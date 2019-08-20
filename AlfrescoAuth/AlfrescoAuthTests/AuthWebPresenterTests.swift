@@ -33,26 +33,21 @@ class AuthWebPresenterTests: XCTestCase {
     
     func testSutParseReturnWKNavigationActionPolicyCancel() {
         navigationActionStub.sendTokenUrl = true
-        let actionPolicy = sut.parse(navigationAction: navigationActionStub)
+        let actionPolicy = sut.parse(action: navigationActionStub)
         XCTAssertEqual(actionPolicy, WKNavigationActionPolicy.cancel)
     }
     
     func testSutParseReturnWKNavigationActionPolicyAllow() {
         navigationActionStub.sendTokenUrl = false
-        let actionPolicy = sut.parse(navigationAction: navigationActionStub)
+        let actionPolicy = sut.parse(action: navigationActionStub)
         XCTAssertEqual(actionPolicy, WKNavigationActionPolicy.allow)
     }
     
     func testSutParseCallsAuthDelegateDidReceive() {
         let delegateStub = AlfrescoAuthDelegateStub()
         sut.authDelegate = delegateStub
-        _ = sut.parse(navigationAction: navigationActionStub)
+        _ = sut.parse(action: navigationActionStub)
         XCTAssertTrue(delegateStub.didReceiveCalled)
-    }
-    
-    func testSutNormalizeUrlStringReplacesHashTagWithQuestionMark() {
-        let normalizedString = sut.normalizeUrlString(TestData.urlStringToNormalize)
-        XCTAssertEqual(normalizedString, TestData.urlString)
     }
     
     func testSutWKNavigationDelegateNavigationAction() {
@@ -65,9 +60,7 @@ class AuthWebPresenterTests: XCTestCase {
     
     //MARK: - Doubles
     
-    class WebViewMock: WKWebView {
-        
-    }
+    class WebViewMock: WKWebView { }
     
     class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {
         var didReceiveCalled = false
@@ -79,12 +72,10 @@ class AuthWebPresenterTests: XCTestCase {
     class WKNavigationActionStub: WKNavigationAction {
         var sendTokenUrl: Bool = true
         override var request: URLRequest {
-            get {
-                if sendTokenUrl {
-                    return URLRequest(url: URL(string: TestData.urlString)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 0)
-                } else {
-                    return URLRequest(url: URL(string: TestData.urlStringWithoutAccesToken)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 0)
-                }
+            if sendTokenUrl {
+                return URLRequest(url: URL(string: TestData.urlString)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 0)
+            } else {
+                return URLRequest(url: URL(string: TestData.urlStringWithoutAccesToken)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 0)
             }
         }
     }

@@ -19,9 +19,12 @@ class AuthWebViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         sut = AuthWebViewController()
+        
         webViewMock = WebViewMock()
         sut.webView = webViewMock
+        
         presenterDummy = AuthWebPresenterDummy()
+        sut.presenter = presenterDummy
     }
 
     override func tearDown() {
@@ -35,7 +38,6 @@ class AuthWebViewControllerTests: XCTestCase {
     }
     
     func testSutViewDidLoadSetsWebViewNavigationDelegate() {
-        sut.setAuthDelegate(delegate: AlfrescoAuthDelegateDummy())
         sut.viewDidLoad()
         XCTAssertNotNil(webViewMock.navigationDelegate)
     }
@@ -60,10 +62,9 @@ class AuthWebViewControllerTests: XCTestCase {
         }
     }
     
-    class AuthWebPresenterDummy: AuthWebPresenter {
-    }
+    class AuthWebPresenterDummy: AuthWebPresenter { }
     
     struct AlfrescoAuthDelegateDummy: AlfrescoAuthDelegate{
-        func didReceive(result: Result<AlfrescoCredential, Error>) {}
+        func didReceive(result: Result<AlfrescoCredential, Error>) { }
     }
 }

@@ -15,15 +15,18 @@ public enum AuthViewControllerType {
 
 public struct AlfrescoAuth {
     
-    public init(){}
+    public init() { }
     
     public func getAuthViewController(ofType type:AuthViewControllerType, urlStringToLoad: String? = nil, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) -> UIViewController {
         switch type {
         case .web:
+            let presenter = AuthWebPresenter()
+            presenter.authDelegate = alfrescoAuthDelegate
+            
             let frameworkBundle = Bundle(for: AuthWebViewController.self)
             let storyboard = UIStoryboard(name: "Auth", bundle: frameworkBundle)
             let controller = storyboard.instantiateViewController(identifier: "AuthWebViewController") as AuthWebViewController
-            controller.setAuthDelegate(delegate: alfrescoAuthDelegate)
+            controller.presenter = presenter
             controller.urlString = urlStringToLoad
             return controller
         case .basic:

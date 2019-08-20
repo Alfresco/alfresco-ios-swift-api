@@ -27,7 +27,7 @@ class AuthCredentialTests: XCTestCase {
     }
     
     func testInitWithUrlStringSetsProperties() {
-        sut = AlfrescoCredential(from: URL(string:TestData.urlString)!)
+        sut = AlfrescoCredential(with: URL(string:TestData.urlString)!)
         
         XCTAssertEqual(sut.sessionState, TestData.sessionStateString)
         XCTAssertEqual(sut.idToken, TestData.idTokenString)
@@ -35,8 +35,8 @@ class AuthCredentialTests: XCTestCase {
         XCTAssertEqual(sut.expiresIn, TestData.expiresIn)
     }
     
-    func testInitWithUrlStringWithExtraParamSetsProperties(){
-        sut = AlfrescoCredential(from: URL(string:TestData.urlStringWithExtraParam)!)
+    func testInitWithUrlStringWithExtraParamSetsProperties() {
+        sut = AlfrescoCredential(with: URL(string:TestData.urlStringWithExtraParam)!)
         
         XCTAssertEqual(sut.sessionState, TestData.sessionStateString)
         XCTAssertEqual(sut.idToken, TestData.idTokenString)
@@ -45,7 +45,7 @@ class AuthCredentialTests: XCTestCase {
     }
     
     func testInitWithUrlStringWithExpiresInString() {
-        sut = AlfrescoCredential(from: URL(string:TestData.urlStringWithExpiresInString)!)
+        sut = AlfrescoCredential(with: URL(string:TestData.urlStringWithExpiresInString)!)
         
         XCTAssertEqual(sut.sessionState, TestData.sessionStateString)
         XCTAssertEqual(sut.idToken, TestData.idTokenString)

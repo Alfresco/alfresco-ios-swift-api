@@ -20,6 +20,7 @@
 		2BD6E16D22F47FFE00949E44 /* AlfrescoCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD6E16C22F47FFE00949E44 /* AlfrescoCredential.swift */; };
 		2BE0E70222F81BE9002857F0 /* AlfrescoCredentialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0E70122F81BE9002857F0 /* AlfrescoCredentialTests.swift */; };
 		2BE0E70422F84EAB002857F0 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0E70322F84EAB002857F0 /* TestData.swift */; };
+		2BE921A8230C26DF0009F470 /* String+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE921A7230C26DF0009F470 /* String+Helpers.swift */; };
 		E31B47E122F97C53002B6BC5 /* AuthWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,7 @@
 		2BD6E16C22F47FFE00949E44 /* AlfrescoCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoCredential.swift; sourceTree = "<group>"; };
 		2BE0E70122F81BE9002857F0 /* AlfrescoCredentialTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoCredentialTests.swift; sourceTree = "<group>"; };
 		2BE0E70322F84EAB002857F0 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		2BE921A7230C26DF0009F470 /* String+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
 		E31B47DF22F97844002B6BC5 /* AlfrescoAuth.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = AlfrescoAuth.xctestplan; sourceTree = "<group>"; };
 		E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWebViewControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,6 +96,7 @@
 		2BD6E14522F442C900949E44 /* AlfrescoAuth */ = {
 			isa = PBXGroup;
 			children = (
+				2BE921A6230C26840009F470 /* Extensions */,
 				2BE0E70522F965A2002857F0 /* Model */,
 				2BD6E16722F4694A00949E44 /* AuthWebViewController */,
 				2BD6E14622F442C900949E44 /* AlfrescoAuth.h */,
@@ -135,6 +138,14 @@
 				2BD6E16C22F47FFE00949E44 /* AlfrescoCredential.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		2BE921A6230C26840009F470 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2BE921A7230C26DF0009F470 /* String+Helpers.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +265,7 @@
 				2BD6E16322F4475700949E44 /* Constants.swift in Sources */,
 				2BD6E16D22F47FFE00949E44 /* AlfrescoCredential.swift in Sources */,
 				2BA89C7B22FC5E0300597553 /* AlfrescoAuthDelegate.swift in Sources */,
+				2BE921A8230C26DF0009F470 /* String+Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

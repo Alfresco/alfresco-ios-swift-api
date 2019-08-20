@@ -9,17 +9,17 @@
 import Foundation
 import WebKit
 
-class AuthWebPresenter : NSObject {
+class AuthWebPresenter: NSObject {
     var authDelegate: AlfrescoAuthDelegate? = nil
     
-    func parse(navigationAction: WKNavigationAction) -> WKNavigationActionPolicy {
-        let url = navigationAction.request.url
+    func parse(action: WKNavigationAction) -> WKNavigationActionPolicy {
+        let url = action.request.url
         if let urlString = url?.absoluteString {
             if urlString.contains("access_token") {
-                var alfrescoCredentials = AlfrescoCredential(from: url!)
-                let normalizedUrlString = normalizeUrlString(urlString)
+                var alfrescoCredentials = AlfrescoCredential(with: url!)
+                let normalizedUrlString = urlString.replaceHashTagWithQuestionMark()
                 if let normalizedUrl = URL(string: normalizedUrlString) {
-                    alfrescoCredentials = AlfrescoCredential(from: normalizedUrl)
+                    alfrescoCredentials = AlfrescoCredential(with: normalizedUrl)
                 }
                 authDelegate?.didReceive(result: .success(alfrescoCredentials))
                 return .cancel
@@ -27,15 +27,10 @@ class AuthWebPresenter : NSObject {
         }
         return .allow
     }
-    
-    func normalizeUrlString(_ urlString: String) -> String {
-        let normalizedString = urlString.replacingOccurrences(of: "#", with: "?")
-        return normalizedString
-    }
 }
 
-extension AuthWebPresenter : WKNavigationDelegate {
+extension AuthWebPresenter: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        decisionHandler(parse(navigationAction: navigationAction))
+        decisionHandler(parse(action: navigationAction))
     }
 }

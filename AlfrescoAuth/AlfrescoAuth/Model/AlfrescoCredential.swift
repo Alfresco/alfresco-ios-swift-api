@@ -15,10 +15,9 @@ public struct AlfrescoCredential {
     var tokenType: String?
     var expiresIn: Int?
     
-    init() {
-    }
+    init() { }
     
-    init(from url:URL) {
+    init(with url:URL) {
         let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
         if let queryItems = urlComponents?.queryItems {
             for item in queryItems {

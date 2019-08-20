@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class AuthWebViewController : UIViewController {
+class AuthWebViewController: UIViewController {
     
     @IBOutlet weak var webView: WKWebView!
     
@@ -22,10 +22,5 @@ class AuthWebViewController : UIViewController {
         if let url = URL(string: urlString ?? "") {
             webView.load(URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData))
         }
-    }
-    
-    func setAuthDelegate(delegate: AlfrescoAuthDelegate) {
-        presenter = AuthWebPresenter()
-        presenter?.authDelegate = delegate
     }
 }

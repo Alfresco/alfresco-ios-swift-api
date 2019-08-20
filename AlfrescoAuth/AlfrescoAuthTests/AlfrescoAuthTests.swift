@@ -50,7 +50,6 @@ class AlfrescoAuthTests: XCTestCase {
 
     //MARK: - Doubles
     struct AlfrescoAuthDelegateDummy: AlfrescoAuthDelegate {
-        func didReceive(result: Result<AlfrescoCredential, Error>) {
-        }
+        func didReceive(result: Result<AlfrescoCredential, Error>) { }
     }
 }
