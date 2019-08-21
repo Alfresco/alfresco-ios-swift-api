@@ -30,7 +30,14 @@ public struct AlfrescoAuth {
             controller.urlString = urlStringToLoad
             return controller
         case .basic:
-            return UIViewController()
+            let presenter = AuthBasicPresenter()
+            presenter.authDelegate = alfrescoAuthDelegate
+            
+            let frameworkBundle = Bundle(for: AuthBasicViewController.self)
+            let storyboard = UIStoryboard(name: "Auth", bundle: frameworkBundle)
+            let controller = storyboard.instantiateViewController(identifier: "AuthBasicViewController") as AuthBasicViewController
+            controller.presenter = presenter
+            return controller
         }
     }
 }

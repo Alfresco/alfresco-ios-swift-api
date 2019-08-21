@@ -23,4 +23,6 @@ struct TestData {
 
     static let urlStringToLoad = "https://gateway.aps2dev.envalfresco.com/admin"
     
+    static let username1 = "admin"
+    static let password1 = "admin"
 }
