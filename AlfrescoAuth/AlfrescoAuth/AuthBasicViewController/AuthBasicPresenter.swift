@@ -7,29 +7,34 @@
 //
 
 import Foundation
+import UIKit
 
 class AuthBasicPresenter: NSObject {
     var authDelegate: AlfrescoAuthDelegate? = nil
-    
-    func parse(username: String?, password: String?) {
-        if let username = username, let password = password {
-            if checkNotEmpty(username, password) {
-                //TODO: Core Module
-                let alfrescoCredentials = AlfrescoCredential()
-                authDelegate?.didReceive(result: .success(alfrescoCredentials))
-            } else {
-                //TODO: Core Module
-                let error = NSError(domain:"", code:401, userInfo:[ NSLocalizedDescriptionKey: "Empty credentials!"])
-                authDelegate?.didReceive(result: .failure(error))
-            }
+    var view: AuthBasicViewProtocol? = nil
+
+    func verify(string: String?, type: InputType) -> String? {
+        guard let string = string else {
+            view?.display(errorMessage: "Field can't be empty!", type: type)
+            return nil
         }
+        
+        let stringTrim = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        if stringTrim.isEmpty {
+            view?.display(errorMessage: "Field can't be empty!", type: type)
+            return nil
+        }
+        return string
     }
-    
-    //MARK: - Utils
-    func checkNotEmpty(_ username: String, _ password: String) -> Bool {
-        if username != "" && password != "" && username.isEmpty == false && password.isEmpty == false {
-            return true
+
+    func execute(username: String?, password: String?) {
+        let username = verify(string: username, type: .username)
+        let password = verify(string: password, type: .password)
+        if let username = username, let password = password {
+            print("Username and password is valid!")
+            //TODO: Core Module request call with username/password
+            let alfrescoCredentials = AlfrescoCredential()
+            authDelegate?.didReceive(result: .success(alfrescoCredentials))
         }
-        return false
     }
 }

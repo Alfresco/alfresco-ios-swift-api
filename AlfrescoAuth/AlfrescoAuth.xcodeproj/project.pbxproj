@@ -22,6 +22,7 @@
 		2BE0E70422F84EAB002857F0 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0E70322F84EAB002857F0 /* TestData.swift */; };
 		2BE921A8230C26DF0009F470 /* String+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE921A7230C26DF0009F470 /* String+Helpers.swift */; };
 		E31B47E122F97C53002B6BC5 /* AuthWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */; };
+		E326985A2313ED8D00D19D3B /* AuthBasicViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32698592313ED8D00D19D3B /* AuthBasicViewProtocol.swift */; };
 		E36035F7230D5D1100719281 /* AuthBasicPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36035F5230D5D1100719281 /* AuthBasicPresenterTests.swift */; };
 		E36035F8230D5D1100719281 /* AuthBasicViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36035F6230D5D1100719281 /* AuthBasicViewControllerTests.swift */; };
 		E36314CD230D5A5000907B18 /* AuthBasicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36314CB230D5A5000907B18 /* AuthBasicPresenter.swift */; };
@@ -58,6 +59,7 @@
 		2BE921A7230C26DF0009F470 /* String+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
 		E31B47DF22F97844002B6BC5 /* AlfrescoAuth.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = AlfrescoAuth.xctestplan; sourceTree = "<group>"; };
 		E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWebViewControllerTests.swift; sourceTree = "<group>"; };
+		E32698592313ED8D00D19D3B /* AuthBasicViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBasicViewProtocol.swift; sourceTree = "<group>"; };
 		E36035F5230D5D1100719281 /* AuthBasicPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBasicPresenterTests.swift; sourceTree = "<group>"; };
 		E36035F6230D5D1100719281 /* AuthBasicViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBasicViewControllerTests.swift; sourceTree = "<group>"; };
 		E36314CB230D5A5000907B18 /* AuthBasicPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBasicPresenter.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				E36314CC230D5A5000907B18 /* AuthBasicViewController.swift */,
 				E36314CB230D5A5000907B18 /* AuthBasicPresenter.swift */,
+				E32698592313ED8D00D19D3B /* AuthBasicViewProtocol.swift */,
 			);
 			path = AuthBasicViewController;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				2BD6E16522F45BA600949E44 /* AlfrescoAuth.swift in Sources */,
 				2BD6E16922F4699000949E44 /* AuthWebPresenter.swift in Sources */,
 				2BD6E16122F4466A00949E44 /* AuthWebViewController.swift in Sources */,
+				E326985A2313ED8D00D19D3B /* AuthBasicViewProtocol.swift in Sources */,
 				2BD6E16322F4475700949E44 /* Constants.swift in Sources */,
 				2BD6E16D22F47FFE00949E44 /* AlfrescoCredential.swift in Sources */,
 				2BA89C7B22FC5E0300597553 /* AlfrescoAuthDelegate.swift in Sources */,

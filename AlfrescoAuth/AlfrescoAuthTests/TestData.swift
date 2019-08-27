@@ -25,4 +25,6 @@ struct TestData {
     
     static let username1 = "admin"
     static let password1 = "admin"
+    
+    static let errorMessage1 = "This is an error!"
 }

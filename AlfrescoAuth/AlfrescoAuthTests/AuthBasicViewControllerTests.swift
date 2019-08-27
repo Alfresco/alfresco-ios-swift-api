@@ -37,9 +37,7 @@ class AuthBasicViewControllerTests: XCTestCase {
     }
     
     func testSutLoginButton() {
-        let delegateStub = AlfrescoAuthDelegateStub()
         sut.presenter = presenterDummy
-        presenterDummy.authDelegate = delegateStub
         
         userNameTextFieldStub = UITextFieldDummy()
         userNameTextFieldStub.text = TestData.username1
@@ -50,23 +48,79 @@ class AuthBasicViewControllerTests: XCTestCase {
         sut.passwordTextfield = passwordTextFieldStub
         
         sut.loginButtonTapped(UIButton())
-        XCTAssertTrue(delegateStub.didReceiveCalled)
+        XCTAssertTrue(presenterDummy.didReceiveCalled)
+    }
+    
+    func testSutDisplayErrorMessageForUsername() {
+        let label = UILabel()
+        let textfield = UITextField()
+        sut.userNameErrorLabel = label
+        sut.userNameTextfield = textfield
+        sut.display(errorMessage: TestData.errorMessage1, type: .username)
+        XCTAssertEqual(TestData.errorMessage1, label.text)
+        XCTAssertFalse(label.isHidden)
+        XCTAssertEqual(UIColor.red.cgColor, textfield.layer.borderColor)
+        XCTAssertEqual(1, textfield.layer.borderWidth)
+    }
+    
+    func testSutDisplayErrorMessageForPassword() {
+        let label = UILabel()
+        let textfield = UITextField()
+        sut.passwordErrorLabel = label
+        sut.passwordTextfield = textfield
+        sut.display(errorMessage: TestData.errorMessage1, type: .password)
+        XCTAssertEqual(TestData.errorMessage1, label.text)
+        XCTAssertFalse(label.isHidden)
+        XCTAssertEqual(UIColor.red.cgColor, textfield.layer.borderColor)
+        XCTAssertEqual(1, textfield.layer.borderWidth)
+    }
+    
+    func testSutDisplayAlertError() {
+        sut.display(alertError: UIAlertController())
+        XCTAssertNotNil(sut)
+    }
+    
+    func testSutTextFieldDidBeginEditingForUsername() {
+        let textfield = UITextField()
+        let label = UILabel()
+        sut.userNameErrorLabel = label
+        sut.userNameTextfield = textfield
+        sut.textFieldDidBeginEditing(textfield)
+        XCTAssertEqual("", label.text)
+        XCTAssertTrue(label.isHidden)
+        XCTAssertEqual(UIColor.clear.cgColor, textfield.layer.borderColor)
+        XCTAssertEqual(0, textfield.layer.borderWidth)
+    }
+    
+    func testSutTextFieldDidBeginEditingForPassword() {
+        let textfield = UITextField()
+        let label = UILabel()
+        sut.passwordErrorLabel = label
+        sut.passwordTextfield = textfield
+        sut.textFieldDidBeginEditing(textfield)
+        XCTAssertEqual("", label.text)
+        XCTAssertTrue(label.isHidden)
+        XCTAssertEqual(UIColor.clear.cgColor, textfield.layer.borderColor)
+        XCTAssertEqual(0, textfield.layer.borderWidth)
+    }
+    
+    func testSutTextFieldDidBeginEditingForDefault() {
+        let textfield = UITextField()
+        let label = UILabel()
+        sut.textFieldDidBeginEditing(textfield)
+        XCTAssertNil(label.text)
+        XCTAssertFalse(label.isHidden)
+        XCTAssertNotNil(textfield.layer.borderColor)
+        XCTAssertEqual(0, textfield.layer.borderWidth)
     }
     
     //MARK: - Doubles
-    class AuthBasicPresenterDummy: AuthBasicPresenter { }
-    
-    class UITextFieldDummy: UITextField { }
-    
-    class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {
+    class AuthBasicPresenterDummy: AuthBasicPresenter {
         var didReceiveCalled = false
-        func didReceive(result: Result<AlfrescoCredential, Error>) {
-            switch result {
-            case .success(_):
-                didReceiveCalled = true
-            case .failure(_):
-                didReceiveCalled = false
-            }
+        override func execute(username: String?, password: String?) {
+            didReceiveCalled = true
         }
     }
+    
+    class UITextFieldDummy: UITextField { }
 }

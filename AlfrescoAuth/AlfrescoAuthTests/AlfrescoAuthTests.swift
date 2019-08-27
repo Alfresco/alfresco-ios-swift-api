@@ -45,7 +45,7 @@ class AlfrescoAuthTests: XCTestCase {
     //MARK: - Basic auth tests
     func testGetAuthViewControllerOfTypeBasicIsAUIViewController() {
         let viewController = sut.getAuthViewController(ofType: .basic, delegate: AlfrescoAuthDelegateDummy())
-        XCTAssert(viewController.isKind(of: UIViewController.self))
+        XCTAssert(viewController.isKind(of: AuthBasicViewController.self))
     }
     
     func testGetBasicViewControllerOfTypeBasicSetsAuthDelegateOnPresenter() {

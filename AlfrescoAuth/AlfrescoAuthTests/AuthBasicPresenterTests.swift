@@ -27,28 +27,55 @@ class AuthBasicPresenterTests: XCTestCase {
         XCTAssertNotNil(sut)
     }
     
-    func testSutParseCallsAuthDelegateDidReceiveAlfrescoCredential() {
+    func testSutExecuteCallsAuthDelegateDidReceiveAlfrescoCredential() {
         let delegateStub = AlfrescoAuthDelegateStub()
         sut.authDelegate = delegateStub
-        sut.parse(username: TestData.username1, password: TestData.password1)
+        sut.execute(username: TestData.username1, password: TestData.password1)
         XCTAssertTrue(delegateStub.didReceiveCalled)
     }
     
-    func testSutParseCallsAuthDelegateDidReceiveError() {
+    func testSutExecuteCallsAuthDelegateDidReceiveErrorWithEmptyString() {
         let delegateStub = AlfrescoAuthDelegateStub()
         sut.authDelegate = delegateStub
-        sut.parse(username: TestData.username1, password: "")
+        sut.execute(username: TestData.username1, password: "")
         XCTAssertFalse(delegateStub.didReceiveCalled)
     }
     
-    func testSutCheckNotEmptyCallTrue() {
-        let check = sut.checkNotEmpty(TestData.username1, TestData.password1)
-        XCTAssertTrue(check)
+    func testSutExecuteCallsAuthDelegateDidReceiveErrorWithNilString() {
+        let delegateStub = AlfrescoAuthDelegateStub()
+        sut.authDelegate = delegateStub
+        sut.execute(username: TestData.username1, password: nil)
+        XCTAssertFalse(delegateStub.didReceiveCalled)
     }
     
-    func testSutCheckNotEmptyCallFalse() {
-        let check = sut.checkNotEmpty(TestData.username1, "")
-        XCTAssertFalse(check)
+    func testSutVerifyCallsWithInputTypeUsernameAndStringNotNil() {
+        let string = sut.verify(string: TestData.username1, type: .username)
+        XCTAssertNotNil(string)
+    }
+    
+    func testSutVerifyCallsWithInputTypeUsernameAndNilStringNotNil() {
+        let string = sut.verify(string: nil, type: .username)
+        XCTAssertNil(string)
+    }
+    
+    func testSutVerifyCallsWithInputTypeUsernameAndEmptyStringNotNil() {
+        let string = sut.verify(string: "", type: .username)
+        XCTAssertNil(string)
+    }
+    
+    func testSutVerifyCallsWithInputTypePasswordAndStringNotNil() {
+        let string = sut.verify(string: TestData.password1, type: .password)
+        XCTAssertNotNil(string)
+    }
+    
+    func testSutVerifyCallsWithInputTypePasswordAndNilStringNotNil() {
+        let string = sut.verify(string: nil, type: .password)
+        XCTAssertNil(string)
+    }
+    
+    func testSutVerifyCallsWithInputTypePasswordAndEmptyStringNotNil() {
+        let string = sut.verify(string: "", type: .password)
+        XCTAssertNil(string)
     }
     
     //MARK: - Doubles
