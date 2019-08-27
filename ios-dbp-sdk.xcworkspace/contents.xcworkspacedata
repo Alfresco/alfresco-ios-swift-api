@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:AlfrescoCore/AlfrescoCore.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "container:AlfrescoAuth/AlfrescoAuth.xcodeproj">
    </FileRef>
 </Workspace>
