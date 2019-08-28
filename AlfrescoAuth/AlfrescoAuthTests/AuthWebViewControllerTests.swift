@@ -43,10 +43,10 @@ class AuthWebViewControllerTests: XCTestCase {
     }
     
     func testSutViewDidLoadLoadsURLString() {
-        sut.urlString = TestData.urlStringToLoad
+        sut.urlString = TestData.urlStringToLoadGood
         sut.viewDidLoad()
         XCTAssertTrue(webViewMock.loadWasCalled)
-        XCTAssertEqual(TestData.urlStringToLoad, webViewMock.urlString)
+        XCTAssertEqual(TestData.urlStringToLoadGood, webViewMock.urlString)
     }
     
     // MARK: - Doubles

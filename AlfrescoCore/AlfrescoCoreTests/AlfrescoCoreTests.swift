@@ -22,10 +22,10 @@ class AlfrescoCoreTests: XCTestCase {
         super.tearDown()
     }
     
-    func testRequestBuilderReturnsANonNilRequestBuilderProtocolImplementation() {
-        let requestBuilder = sut.requestBuilder(baseURLString: TestData.baseURLString)
-        
-        XCTAssertNotNil(requestBuilder)
-    }
+//    func testRequestBuilderReturnsANonNilRequestBuilderProtocolImplementation() {
+//        let requestBuilder = sut.requestBuilder(baseURLString: TestData.baseURLString)
+//        
+//        XCTAssertNotNil(requestBuilder)
+//    }
 
 }

@@ -8,8 +8,6 @@
 
 import Foundation
 
-struct AlfrescoCore {
-    func requestBuilder(baseURLString: String) -> RequestBuilderProtocol {
-        return NetworkRequestBuilder(baseURL: URL(string: baseURLString))
-    }
+public struct AlfrescoCore {
+    public init () { }
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B7D2D3E23140083004930BF /* NetworkRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2D3D23140083004930BF /* NetworkRequestBuilder.swift */; };
 		2B7D2D4023141C3C004930BF /* Dictionary+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2D3F23141C3C004930BF /* Dictionary+Helpers.swift */; };
 		2B7D2D4223141CA5004930BF /* CharacterSet+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2D4123141CA5004930BF /* CharacterSet+Helpers.swift */; };
 		2B7D2D442314211C004930BF /* AlfrescoCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D2D432314211C004930BF /* AlfrescoCore.swift */; };
@@ -16,7 +15,10 @@
 		2BAFC1B1230D99C3000CB1A9 /* AlfrescoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAFC1A7230D99C2000CB1A9 /* AlfrescoCore.framework */; };
 		2BAFC1B6230D99C3000CB1A9 /* AlfrescoCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAFC1B5230D99C3000CB1A9 /* AlfrescoCoreTests.swift */; };
 		2BAFC1B8230D99C3000CB1A9 /* AlfrescoCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BAFC1AA230D99C2000CB1A9 /* AlfrescoCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BF51427230EE36400329FD1 /* RequestBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF51426230EE36400329FD1 /* RequestBuilderProtocol.swift */; };
+		E31311F7231FD93B00D6829E /* Data+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31311F6231FD93B00D6829E /* Data+Helpers.swift */; };
+		E3C38EEF2327B0D1007FCF8B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C38EEE2327B0D1007FCF8B /* APIClient.swift */; };
+		E3C38EF12327B139007FCF8B /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C38EF02327B139007FCF8B /* APIRequest.swift */; };
+		E3C38EF32327B226007FCF8B /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C38EF22327B226007FCF8B /* APIResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +32,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2B7D2D3D23140083004930BF /* NetworkRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestBuilder.swift; sourceTree = "<group>"; };
 		2B7D2D3F23141C3C004930BF /* Dictionary+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Helpers.swift"; sourceTree = "<group>"; };
 		2B7D2D4123141CA5004930BF /* CharacterSet+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterSet+Helpers.swift"; sourceTree = "<group>"; };
 		2B7D2D432314211C004930BF /* AlfrescoCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoCore.swift; sourceTree = "<group>"; };
@@ -43,7 +44,10 @@
 		2BAFC1B0230D99C3000CB1A9 /* AlfrescoCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlfrescoCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BAFC1B5230D99C3000CB1A9 /* AlfrescoCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoCoreTests.swift; sourceTree = "<group>"; };
 		2BAFC1B7230D99C3000CB1A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2BF51426230EE36400329FD1 /* RequestBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilderProtocol.swift; sourceTree = "<group>"; };
+		E31311F6231FD93B00D6829E /* Data+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Helpers.swift"; sourceTree = "<group>"; };
+		E3C38EEE2327B0D1007FCF8B /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		E3C38EF02327B139007FCF8B /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		E3C38EF22327B226007FCF8B /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +74,7 @@
 			children = (
 				2B7D2D3F23141C3C004930BF /* Dictionary+Helpers.swift */,
 				2B7D2D4123141CA5004930BF /* CharacterSet+Helpers.swift */,
+				E31311F6231FD93B00D6829E /* Data+Helpers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -77,8 +82,9 @@
 		2B7D2D4623155477004930BF /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				2BF51426230EE36400329FD1 /* RequestBuilderProtocol.swift */,
-				2B7D2D3D23140083004930BF /* NetworkRequestBuilder.swift */,
+				E3C38EEE2327B0D1007FCF8B /* APIClient.swift */,
+				E3C38EF02327B139007FCF8B /* APIRequest.swift */,
+				E3C38EF22327B226007FCF8B /* APIResponse.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -244,10 +250,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B7D2D4223141CA5004930BF /* CharacterSet+Helpers.swift in Sources */,
-				2B7D2D3E23140083004930BF /* NetworkRequestBuilder.swift in Sources */,
-				2BF51427230EE36400329FD1 /* RequestBuilderProtocol.swift in Sources */,
+				E3C38EEF2327B0D1007FCF8B /* APIClient.swift in Sources */,
+				E31311F7231FD93B00D6829E /* Data+Helpers.swift in Sources */,
 				2B7D2D442314211C004930BF /* AlfrescoCore.swift in Sources */,
+				E3C38EF12327B139007FCF8B /* APIRequest.swift in Sources */,
 				2B7D2D4023141C3C004930BF /* Dictionary+Helpers.swift in Sources */,
+				E3C38EF32327B226007FCF8B /* APIResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

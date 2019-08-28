@@ -8,24 +8,41 @@
 
 import Foundation
 import WebKit
+import AlfrescoCore
 
-class AuthWebPresenter: NSObject {
+class AuthWebPresenter: NSObject, NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? = nil
     
     func parse(action: WKNavigationAction) -> WKNavigationActionPolicy {
         let url = action.request.url
         if let urlString = url?.absoluteString {
-            if urlString.contains("access_token") {
-                var alfrescoCredentials = AlfrescoCredential(with: url!)
+            if urlString.contains("&code=") {
                 let normalizedUrlString = urlString.replaceHashTagWithQuestionMark()
                 if let normalizedUrl = URL(string: normalizedUrlString) {
-                    alfrescoCredentials = AlfrescoCredential(with: normalizedUrl)
+                    if let code = normalizedUrl.findAuthorizationCode() {
+                        requestToken(with: code) { (result) in
+                            DispatchQueue.main.async {
+                                self.authDelegate?.didReceive(result: result)
+                            }
+                        }
+                        return .cancel
+                    }
                 }
-                authDelegate?.didReceive(result: .success(alfrescoCredentials))
+                let error = NSError(domain:"", code:401, userInfo:[ NSLocalizedDescriptionKey: "Error! Code not found"])
+                self.authDelegate?.didReceive(result: Result.failure(error))
                 return .cancel
             }
         }
+        let error = NSError(domain:"", code:401, userInfo:[ NSLocalizedDescriptionKey: "Error! Code not found"])
+        self.authDelegate?.didReceive(result: Result.failure(error))
         return .allow
+    }
+    
+    func requestToken(with code: String, completion: @escaping (Result<AlfrescoCredential, Error>) -> Void) {
+        _ = apiClient.send(GetToken(code: code), completion: { (result) in
+            completion(result)
+        })
+        
     }
 }
 

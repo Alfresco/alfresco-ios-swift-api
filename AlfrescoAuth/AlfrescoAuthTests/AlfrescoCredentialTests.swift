@@ -26,30 +26,25 @@ class AuthCredentialTests: XCTestCase {
         XCTAssertNotNil(sut)
     }
     
-    func testInitWithUrlStringSetsProperties() {
-        sut = AlfrescoCredential(with: URL(string:TestData.urlString)!)
+    func testInitWithDictionarySetsProperties() {
+        sut = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
         
-        XCTAssertEqual(sut.sessionState, TestData.sessionStateString)
-        XCTAssertEqual(sut.idToken, TestData.idTokenString)
-        XCTAssertEqual(sut.tokenType, TestData.tokenType)
-        XCTAssertEqual(sut.expiresIn, TestData.expiresIn)
+        XCTAssertEqual(sut.accessToken, TestData.accessTokenGood)
+        XCTAssertEqual(sut.accessTokenExpiresIn, TestData.accessTokenExpiresInGood)
+        XCTAssertEqual(sut.refreshToken, TestData.refreshTokenGood)
+        XCTAssertEqual(sut.refreshTokenExpiresIn, TestData.refreshTokenExpiresInGood)
+        XCTAssertEqual(sut.tokenType, TestData.tokenTypeGood)
+        XCTAssertEqual(sut.sessionState, TestData.sessionStateGood)
     }
     
-    func testInitWithUrlStringWithExtraParamSetsProperties() {
-        sut = AlfrescoCredential(with: URL(string:TestData.urlStringWithExtraParam)!)
+    func testInitWithDictionaryExtraSetsProperties() {
+        sut = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialExtra)
         
-        XCTAssertEqual(sut.sessionState, TestData.sessionStateString)
-        XCTAssertEqual(sut.idToken, TestData.idTokenString)
-        XCTAssertEqual(sut.tokenType, TestData.tokenType)
-        XCTAssertEqual(sut.expiresIn, TestData.expiresIn)
-    }
-    
-    func testInitWithUrlStringWithExpiresInString() {
-        sut = AlfrescoCredential(with: URL(string:TestData.urlStringWithExpiresInString)!)
-        
-        XCTAssertEqual(sut.sessionState, TestData.sessionStateString)
-        XCTAssertEqual(sut.idToken, TestData.idTokenString)
-        XCTAssertEqual(sut.tokenType, TestData.tokenType)
-        XCTAssertEqual(sut.expiresIn, 0)
+        XCTAssertEqual(sut.accessToken, TestData.accessTokenGood)
+        XCTAssertEqual(sut.accessTokenExpiresIn, TestData.accessTokenExpiresInGood)
+        XCTAssertEqual(sut.refreshToken, TestData.refreshTokenGood)
+        XCTAssertEqual(sut.refreshTokenExpiresIn, TestData.refreshTokenExpiresInGood)
+        XCTAssertEqual(sut.tokenType, TestData.tokenTypeGood)
+        XCTAssertEqual(sut.sessionState, TestData.sessionStateGood)
     }
 }

@@ -10,7 +10,6 @@ import UIKit
 
 public enum AuthViewControllerType {
     case web
-    case basic
 }
 
 public struct AlfrescoAuth {
@@ -29,16 +28,13 @@ public struct AlfrescoAuth {
             controller.presenter = presenter
             controller.urlString = urlStringToLoad
             return controller
-        case .basic:
-            let presenter = AuthBasicPresenter()
-            presenter.authDelegate = alfrescoAuthDelegate
-            
-            let frameworkBundle = Bundle(for: AuthBasicViewController.self)
-            let storyboard = UIStoryboard(name: "Auth", bundle: frameworkBundle)
-            let controller = storyboard.instantiateViewController(identifier: String(describing: AuthBasicViewController.self)) as AuthBasicViewController
-            controller.presenter = presenter
-            return controller
         }
+    }
+    
+    public func auth(with username: String, and password: String, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
+        let presenter = AuthBasicPresenter()
+        presenter.authDelegate = alfrescoAuthDelegate
+        presenter.execute(username: username, password: password)
     }
 }
 
