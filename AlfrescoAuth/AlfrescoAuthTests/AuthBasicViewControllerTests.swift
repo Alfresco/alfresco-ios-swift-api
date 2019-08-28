@@ -80,6 +80,11 @@ class AuthBasicViewControllerTests: XCTestCase {
         XCTAssertNotNil(sut)
     }
     
+    func testSutSuccessCredentials() {
+        sut.success(credential: AlfrescoCredential())
+        XCTAssertNotNil(sut)
+    }
+    
     func testSutTextFieldDidBeginEditingForUsername() {
         let textfield = UITextField()
         let label = UILabel()

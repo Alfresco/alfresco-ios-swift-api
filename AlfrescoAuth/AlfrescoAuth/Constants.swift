@@ -7,3 +7,6 @@
 //
 
 import Foundation
+
+let baseURLString = "http://alfresco-identity-service.mobile.dev.alfresco.me"
+

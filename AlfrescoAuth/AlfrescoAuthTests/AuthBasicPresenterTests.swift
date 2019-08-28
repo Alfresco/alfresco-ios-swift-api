@@ -13,6 +13,9 @@ import XCTest
 class AuthBasicPresenterTests: XCTestCase {
     var sut: AuthBasicPresenter!
     
+    var expectationForDidRevicedCall = XCTestExpectation(description: "Wait for delegate to login with username and password.")
+    var expectationForSuccessInDidRecivedCall = XCTestExpectation(description: "Delegate direceivced call")
+    
     override func setUp() {
         super.setUp()
         sut = AuthBasicPresenter()
@@ -29,9 +32,13 @@ class AuthBasicPresenterTests: XCTestCase {
     
     func testSutExecuteCallsAuthDelegateDidReceiveAlfrescoCredential() {
         let delegateStub = AlfrescoAuthDelegateStub()
+        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
+        delegateStub.expectationForDidRecivedCall = expectationForSuccessInDidRecivedCall
+        
         sut.authDelegate = delegateStub
         sut.execute(username: TestData.username1, password: TestData.password1)
-        XCTAssertTrue(delegateStub.didReceiveCalled)
+        
+        wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
     }
     
     func testSutExecuteCallsAuthDelegateDidReceiveErrorWithEmptyString() {
@@ -82,13 +89,18 @@ class AuthBasicPresenterTests: XCTestCase {
     
     class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {
         var didReceiveCalled = false
+        var expectationRequestLogin: XCTestExpectation!
+        var expectationForDidRecivedCall: XCTestExpectation!
+        
         func didReceive(result: Result<AlfrescoCredential, Error>) {
             switch result {
             case .success(_):
+                expectationForDidRecivedCall.fulfill()
                 didReceiveCalled = true
             case .failure(_):
                 didReceiveCalled = false
             }
+            expectationRequestLogin.fulfill()
         }
     }
 }

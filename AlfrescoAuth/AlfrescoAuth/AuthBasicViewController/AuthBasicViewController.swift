@@ -31,8 +31,10 @@ class AuthBasicViewController: UIViewController {
 }
 
 extension AuthBasicViewController: AuthBasicViewProtocol {
+    func success(credential: AlfrescoCredential) {
+    }
+    
     func display(alertError: UIAlertController) {
-        
     }
     
     func display(errorMessage: String, type: InputType) {
@@ -61,16 +63,7 @@ extension AuthBasicViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         var textfield = UITextField()
         var label = UILabel()
-        
-//        if textfield == userNameTextfield {
-//            textfield = userNameTextfield
-//            label = userNameErrorLabel
-//        } else if textfield == passwordTextfield {
-//           textfield = passwordTextfield
-//           label = passwordErrorLabel
-//        }
     
-        
         switch textField {
         case userNameTextfield:
             textfield = userNameTextfield

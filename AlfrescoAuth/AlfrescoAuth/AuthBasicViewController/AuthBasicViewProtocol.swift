@@ -17,4 +17,5 @@ enum InputType {
 protocol AuthBasicViewProtocol {
     func display(errorMessage: String, type: InputType)
     func display(alertError: UIAlertController)
+    func success(credential: AlfrescoCredential)
 }

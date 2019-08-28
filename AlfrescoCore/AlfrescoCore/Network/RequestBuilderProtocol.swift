@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum HttpMethod: String {
+public enum HttpMethod: String {
     case get = "GET"
     case head = "HEAD"
     case delete = "DELETE"
@@ -16,7 +16,7 @@ enum HttpMethod: String {
     case put = "PUT"
 }
 
-protocol RequestBuilderProtocol {
+public protocol RequestBuilderProtocol {
     var baseURL: URL? { get set }
     
     func request(method: HttpMethod, path: String, headerFields: [String: String]?, parameters: [String: String]?) -> URLRequest?

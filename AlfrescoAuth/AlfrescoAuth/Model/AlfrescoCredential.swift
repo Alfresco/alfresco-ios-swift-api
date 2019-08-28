@@ -12,12 +12,15 @@ public struct AlfrescoCredential {
     var sessionState: String?
     var idToken: String?
     var accessToken: String?
+    var refreshToken: String?
     var tokenType: String?
     var expiresIn: Int?
+    var notBeforePolicy: Bool?
+    var scope: String?
     
     init() { }
     
-    init(with url:URL) {
+    init(with url: URL) {
         let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
         if let queryItems = urlComponents?.queryItems {
             for item in queryItems {
@@ -34,6 +37,28 @@ public struct AlfrescoCredential {
                     expiresIn = Int(item.value!) ?? 0
                 default: break
                 }
+            }
+        }
+    }
+    
+    init(with dictionary: [String: Any]) {
+        for (key, value) in dictionary {
+            switch key {
+            case "session_state":
+                sessionState = value as? String
+            case "access_token":
+                accessToken = value as? String
+            case "token_type":
+                tokenType = value as? String
+            case "expires_in":
+                expiresIn = value as? Int
+            case "refresh_token":
+                refreshToken = value as? String
+            case "not-before-policy":
+                notBeforePolicy = value as? Bool
+            case "scope":
+                scope = value as? String
+            default: break
             }
         }
     }

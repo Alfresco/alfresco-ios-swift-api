@@ -106,13 +106,12 @@
 		2BD6E14522F442C900949E44 /* AlfrescoAuth */ = {
 			isa = PBXGroup;
 			children = (
+				E326985B231698FF00D19D3B /* Supporting files */,
 				2BE921A6230C26840009F470 /* Extensions */,
 				2BE0E70522F965A2002857F0 /* Model */,
 				2BD6E16722F4694A00949E44 /* AuthWebViewController */,
 				E36314CA230D5A5000907B18 /* AuthBasicViewController */,
-				2BD6E14622F442C900949E44 /* AlfrescoAuth.h */,
 				2BD6E16222F4475700949E44 /* Constants.swift */,
-				2BD6E14722F442C900949E44 /* Info.plist */,
 				2BD6E15E22F445CB00949E44 /* Auth.storyboard */,
 				2BD6E16422F45BA600949E44 /* AlfrescoAuth.swift */,
 				2BA89C7A22FC5E0300597553 /* AlfrescoAuthDelegate.swift */,
@@ -159,6 +158,15 @@
 				2BE921A7230C26DF0009F470 /* String+Helpers.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E326985B231698FF00D19D3B /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				2BD6E14622F442C900949E44 /* AlfrescoAuth.h */,
+				2BD6E14722F442C900949E44 /* Info.plist */,
+			);
+			path = "Supporting files";
 			sourceTree = "<group>";
 		};
 		E36314CA230D5A5000907B18 /* AuthBasicViewController */ = {
@@ -451,7 +459,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AlfrescoAuth/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/AlfrescoAuth/Supporting files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -479,7 +487,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AlfrescoAuth/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/AlfrescoAuth/Supporting files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
