@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "27869220-E8D4-4C28-B09C-6891C495EB03",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:AlfrescoCore.xcodeproj",
+        "identifier" : "2BAFC1AF230D99C3000CB1A9",
+        "name" : "AlfrescoCoreTests"
+      }
+    }
+  ],
+  "version" : 1
+}
