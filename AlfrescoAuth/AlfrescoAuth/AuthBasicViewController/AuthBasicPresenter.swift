@@ -35,7 +35,7 @@ class AuthBasicPresenter: NSObject {
             requestLogin(with: username, and: password) { (result) in
                 switch result {
                 case .failure(_): break
-                    //
+                //
                 case .success(let credential):
                     self.view?.success(credential: credential)
                     break
@@ -58,10 +58,21 @@ class AuthBasicPresenter: NSObject {
                                           "client_id": "alfresco"]
         let request = builder.request(method: .post, path: path, headerFields: headers, parameters: parameters)
         if let request = request {
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-               guard let data = data, let _ = response as? HTTPURLResponse, error == nil else {
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+               guard let data = data, let response = response as? HTTPURLResponse, error == nil else {
                     let error = NSError(domain:"", code:401, userInfo:[ NSLocalizedDescriptionKey: "Request unavailable."])
                     completionHandler(Result.failure(error))
+                    return
+                }
+                
+                guard (200 ... 299) ~= response.statusCode else {
+                    if let erDict = self.convertToDictionary(data: data) {
+                        let error = NSError(domain:"", code:response.statusCode, userInfo:[ NSLocalizedDescriptionKey: erDict["error_description"] as! String])
+                        completionHandler(Result.failure(error))
+                    } else {
+                        let error = NSError(domain:"", code:401, userInfo:[ NSLocalizedDescriptionKey: "Converstion to dictonary failed."])
+                        completionHandler(Result.failure(error))
+                    }
                     return
                 }
                 
