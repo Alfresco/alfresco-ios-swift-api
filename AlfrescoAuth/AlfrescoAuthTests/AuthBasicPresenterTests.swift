@@ -13,8 +13,9 @@ import XCTest
 class AuthBasicPresenterTests: XCTestCase {
     var sut: AuthBasicPresenter!
     
-    var expectationForDidRevicedCall = XCTestExpectation(description: "Wait for delegate to login with username and password.")
-    var expectationForSuccessInDidRecivedCall = XCTestExpectation(description: "Delegate direceivced call")
+    var expectationForDidRevicedCall = XCTestExpectation(description: "Delegate didReceivced call")
+    var expectationForSuccessInDidRecivedCall = XCTestExpectation(description: "Wait for delegate to login with success with username and password.")
+    var expectationForErrorInDidRecivedCall = XCTestExpectation(description: "Wait for delegate to login with error with wrong username or password.")
     
     override func setUp() {
         super.setUp()
@@ -33,7 +34,7 @@ class AuthBasicPresenterTests: XCTestCase {
     func testSutExecuteCallsAuthDelegateDidReceiveAlfrescoCredential() {
         let delegateStub = AlfrescoAuthDelegateStub()
         delegateStub.expectationRequestLogin = expectationForDidRevicedCall
-        delegateStub.expectationForDidRecivedCall = expectationForSuccessInDidRecivedCall
+        delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
         
         sut.authDelegate = delegateStub
         sut.execute(username: TestData.username1, password: TestData.password1)
@@ -41,18 +42,27 @@ class AuthBasicPresenterTests: XCTestCase {
         wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
     }
     
+    func testSutExecuteCallsAuthDelegateDidReceiveErrorFromServer() {
+        let delegateStub = AlfrescoAuthDelegateStub()
+        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
+        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
+        
+        sut.authDelegate = delegateStub
+        sut.execute(username: TestData.username1, password: TestData.password2)
+        
+        wait(for: [expectationForDidRevicedCall, expectationForErrorInDidRecivedCall], timeout: 10.0)
+    }
+    
+    
     func testSutExecuteCallsAuthDelegateDidReceiveErrorWithEmptyString() {
         let delegateStub = AlfrescoAuthDelegateStub()
+        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
+        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
+        
         sut.authDelegate = delegateStub
         sut.execute(username: TestData.username1, password: "")
         XCTAssertFalse(delegateStub.didReceiveCalled)
-    }
-    
-    func testSutExecuteCallsAuthDelegateDidReceiveErrorWithNilString() {
-        let delegateStub = AlfrescoAuthDelegateStub()
-        sut.authDelegate = delegateStub
-        sut.execute(username: TestData.username1, password: nil)
-        XCTAssertFalse(delegateStub.didReceiveCalled)
+        wait(for: [expectationForDidRevicedCall, expectationForErrorInDidRecivedCall], timeout: 10.0)
     }
     
     func testSutVerifyCallsWithInputTypeUsernameAndStringNotNil() {
@@ -90,14 +100,17 @@ class AuthBasicPresenterTests: XCTestCase {
     class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {
         var didReceiveCalled = false
         var expectationRequestLogin: XCTestExpectation!
-        var expectationForDidRecivedCall: XCTestExpectation!
+        var expectationForSuccessInDidRecivedCall: XCTestExpectation!
+        var expectationForErrorInDidRecivedCall: XCTestExpectation!
         
         func didReceive(result: Result<AlfrescoCredential, Error>) {
             switch result {
-            case .success(_):
-                expectationForDidRecivedCall.fulfill()
+            case .success(let cred):
+                print(cred)
+                expectationForSuccessInDidRecivedCall.fulfill()
                 didReceiveCalled = true
             case .failure(_):
+                expectationForErrorInDidRecivedCall.fulfill()
                 didReceiveCalled = false
             }
             expectationRequestLogin.fulfill()

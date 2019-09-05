@@ -34,7 +34,7 @@ class NetworkRequestBuilderTests: XCTestCase {
     }
     
     func testRequestMethodSetsHeaderFields() {
-        let urlRequest = sut.request(method: .post, path: TestData.path, headerFields: [TestData.headerFieldsContentType: TestData.headerFieldsContentTypeValue])
+        let urlRequest = sut.request(method: .post, path: TestData.path, headerFields: [TestData.headerFieldsContentType: .urlencoded])
         XCTAssertEqual(urlRequest?.allHTTPHeaderFields?[TestData.headerFieldsContentType], TestData.headerFieldsContentTypeValue)
     }
 

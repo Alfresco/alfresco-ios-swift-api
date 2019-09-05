@@ -16,8 +16,18 @@ public enum HttpMethod: String {
     case put = "PUT"
 }
 
+public enum ContentType: String {
+    case urlencoded = "application/x-www-form-urlencoded"
+}
+
+public enum GrantType: String {
+    case password = "password"
+}
+
 public protocol RequestBuilderProtocol {
     var baseURL: URL? { get set }
     
-    func request(method: HttpMethod, path: String, headerFields: [String: String]?, parameters: [String: String]?) -> URLRequest?
+    func request(method: HttpMethod, path: String, headerFields: [String: ContentType]?, parameters: [String: String]?) -> URLRequest?
+    
+    func start(request: URLRequest?, completionHandler: @escaping (Result<[String: Any], Error>) -> Void) -> URLSessionDataTask?
 }

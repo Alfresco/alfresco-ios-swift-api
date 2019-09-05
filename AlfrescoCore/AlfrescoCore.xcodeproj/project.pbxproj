@@ -17,6 +17,7 @@
 		2BAFC1B6230D99C3000CB1A9 /* AlfrescoCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAFC1B5230D99C3000CB1A9 /* AlfrescoCoreTests.swift */; };
 		2BAFC1B8230D99C3000CB1A9 /* AlfrescoCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BAFC1AA230D99C2000CB1A9 /* AlfrescoCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BF51427230EE36400329FD1 /* RequestBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF51426230EE36400329FD1 /* RequestBuilderProtocol.swift */; };
+		E31311F7231FD93B00D6829E /* Data+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31311F6231FD93B00D6829E /* Data+Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		2BAFC1B5230D99C3000CB1A9 /* AlfrescoCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoCoreTests.swift; sourceTree = "<group>"; };
 		2BAFC1B7230D99C3000CB1A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BF51426230EE36400329FD1 /* RequestBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilderProtocol.swift; sourceTree = "<group>"; };
+		E31311F6231FD93B00D6829E /* Data+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Helpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			children = (
 				2B7D2D3F23141C3C004930BF /* Dictionary+Helpers.swift */,
 				2B7D2D4123141CA5004930BF /* CharacterSet+Helpers.swift */,
+				E31311F6231FD93B00D6829E /* Data+Helpers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 				2B7D2D4223141CA5004930BF /* CharacterSet+Helpers.swift in Sources */,
 				2B7D2D3E23140083004930BF /* NetworkRequestBuilder.swift in Sources */,
 				2BF51427230EE36400329FD1 /* RequestBuilderProtocol.swift in Sources */,
+				E31311F7231FD93B00D6829E /* Data+Helpers.swift in Sources */,
 				2B7D2D442314211C004930BF /* AlfrescoCore.swift in Sources */,
 				2B7D2D4023141C3C004930BF /* Dictionary+Helpers.swift in Sources */,
 			);

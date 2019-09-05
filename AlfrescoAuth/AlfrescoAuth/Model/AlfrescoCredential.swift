@@ -9,37 +9,36 @@
 import Foundation
 
 public struct AlfrescoCredential {
-    var sessionState: String?
-    var idToken: String?
-    var accessToken: String?
-    var refreshToken: String?
-    var tokenType: String?
-    var expiresIn: Int?
-    var notBeforePolicy: Bool?
-    var scope: String?
+    var tokenType: String!
+    var accessToken: String!
+    var accessTokenExpiresIn: Int!
+    var refreshToken: String!
+    var refreshTokenExpiresIn: Int!
+    var sessionState: String!
+
     
     init() { }
     
-    init(with url: URL) {
-        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        if let queryItems = urlComponents?.queryItems {
-            for item in queryItems {
-                switch item.name {
-                case "session_state":
-                    sessionState = item.value!
-                case "id_token":
-                    idToken = item.value!
-                case "access_token":
-                    accessToken = item.value!
-                case "token_type":
-                    tokenType = item.value!
-                case "expires_in":
-                    expiresIn = Int(item.value!) ?? 0
-                default: break
-                }
-            }
-        }
-    }
+//    init(with url: URL) {
+//        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+//        if let queryItems = urlComponents?.queryItems {
+//            for item in queryItems {
+//                switch item.name {
+//                case "session_state":
+//                    sessionState = item.value!
+//                case "id_token":
+//                    idToken = item.value!
+//                case "access_token":
+//                    accessToken = item.value!
+//                case "token_type":
+//                    tokenType = item.value!
+//                case "expires_in":
+//                    expiresIn = Int(item.value!) ?? 0
+//                default: break
+//                }
+//            }
+//        }
+//    }
     
     init(with dictionary: [String: Any]) {
         for (key, value) in dictionary {
@@ -51,13 +50,11 @@ public struct AlfrescoCredential {
             case "token_type":
                 tokenType = value as? String
             case "expires_in":
-                expiresIn = value as? Int
+                accessTokenExpiresIn = value as? Int
             case "refresh_token":
                 refreshToken = value as? String
-            case "not-before-policy":
-                notBeforePolicy = value as? Bool
-            case "scope":
-                scope = value as? String
+            case "refresh_expires_in":
+                refreshTokenExpiresIn = value as? Int
             default: break
             }
         }

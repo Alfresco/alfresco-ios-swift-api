@@ -12,6 +12,9 @@ import WebKit
 @testable import AlfrescoAuth
 
 class AuthWebPresenterTests: XCTestCase {
+    var expectationForDidRevicedCall = XCTestExpectation(description: "Wait for delegate to login with SAML")
+    var expectationForSuccessInDidRecivedCall = XCTestExpectation(description: "Delegate didReceivced call")
+    var expectationForErrorInDidRecivedCall = XCTestExpectation(description: "Wait for delegate to get token with error with code.")
     var sut: AuthWebPresenter!
     var navigationActionStub: WKNavigationActionStub!
 
@@ -32,22 +35,39 @@ class AuthWebPresenterTests: XCTestCase {
     }
     
     func testSutParseReturnWKNavigationActionPolicyCancel() {
-        navigationActionStub.sendTokenUrl = true
+        navigationActionStub.sendCodeUrl = true
         let actionPolicy = sut.parse(action: navigationActionStub)
         XCTAssertEqual(actionPolicy, WKNavigationActionPolicy.cancel)
     }
     
     func testSutParseReturnWKNavigationActionPolicyAllow() {
-        navigationActionStub.sendTokenUrl = false
+        navigationActionStub.sendCodeUrl = false
         let actionPolicy = sut.parse(action: navigationActionStub)
         XCTAssertEqual(actionPolicy, WKNavigationActionPolicy.allow)
     }
     
-    func testSutParseCallsAuthDelegateDidReceive() {
+    func testSutParseCallsAuthDelegateDidReceiveErrorFromServer() {
         let delegateStub = AlfrescoAuthDelegateStub()
+        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
+        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
+
+        navigationActionStub.sendCodeUrl = false
         sut.authDelegate = delegateStub
         _ = sut.parse(action: navigationActionStub)
-        XCTAssertTrue(delegateStub.didReceiveCalled)
+        XCTAssertFalse(delegateStub.didReceiveCalled)
+        wait(for: [expectationForDidRevicedCall, expectationForErrorInDidRecivedCall], timeout: 10.0)
+    }
+    
+    func testRequestTokenReceiveAlfrescoCredential() {
+        sut.requestToken(with: TestData.code) { (result) in
+            switch result {
+            case .success(_): 
+                self.expectationForSuccessInDidRecivedCall.fulfill()
+            case .failure(_): break
+            }
+            self.expectationForDidRevicedCall.fulfill()
+        }
+        wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
     }
     
     func testSutWKNavigationDelegateNavigationAction() {
@@ -64,18 +84,31 @@ class AuthWebPresenterTests: XCTestCase {
     
     class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {
         var didReceiveCalled = false
+        var expectationRequestLogin: XCTestExpectation!
+        var expectationForDidRecivedCall: XCTestExpectation!
+        var expectationForErrorInDidRecivedCall: XCTestExpectation!
+        
         func didReceive(result: Result<AlfrescoCredential, Error>) {
-            didReceiveCalled = true
+            switch result {
+            case .success(let cred):
+                print(cred)
+                expectationForDidRecivedCall.fulfill()
+                didReceiveCalled = true
+            case .failure(_):
+                expectationForErrorInDidRecivedCall.fulfill()
+                didReceiveCalled = false
+            }
+            expectationRequestLogin.fulfill()
         }
     }
     
     class WKNavigationActionStub: WKNavigationAction {
-        var sendTokenUrl: Bool = true
+        var sendCodeUrl: Bool = true
         override var request: URLRequest {
-            if sendTokenUrl {
-                return URLRequest(url: URL(string: TestData.urlString)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 0)
+            if sendCodeUrl {
+                return URLRequest(url: URL(string: TestData.urlStringToLoadGood)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 0)
             } else {
-                return URLRequest(url: URL(string: TestData.urlStringWithoutAccesToken)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 0)
+                return URLRequest(url: URL(string: TestData.urlStringWithoutCode)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 0)
             }
         }
     }

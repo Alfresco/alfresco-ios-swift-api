@@ -11,7 +11,7 @@ import Foundation
 struct NetworkRequestBuilder: RequestBuilderProtocol {
     var baseURL: URL?
     
-    func request(method: HttpMethod, path: String, headerFields: [String: String]? = nil, parameters: [String: String]? = nil) -> URLRequest? {
+    func request(method: HttpMethod, path: String, headerFields: [String: ContentType]? = nil, parameters: [String: String]? = nil) -> URLRequest? {
         var request: URLRequest?
         if let url = URL(string: path, relativeTo: baseURL) {
             request = URLRequest(url: url)
@@ -19,7 +19,7 @@ struct NetworkRequestBuilder: RequestBuilderProtocol {
             
             if let httpHeaderFields = headerFields {
                 for (key, value) in httpHeaderFields {
-                    request?.setValue(value, forHTTPHeaderField: key)
+                    request?.setValue(value.rawValue, forHTTPHeaderField: key)
                 }
             }
             
@@ -41,5 +41,43 @@ struct NetworkRequestBuilder: RequestBuilderProtocol {
         }
         
         return request
+    }
+    
+    func start(request: URLRequest?, completionHandler: @escaping (Result<[String: Any], Error>) -> Void) -> URLSessionDataTask? {
+        guard let request = request else {
+            completionHandler(Result.failure(createError(code: 400, message: "Request unavailable.")))
+            return nil
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data, let response = response as? HTTPURLResponse, error == nil else {
+                completionHandler(Result.failure(self.createError(code: 400, message: "Request unavailable.")))
+                return
+            }
+            guard (200 ... 299) ~= response.statusCode else {
+                if let errorDictionary = data.convertToDictionary() {
+                    completionHandler(Result.failure(self.createError(code: 400, message: errorDictionary["error_description"] as! String)))
+                } else {
+                    completionHandler(Result.failure(self.createError(code: 400, message: "Converstion to dictonary failed.")))
+                }
+                return
+            }
+            if let model = data.convertToDictionary() {
+                completionHandler(Result.success(model))
+            } else {
+                completionHandler(Result.failure(self.createError(code: 400, message: "Converstion to dictonary failed.")))
+            }
+        }
+        task.resume()
+        return task
+    }
+    
+    //MARK: - Utils
+    
+    func createError(domain: String = "", code: NSInteger, message: String) -> NSError {
+        let error = NSError(domain: domain,
+                            code: code,
+                            userInfo: [NSLocalizedDescriptionKey: message])
+        return error
     }
 }
