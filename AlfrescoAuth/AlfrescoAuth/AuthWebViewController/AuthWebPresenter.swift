@@ -10,7 +10,7 @@ import Foundation
 import WebKit
 import AlfrescoCore
 
-class AuthWebPresenter: NSObject {
+class AuthWebPresenter: NSObject, NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? = nil
     
     func parse(action: WKNavigationAction) -> WKNavigationActionPolicy {
@@ -19,7 +19,7 @@ class AuthWebPresenter: NSObject {
             if urlString.contains("&code=") {
                 let normalizedUrlString = urlString.replaceHashTagWithQuestionMark()
                 if let normalizedUrl = URL(string: normalizedUrlString) {
-                    if let code = getCode(from: normalizedUrl) {
+                    if let code = normalizedUrl.findAuthorizationCode() {
                         requestToken(with: code) { (result) in
                             DispatchQueue.main.async {
                                 self.authDelegate?.didReceive(result: result)
@@ -38,42 +38,11 @@ class AuthWebPresenter: NSObject {
         return .allow
     }
     
-    func requestToken(with code: String, completionHandler: @escaping (Result<AlfrescoCredential, Error>) -> Void) {
-        let core = AlfrescoCore()
-        let builder = core.requestBuilder(baseURLString: baseURLString)
-        let path = tokenEndpoint
-        let headers = ["Content-Type": ContentType.urlencoded]
-        let parameters: [String: String] = ["grant_type": "authorization_code",
-                                            "client_id": clientID,
-                                            "client_secret": clientSecret,
-                                            "redirect_uri": "",
-                                            "code": code]
-        let request = builder.request(method: .post, path: path, headerFields: headers, parameters: parameters)
-        _ = builder.start(request: request, completionHandler: { (result) in
-            switch result {
-            case .success(let model):
-                let credential = AlfrescoCredential.init(with: model)
-                completionHandler(Result.success(credential))
-                break
-            case .failure(let error):
-                completionHandler(Result.failure(error))
-                break
-            }
+    func requestToken(with code: String, completion: @escaping (Result<AlfrescoCredential, Error>) -> Void) {
+        _ = apiClient.send(GetToken(code: code), completion: { (result) in
+            completion(result)
         })
-    }
-    
-    func getCode(from url: URL) -> String? {
-        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        if let queryItems = urlComponents?.queryItems {
-            for item in queryItems {
-                switch item.name {
-                case "code":
-                    return item.value!
-                default: break
-                }
-            }
-        }
-        return nil
+        
     }
 }
 

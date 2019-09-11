@@ -15,7 +15,7 @@ enum InputType {
     case password
 }
 
-class AuthBasicPresenter: NSObject {
+class AuthBasicPresenter: NSObject, NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? = nil
 
     func verify(string: String?, type: InputType) -> String? {
@@ -46,29 +46,9 @@ class AuthBasicPresenter: NSObject {
         }
     }
     
-    func requestLogin(with username: String, and password: String, completionHandler: @escaping (Result<AlfrescoCredential, Error>) -> Void) {
-        let core = AlfrescoCore()
-        let builder = core.requestBuilder(baseURLString: baseURLString)
-        let path = tokenEndpoint
-        let headers = ["Content-Type": ContentType.urlencoded]
-        let parameters: [String: String] = ["grant_type": "password",
-                                            "client_id": clientID,
-                                            "client_secret": clientSecret,
-                                            "username": username,
-                                            "password": password,]
-        
-        let request = builder.request(method: .post, path: path, headerFields: headers, parameters: parameters)
-        
-        _ = builder.start(request: request) { (result) in
-            switch result {
-            case .success(let model):
-                let credential = AlfrescoCredential.init(with: model)
-                completionHandler(Result.success(credential))
-                break
-            case .failure(let error):
-                completionHandler(Result.failure(error))
-                break
-            }
+    func requestLogin(with username: String, and password: String, completion: @escaping (Result<AlfrescoCredential, Error>) -> Void) {
+        _ = apiClient.send(GetToken(username: username, password: password)) { (result) in
+            completion(result)
         }
     }
 }

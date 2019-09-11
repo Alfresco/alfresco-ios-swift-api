@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AlfrescoCredential {
+public struct AlfrescoCredential: Decodable {
     var tokenType: String!
     var accessToken: String!
     var accessTokenExpiresIn: Int!
@@ -16,29 +16,16 @@ public struct AlfrescoCredential {
     var refreshTokenExpiresIn: Int!
     var sessionState: String!
 
+    enum CodingKeys: String, CodingKey {
+        case tokenType = "token_type"
+        case accessToken = "access_token"
+        case accessTokenExpiresIn = "expires_in"
+        case refreshToken = "refresh_token"
+        case refreshTokenExpiresIn = "refresh_expires_in"
+        case sessionState = "session_state"
+    }
     
     init() { }
-    
-//    init(with url: URL) {
-//        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-//        if let queryItems = urlComponents?.queryItems {
-//            for item in queryItems {
-//                switch item.name {
-//                case "session_state":
-//                    sessionState = item.value!
-//                case "id_token":
-//                    idToken = item.value!
-//                case "access_token":
-//                    accessToken = item.value!
-//                case "token_type":
-//                    tokenType = item.value!
-//                case "expires_in":
-//                    expiresIn = Int(item.value!) ?? 0
-//                default: break
-//                }
-//            }
-//        }
-//    }
     
     init(with dictionary: [String: Any]) {
         for (key, value) in dictionary {
@@ -58,5 +45,15 @@ public struct AlfrescoCredential {
             default: break
             }
         }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        tokenType = try values.decode(String.self, forKey: .tokenType)
+        accessToken = try values.decode(String.self, forKey: .accessToken)
+        accessTokenExpiresIn = try values.decode(Int.self, forKey: .accessTokenExpiresIn)
+        refreshToken = try values.decode(String.self, forKey: .refreshToken)
+        refreshTokenExpiresIn = try values.decode(Int.self, forKey: .refreshTokenExpiresIn)
+        sessionState = try values.decode(String.self, forKey: .sessionState)
     }
 }

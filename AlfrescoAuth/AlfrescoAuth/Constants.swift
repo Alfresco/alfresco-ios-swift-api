@@ -8,8 +8,8 @@
 
 import Foundation
 
-let baseURLString = "http://alfresco-identity-service.mobile.dev.alfresco.me"
-let tokenEndpoint = "/auth/realms/alfresco/protocol/openid-connect/token"
-let clientID = "alfresco"
-let clientSecret = "4bd63685-9e36-492d-8002-df2c6652ffb1"
+let kBaseURLString = "http://alfresco-identity-service.mobile.dev.alfresco.me"
+let kTokenEndpoint = "/auth/realms/alfresco/protocol/openid-connect/token"
+let kClientID: String = "alfresco"
+let kClientSecret = "4bd63685-9e36-492d-8002-df2c6652ffb1"
 
