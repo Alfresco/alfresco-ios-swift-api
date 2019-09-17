@@ -12,6 +12,10 @@ public enum AuthViewControllerType {
     case web
 }
 
+public protocol AlfrescoAuthDelegate {
+    func didReceive(result: Result<AlfrescoCredential, Error>)
+}
+
 public struct AlfrescoAuth {
     
     public init() { }
@@ -35,6 +39,12 @@ public struct AlfrescoAuth {
         let presenter = AuthBasicPresenter()
         presenter.authDelegate = alfrescoAuthDelegate
         presenter.execute(username: username, password: password)
+    }
+    
+    public func refreshSession(_ credential: AlfrescoCredential, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
+        let presenter = RefreshTokenPresenter()
+        presenter.authDelegate = alfrescoAuthDelegate
+        presenter.executeRefresh(credential)
     }
 }
 

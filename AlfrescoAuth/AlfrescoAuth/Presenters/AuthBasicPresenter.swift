@@ -38,16 +38,17 @@ class AuthBasicPresenter: NSObject, NetworkServiceProtocol {
         let username = verify(string: username, type: .username)
         let password = verify(string: password, type: .password)
         if let username = username, let password = password {
-            requestLogin(with: username, and: password) { (result) in
+            requestLogin(with: username, and: password) { [weak self] (result) in
+                guard let sSelf = self else { return }
                 DispatchQueue.main.async {
-                    self.authDelegate?.didReceive(result: result)
+                    sSelf.authDelegate?.didReceive(result: result)
                 }
             }
         }
     }
     
     func requestLogin(with username: String, and password: String, completion: @escaping (Result<AlfrescoCredential, Error>) -> Void) {
-        _ = apiClient.send(GetToken(username: username, password: password)) { (result) in
+        _ = apiClient.send(GetAlfrescoCredential(username: username, password: password)) { (result) in
             completion(result)
         }
     }
