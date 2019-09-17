@@ -55,6 +55,16 @@ class AlfrescoAuthTests: XCTestCase {
         wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
     }
     
+    func testRefreshSessionWithSuccess() {
+        let delegateStub = AlfrescoAuthDelegateStub()
+        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
+        delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
+        let credential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
+        sut.refreshSession(credential, delegate: delegateStub)
+        
+        wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
+    }
+    
 
     //MARK: - Doubles
     class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {

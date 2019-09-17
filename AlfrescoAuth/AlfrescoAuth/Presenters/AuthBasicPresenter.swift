@@ -47,7 +47,7 @@ class AuthBasicPresenter: NSObject, NetworkServiceProtocol {
     }
     
     func requestLogin(with username: String, and password: String, completion: @escaping (Result<AlfrescoCredential, Error>) -> Void) {
-        _ = apiClient.send(GetToken(username: username, password: password)) { (result) in
+        _ = apiClient.send(GetAlfrescoCredential(username: username, password: password)) { (result) in
             completion(result)
         }
     }

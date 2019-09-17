@@ -39,7 +39,7 @@ class AuthWebPresenter: NSObject, NetworkServiceProtocol {
     }
     
     func requestToken(with code: String, completion: @escaping (Result<AlfrescoCredential, Error>) -> Void) {
-        _ = apiClient.send(GetToken(code: code), completion: { (result) in
+        _ = apiClient.send(GetAlfrescoCredential(code: code), completion: { (result) in
             completion(result)
         })
         
