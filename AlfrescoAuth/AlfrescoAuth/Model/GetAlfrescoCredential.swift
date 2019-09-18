@@ -15,7 +15,7 @@ enum GrantType: String {
     case code = "authorization_code"
 }
 
-struct GetToken: APIRequest {
+struct GetAlfrescoCredential: APIRequest {
     typealias Response = AlfrescoCredential
     
     var path: String {
@@ -38,9 +38,13 @@ struct GetToken: APIRequest {
                     "client_secret": kClientSecret,
                     "redirect_uri": "",
                     "code": code ?? ""]
-        case .refresh: break
+        case .refresh:
+            return ["grant_type": grantType?.rawValue ?? "",
+                    "client_id": kClientID,
+                    "client_secret": kClientSecret,
+                    "refresh_token": refreshToken ?? ""]
         case .password:
-            return ["grant_type": "password",
+            return ["grant_type": grantType?.rawValue ?? "",
                     "client_id": kClientID,
                     "client_secret": kClientSecret,
                     "username": username ?? "",
@@ -54,6 +58,7 @@ struct GetToken: APIRequest {
     var code: String?
     var username: String?
     var password: String?
+    var refreshToken: String?
     var grantType: GrantType?
     var clientID: String = kClientID
     var clientSecret = kClientSecret
@@ -68,6 +73,11 @@ struct GetToken: APIRequest {
         self.username = username
         self.password = password
         self.grantType = .password
+    }
+    
+    init(refreshToken: String) {
+        self.refreshToken = refreshToken
+        self.grantType = .refresh
     }
 }
 

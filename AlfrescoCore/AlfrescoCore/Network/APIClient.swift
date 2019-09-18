@@ -27,16 +27,17 @@ public class APIClient: APIClientProtocol {
 
     public func send<T: APIRequest>(_ request: T, completion: @escaping ResultCallback<T.Response>) -> URLSessionDataTask? {
         if let urlRequest = endPoint(for: request) {
-            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+            let task = session.dataTask(with: urlRequest) { [weak self] (data, response, error) in
+                guard let sSelf = self else { return }
                 guard let data = data, let response = response as? HTTPURLResponse, error == nil else {
-                    completion(.failure(self.createError(code: 400, message: "Request unavailable.")))
+                    completion(.failure(sSelf.createError(code: 400, message: "Request unavailable.")))
                     return
                 }
                 guard (200 ... 299) ~= response.statusCode else {
                     if let errorDictionary = data.convertToDictionary() {
-                        completion(.failure(self.createError(code: 400, message: errorDictionary["error_description"] as! String)))
+                        completion(.failure(sSelf.createError(code: 400, message: errorDictionary["error_description"] as! String)))
                     } else {
-                        completion(.failure(self.createError(code: 400, message: "Converstion to dictonary failed.")))
+                        completion(.failure(sSelf.createError(code: 400, message: "Converstion to dictonary failed.")))
                     }
                     return
                 }
