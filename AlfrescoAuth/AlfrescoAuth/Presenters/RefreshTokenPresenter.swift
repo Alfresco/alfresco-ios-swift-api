@@ -12,9 +12,10 @@ class RefreshTokenPresenter: NSObject, NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? = nil
     
     func executeRefresh(_ credential: AlfrescoCredential) {
-        requestRefresh(with: credential) { (result) in
+        requestRefresh(with: credential) { [weak self] (result) in
+            guard let sSelf = self else { return } 
             DispatchQueue.main.async {
-                self.authDelegate?.didReceive(result: result)
+                sSelf.authDelegate?.didReceive(result: result)
             }
         }
     }

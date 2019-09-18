@@ -20,9 +20,10 @@ class AuthWebPresenter: NSObject, NetworkServiceProtocol {
                 let normalizedUrlString = urlString.replaceHashTagWithQuestionMark()
                 if let normalizedUrl = URL(string: normalizedUrlString) {
                     if let code = normalizedUrl.findAuthorizationCode() {
-                        requestToken(with: code) { (result) in
+                        requestToken(with: code) { [weak self] (result) in
+                            guard let sSelf = self else { return }
                             DispatchQueue.main.async {
-                                self.authDelegate?.didReceive(result: result)
+                                sSelf.authDelegate?.didReceive(result: result)
                             }
                         }
                         return .cancel

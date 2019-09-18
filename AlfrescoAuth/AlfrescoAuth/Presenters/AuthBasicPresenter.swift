@@ -38,9 +38,10 @@ class AuthBasicPresenter: NSObject, NetworkServiceProtocol {
         let username = verify(string: username, type: .username)
         let password = verify(string: password, type: .password)
         if let username = username, let password = password {
-            requestLogin(with: username, and: password) { (result) in
+            requestLogin(with: username, and: password) { [weak self] (result) in
+                guard let sSelf = self else { return }
                 DispatchQueue.main.async {
-                    self.authDelegate?.didReceive(result: result)
+                    sSelf.authDelegate?.didReceive(result: result)
                 }
             }
         }
