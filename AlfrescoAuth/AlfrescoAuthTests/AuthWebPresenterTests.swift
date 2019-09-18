@@ -63,7 +63,7 @@ class AuthWebPresenterTests: XCTestCase {
             switch result {
             case .success(_): 
                 self.expectationForSuccessInDidRecivedCall.fulfill()
-            case .failure(_): break
+            case .failure(let error): print(error) 
             }
             self.expectationForDidRevicedCall.fulfill()
         }

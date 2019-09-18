@@ -19,6 +19,7 @@ public protocol APIClientProtocol {
 
 public class APIClient: APIClientProtocol {
     private let session = URLSession(configuration: .default)
+    private let moduleName = "AlfrecoCore"
     public var baseURL: URL?
     
     public required init(with base: String) {
@@ -29,15 +30,22 @@ public class APIClient: APIClientProtocol {
         if let urlRequest = endPoint(for: request) {
             let task = session.dataTask(with: urlRequest) { [weak self] (data, response, error) in
                 guard let sSelf = self else { return }
-                guard let data = data, let response = response as? HTTPURLResponse, error == nil else {
-                    completion(.failure(sSelf.createError(code: 400, message: "Request unavailable.")))
+                if let error = error {
+                    completion(.failure(error))
+                }
+                guard let data = data, let response = response as? HTTPURLResponse else {
+                    completion(.failure(APIError(domain: sSelf.moduleName, message: errTryAgain)))
                     return
                 }
                 guard (200 ... 299) ~= response.statusCode else {
-                    if let errorDictionary = data.convertToDictionary() {
-                        completion(.failure(sSelf.createError(code: 400, message: errorDictionary["error_description"] as! String)))
-                    } else {
-                        completion(.failure(sSelf.createError(code: 400, message: "Converstion to dictonary failed.")))
+                    do {
+                        if let errorDictionary = try data.convertToDictionary() {
+                            completion(.failure(APIError(domain: sSelf.moduleName, code: response.statusCode, userInfo: errorDictionary)))
+                        } else {
+                            completion(.failure(APIError(domain: sSelf.moduleName, code: response.statusCode, message: errTryAgain)))
+                        }
+                    } catch {
+                        completion(.failure(error))
                     }
                     return
                 }
@@ -51,7 +59,7 @@ public class APIClient: APIClientProtocol {
             task.resume()
             return task
         } else {
-            completion(.failure(self.createError(code: 400, message: "Request unavailable.")))
+            completion(.failure(APIError(domain: self.moduleName, message: errRequestUnavailable)))
         }
         return nil
     }
@@ -84,12 +92,5 @@ public class APIClient: APIClientProtocol {
         }
         
         return urlRequest
-    }
-    
-    private func createError(domain: String = "", code: NSInteger, message: String) -> NSError {
-        let error = NSError(domain: domain,
-                            code: code,
-                            userInfo: [NSLocalizedDescriptionKey: message])
-        return error
     }
 }

@@ -24,8 +24,8 @@
 		E324E7B0232BBEB00014A8F7 /* RefreshTokenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E324E7AF232BBEB00014A8F7 /* RefreshTokenPresenter.swift */; };
 		E36035F7230D5D1100719281 /* AuthBasicPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36035F5230D5D1100719281 /* AuthBasicPresenterTests.swift */; };
 		E36314CD230D5A5000907B18 /* AuthBasicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36314CB230D5A5000907B18 /* AuthBasicPresenter.swift */; };
+		E3841C802332563300B18A7B /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3841C7F2332563300B18A7B /* NetworkServiceProtocol.swift */; };
 		E3C38EF52327B4EA007FCF8B /* GetAlfrescoCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C38EF42327B4EA007FCF8B /* GetAlfrescoCredential.swift */; };
-		E3C38EFB2327DD78007FCF8B /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C38EFA2327DD78007FCF8B /* NetworkServiceProtocol.swift */; };
 		E3C38EFD2327E50E007FCF8B /* URL+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C38EFC2327E50E007FCF8B /* URL+Helpers.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,8 +61,8 @@
 		E324E7AF232BBEB00014A8F7 /* RefreshTokenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPresenter.swift; sourceTree = "<group>"; };
 		E36035F5230D5D1100719281 /* AuthBasicPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBasicPresenterTests.swift; sourceTree = "<group>"; };
 		E36314CB230D5A5000907B18 /* AuthBasicPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBasicPresenter.swift; sourceTree = "<group>"; };
+		E3841C7F2332563300B18A7B /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		E3C38EF42327B4EA007FCF8B /* GetAlfrescoCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlfrescoCredential.swift; sourceTree = "<group>"; };
-		E3C38EFA2327DD78007FCF8B /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		E3C38EFC2327E50E007FCF8B /* URL+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Helpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,7 +111,6 @@
 				2BE0E70522F965A2002857F0 /* Model */,
 				E37CFB742330CB7E00C14FB2 /* Presenters */,
 				2BD6E16222F4475700949E44 /* Constants.swift */,
-				E3C38EFA2327DD78007FCF8B /* NetworkServiceProtocol.swift */,
 				2BD6E16422F45BA600949E44 /* AlfrescoAuth.swift */,
 			);
 			path = AlfrescoAuth;
@@ -167,6 +166,7 @@
 				2BD6E16822F4699000949E44 /* AuthWebPresenter.swift */,
 				E36314CB230D5A5000907B18 /* AuthBasicPresenter.swift */,
 				E324E7AF232BBEB00014A8F7 /* RefreshTokenPresenter.swift */,
+				E3841C7F2332563300B18A7B /* NetworkServiceProtocol.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -282,7 +282,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3C38EFB2327DD78007FCF8B /* NetworkServiceProtocol.swift in Sources */,
 				2BD6E16522F45BA600949E44 /* AlfrescoAuth.swift in Sources */,
 				2BD6E16922F4699000949E44 /* AuthWebPresenter.swift in Sources */,
 				2BD6E16122F4466A00949E44 /* AuthWebViewController.swift in Sources */,
@@ -292,6 +291,7 @@
 				E3C38EFD2327E50E007FCF8B /* URL+Helpers.swift in Sources */,
 				2BE921A8230C26DF0009F470 /* String+Helpers.swift in Sources */,
 				E324E7B0232BBEB00014A8F7 /* RefreshTokenPresenter.swift in Sources */,
+				E3841C802332563300B18A7B /* NetworkServiceProtocol.swift in Sources */,
 				E36314CD230D5A5000907B18 /* AuthBasicPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
