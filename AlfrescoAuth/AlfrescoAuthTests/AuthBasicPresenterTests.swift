@@ -46,7 +46,7 @@ class AuthBasicPresenterTests: XCTestCase {
         let delegateStub = AlfrescoAuthDelegateStub()
         delegateStub.expectationRequestLogin = expectationForDidRevicedCall
         delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
-        
+
         sut.authDelegate = delegateStub
         sut.execute(username: TestData.username1, password: TestData.password2)
         

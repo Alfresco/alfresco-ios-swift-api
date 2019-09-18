@@ -46,23 +46,46 @@ class AlfrescoAuthTests: XCTestCase {
         XCTAssertNotNil(TestData.urlStringToLoadGood, viewController.urlString!)
     }
     
-    func testGetAuthWithSuccess() {
+    func testGetAuthWithUsernameAndPasswordWithSuccess() {
         let delegateStub = AlfrescoAuthDelegateStub()
         delegateStub.expectationRequestLogin = expectationForDidRevicedCall
         delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
+        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
         sut.auth(with: TestData.username1, and: TestData.password1, delegate: delegateStub)
     
         wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
+    }
+    
+    func testGetAuthWithUsernameAndPasswordWithErrorFromServer() {
+        let delegateStub = AlfrescoAuthDelegateStub()
+        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
+        delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
+        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
+        sut.auth(with: TestData.username1, and: TestData.password2, delegate: delegateStub)
+    
+        wait(for: [expectationForDidRevicedCall, expectationForErrorInDidRecivedCall], timeout: 10.0)
     }
     
     func testRefreshSessionWithSuccess() {
         let delegateStub = AlfrescoAuthDelegateStub()
         delegateStub.expectationRequestLogin = expectationForDidRevicedCall
         delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
+        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
         let credential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
         sut.refreshSession(credential, delegate: delegateStub)
         
         wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
+    }
+    
+    func testRefreshSessionWithErrorFromServer() {
+        let delegateStub = AlfrescoAuthDelegateStub()
+        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
+        delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
+        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
+        let credential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
+        sut.refreshSession(credential, delegate: delegateStub)
+        
+        wait(for: [expectationForDidRevicedCall, expectationForErrorInDidRecivedCall], timeout: 10.0)
     }
     
 
@@ -79,7 +102,8 @@ class AlfrescoAuthTests: XCTestCase {
                 print(cred)
                 expectationForSuccessInDidRecivedCall.fulfill()
                 didReceiveCalled = true
-            case .failure(_):
+            case .failure(let error):
+                print(error)
                 expectationForErrorInDidRecivedCall.fulfill()
                 didReceiveCalled = false
             }

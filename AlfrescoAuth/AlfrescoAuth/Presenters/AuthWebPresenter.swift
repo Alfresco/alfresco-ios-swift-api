@@ -12,6 +12,7 @@ import AlfrescoCore
 
 class AuthWebPresenter: NSObject, NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? = nil
+    var apiClient = APIClient(with: kBaseURLString)
     
     func parse(action: WKNavigationAction) -> WKNavigationActionPolicy {
         let url = action.request.url
@@ -29,13 +30,10 @@ class AuthWebPresenter: NSObject, NetworkServiceProtocol {
                         return .cancel
                     }
                 }
-                let error = NSError(domain:"", code:401, userInfo:[ NSLocalizedDescriptionKey: "Error! Code not found"])
-                self.authDelegate?.didReceive(result: Result.failure(error))
+                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Couldn't find AUTHORIZATION CODE!")))
                 return .cancel
             }
         }
-        let error = NSError(domain:"", code:401, userInfo:[ NSLocalizedDescriptionKey: "Error! Code not found"])
-        self.authDelegate?.didReceive(result: Result.failure(error))
         return .allow
     }
     

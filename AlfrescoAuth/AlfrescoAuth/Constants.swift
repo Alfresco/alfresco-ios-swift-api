@@ -13,3 +13,4 @@ let kTokenEndpoint = "/auth/realms/alfresco/protocol/openid-connect/token"
 let kClientID: String = "alfresco"
 let kClientSecret = "4bd63685-9e36-492d-8002-df2c6652ffb1"
 
+let moduleName = "AlfrecoAuth"
