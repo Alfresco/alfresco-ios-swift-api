@@ -18,33 +18,33 @@ public protocol AlfrescoAuthDelegate {
 
 public struct AlfrescoAuth {
     
+    var webPresenter: AuthWebPresenter = AuthWebPresenter()
+    var basicPresenter: AuthBasicPresenter = AuthBasicPresenter()
+    var refreshPresenter: RefreshTokenPresenter = RefreshTokenPresenter()
+    
     public init() { }
     
     public func getAuthViewController(ofType type:AuthViewControllerType, urlStringToLoad: String? = nil, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) -> UIViewController {
         switch type {
         case .web:
-            let presenter = AuthWebPresenter()
-            presenter.authDelegate = alfrescoAuthDelegate
-            
+            webPresenter.authDelegate = alfrescoAuthDelegate
             let frameworkBundle = Bundle(for: AuthWebViewController.self)
             let storyboard = UIStoryboard(name: "Auth", bundle: frameworkBundle)
             let controller = storyboard.instantiateViewController(identifier: String(describing: AuthWebViewController.self)) as AuthWebViewController
-            controller.presenter = presenter
+            controller.presenter = webPresenter
             controller.urlString = urlStringToLoad
             return controller
         }
     }
     
-    public func auth(with username: String, and password: String, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
-        let presenter = AuthBasicPresenter()
-        presenter.authDelegate = alfrescoAuthDelegate
-        presenter.execute(username: username, password: password)
+    public func auth(with username: String?, and password: String?, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
+        basicPresenter.authDelegate = alfrescoAuthDelegate
+        basicPresenter.execute(username: username, password: password)
     }
     
     public func refreshSession(_ credential: AlfrescoCredential, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
-        let presenter = RefreshTokenPresenter()
-        presenter.authDelegate = alfrescoAuthDelegate
-        presenter.executeRefresh(credential)
+        refreshPresenter.authDelegate = alfrescoAuthDelegate
+        refreshPresenter.executeRefresh(credential)
     }
 }
 
