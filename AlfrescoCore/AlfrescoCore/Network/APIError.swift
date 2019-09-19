@@ -13,30 +13,15 @@ let errRequestUnavailable = "Request unavailable."
 
 public struct APIError: Error {
     let domain: String
-    let userInfo: [String: Any]
+    var userInfo: [String: Any]
     let responseCode: Int
     
-    public init(domain: String, userInfo: [String: Any]) {
-        self.domain = domain
-        self.responseCode = 0
-        self.userInfo = userInfo
-    }
-    
-    public init(domain: String, code: Int, userInfo: [String: Any]) {
+    public init(domain: String, code: Int = 0, message: String = "", userInfo: [String: Any] = ["": ""]) {
         self.domain = domain
         self.responseCode = code
         self.userInfo = userInfo
-    }
-    
-    public init(domain: String, message: String) {
-        self.domain = domain
-        self.responseCode = 0
-        self.userInfo = [NSLocalizedDescriptionKey: message]
-    }
-    
-    public init(domain: String, code: Int, message: String) {
-        self.domain = domain
-        self.responseCode = code
-        self.userInfo = [NSLocalizedDescriptionKey: message]
+        if message != "" {
+            self.userInfo = [NSLocalizedDescriptionKey: message]
+        }
     }
 }
