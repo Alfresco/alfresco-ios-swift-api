@@ -20,7 +20,7 @@ steps:
     scheme: ''
     sdk: 'iphoneos'
     configuration: 'Release'
-    xcWorkspacePath: 'ios-dbp-sdk.xcworkspace'
+    xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
     xcodeVersion: '10' # Options: 8, 9, 10, default, specifyPath
     args: '-archivePath $(agent.buildDirectory)/ios-dbp-sdk'
 - task: ArchiveFiles@2
