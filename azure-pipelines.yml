@@ -10,10 +10,10 @@ pool:
   vmImage: 'macos-latest'
 
 steps:
-- task: CocoaPods@0
-  displayName: 'Installing dependencies'
-  inputs:
-    forceRepoUpdate: true
+#- task: CocoaPods@0
+#  displayName: 'Installing dependencies'
+#  inputs:
+#    forceRepoUpdate: true
 - task: Xcode@5
   inputs:
     actions: 'clean build analyze archive'
