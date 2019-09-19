@@ -9,16 +9,11 @@ trigger:
 pool:
   vmImage: 'macos-latest'
 
-# CocoaPods
-# Install CocoaPods dependencies for Swift and Objective-C Cocoa projects
+steps:
 - task: CocoaPods@0
   displayName: 'Installing dependencies'
   inputs:
-    #workingDirectory: # Optional
-    forceRepoUpdate: 
-    #projectDirectory: # Optional
-
-steps:
+    forceRepoUpdate: true
 - task: Xcode@5
   inputs:
     actions: 'clean build analyze archive'
