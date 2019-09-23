@@ -1,0 +1,40 @@
+# Xcode
+# Build, test, and archive an Xcode workspace on macOS.
+# Add steps that install certificates, test, sign, and distribute an app, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/xcode
+
+trigger:
+- master
+
+pool:
+  vmImage: 'macos-latest'
+
+steps:
+#- task: CocoaPods@0
+#  displayName: 'Installing dependencies'
+#  inputs:
+#    forceRepoUpdate: true
+
+# ---------------------------------------
+# Build core module
+# ---------------------------------------
+- task: Xcode@5
+  displayName: 'Building DBP SDK Core Module'
+  inputs:
+    actions: 'clean build analyze archive'
+    scheme: 'AlfrescoCore'
+    sdk: 'iphoneos'
+    configuration: 'Release'
+    xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
+    xcodeVersion: 'default' # Options: 8, 9, 10, default, specifyPath
+    args: '-archivePath $(agent.buildDirectory)/ios-dbp-sdk-core'
+- task: ArchiveFiles@2
+  displayName: 'Package Core Module .xcarchive into a zip file'
+  inputs:
+    rootFolderOrFile: '$(agent.buildDirectory)/ios-dbp-sdk-core.xcarchive/'
+    archiveFile: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core.xcarchive.zip'
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core.xcarchive.zip'
+    artifactName: 'xcarchive-files'
+    artifactType: 'container'
