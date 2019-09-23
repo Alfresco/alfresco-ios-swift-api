@@ -39,9 +39,7 @@ steps:
     xcodeVersion: 'default'
     packageApp: false
     xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
-    destinationTypeOption: 'simulators'
     destinationPlatformOption: 'iOS'
-    signingOption: "auto"
     useXcpretty: true
     publishJUnitResults: 'build/reports/junit.xml'
 
