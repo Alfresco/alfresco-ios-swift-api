@@ -39,7 +39,6 @@ steps:
     xcodeVersion: 'default'
     packageApp: false
     xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
-    destinationSimulators: 'iPhone X'
     destinationTypeOption: 'simulators'
     destinationPlatformOption: 'iOS'
     signingOption: "auto"
