@@ -21,7 +21,7 @@ steps:
 - task: Xcode@5
   displayName: 'Building DBP SDK Core Module'
   inputs:
-    actions: 'clean build analyze archive'
+    actions: 'clean build test analyze archive'
     scheme: 'AlfrescoCore'
     sdk: 'iphoneos'
     configuration: 'Release'
