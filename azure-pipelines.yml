@@ -12,11 +12,6 @@ pool:
   vmImage: 'macos-latest'
 
 steps:
-#- task: CocoaPods@0
-#  displayName: 'Installing dependencies'
-#  inputs:
-#    forceRepoUpdate: true
-
 # ---------------------------------------
 # Build core module
 # ---------------------------------------
