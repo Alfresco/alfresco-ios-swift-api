@@ -23,7 +23,7 @@ steps:
     sdk: 'iphoneos'
     configuration: 'Release'
     xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
-    xcodeVersion: 'default' # Options: 8, 9, 10, default, specifyPath
+    xcodeVersion: '11.0'
     args: '-archivePath $(agent.buildDirectory)/ios-dbp-sdk-core'
 
 # ---------------------------------------
@@ -36,10 +36,10 @@ steps:
     scheme: 'AlfrescoCore'
     sdk: 'iphonesimulator'
     configuration: 'Debug'
-    xcodeVersion: 'default' # Options: 8, 9, default, specifyPath
+    xcodeVersion: '11.0'
     packageApp: false
     xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
-    destinationSimulators: 'iPhone X'
+    destinationSimulators: 'iPhone 11'
     destinationTypeOption: 'simulators'
     destinationPlatformOption: 'iOS'
     signingOption: "auto"
