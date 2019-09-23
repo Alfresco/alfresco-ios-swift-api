@@ -22,7 +22,7 @@ steps:
   displayName: 'Building DBP SDK Core Module'
   inputs:
     actions: 'clean build analyze archive'
-    scheme: ''
+    scheme: 'AlfrescoCore'
     sdk: 'iphoneos'
     configuration: 'Release'
     xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
