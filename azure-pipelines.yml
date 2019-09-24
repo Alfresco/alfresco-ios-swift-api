@@ -18,7 +18,7 @@ steps:
 - task: Xcode@5
   displayName: 'Running tests'
   inputs:
-    actions: 'test'
+    actions: 'clean test'
     sdk: 'iphonesimulator'
     xcodeVersion: 11
     scheme: 'AlfrescoCore'
