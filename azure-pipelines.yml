@@ -13,20 +13,6 @@ pool:
 
 steps:
 # ---------------------------------------
-# Build core module
-# ---------------------------------------
-- task: Xcode@5
-  displayName: 'Building Alfresco iOS DBP SDK - core module'
-  inputs:
-    actions: 'clean build analyze archive'
-    scheme: 'AlfrescoCore'
-    sdk: 'iphoneos'
-    configuration: 'Release'
-    xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
-    xcodeVersion: 'default'
-    args: '-archivePath $(agent.buildDirectory)/ios-dbp-sdk-core'
-
-# ---------------------------------------
 # Run core module tests
 # ---------------------------------------
 - task: Xcode@5
@@ -41,6 +27,31 @@ steps:
     publishJUnitResults: 'build/reports/junit.xml'
 
 # ---------------------------------------
+# Publish test results
+# ---------------------------------------
+- task: PublishTestResults@2
+  displayName: 'Publish test'
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: 'build/reports/junit.xml'
+    failTaskOnFailedTests: true
+    testRunTitle: 'Publishing test results'
+
+# ---------------------------------------
+# Build core module
+# ---------------------------------------
+- task: Xcode@5
+  displayName: 'Building Alfresco iOS DBP SDK - core module'
+  inputs:
+    actions: 'clean build analyze archive'
+    scheme: 'AlfrescoCore'
+    sdk: 'iphoneos'
+    configuration: 'Release'
+    xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
+    xcodeVersion: 'default'
+    args: '-archivePath $(agent.buildDirectory)/ios-dbp-sdk-core'
+
+# ---------------------------------------
 # Package core module
 # ---------------------------------------
 - task: ArchiveFiles@2
@@ -53,17 +64,8 @@ steps:
 # Publish artifacts
 # ---------------------------------------
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish build artifacts'
   inputs:
     pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core.xcarchive.zip'
     artifactName: 'xcarchive-files'
     artifactType: 'container'
-
-# ---------------------------------------
-# Publish test results
-# ---------------------------------------
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/junit.xml'
-    failTaskOnFailedTests: true
-    testRunTitle: 'Publishing test results'
