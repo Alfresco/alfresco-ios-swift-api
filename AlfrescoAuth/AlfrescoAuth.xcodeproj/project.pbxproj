@@ -88,7 +88,7 @@
 		2BD6E13922F442C800949E44 = {
 			isa = PBXGroup;
 			children = (
-				2BD6E14522F442C900949E44 /* AlfrescoAuth */,
+				2BD6E14522F442C900949E44 /* Sources */,
 				2BD6E15022F442C900949E44 /* AlfrescoAuthTests */,
 				2BD6E14422F442C900949E44 /* Products */,
 			);
@@ -103,7 +103,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2BD6E14522F442C900949E44 /* AlfrescoAuth */ = {
+		2BD6E14522F442C900949E44 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				E326985B231698FF00D19D3B /* Supporting files */,
@@ -113,7 +113,7 @@
 				2BD6E16222F4475700949E44 /* Constants.swift */,
 				2BD6E16422F45BA600949E44 /* AlfrescoAuth.swift */,
 			);
-			path = AlfrescoAuth;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		2BD6E15022F442C900949E44 /* AlfrescoAuthTests */ = {
