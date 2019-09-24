@@ -79,23 +79,5 @@
    <ArchiveAction
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
-      <PostActions>
-         <ExecutionAction
-            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
-            <ActionContent
-               title = "Run Script"
-               scriptText = "CURRENTPATH=`pwd`&#10;&#10;xcodebuild -project ${PROJECT_NAME}.xcodeproj -configuration &#10;  ${CONFIGURATION} - &#10;  sdk iphoneos clean build ARCHS=&apos;armv7 armv7s&apos; &#10;  IPHONEOS_DEPLOYMENT_TARGET=&apos;5.0&apos; &#10;  TARGET_BUILD_DIR=&apos;./build-arm&apos; BUILT_PRODUCTS_DIR=&apos;./build-arm&apos;&#10;&#10; xcodebuild -project ${PROJECT_NAME}.xcodeproj -configuration ${CONFIGURATION} &#10;  -sdk iphoneos clean build ARCHS=&apos;arm64&apos; IPHONEOS_DEPLOYMENT_TARGET=&apos;7.0&apos; &#10;   TARGET_BUILD_DIR=&apos;./build-arm64&apos; BUILT_PRODUCTS_DIR=&apos;./build-arm64&apos;&#10;&#10;xcodebuild -project ${PROJECT_NAME}.xcodeproj -configuration ${CONFIGURATION} - &#10;  sdk iphonesimulator clean build ARCHS=&apos;i386&apos; IPHONEOS_DEPLOYMENT_TARGET=&apos;5.0&apos; &#10;  TARGET_BUILD_DIR=&apos;./build-i386&apos; BUILT_PRODUCTS_DIR=&apos;./build-i386&apos;&#10;&#10;xcodebuild -project ${PROJECT_NAME}.xcodeproj -configuration ${CONFIGURATION} - &#10;  sdk iphonesimulator clean build ARCHS=&apos;x86_64&apos; VALID_ARCHS=&apos;x86_64&apos; &#10;  IPHONEOS_DEPLOYMENT_TARGET=&apos;7.0&apos; TARGET_BUILD_DIR=&apos;./build-x86_64&apos; &#10;  BUILT_PRODUCTS_DIR=&apos;./build-x86_64&apos;&#10;&#10;cp -r &quot;${CURRENTPATH}/build-arm64/include&quot; &quot;${CURRENTPATH}/build-universal&quot;&#10;&#10;lipo -create ./build-arm/lib${PROJECT_NAME}.a ./build- &#10;  arm64/lib${PROJECT_NAME}.a ./build-i386/lib${PROJECT_NAME}.a ./build- &#10;   x86_64/lib${PROJECT_NAME}.a -output ./build-universal/lib${PROJECT_NAME}.a&#10;">
-               <EnvironmentBuildable>
-                  <BuildableReference
-                     BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "2BAFC1A6230D99C2000CB1A9"
-                     BuildableName = "AlfrescoCore.framework"
-                     BlueprintName = "AlfrescoCore"
-                     ReferencedContainer = "container:AlfrescoCore.xcodeproj">
-                  </BuildableReference>
-               </EnvironmentBuildable>
-            </ActionContent>
-         </ExecutionAction>
-      </PostActions>
    </ArchiveAction>
 </Scheme>
