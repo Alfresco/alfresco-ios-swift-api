@@ -31,7 +31,10 @@ public struct AlfrescoAuth {
             let frameworkBundle = Bundle(for: AuthWebViewController.self)
             let storyboard = UIStoryboard(name: "Auth", bundle: frameworkBundle)
             let controller = storyboard.instantiateViewController(withIdentifier: String(describing: AuthWebViewController.self)) as! AuthWebViewController
-//            let controller = storyboard.instantiateViewController(identifier: String(describing: AuthWebViewController.self)) as AuthWebViewController
+            /*
+             //This line is for iOS 13.0
+            let controller = storyboard.instantiateViewController(identifier: String(describing: AuthWebViewController.self)) as AuthWebViewController
+             */
             controller.presenter = webPresenter
             controller.urlString = urlStringToLoad
             return controller
