@@ -19,6 +19,7 @@ steps:
   displayName: 'Running tests'
   inputs:
     actions: 'test'
+    xcodeVersion: 11
     scheme: 'AlfrescoCore'
     sdk: 'iphonesimulator'
     configuration: 'Debug'
