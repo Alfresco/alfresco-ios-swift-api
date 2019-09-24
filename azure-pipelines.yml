@@ -24,7 +24,6 @@ steps:
     scheme: 'AlfrescoCore'
     configuration: 'Debug'
     destinationPlatformOption: 'custom'
-    destinationPlatform: 'iOS Simulator'
     xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
     useXcpretty: true
     publishJUnitResults: 'build/reports/junit.xml'
