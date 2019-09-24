@@ -22,6 +22,10 @@ class AlfrescoCoreTests: XCTestCase {
         super.tearDown()
     }
     
+    func testThatAzureReportsAregenerated () {
+        XCTAssertNotNil(sut)
+    }
+    
 //    func testRequestBuilderReturnsANonNilRequestBuilderProtocolImplementation() {
 //        let requestBuilder = sut.requestBuilder(baseURLString: TestData.baseURLString)
 //        
