@@ -57,3 +57,13 @@ steps:
     pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core.xcarchive.zip'
     artifactName: 'xcarchive-files'
     artifactType: 'container'
+
+# ---------------------------------------
+# Publish test results
+# ---------------------------------------
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/junit.xml'
+    failTaskOnFailedTests: true
+    testRunTitle: 'Publishing test results'
