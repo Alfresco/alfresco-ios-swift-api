@@ -23,7 +23,7 @@ steps:
     scheme: 'AlfrescoCore'
     sdk: 'iphonesimulator'
     configuration: 'Debug'
-    destinationTypeOption: 'simulators'
+    destinationPlatform: 'iOS Simulator'
     destinationSimulators: 'iPhone 11'
     xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
     useXcpretty: true
