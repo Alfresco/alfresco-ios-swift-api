@@ -12,7 +12,7 @@ s.source_files 			= 'AlfrescoAuth/Sources/**/*.{swift}'
 s.exclude_files			= ['AlfrescoAuth/AlfrescoAuthTests', 'AlfrescoAuth/Sources/**/*.plist']
 s.ios.deployment_target = '12.0'
 s.swift_version         = '5.0'
-s.framework 			= ['XCTest', 'WebKit']
+s.framework 			= ['WebKit']
 s.dependency 			 'AlfrescoCore'
 
 end

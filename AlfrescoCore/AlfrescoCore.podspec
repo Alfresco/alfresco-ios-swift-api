@@ -12,6 +12,6 @@ s.source_files 			= 'AlfrescoCore/Sources/**/*.{swift}'
 s.exclude_files			= ['AlfrescoCore/AlfrescoCoreTests', 'AlfrescoCore/Sources/**/*.plist']
 s.ios.deployment_target = '12.0'
 s.swift_version         = '5.0'
-s.framework 			= 'XCTest'
+# s.framework 			= 'XCTest'
 
 end
