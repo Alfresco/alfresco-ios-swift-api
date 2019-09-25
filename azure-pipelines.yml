@@ -12,6 +12,8 @@ pool:
   vmImage: 'macos-latest'
 
 steps:
+- checkout: self
+  persistCredentials: true
 # ---------------------------------------
 # Run core module tests
 # ---------------------------------------
