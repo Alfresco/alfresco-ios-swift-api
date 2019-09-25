@@ -54,21 +54,21 @@ steps:
     xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
     xcodeVersion: '11'
 
-# # ---------------------------------------
-# # Package core module
-# # ---------------------------------------
-# - task: ArchiveFiles@2
-#   displayName: 'Package core module framework into a zip file'
-#   inputs:
-#     rootFolderOrFile: '$(agent.buildDirectory)/AlfrescoCoreInternalRelease/'
-#     archiveFile: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core-framework.zip'
+# ---------------------------------------
+# Package core module
+# ---------------------------------------
+- task: ArchiveFiles@2
+  displayName: 'Package core module framework into a zip file'
+  inputs:
+    rootFolderOrFile: 'AlfrescoCore/AlfrescoCoreInternalRelease/'
+    archiveFile: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core-framework.zip'
 
-# # ---------------------------------------
-# # Publish artifacts
-# # ---------------------------------------
-# - task: PublishBuildArtifacts@1
-#   displayName: 'Publish build artifacts'
-#   inputs:
-#     pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core-framework.zip'
-#     artifactName: 'xcarchive-files'
-#     artifactType: 'container'
+# ---------------------------------------
+# Publish artifacts
+# ---------------------------------------
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish build artifacts'
+  inputs:
+    pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core-framework.zip'
+    artifactName: 'xcarchive-files'
+    artifactType: 'container'
