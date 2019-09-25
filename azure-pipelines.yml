@@ -70,5 +70,5 @@ steps:
   displayName: 'Publish build artifacts'
   inputs:
     pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core-framework.zip'
-    artifactName: 'xcarchive-files'
+    artifactName: 'framework-files'
     artifactType: 'container'
