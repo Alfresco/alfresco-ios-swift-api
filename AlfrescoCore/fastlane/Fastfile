@@ -14,7 +14,6 @@
 # update_fastlane
 
 default_platform(:ios)
-podspec_name = "AlfrescoCore.podspec"
 
 platform :ios do
   desc "Release new version with a patch version bump"
@@ -33,7 +32,7 @@ platform :ios do
   end
 
   def release(type)
-  	version_bump_podspec(path: podspec_name,
+  	version_bump_podspec(path: "AlfrescoCore.podspec",
   						 bump_type: type)
   end
 
