@@ -28,7 +28,7 @@ platform :ios do
   end
 
   desc "Release a new version with a major bump"
-  lane: major do
+  lane :major do
   	release("major")
   end
 
