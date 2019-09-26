@@ -74,9 +74,3 @@ steps:
     pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core-framework.zip'
     artifactName: 'framework-files'
     artifactType: 'container'
-
-  
-- task: CmdLine@2
-  inputs:
-    script: |
-      fastlane env
