@@ -13,7 +13,7 @@ s.exclude_files			= ['AlfrescoAuth/AlfrescoAuthTests', 'AlfrescoAuth/Sources/**/
 s.ios.deployment_target = '12.0'
 s.swift_version         = '5.0'
 s.framework 			= ['WebKit']
-s.resources 			= ["Sources/**/*.storyboard"]
+s.resources 			= ["AlfrescoAuth/Sources/**/*.storyboard"]
 s.dependency 			 'AlfrescoCore'
 
 end
