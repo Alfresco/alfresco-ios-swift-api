@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import AlfrescoCore
 
 public enum AuthViewControllerType {
     case web
 }
 
 public protocol AlfrescoAuthDelegate {
-    func didReceive(result: Result<AlfrescoCredential, Error>)
+    func didReceive(result: Result<AlfrescoCredential, APIError>)
 }
 
 public struct AlfrescoAuth {
@@ -24,24 +25,22 @@ public struct AlfrescoAuth {
     
     public init() { }
     
-    public func getAuthViewController(ofType type:AuthViewControllerType, urlStringToLoad: String? = nil, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) -> UIViewController {
-        switch type {
-        case .web:
-            webPresenter.authDelegate = alfrescoAuthDelegate
-            let frameworkBundle = Bundle(for: AuthWebViewController.self)
-            let storyboard = UIStoryboard(name: "Auth", bundle: frameworkBundle)
-            let controller = storyboard.instantiateViewController(withIdentifier: String(describing: AuthWebViewController.self)) as! AuthWebViewController
-            /*
-             //This line is for iOS 13.0
-            let controller = storyboard.instantiateViewController(identifier: String(describing: AuthWebViewController.self)) as AuthWebViewController
-             */
-            controller.presenter = webPresenter
-            controller.urlString = urlStringToLoad
-            return controller
-        }
+    public func webAuth(with urlStringToLoad: String? = nil, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) -> UIViewController {
+        webPresenter.authDelegate = alfrescoAuthDelegate
+        let frameworkBundle = Bundle(for: AuthWebViewController.self)
+        let storyboard = UIStoryboard(name: "Auth", bundle: frameworkBundle)
+        let identifier = String(describing: AuthWebViewController.self)
+        let controller = storyboard.instantiateViewController(withIdentifier: identifier) as! AuthWebViewController
+        /*
+         //This line is for iOS 13.0
+         let controller = storyboard.instantiateViewController(identifier: identifier) as AuthWebViewController
+         */
+        controller.presenter = webPresenter
+        controller.urlString = urlStringToLoad
+        return controller
     }
     
-    public func auth(with username: String?, and password: String?, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
+    public func basicAuth(with username: String?, and password: String?, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
         basicPresenter.authDelegate = alfrescoAuthDelegate
         basicPresenter.execute(username: username, password: password)
     }

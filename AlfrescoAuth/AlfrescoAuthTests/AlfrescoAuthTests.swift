@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import AlfrescoCore
 @testable import AlfrescoAuth
 
 class AlfrescoAuthTests: XCTestCase {
@@ -96,7 +97,7 @@ class AlfrescoAuthTests: XCTestCase {
         var expectationForSuccessInDidRecivedCall: XCTestExpectation!
         var expectationForErrorInDidRecivedCall: XCTestExpectation!
         
-        func didReceive(result: Result<AlfrescoCredential, Error>) {
+        func didReceive(result: Result<AlfrescoCredential, APIError>) {
             switch result {
             case .success(let cred):
                 print(cred)
