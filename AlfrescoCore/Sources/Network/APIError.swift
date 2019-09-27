@@ -16,12 +16,18 @@ public struct APIError: Error {
     var userInfo: [String: Any]
     let responseCode: Int
     
-    public init(domain: String, code: Int = 0, message: String = "", userInfo: [String: Any] = ["": ""]) {
+    public init(domain: String, code: Int = 0, message: String = "", userInfo: [String: Any] = ["": ""], error: Error? = nil ) {
         self.domain = domain
         self.responseCode = code
         self.userInfo = userInfo
         if message != "" {
             self.userInfo = [NSLocalizedDescriptionKey: message]
+        }
+        if let error = error {
+            self.userInfo = [NSLocalizedDescriptionKey: error.localizedDescription]
+            if message != "" {
+                self.userInfo = [NSLocalizedFailureErrorKey: message]
+            }
         }
     }
 }

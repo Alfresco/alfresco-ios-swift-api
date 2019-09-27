@@ -22,7 +22,7 @@ class RefreshTokenPresenter: NSObject, NetworkServiceProtocol {
         }
     }
     
-    func requestToken(with credential: AlfrescoCredential, completion: @escaping (Result<AlfrescoCredential, Error>) -> Void) {
+    func requestToken(with credential: AlfrescoCredential, completion: @escaping (Result<AlfrescoCredential, APIError>) -> Void) {
         _ = apiClient.send(GetAlfrescoCredential(refreshToken: credential.refreshToken), completion: { (result) in
             completion(result)
         })

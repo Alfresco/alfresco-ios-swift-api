@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias ResultCallback<Value> = (Result<Value, Error>) -> Void
+public typealias ResultCallback<Value> = (Result<Value, APIError>) -> Void
 
 public protocol APIClientProtocol {
     var baseURL: URL? { get }
@@ -31,7 +31,7 @@ public class APIClient: APIClientProtocol {
             let task = session.dataTask(with: urlRequest) { [weak self] (data, response, error) in
                 guard let sSelf = self else { return }
                 if let error = error {
-                    completion(.failure(error))
+                    completion(.failure(APIError(domain: sSelf.moduleName, error: error)))
                 }
                 guard let data = data, let response = response as? HTTPURLResponse else {
                     completion(.failure(APIError(domain: sSelf.moduleName, message: errTryAgain)))
@@ -45,7 +45,7 @@ public class APIClient: APIClientProtocol {
                             completion(.failure(APIError(domain: sSelf.moduleName, code: response.statusCode, message: errTryAgain)))
                         }
                     } catch {
-                        completion(.failure(error))
+                        completion(.failure(APIError(domain: sSelf.moduleName, error: error)))
                     }
                     return
                 }
@@ -53,7 +53,7 @@ public class APIClient: APIClientProtocol {
                     let model = try JSONDecoder().decode(T.Response.self, from: data)
                     completion(.success(model))
                 } catch {
-                    completion(.failure(error))
+                    completion(.failure(APIError(domain: sSelf.moduleName, error: error)))
                 }
             }
             task.resume()
