@@ -33,9 +33,9 @@ public struct APIError: Error {
     
     public var localizedDescription: String {
         if let message = self.userInfo[NSLocalizedDescriptionKey] {
-            return message as! String
+            return message as? String ?? ""
         } else {
-            return userInfo["error_description"] as! String
+            return userInfo["error_description"] as? String ?? ""
         }
     }
 }
