@@ -12,9 +12,9 @@ let errTryAgain =  "Some error has occurred, try again!"
 let errRequestUnavailable = "Request unavailable."
 
 public struct APIError: Error {
-    let domain: String
-    var userInfo: [String: Any]
-    let responseCode: Int
+    public let domain: String
+    public var userInfo: [String: Any]
+    public let responseCode: Int
     
     public init(domain: String, code: Int = 0, message: String = "", userInfo: [String: Any] = ["": ""], error: Error? = nil ) {
         self.domain = domain
@@ -28,6 +28,14 @@ public struct APIError: Error {
             if message != "" {
                 self.userInfo = [NSLocalizedFailureErrorKey: message]
             }
+        }
+    }
+    
+    public var localizedDescription: String {
+        if let message = self.userInfo[NSLocalizedDescriptionKey] {
+            return message as! String
+        } else {
+            return userInfo["error_description"] as! String
         }
     }
 }
