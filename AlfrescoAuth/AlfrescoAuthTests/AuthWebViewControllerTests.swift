@@ -9,6 +9,7 @@
 import WebKit
 import UIKit
 import XCTest
+import AlfrescoCore
 @testable import AlfrescoAuth
 
 class AuthWebViewControllerTests: XCTestCase {
@@ -65,6 +66,6 @@ class AuthWebViewControllerTests: XCTestCase {
     class AuthWebPresenterDummy: AuthWebPresenter { }
     
     struct AlfrescoAuthDelegateDummy: AlfrescoAuthDelegate{
-        func didReceive(result: Result<AlfrescoCredential, Error>) { }
+        func didReceive(result: Result<AlfrescoCredential, APIError>) { }
     }
 }

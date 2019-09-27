@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import AlfrescoCore
 @testable import AlfrescoAuth
 
 class AlfrescoAuthTests: XCTestCase {
@@ -32,17 +33,17 @@ class AlfrescoAuthTests: XCTestCase {
     
     //MARK: - SAML web auth tests
     func testGetAuthViewControllerOfTypeWebIsAAuthWebViewController() {
-        let viewController = sut.getAuthViewController(ofType: .web, delegate: AlfrescoAuthDelegateStub())
+        let viewController = sut.webAuth(delegate: AlfrescoAuthDelegateStub())
         XCTAssert(viewController.isKind(of: AuthWebViewController.self))
     }
     
     func testGetAuthViewControllerOfTypeWebSetsAuthDelegateOnPresenter() {
-        let viewController = sut.getAuthViewController(ofType: .web, delegate: AlfrescoAuthDelegateStub()) as! AuthWebViewController
+        let viewController = sut.webAuth(delegate: AlfrescoAuthDelegateStub()) as! AuthWebViewController
         XCTAssertNotNil(viewController.presenter?.authDelegate)
     }
     
     func testGetAuthViewControllerOfTypeWebSetsURLStringToLoad() {
-        let viewController = sut.getAuthViewController(ofType: .web, urlStringToLoad: TestData.urlStringToLoadGood, delegate: AlfrescoAuthDelegateStub()) as! AuthWebViewController
+        let viewController = sut.webAuth(with: TestData.urlStringToLoadGood, delegate: AlfrescoAuthDelegateStub()) as! AuthWebViewController
         XCTAssertNotNil(TestData.urlStringToLoadGood, viewController.urlString!)
     }
     
@@ -51,7 +52,7 @@ class AlfrescoAuthTests: XCTestCase {
         delegateStub.expectationRequestLogin = expectationForDidRevicedCall
         delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
         delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
-        sut.auth(with: TestData.username1, and: TestData.password1, delegate: delegateStub)
+        sut.basicAuth(with: TestData.username1, and: TestData.password1, delegate: delegateStub)
     
         wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
     }
@@ -61,7 +62,7 @@ class AlfrescoAuthTests: XCTestCase {
         delegateStub.expectationRequestLogin = expectationForDidRevicedCall
         delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
         delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
-        sut.auth(with: TestData.username1, and: TestData.password2, delegate: delegateStub)
+        sut.basicAuth(with: TestData.username1, and: TestData.password2, delegate: delegateStub)
     
         wait(for: [expectationForDidRevicedCall, expectationForErrorInDidRecivedCall], timeout: 10.0)
     }
@@ -96,7 +97,7 @@ class AlfrescoAuthTests: XCTestCase {
         var expectationForSuccessInDidRecivedCall: XCTestExpectation!
         var expectationForErrorInDidRecivedCall: XCTestExpectation!
         
-        func didReceive(result: Result<AlfrescoCredential, Error>) {
+        func didReceive(result: Result<AlfrescoCredential, APIError>) {
             switch result {
             case .success(let cred):
                 print(cred)
