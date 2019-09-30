@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AlfrescoCore/AlfrescoCore.h>
 
 //! Project version number for AlfrescoAuth.
 FOUNDATION_EXPORT double AlfrescoAuthVersionNumber;

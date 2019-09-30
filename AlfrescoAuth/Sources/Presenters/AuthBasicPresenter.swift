@@ -17,8 +17,14 @@ enum InputType: String {
 
 class AuthBasicPresenter: NSObject, NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? = nil
-    var apiClient = APIClient(with: kBaseURLString)
-
+    var apiClient: APIClient
+    var configuration: Configuration
+    
+    init(configuration: Configuration) {
+        self.configuration = configuration
+        self.apiClient = APIClient(with: configuration.baseUrl)
+    }
+    
     func verify(string: String?, type: InputType) -> String? {
         guard let string = string else {
             self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "\(type.rawValue) field can't be empty!")))
@@ -47,7 +53,7 @@ class AuthBasicPresenter: NSObject, NetworkServiceProtocol {
     }
     
     func requestToken(with username: String, and password: String, completion: @escaping (Result<AlfrescoCredential, APIError>) -> Void) {
-        _ = apiClient.send(GetAlfrescoCredential(username: username, password: password)) { (result) in
+        _ = apiClient.send(GetAlfrescoCredential(username: username, password: password, configuration: configuration)) { (result) in
             completion(result)
         }
     }
