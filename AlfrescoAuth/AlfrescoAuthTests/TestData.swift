@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AlfrescoAuth
 
 struct TestData {
     static let urlStringToLoadGood = "http://alfresco-identity-service.mobile.dev.alfresco.me/auth/?session_state=1a1cc1fc-e4d1-4430-8ff1-91ba7b7bff6e&code=6e5fc8c3-1be9-48f2-a15b-2f1e3388bf9a.1a1cc1fc-e4d1-4430-8ff1-91ba7b7bff6e.be13165d-2792-43aa-abdb-2c6cdb627184"
@@ -42,5 +43,9 @@ struct TestData {
     "session_state": sessionStateGood,
     "scope": "profile email"
     ] as [String : Any]
-    
+
+    static let configuration = Configuration(baseUrl: "http://alfresco-identity-service.mobile.dev.alfresco.me",
+                                             clientID: "alfresco",
+                                             realm: "alfresco",
+                                             clientSecret: "4bd63685-9e36-492d-8002-df2c6652ffb1")
 }

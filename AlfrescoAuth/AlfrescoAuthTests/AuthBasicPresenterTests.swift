@@ -20,7 +20,7 @@ class AuthBasicPresenterTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = AuthBasicPresenter()
+        sut = AuthBasicPresenter(configuration: TestData.configuration)
     }
 
     override func tearDown() {

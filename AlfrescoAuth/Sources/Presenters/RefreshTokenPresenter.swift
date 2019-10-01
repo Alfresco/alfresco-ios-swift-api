@@ -11,7 +11,13 @@ import AlfrescoCore
 
 class RefreshTokenPresenter: NSObject, NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? = nil
-    var apiClient = APIClient(with: kBaseURLString)
+    var apiClient: APIClient
+    var configuration: Configuration
+    
+    init(configuration: Configuration) {
+        self.configuration = configuration
+        self.apiClient = APIClient(with: configuration.baseUrl)
+    }
     
     func executeRefresh(_ credential: AlfrescoCredential) {
         requestToken(with: credential) { [weak self] (result) in
@@ -23,7 +29,7 @@ class RefreshTokenPresenter: NSObject, NetworkServiceProtocol {
     }
     
     func requestToken(with credential: AlfrescoCredential, completion: @escaping (Result<AlfrescoCredential, APIError>) -> Void) {
-        _ = apiClient.send(GetAlfrescoCredential(refreshToken: credential.refreshToken), completion: { (result) in
+        _ = apiClient.send(GetAlfrescoCredential(refreshToken: credential.refreshToken, configuration: configuration), completion: { (result) in
             completion(result)
         })
     }

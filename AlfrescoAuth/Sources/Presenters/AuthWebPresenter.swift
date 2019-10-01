@@ -12,7 +12,13 @@ import AlfrescoCore
 
 class AuthWebPresenter: NSObject, NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? = nil
-    var apiClient = APIClient(with: kBaseURLString)
+    var apiClient: APIClient
+    var configuration: Configuration
+    
+    init(configuration: Configuration) {
+        self.configuration = configuration
+         self.apiClient = APIClient(with: configuration.baseUrl)
+    }
     
     func parse(action: WKNavigationAction) -> WKNavigationActionPolicy {
         let url = action.request.url
@@ -38,7 +44,7 @@ class AuthWebPresenter: NSObject, NetworkServiceProtocol {
     }
     
     func requestToken(with code: String, completion: @escaping (Result<AlfrescoCredential, APIError>) -> Void) {
-        _ = apiClient.send(GetAlfrescoCredential(code: code), completion: { (result) in
+        _ = apiClient.send(GetAlfrescoCredential(code: code, configuration: configuration), completion: { (result) in
             completion(result)
         })
         
