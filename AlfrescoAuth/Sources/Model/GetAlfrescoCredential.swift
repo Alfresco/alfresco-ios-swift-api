@@ -19,7 +19,7 @@ struct GetAlfrescoCredential: APIRequest {
     typealias Response = AlfrescoCredential
     
     var path: String {
-        return kTokenEndpoint
+        return String(format: kTokenEndPoint, configuration.realm)
     }
     
     var method: HttpMethod {
@@ -34,19 +34,19 @@ struct GetAlfrescoCredential: APIRequest {
         switch grantType {
         case .code:
             return ["grant_type": grantType?.rawValue ?? "",
-                    "client_id": kClientID,
-                    "client_secret": kClientSecret,
+                    "client_id": configuration.clientID,
+                    "client_secret": configuration.clientSecret ?? "",
                     "redirect_uri": "",
                     "code": code ?? ""]
         case .refresh:
             return ["grant_type": grantType?.rawValue ?? "",
-                    "client_id": kClientID,
-                    "client_secret": kClientSecret,
+                    "client_id": configuration.clientID,
+                    "client_secret": configuration.clientSecret ?? "",
                     "refresh_token": refreshToken ?? ""]
         case .password:
             return ["grant_type": grantType?.rawValue ?? "",
-                    "client_id": kClientID,
-                    "client_secret": kClientSecret,
+                    "client_id": configuration.clientID,
+                    "client_secret": configuration.clientSecret ?? "",
                     "username": username ?? "",
                     "password": password ?? ""]
         case .none: break
@@ -60,24 +60,26 @@ struct GetAlfrescoCredential: APIRequest {
     var password: String?
     var refreshToken: String?
     var grantType: GrantType?
-    var clientID: String = kClientID
-    var clientSecret = kClientSecret
+    var configuration: Configuration
     var redirectUri = ""
     
-    init(code: String) {
+    init(code: String, configuration: Configuration) {
         self.code = code
         self.grantType = .code
+        self.configuration = configuration
     }
     
-    init(username: String, password: String) {
+    init(username: String, password: String, configuration: Configuration) {
         self.username = username
         self.password = password
         self.grantType = .password
+        self.configuration = configuration
     }
     
-    init(refreshToken: String) {
+    init(refreshToken: String, configuration: Configuration) {
         self.refreshToken = refreshToken
         self.grantType = .refresh
+        self.configuration = configuration
     }
 }
 

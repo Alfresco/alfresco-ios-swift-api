@@ -21,7 +21,7 @@ class AuthWebPresenterTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = AuthWebPresenter()
+        sut = AuthWebPresenter(configuration: TestData.configuration)
         navigationActionStub = WKNavigationActionStub()
     }
 
@@ -52,7 +52,7 @@ class AuthWebPresenterTests: XCTestCase {
         delegateStub.expectationRequestLogin = expectationForDidRevicedCall
         delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
 
-        navigationActionStub.sendCodeUrl = false
+        navigationActionStub.sendCodeUrl = true
         sut.authDelegate = delegateStub
         _ = sut.parse(action: navigationActionStub)
         XCTAssertFalse(delegateStub.didReceiveCalled)

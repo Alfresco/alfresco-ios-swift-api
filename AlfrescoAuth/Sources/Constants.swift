@@ -8,9 +8,7 @@
 
 import Foundation
 
-let kBaseURLString = "http://alfresco-identity-service.mobile.dev.alfresco.me"
-let kTokenEndpoint = "/auth/realms/alfresco/protocol/openid-connect/token"
-let kClientID: String = "alfresco"
-let kClientSecret = "4bd63685-9e36-492d-8002-df2c6652ffb1"
-
+let kWebSAMLURLString = "%@/auth/realms/%@/protocol/openid-connect/auth?client_id=alfresco&redirect_uri&scope=openid&response_type=code&nonce"
+let kTokenEndPoint = "/auth/realms/%@/protocol/openid-connect/token"
 let moduleName = "AlfrecoAuth"
+

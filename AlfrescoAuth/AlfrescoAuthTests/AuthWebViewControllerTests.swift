@@ -24,7 +24,7 @@ class AuthWebViewControllerTests: XCTestCase {
         webViewMock = WebViewMock()
         sut.webView = webViewMock
         
-        presenterDummy = AuthWebPresenterDummy()
+        presenterDummy = AuthWebPresenterDummy(configuration: TestData.configuration)
         sut.presenter = presenterDummy
     }
 
