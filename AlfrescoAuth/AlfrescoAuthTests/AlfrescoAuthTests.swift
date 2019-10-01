@@ -19,7 +19,7 @@ class AlfrescoAuthTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = AlfrescoAuth(baseURLString: TestData.configuration.baseUrl, clientID: TestData.configuration.clientID, realm: TestData.configuration.realm)
+        sut = AlfrescoAuth(baseURLString: TestData.configuration.baseUrl, realm: TestData.configuration.realm, clientID: TestData.configuration.clientID, clientSecret: TestData.configuration.clientSecret ?? "")
     }
 
     override func tearDown() {
@@ -43,7 +43,7 @@ class AlfrescoAuthTests: XCTestCase {
     }
     
     func testGetAuthViewControllerOfTypeWebSetsURLStringToLoad() {
-        let viewController = sut.webAuth(with: TestData.urlStringToLoadGood, delegate: AlfrescoAuthDelegateStub()) as! AuthWebViewController
+        let viewController = sut.webAuth(delegate: AlfrescoAuthDelegateStub()) as! AuthWebViewController
         XCTAssertNotNil(TestData.urlStringToLoadGood, viewController.urlString!)
     }
     
@@ -52,7 +52,7 @@ class AlfrescoAuthTests: XCTestCase {
         delegateStub.expectationRequestLogin = expectationForDidRevicedCall
         delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
         delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
-        sut.basicAuth(with: TestData.username1, and: TestData.password1, delegate: delegateStub)
+        sut.basicAuth(username: TestData.username1, password: TestData.password1, delegate: delegateStub)
     
         wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
     }
@@ -62,7 +62,7 @@ class AlfrescoAuthTests: XCTestCase {
         delegateStub.expectationRequestLogin = expectationForDidRevicedCall
         delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
         delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
-        sut.basicAuth(with: TestData.username1, and: TestData.password2, delegate: delegateStub)
+        sut.basicAuth(username: TestData.username1, password: TestData.password2, delegate: delegateStub)
     
         wait(for: [expectationForDidRevicedCall, expectationForErrorInDidRecivedCall], timeout: 10.0)
     }
@@ -73,7 +73,7 @@ class AlfrescoAuthTests: XCTestCase {
         delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
         delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
         let credential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
-        sut.refreshSession(credential, delegate: delegateStub)
+        sut.refreshSession(credential: credential, delegate: delegateStub)
         
         wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
     }
@@ -84,7 +84,7 @@ class AlfrescoAuthTests: XCTestCase {
         delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
         delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
         let credential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
-        sut.refreshSession(credential, delegate: delegateStub)
+        sut.refreshSession(credential: credential, delegate: delegateStub)
         
         wait(for: [expectationForDidRevicedCall, expectationForErrorInDidRecivedCall], timeout: 10.0)
     }

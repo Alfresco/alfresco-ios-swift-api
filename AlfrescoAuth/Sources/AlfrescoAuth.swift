@@ -24,11 +24,8 @@ public struct AlfrescoAuth {
     var refreshPresenter: RefreshTokenPresenter
     var configuration: Configuration
     
-    public init(baseURLString: String, clientID: String, realm: String) {
-        configuration = Configuration(baseUrl: baseURLString, clientID: clientID, realm: realm)
-        //TODO: This is where we need to call AppAuth to get client secret.
-        configuration.clientSecret = kClientSecret
-        
+    public init(baseURLString: String, realm: String, clientID: String, clientSecret: String = "") {
+        configuration = Configuration(baseUrl: baseURLString, clientID: clientID, realm: realm, clientSecret: clientSecret)
         webPresenter = AuthWebPresenter(configuration: configuration)
         basicPresenter = AuthBasicPresenter(configuration: configuration)
         refreshPresenter = RefreshTokenPresenter(configuration: configuration)
