@@ -502,7 +502,7 @@
 		2BD6E15B22F442C900949E44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "${inherited}";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W8N95J537P;
 				INFOPLIST_FILE = AlfrescoAuthTests/Info.plist;
@@ -521,7 +521,7 @@
 		2BD6E15C22F442C900949E44 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "${inherited}";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W8N95J537P;
 				INFOPLIST_FILE = AlfrescoAuthTests/Info.plist;
