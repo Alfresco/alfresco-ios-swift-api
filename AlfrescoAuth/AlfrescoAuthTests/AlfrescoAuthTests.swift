@@ -19,7 +19,8 @@ class AlfrescoAuthTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = AlfrescoAuth(baseURLString: TestData.configuration.baseUrl, realm: TestData.configuration.realm, clientID: TestData.configuration.clientID, clientSecret: TestData.configuration.clientSecret ?? "")
+        
+        sut = AlfrescoAuth(configuration: TestData.configuration)
     }
 
     override func tearDown() {

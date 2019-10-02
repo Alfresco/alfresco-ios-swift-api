@@ -43,9 +43,10 @@ struct TestData {
     "session_state": sessionStateGood,
     "scope": "profile email"
     ] as [String : Any]
-
-    static let configuration = Configuration(baseUrl: "http://alfresco-identity-service.mobile.dev.alfresco.me",
-                                             clientID: "alfresco",
-                                             realm: "alfresco",
-                                             clientSecret: "4bd63685-9e36-492d-8002-df2c6652ffb1")
+    
+    static let configuration = AuthConfiguration(baseUrl: "http://alfresco-identity-service.mobile.dev.alfresco.me",
+                                                 clientID: "alfresco",
+                                                 realm: "alfresco",
+                                                 clientSecret: "4bd63685-9e36-492d-8002-df2c6652ffb1",
+                                                 redirectURI: "")
 }

@@ -12,9 +12,9 @@ import AlfrescoCore
 class RefreshTokenPresenter: NSObject, NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? = nil
     var apiClient: APIClient
-    var configuration: Configuration
+    var configuration: AuthConfiguration
     
-    init(configuration: Configuration) {
+    init(configuration: AuthConfiguration) {
         self.configuration = configuration
         self.apiClient = APIClient(with: configuration.baseUrl)
     }

@@ -60,23 +60,23 @@ struct GetAlfrescoCredential: APIRequest {
     var password: String?
     var refreshToken: String?
     var grantType: GrantType?
-    var configuration: Configuration
+    var configuration: AuthConfiguration
     var redirectUri = ""
     
-    init(code: String, configuration: Configuration) {
+    init(code: String, configuration: AuthConfiguration) {
         self.code = code
         self.grantType = .code
         self.configuration = configuration
     }
     
-    init(username: String, password: String, configuration: Configuration) {
+    init(username: String, password: String, configuration: AuthConfiguration) {
         self.username = username
         self.password = password
         self.grantType = .password
         self.configuration = configuration
     }
     
-    init(refreshToken: String, configuration: Configuration) {
+    init(refreshToken: String, configuration: AuthConfiguration) {
         self.refreshToken = refreshToken
         self.grantType = .refresh
         self.configuration = configuration
