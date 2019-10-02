@@ -8,24 +8,27 @@
 
 import Foundation
 
-public struct Configuration: Encodable {
+public struct AuthConfiguration: Encodable {
     enum Key: CodingKey {
         case clientID
         case clientSecret
         case baseUrl
         case realm
+        case redirectURI
     }
     
     var clientID: String
     var clientSecret: String?
     var baseUrl: String
     var realm: String
+    var redirectURI: String?
     
-    public init(baseUrl: String, clientID: String, realm: String, clientSecret: String = "") {
+    public init(baseUrl: String, clientID: String, realm: String, clientSecret: String = "", redirectURI: String = "") {
         self.clientID = clientID
         self.baseUrl = baseUrl
         self.realm = realm
         self.clientSecret = clientSecret
+        self.redirectURI = redirectURI
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -34,5 +37,6 @@ public struct Configuration: Encodable {
         try container.encode("clientSecret", forKey: .clientSecret)
         try container.encode("baseUrl", forKey: .baseUrl)
         try container.encode("realm", forKey: .realm)
+        try container.encode("redirectURI", forKey: .redirectURI)
     }
 }

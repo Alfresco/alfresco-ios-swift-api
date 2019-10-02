@@ -9,6 +9,7 @@
 import UIKit
 import AlfrescoCore
 
+
 public enum AuthViewControllerType {
     case web
 }
@@ -19,20 +20,20 @@ public protocol AlfrescoAuthDelegate {
 
 public struct AlfrescoAuth {
     
-    var webPresenter: AuthWebPresenter
-    var basicPresenter: AuthBasicPresenter
-    var refreshPresenter: RefreshTokenPresenter
-    var configuration: Configuration
+    var webPresenter: AuthWebPresenter?
+    var basicPresenter: AuthBasicPresenter?
+    var refreshPresenter: RefreshTokenPresenter?
+    var pkcePresenter: AuthPkcePresenter?
     
-    public init(baseURLString: String, realm: String, clientID: String, clientSecret: String = "") {
-        configuration = Configuration(baseUrl: baseURLString, clientID: clientID, realm: realm, clientSecret: clientSecret)
-        webPresenter = AuthWebPresenter(configuration: configuration)
-        basicPresenter = AuthBasicPresenter(configuration: configuration)
-        refreshPresenter = RefreshTokenPresenter(configuration: configuration)
+    var configuration: AuthConfiguration
+    
+    public init(configuration: AuthConfiguration) {
+        self.configuration = configuration
     }
     
-    public func webAuth(delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) -> UIViewController {
-        webPresenter.authDelegate = alfrescoAuthDelegate
+    public mutating func webAuth(delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) -> UIViewController {
+        webPresenter = AuthWebPresenter(configuration: configuration)
+        webPresenter?.authDelegate = alfrescoAuthDelegate
         let frameworkBundle = Bundle(for: AuthWebViewController.self)
         let storyboard = UIStoryboard(name: "Auth", bundle: frameworkBundle)
         let identifier = String(describing: AuthWebViewController.self)
@@ -42,14 +43,26 @@ public struct AlfrescoAuth {
         return controller
     }
     
-    public func basicAuth(username: String?, password: String?, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
-        basicPresenter.authDelegate = alfrescoAuthDelegate
-        basicPresenter.execute(username: username, password: password)
+    public mutating func basicAuth(username: String?, password: String?, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
+        basicPresenter = AuthBasicPresenter(configuration: configuration)
+        basicPresenter?.authDelegate = alfrescoAuthDelegate
+        basicPresenter?.execute(username: username, password: password)
     }
     
-    public func refreshSession(credential: AlfrescoCredential, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
-        refreshPresenter.authDelegate = alfrescoAuthDelegate
-        refreshPresenter.executeRefresh(credential)
+    public mutating func refreshSession(credential: AlfrescoCredential, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
+        refreshPresenter = RefreshTokenPresenter(configuration: configuration)
+        refreshPresenter?.authDelegate = alfrescoAuthDelegate
+        refreshPresenter?.executeRefresh(credential)
+    }
+    
+    public mutating func pkceAuth(onViewController viewController: UIViewController) -> AlfrescoAuthSession {
+        pkcePresenter = AuthPkcePresenter(configuration: configuration)
+        pkcePresenter?.presentingViewController = viewController
+        let authSession = AlfrescoAuthSession()
+        pkcePresenter?.authSession = authSession
+        pkcePresenter?.execute()
+        
+        return authSession
     }
 }
 
