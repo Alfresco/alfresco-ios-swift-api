@@ -13,6 +13,7 @@ public class AuthPkcePresenter {
     var configuration: AuthConfiguration
     var presentingViewController: UIViewController?
     var authSession: AlfrescoAuthSession?
+    var authDelegate: AlfrescoAuthDelegate?
     
     init(configuration: AuthConfiguration) {
         self.configuration = configuration

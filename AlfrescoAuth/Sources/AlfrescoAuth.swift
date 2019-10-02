@@ -54,11 +54,14 @@ public struct AlfrescoAuth {
         refreshPresenter?.executeRefresh(credential)
     }
     
-    public mutating func pkceAuth(onViewController viewController: UIViewController) -> AlfrescoAuthSession {
+    public mutating func pkceAuth(onViewController viewController: UIViewController, delegate: AlfrescoAuthDelegate) -> AlfrescoAuthSession {
         pkcePresenter = AuthPkcePresenter(configuration: configuration)
         pkcePresenter?.presentingViewController = viewController
+        pkcePresenter?.authDelegate = delegate
+        
         let authSession = AlfrescoAuthSession()
         pkcePresenter?.authSession = authSession
+        
         pkcePresenter?.execute()
         
         return authSession
