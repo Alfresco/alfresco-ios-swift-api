@@ -9,7 +9,6 @@
 import UIKit
 import AlfrescoCore
 
-
 public enum AuthViewControllerType {
     case web
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppAuth
 
 public struct AlfrescoAuthSession {
     var authorizationFlow: OIDExternalUserAgentSession?

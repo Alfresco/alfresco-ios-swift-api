@@ -11,7 +11,7 @@ DEPENDENCIES:
   - AppAuth
 
 SPEC REPOS:
-  https://github.com/Alfresco/alfresco-private-podspecs-ios-sdk:
+  https://github.com/Alfresco/alfresco-private-podspecs-ios-sdk.git:
     - AlfrescoCore
   https://github.com/CocoaPods/Specs.git:
     - AppAuth
