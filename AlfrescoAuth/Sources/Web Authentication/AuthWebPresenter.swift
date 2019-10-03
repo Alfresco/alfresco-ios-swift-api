@@ -17,7 +17,7 @@ class AuthWebPresenter: NSObject, NetworkServiceProtocol {
     
     init(configuration: AuthConfiguration) {
         self.configuration = configuration
-         self.apiClient = APIClient(with: configuration.baseUrl)
+        self.apiClient = APIClient(with: configuration.baseUrl)
     }
     
     func parse(action: WKNavigationAction) -> WKNavigationActionPolicy {
