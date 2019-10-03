@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppAuth
 
 public struct AlfrescoCredential: Decodable {
     var tokenType: String!
@@ -46,6 +47,16 @@ public struct AlfrescoCredential: Decodable {
             }
         }
     }
+    
+    init(with authState: OIDAuthState) {
+        self.tokenType = authState.lastTokenResponse?.tokenType
+        self.accessToken = authState.lastTokenResponse?.accessToken
+        self.accessTokenExpiresIn = Int(authState.lastTokenResponse?.accessTokenExpirationDate?.timeIntervalSince1970 ?? 0)
+        self.refreshToken = authState.lastTokenResponse?.refreshToken
+        self.refreshTokenExpiresIn = 0
+        self.sessionState = ""
+    }
+    
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)

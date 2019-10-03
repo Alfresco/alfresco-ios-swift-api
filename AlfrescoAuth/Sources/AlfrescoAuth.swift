@@ -33,12 +33,15 @@ public struct AlfrescoAuth {
     public mutating func webAuth(delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) -> UIViewController {
         webPresenter = AuthWebPresenter(configuration: configuration)
         webPresenter?.authDelegate = alfrescoAuthDelegate
+        
         let frameworkBundle = Bundle(for: AuthWebViewController.self)
         let storyboard = UIStoryboard(name: "Auth", bundle: frameworkBundle)
         let identifier = String(describing: AuthWebViewController.self)
         let controller = storyboard.instantiateViewController(withIdentifier: identifier) as! AuthWebViewController
+        
         controller.presenter = webPresenter
         controller.urlString = String(format: kWebSAMLURLString, configuration.baseUrl, configuration.realm)
+        
         return controller
     }
     

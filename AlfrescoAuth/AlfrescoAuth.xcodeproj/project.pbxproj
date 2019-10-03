@@ -112,12 +112,17 @@
 		2BD6E14522F442C900949E44 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				E326985B231698FF00D19D3B /* Supporting files */,
-				2BE921A6230C26840009F470 /* Extensions */,
-				2BE0E70522F965A2002857F0 /* Model */,
-				E37CFB742330CB7E00C14FB2 /* Presenters */,
-				2BD6E16222F4475700949E44 /* Constants.swift */,
 				2BD6E16422F45BA600949E44 /* AlfrescoAuth.swift */,
+				2BD6E16222F4475700949E44 /* Constants.swift */,
+				E3103B0D2345DDA400199CE0 /* Protocols */,
+				2BE921A6230C26840009F470 /* Extensions */,
+				E326985B231698FF00D19D3B /* Supporting files */,
+				E3103B0B2345DCEF00199CE0 /* PKCE Authentication */,
+				E3103B0A2345DCE300199CE0 /* Web Authentication */,
+				E3103B092345DCC700199CE0 /* Basic Authentication */,
+				E3103B0C2345DD7300199CE0 /* Refresh Session */,
+				2BE0E70522F965A2002857F0 /* Model */,
+				E37CFB742330CB7E00C14FB2 /* Resourses */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -140,7 +145,6 @@
 		2BE0E70522F965A2002857F0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B98D87DA2344D47000BC0259 /* AlfrescoAuthSession.swift */,
 				E3C38EF42327B4EA007FCF8B /* GetAlfrescoCredential.swift */,
 				2BD6E16C22F47FFE00949E44 /* AlfrescoCredential.swift */,
 				E3267D4423420E4C00ED429C /* AuthConfiguration.swift */,
@@ -157,6 +161,48 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		E3103B092345DCC700199CE0 /* Basic Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				E36314CB230D5A5000907B18 /* AuthBasicPresenter.swift */,
+			);
+			path = "Basic Authentication";
+			sourceTree = "<group>";
+		};
+		E3103B0A2345DCE300199CE0 /* Web Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				2BD6E16822F4699000949E44 /* AuthWebPresenter.swift */,
+				E3DB7766233A296A000122BB /* AuthWebViewController.swift */,
+			);
+			path = "Web Authentication";
+			sourceTree = "<group>";
+		};
+		E3103B0B2345DCEF00199CE0 /* PKCE Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				B95789F02344971B00F19594 /* AuthPkcePresenter.swift */,
+				B98D87DA2344D47000BC0259 /* AlfrescoAuthSession.swift */,
+			);
+			path = "PKCE Authentication";
+			sourceTree = "<group>";
+		};
+		E3103B0C2345DD7300199CE0 /* Refresh Session */ = {
+			isa = PBXGroup;
+			children = (
+				E324E7AF232BBEB00014A8F7 /* RefreshTokenPresenter.swift */,
+			);
+			path = "Refresh Session";
+			sourceTree = "<group>";
+		};
+		E3103B0D2345DDA400199CE0 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				E3841C7F2332563300B18A7B /* NetworkServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		E326985B231698FF00D19D3B /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,18 +212,12 @@
 			path = "Supporting files";
 			sourceTree = "<group>";
 		};
-		E37CFB742330CB7E00C14FB2 /* Presenters */ = {
+		E37CFB742330CB7E00C14FB2 /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
 				2BD6E15E22F445CB00949E44 /* Auth.storyboard */,
-				2BD6E16822F4699000949E44 /* AuthWebPresenter.swift */,
-				E3DB7766233A296A000122BB /* AuthWebViewController.swift */,
-				E36314CB230D5A5000907B18 /* AuthBasicPresenter.swift */,
-				E324E7AF232BBEB00014A8F7 /* RefreshTokenPresenter.swift */,
-				E3841C7F2332563300B18A7B /* NetworkServiceProtocol.swift */,
-				B95789F02344971B00F19594 /* AuthPkcePresenter.swift */,
 			);
-			path = Presenters;
+			path = Resourses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
