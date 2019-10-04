@@ -53,7 +53,6 @@ public class AuthPkcePresenter: NSObject {
                     return
                 }
                 sSelf.authSession?.authState = authState
-                sSelf.authSession?.authState?.stateChangeDelegate = self
                 sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState.lastTokenResponse)))
             }
         }
@@ -61,22 +60,20 @@ public class AuthPkcePresenter: NSObject {
     
     func executeRefreshSession() {
         if let authState = self.authSession?.authState {
-            authState.stateChangeDelegate = self
-            authState.errorDelegate = self
-            authState.tokenRefreshRequest()
-            authState.performAction { (accessToken, idTOken, error) in
-                print(accessToken)
+            authState.performAction { [weak self] (accessToken, idTOken, error) in
+                guard let sSelf = self else { return }
+                if let error = error {
+                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, error: error)))
+                    return
+                }
+                
+                guard accessToken != nil else {
+                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Failed to retrieve access a fresh access token")))
+                    return
+                }
+                
+                sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState.lastTokenResponse)))
             }
         }
-    }
-}
-
-extension AuthPkcePresenter: OIDAuthStateChangeDelegate, OIDAuthStateErrorDelegate {
-    public func authState(_ state: OIDAuthState, didEncounterAuthorizationError error: Error) {
-        print(error)
-    }
-    
-    public func didChange(_ state: OIDAuthState) {
-        print(state)
     }
 }
