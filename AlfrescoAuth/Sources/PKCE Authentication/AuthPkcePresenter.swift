@@ -9,7 +9,7 @@
 import Foundation
 import AppAuth
 
-public class AuthPkcePresenter {
+public class AuthPkcePresenter: NSObject {
     var configuration: AuthConfiguration
     var presentingViewController: UIViewController?
     var authSession: AlfrescoAuthSession?
@@ -52,9 +52,31 @@ public class AuthPkcePresenter {
                     sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Can't authentificate!")))
                     return
                 }
-                sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState)))
+                sSelf.authSession?.authState = authState
+                sSelf.authSession?.authState?.stateChangeDelegate = self
+                sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState.lastTokenResponse)))
             }
         }
-        
+    }
+    
+    func executeRefreshSession() {
+        if let authState = self.authSession?.authState {
+            authState.stateChangeDelegate = self
+            authState.errorDelegate = self
+            authState.tokenRefreshRequest()
+            authState.performAction { (accessToken, idTOken, error) in
+                print(accessToken)
+            }
+        }
+    }
+}
+
+extension AuthPkcePresenter: OIDAuthStateChangeDelegate, OIDAuthStateErrorDelegate {
+    public func authState(_ state: OIDAuthState, didEncounterAuthorizationError error: Error) {
+        print(error)
+    }
+    
+    public func didChange(_ state: OIDAuthState) {
+        print(state)
     }
 }

@@ -69,5 +69,9 @@ public struct AlfrescoAuth {
         
         return authSession
     }
+    
+    public mutating func pkceRefreshSession(delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
+        pkcePresenter?.executeRefreshSession()
+    }
 }
 
