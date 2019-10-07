@@ -52,9 +52,28 @@ public class AuthPkcePresenter {
                     sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Can't authentificate!")))
                     return
                 }
-                sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState)))
+                sSelf.authSession?.authState = authState
+                sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState.lastTokenResponse)))
             }
         }
-        
+    }
+    
+    func executeRefreshSession() {
+        if let authState = self.authSession?.authState {
+            authState.performAction { [weak self] (accessToken, idTOken, error) in
+                guard let sSelf = self else { return }
+                if let error = error {
+                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, error: error)))
+                    return
+                }
+                
+                guard accessToken != nil else {
+                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Failed to retrieve a fresh access token")))
+                    return
+                }
+                
+                sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState.lastTokenResponse)))
+            }
+        }
     }
 }
