@@ -9,27 +9,37 @@
 import UIKit
 import AlfrescoCore
 
-public enum AuthViewControllerType {
-    case web
-}
 
+/// Delegate of the AlfrescoAuth module used to monitor responses coming from the Identity Service.
 public protocol AlfrescoAuthDelegate {
+    
+    /** Called when a response coming from the Identity Service is available.
+    - Parameter result: Object containing token related information  used to authorize further requests or an optional error parameter.
+    */
     func didReceive(result: Result<AlfrescoCredential, APIError>)
 }
 
 public struct AlfrescoAuth {
-    
+    // Presenters
     var webPresenter: AuthWebPresenter?
     var basicPresenter: AuthBasicPresenter?
     var refreshPresenter: RefreshTokenPresenter?
     var pkcePresenter: AuthPkcePresenter?
     
+    // Configuration
     var configuration: AuthConfiguration
     
+    
+    /** Designated initializer of the AlfrescoAuthModule.
+    - Parameter configuration: Identity Service related configuration parameters.
+    */
     public init(configuration: AuthConfiguration) {
         self.configuration = configuration
     }
     
+    /** Alternative method used to authenticate with Identity Service when it is set up to work with an exernal provider that invokes the use of web view components.
+    - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the authentication request
+    */
     public mutating func webAuth(delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) -> UIViewController {
         webPresenter = AuthWebPresenter(configuration: configuration)
         webPresenter?.authDelegate = alfrescoAuthDelegate
@@ -45,18 +55,32 @@ public struct AlfrescoAuth {
         return controller
     }
     
+    /** Alternative method used to authenticate with Identity Service when it is set up to work with Basic Auth.
+    - Parameter username: Username for which the authentication request is created
+    - Parameter password: Password for which the authentication request is created
+    - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the authentication request
+    */
     public mutating func basicAuth(username: String?, password: String?, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
         basicPresenter = AuthBasicPresenter(configuration: configuration)
         basicPresenter?.authDelegate = alfrescoAuthDelegate
         basicPresenter?.execute(username: username, password: password)
     }
     
+    /** Alternative method used to refresh session with Identity service.
+    - Remark: Works with all the provided authentication methods in AlfrescoAuth
+    - Parameter credential: Object containing token related information
+    - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the authentication request
+    */
     public mutating func refreshSession(credential: AlfrescoCredential, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
         refreshPresenter = RefreshTokenPresenter(configuration: configuration)
         refreshPresenter?.authDelegate = alfrescoAuthDelegate
         refreshPresenter?.executeRefresh(credential)
     }
     
+    /** Designated safe authetication method with Identity Service using PKCE protocol.
+    - Parameter viewController: Thew view controller from which to present the SFSafariViewController.
+    - Parameter delegate: Delegate used to report the state and response of the authentication request
+    */
     public mutating func pkceAuth(onViewController viewController: UIViewController, delegate: AlfrescoAuthDelegate) -> AlfrescoAuthSession {
         pkcePresenter = AuthPkcePresenter(configuration: configuration)
         pkcePresenter?.presentingViewController = viewController
@@ -70,6 +94,9 @@ public struct AlfrescoAuth {
         return authSession
     }
     
+    /** Designated safe session refresh method with Identity Service  using PKCE protocol.
+    - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the re-authentication request
+    */
     public mutating func pkceRefreshSession(delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
         pkcePresenter?.executeRefreshSession()
     }

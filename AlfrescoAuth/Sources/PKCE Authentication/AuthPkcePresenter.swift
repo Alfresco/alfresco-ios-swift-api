@@ -68,7 +68,7 @@ public class AuthPkcePresenter {
                 }
                 
                 guard accessToken != nil else {
-                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Failed to retrieve access a fresh access token")))
+                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Failed to retrieve a fresh access token")))
                     return
                 }
                 
