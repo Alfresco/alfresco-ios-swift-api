@@ -7,11 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#ifdef COCOAPODS
-#import <AlfrescoCore/AlfrescoCore-umbrella.h>
-#else
-#import <AlfrescoCore/AlfrescoCore.h>
-#endif
+@import AlfrescoCore;
 
 //! Project version number for AlfrescoAuth.
 FOUNDATION_EXPORT double AlfrescoAuthVersionNumber;
