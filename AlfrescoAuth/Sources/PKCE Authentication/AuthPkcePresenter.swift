@@ -9,7 +9,7 @@
 import Foundation
 import AppAuth
 
-public class AuthPkcePresenter: NSObject {
+public class AuthPkcePresenter {
     var configuration: AuthConfiguration
     var presentingViewController: UIViewController?
     var authSession: AlfrescoAuthSession?
