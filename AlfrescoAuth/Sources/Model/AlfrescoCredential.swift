@@ -48,11 +48,11 @@ public struct AlfrescoCredential: Decodable {
         }
     }
     
-    init(with authState: OIDAuthState) {
-        self.tokenType = authState.lastTokenResponse?.tokenType
-        self.accessToken = authState.lastTokenResponse?.accessToken
-        self.accessTokenExpiresIn = Int(authState.lastTokenResponse?.accessTokenExpirationDate?.timeIntervalSince1970 ?? 0)
-        self.refreshToken = authState.lastTokenResponse?.refreshToken
+    init(with response: OIDTokenResponse?) {
+        self.tokenType = response?.tokenType
+        self.accessToken = response?.accessToken
+        self.accessTokenExpiresIn = Int(response?.accessTokenExpirationDate?.timeIntervalSince1970 ?? 0)
+        self.refreshToken = response?.refreshToken
         self.refreshTokenExpiresIn = 0
         self.sessionState = ""
     }
