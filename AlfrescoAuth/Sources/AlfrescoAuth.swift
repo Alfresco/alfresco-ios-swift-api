@@ -97,7 +97,8 @@ public struct AlfrescoAuth {
     /** Designated safe session refresh method with Identity Service  using PKCE protocol.
     - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the re-authentication request
     */
-    public mutating func pkceRefreshSession(delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
+    public mutating func pkceRefreshSession(delegate: AlfrescoAuthDelegate) {
+        pkcePresenter?.authDelegate = delegate
         pkcePresenter?.executeRefreshSession()
     }
 }

@@ -23,7 +23,7 @@ public struct AuthConfiguration: Encodable {
     var realm: String
     var redirectURI: String?
     
-    public init(baseUrl: String, clientID: String, realm: String, clientSecret: String = "", redirectURI: String = "") {
+    public init(baseUrl: String, clientID: String, realm: String, clientSecret: String? = nil, redirectURI: String = "") {
         self.clientID = clientID
         self.baseUrl = baseUrl
         self.realm = realm
