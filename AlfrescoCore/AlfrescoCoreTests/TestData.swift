@@ -21,13 +21,17 @@ import Foundation
 
 struct TestData {
     static let baseURL = "http://domain.extension"
+    static let invalidBaseURL = " "
     static let testAPIRequestPath = "/path"
+    static let invalidAPIRequestPath = " "
     static let clientID = "id"
     static let clientSecret = "secret"
+    static var response = ["name" : "test"]
+    static var invalidResponse = "response"
 }
 
-struct TestAPIReqest: APIRequest {
-    typealias Response = String
+struct TestAPIRequest: APIRequest {
+    typealias Response = [String : String]
     
     var path: String {
         return TestData.testAPIRequestPath
@@ -46,3 +50,48 @@ struct TestAPIReqest: APIRequest {
                 "client_secret": TestData.clientSecret]
     }
 }
+
+struct TestPOSTAPIRequest: APIRequest {
+    typealias Response = String
+    
+    var path: String {
+        return TestData.testAPIRequestPath
+    }
+    
+    var method: HttpMethod {
+        return .post
+        
+    }
+    
+    var headers: [String : ContentType] {
+        return ["Content-Type": .urlencoded]
+    }
+    
+    var parameters: [String : String] {
+        return ["client_id": TestData.clientID,
+                "client_secret": TestData.clientSecret]
+    }
+}
+
+struct TestAPIRequestWithInvalidPath: APIRequest {
+    typealias Response = String
+    
+    var path: String {
+        return TestData.invalidAPIRequestPath
+    }
+    
+    var method: HttpMethod {
+        return .get
+    }
+    
+    var headers: [String : ContentType] {
+        return ["Content-Type": .urlencoded]
+    }
+    
+    var parameters: [String : String] {
+        return ["client_id": TestData.clientID,
+                "client_secret": TestData.clientSecret]
+    }
+}
+
+

@@ -40,6 +40,7 @@ public class APIClient: APIClientProtocol {
                 guard let sSelf = self else { return }
                 if let error = error {
                     completion(.failure(APIError(domain: sSelf.moduleName, error: error)))
+                    return
                 }
                 guard let data = data, let response = response as? HTTPURLResponse else {
                     completion(.failure(APIError(domain: sSelf.moduleName, message: errTryAgain)))

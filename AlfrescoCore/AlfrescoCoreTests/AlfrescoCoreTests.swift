@@ -10,11 +10,11 @@ import XCTest
 @testable import AlfrescoCore
 
 class AlfrescoCoreTests: XCTestCase {
-    var sut: TestAPIReqest!
+    var sut: TestAPIRequest!
     
     override func setUp() {
         super.setUp()
-        sut = TestAPIReqest()
+        sut = TestAPIRequest()
     }
     
     override func tearDown() {
