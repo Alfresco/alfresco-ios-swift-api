@@ -10,22 +10,24 @@ import XCTest
 @testable import AlfrescoCore
 
 class AlfrescoCoreTests: XCTestCase {
-    var sut: AlfrescoCore!
-
+    var sut: TestAPIRequest!
+    
     override func setUp() {
         super.setUp()
-        sut = AlfrescoCore()
+        sut = TestAPIRequest()
     }
-
+    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
     
-//    func testRequestBuilderReturnsANonNilRequestBuilderProtocolImplementation() {
-//        let requestBuilder = sut.requestBuilder(baseURLString: TestData.baseURLString)
-//        
-//        XCTAssertNotNil(requestBuilder)
-//    }
-
+    func testAPIRequestProtocolConformanceForAdopter () {
+        XCTAssertEqual("/path", sut.path)
+        XCTAssertEqual(HttpMethod.get, sut.method)
+        XCTAssertEqual(["Content-Type" : ContentType.urlencoded], sut.headers)
+        XCTAssertEqual(["client_id": "id",
+                        "client_secret": "secret"], sut.parameters)
+    }
+    
 }
