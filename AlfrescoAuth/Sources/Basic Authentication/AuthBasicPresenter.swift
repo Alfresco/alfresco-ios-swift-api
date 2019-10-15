@@ -17,7 +17,7 @@ enum InputType: String {
 
 class AuthBasicPresenter: NSObject, NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? = nil
-    var apiClient: APIClient
+    var apiClient: APIClientProtocol
     var configuration: AuthConfiguration
     
     init(configuration: AuthConfiguration) {

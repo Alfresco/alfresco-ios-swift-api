@@ -22,10 +22,23 @@
 		B95789F12344971B00F19594 /* AuthPkcePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95789F02344971B00F19594 /* AuthPkcePresenter.swift */; };
 		B98D87DB2344D47000BC0259 /* AlfrescoAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98D87DA2344D47000BC0259 /* AlfrescoAuthSession.swift */; };
 		E31B47E122F97C53002B6BC5 /* AuthWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */; };
+		E31FE3432355B5CE0024B376 /* AlfrescoAuthDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FE3422355B5CE0024B376 /* AlfrescoAuthDelegateStub.swift */; };
+		E31FE3452355B6140024B376 /* APIClientStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FE3442355B6140024B376 /* APIClientStub.swift */; };
+		E31FE3472355B6BF0024B376 /* WKNavigationActionStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FE3462355B6BF0024B376 /* WKNavigationActionStub.swift */; };
+		E31FE34D2355BAA50024B376 /* AuthPresentersMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FE34C2355BAA50024B376 /* AuthPresentersMocks.swift */; };
+		E31FE34F2355BABF0024B376 /* WebViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FE34E2355BABF0024B376 /* WebViewMock.swift */; };
 		E324E7B0232BBEB00014A8F7 /* RefreshTokenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E324E7AF232BBEB00014A8F7 /* RefreshTokenPresenter.swift */; };
 		E3267D4523420E4C00ED429C /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3267D4423420E4C00ED429C /* AuthConfiguration.swift */; };
 		E36035F7230D5D1100719281 /* AuthBasicPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36035F5230D5D1100719281 /* AuthBasicPresenterTests.swift */; };
 		E36314CD230D5A5000907B18 /* AuthBasicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36314CB230D5A5000907B18 /* AuthBasicPresenter.swift */; };
+		E371B6A72355C00A000790DE /* AlfrescoAuthSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E371B6A62355C00A000790DE /* AlfrescoAuthSessionTests.swift */; };
+		E371B6A92355C9F4000790DE /* AuthPkcePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E371B6A82355C9F4000790DE /* AuthPkcePresenterTests.swift */; };
+		E371B6AB2355EA7F000790DE /* AppAuthMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E371B6AA2355EA7F000790DE /* AppAuthMocks.swift */; };
+		E376C0BC23549B33007AF5FA /* AuthConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E376C0BB23549B33007AF5FA /* AuthConfigurationTests.swift */; };
+		E376C0BE2354A596007AF5FA /* GetAlfrescoCredentialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E376C0BD2354A596007AF5FA /* GetAlfrescoCredentialTests.swift */; };
+		E376C0C02354AB20007AF5FA /* String+HelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E376C0BF2354AB20007AF5FA /* String+HelpersTests.swift */; };
+		E376C0C22354AC85007AF5FA /* URL+HelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E376C0C12354AC85007AF5FA /* URL+HelpersTests.swift */; };
+		E376C0C42354B110007AF5FA /* RefreshTokenPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E376C0C32354B110007AF5FA /* RefreshTokenPresenterTests.swift */; };
 		E3841C802332563300B18A7B /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3841C7F2332563300B18A7B /* NetworkServiceProtocol.swift */; };
 		E3C38EF52327B4EA007FCF8B /* GetAlfrescoCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C38EF42327B4EA007FCF8B /* GetAlfrescoCredential.swift */; };
 		E3C38EFD2327E50E007FCF8B /* URL+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C38EFC2327E50E007FCF8B /* URL+Helpers.swift */; };
@@ -62,10 +75,23 @@
 		B98D87DA2344D47000BC0259 /* AlfrescoAuthSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlfrescoAuthSession.swift; sourceTree = "<group>"; };
 		E31B47DF22F97844002B6BC5 /* AlfrescoAuth.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = AlfrescoAuth.xctestplan; sourceTree = "<group>"; };
 		E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWebViewControllerTests.swift; sourceTree = "<group>"; };
+		E31FE3422355B5CE0024B376 /* AlfrescoAuthDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoAuthDelegateStub.swift; sourceTree = "<group>"; };
+		E31FE3442355B6140024B376 /* APIClientStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientStub.swift; sourceTree = "<group>"; };
+		E31FE3462355B6BF0024B376 /* WKNavigationActionStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKNavigationActionStub.swift; sourceTree = "<group>"; };
+		E31FE34C2355BAA50024B376 /* AuthPresentersMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresentersMocks.swift; sourceTree = "<group>"; };
+		E31FE34E2355BABF0024B376 /* WebViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewMock.swift; sourceTree = "<group>"; };
 		E324E7AF232BBEB00014A8F7 /* RefreshTokenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPresenter.swift; sourceTree = "<group>"; };
 		E3267D4423420E4C00ED429C /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		E36035F5230D5D1100719281 /* AuthBasicPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBasicPresenterTests.swift; sourceTree = "<group>"; };
 		E36314CB230D5A5000907B18 /* AuthBasicPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBasicPresenter.swift; sourceTree = "<group>"; };
+		E371B6A62355C00A000790DE /* AlfrescoAuthSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoAuthSessionTests.swift; sourceTree = "<group>"; };
+		E371B6A82355C9F4000790DE /* AuthPkcePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPkcePresenterTests.swift; sourceTree = "<group>"; };
+		E371B6AA2355EA7F000790DE /* AppAuthMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAuthMocks.swift; sourceTree = "<group>"; };
+		E376C0BB23549B33007AF5FA /* AuthConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfigurationTests.swift; sourceTree = "<group>"; };
+		E376C0BD2354A596007AF5FA /* GetAlfrescoCredentialTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlfrescoCredentialTests.swift; sourceTree = "<group>"; };
+		E376C0BF2354AB20007AF5FA /* String+HelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HelpersTests.swift"; sourceTree = "<group>"; };
+		E376C0C12354AC85007AF5FA /* URL+HelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+HelpersTests.swift"; sourceTree = "<group>"; };
+		E376C0C32354B110007AF5FA /* RefreshTokenPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPresenterTests.swift; sourceTree = "<group>"; };
 		E3841C7F2332563300B18A7B /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		E3C38EF42327B4EA007FCF8B /* GetAlfrescoCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlfrescoCredential.swift; sourceTree = "<group>"; };
 		E3C38EFC2327E50E007FCF8B /* URL+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Helpers.swift"; sourceTree = "<group>"; };
@@ -131,13 +157,12 @@
 			isa = PBXGroup;
 			children = (
 				2BD6E15322F442C900949E44 /* Info.plist */,
-				2BE0E70322F84EAB002857F0 /* TestData.swift */,
 				E31B47DF22F97844002B6BC5 /* AlfrescoAuth.xctestplan */,
 				2BD6E15122F442C900949E44 /* AlfrescoAuthTests.swift */,
-				2BD6E16A22F4791C00949E44 /* AuthWebPresenterTests.swift */,
-				2BE0E70122F81BE9002857F0 /* AlfrescoCredentialTests.swift */,
-				E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */,
-				E36035F5230D5D1100719281 /* AuthBasicPresenterTests.swift */,
+				E31FE3412355B5B40024B376 /* Mocks */,
+				E31FE3482355B7DD0024B376 /* Models Tests */,
+				E31FE3492355B8010024B376 /* Extensions Tests */,
+				E31FE34B2355B82B0024B376 /* Presenters Tests */,
 			);
 			path = AlfrescoAuthTests;
 			sourceTree = "<group>";
@@ -201,6 +226,52 @@
 				E3841C7F2332563300B18A7B /* NetworkServiceProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		E31FE3412355B5B40024B376 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				2BE0E70322F84EAB002857F0 /* TestData.swift */,
+				E31FE3422355B5CE0024B376 /* AlfrescoAuthDelegateStub.swift */,
+				E31FE3442355B6140024B376 /* APIClientStub.swift */,
+				E31FE3462355B6BF0024B376 /* WKNavigationActionStub.swift */,
+				E31FE34C2355BAA50024B376 /* AuthPresentersMocks.swift */,
+				E31FE34E2355BABF0024B376 /* WebViewMock.swift */,
+				E371B6AA2355EA7F000790DE /* AppAuthMocks.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		E31FE3482355B7DD0024B376 /* Models Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2BE0E70122F81BE9002857F0 /* AlfrescoCredentialTests.swift */,
+				E376C0BB23549B33007AF5FA /* AuthConfigurationTests.swift */,
+				E376C0BD2354A596007AF5FA /* GetAlfrescoCredentialTests.swift */,
+				E371B6A62355C00A000790DE /* AlfrescoAuthSessionTests.swift */,
+			);
+			path = "Models Tests";
+			sourceTree = "<group>";
+		};
+		E31FE3492355B8010024B376 /* Extensions Tests */ = {
+			isa = PBXGroup;
+			children = (
+				E376C0BF2354AB20007AF5FA /* String+HelpersTests.swift */,
+				E376C0C12354AC85007AF5FA /* URL+HelpersTests.swift */,
+			);
+			path = "Extensions Tests";
+			sourceTree = "<group>";
+		};
+		E31FE34B2355B82B0024B376 /* Presenters Tests */ = {
+			isa = PBXGroup;
+			children = (
+				E376C0C32354B110007AF5FA /* RefreshTokenPresenterTests.swift */,
+				E36035F5230D5D1100719281 /* AuthBasicPresenterTests.swift */,
+				2BD6E16A22F4791C00949E44 /* AuthWebPresenterTests.swift */,
+				E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */,
+				E371B6A82355C9F4000790DE /* AuthPkcePresenterTests.swift */,
+			);
+			path = "Presenters Tests";
 			sourceTree = "<group>";
 		};
 		E326985B231698FF00D19D3B /* Supporting files */ = {
@@ -352,12 +423,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E376C0BE2354A596007AF5FA /* GetAlfrescoCredentialTests.swift in Sources */,
+				E371B6AB2355EA7F000790DE /* AppAuthMocks.swift in Sources */,
 				2BD6E15222F442C900949E44 /* AlfrescoAuthTests.swift in Sources */,
+				E376C0C02354AB20007AF5FA /* String+HelpersTests.swift in Sources */,
+				E376C0C42354B110007AF5FA /* RefreshTokenPresenterTests.swift in Sources */,
 				E36035F7230D5D1100719281 /* AuthBasicPresenterTests.swift in Sources */,
+				E31FE3452355B6140024B376 /* APIClientStub.swift in Sources */,
 				2BE0E70222F81BE9002857F0 /* AlfrescoCredentialTests.swift in Sources */,
+				E31FE3472355B6BF0024B376 /* WKNavigationActionStub.swift in Sources */,
 				2BD6E16B22F4791C00949E44 /* AuthWebPresenterTests.swift in Sources */,
+				E31FE3432355B5CE0024B376 /* AlfrescoAuthDelegateStub.swift in Sources */,
 				2BE0E70422F84EAB002857F0 /* TestData.swift in Sources */,
+				E376C0C22354AC85007AF5FA /* URL+HelpersTests.swift in Sources */,
+				E376C0BC23549B33007AF5FA /* AuthConfigurationTests.swift in Sources */,
+				E371B6A92355C9F4000790DE /* AuthPkcePresenterTests.swift in Sources */,
+				E371B6A72355C00A000790DE /* AlfrescoAuthSessionTests.swift in Sources */,
+				E31FE34D2355BAA50024B376 /* AuthPresentersMocks.swift in Sources */,
 				E31B47E122F97C53002B6BC5 /* AuthWebViewControllerTests.swift in Sources */,
+				E31FE34F2355BABF0024B376 /* WebViewMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

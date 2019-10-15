@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AuthConfiguration: Encodable {
+public struct AuthConfiguration: Encodable, Equatable {
     enum Key: CodingKey {
         case clientID
         case clientSecret

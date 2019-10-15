@@ -9,7 +9,6 @@
 import WebKit
 import UIKit
 import XCTest
-import AlfrescoCore
 @testable import AlfrescoAuth
 
 class AuthWebViewControllerTests: XCTestCase {
@@ -48,24 +47,5 @@ class AuthWebViewControllerTests: XCTestCase {
         sut.viewDidLoad()
         XCTAssertTrue(webViewMock.loadWasCalled)
         XCTAssertEqual(TestData.urlStringToLoadGood, webViewMock.urlString)
-    }
-    
-    // MARK: - Doubles
-    
-    class WebViewMock: WKWebView {
-        var loadWasCalled = false
-        var urlString = ""
-        
-        override func load(_ request: URLRequest) -> WKNavigation? {
-            loadWasCalled = true
-            urlString = request.url?.absoluteString ?? ""
-            return super.load(request)
-        }
-    }
-    
-    class AuthWebPresenterDummy: AuthWebPresenter { }
-    
-    struct AlfrescoAuthDelegateDummy: AlfrescoAuthDelegate{
-        func didReceive(result: Result<AlfrescoCredential, APIError>) { }
     }
 }
