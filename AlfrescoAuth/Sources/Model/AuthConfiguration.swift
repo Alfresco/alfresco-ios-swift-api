@@ -17,15 +17,13 @@ public struct AuthConfiguration: Encodable, Equatable {
         case redirectURI
     }
     
-    var clientID: String!
+    var clientID: String
     var clientSecret: String?
-    var baseUrl: String!
-    var realm: String!
+    var baseUrl: String
+    var realm: String
     var redirectURI: String?
     
-    init() { }
-    
-    public init(baseUrl: String, clientID: String, realm: String, clientSecret: String = "", redirectURI: String = "") {
+    public init(baseUrl: String, clientID: String, realm: String, clientSecret: String? = nil, redirectURI: String = "") {
         self.clientID = clientID
         self.baseUrl = baseUrl
         self.realm = realm

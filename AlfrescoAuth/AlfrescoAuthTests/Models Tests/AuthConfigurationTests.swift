@@ -16,7 +16,7 @@ class AuthConfigurationTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = AuthConfiguration()
+        sut = AuthConfiguration(baseUrl: TestData.baseUrlGood, clientID: TestData.clientIDGood, realm: TestData.realmGood)
     }
     
     override func tearDown() {
@@ -42,7 +42,7 @@ class AuthConfigurationTests: XCTestCase {
         XCTAssertEqual(sut.baseUrl, TestData.baseUrlGood)
         XCTAssertEqual(sut.clientID, TestData.clientIDGood)
         XCTAssertEqual(sut.realm, TestData.realmGood)
-        XCTAssertEqual(sut.clientSecret, "")
+        XCTAssertNil(sut.clientSecret)
         XCTAssertEqual(sut.redirectURI, "")
     }
 }

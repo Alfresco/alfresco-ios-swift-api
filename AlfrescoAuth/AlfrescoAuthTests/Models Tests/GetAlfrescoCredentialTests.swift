@@ -16,7 +16,7 @@ class GetAlfrescoCredentialTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = GetAlfrescoCredential()
+        sut = GetAlfrescoCredential(code: TestData.codeGood, configuration: TestData.configuration)
     }
     
     override func tearDown() {
