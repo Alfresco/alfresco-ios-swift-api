@@ -16,7 +16,16 @@ public struct APIError: Error {
     public var userInfo: [String: Any]
     public let responseCode: Int
     
-    public init(domain: String, code: Int = 0, message: String = "", userInfo: [String: Any] = ["": ""], error: Error? = nil ) {
+    /**
+    Designated initializer for request errors.
+    - Remark: By convention, the domain of the error will be populated with  the module name.
+    - Parameter domain: Error domain name.
+    - Parameter code: Request status code
+    - Parameter message: Error message
+    - Parameter userInfo: Custom object to be passed along the error. If a message value is provided, the *userInfo* property will be overridden
+    - Parameter error: Optional underlaying error object
+    */
+    public init(domain: String, code: Int = 0, message: String = "", userInfo: [String: Any] = ["" : ""], error: Error? = nil ) {
         self.domain = domain
         self.responseCode = code
         self.userInfo = userInfo
