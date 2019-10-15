@@ -8,7 +8,9 @@
 
 import Foundation
 
-public typealias ResultCallback<Value> = (Result<Value, APIError>) -> Void
+public protocol URLSessionProtocol {
+    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskResult) -> URLSessionDataTask
+}
 
 public protocol APIClientProtocol {
     /// Base URL based on which request objects will set custom paths.
@@ -27,13 +29,19 @@ public protocol APIClientProtocol {
     func send<T: APIRequest>(_ request: T, completion: @escaping ResultCallback<T.Response>) -> URLSessionDataTask?
 }
 
+extension URLSession: URLSessionProtocol { }
+
+public typealias DataTaskResult = (Data?, URLResponse?, Error?) -> Void
+public typealias ResultCallback<Value> = (Result<Value, APIError>) -> Void
+
 public class APIClient: APIClientProtocol {
-    private let session = URLSession(configuration: .default)
-    private let moduleName = "AlfrecoCore"
+    private let session: URLSessionProtocol
+    private let moduleName = Bundle.main.bundleName ?? "AlfrescoCore"
     public var baseURL: URL?
     
-    public required init(with base: String) {
+    public required init(with base: String, session: URLSessionProtocol = URLSession(configuration: .default)) {
         self.baseURL = URL(string: base)
+        self.session = session
     }
 
     public func send<T: APIRequest>(_ request: T, completion: @escaping ResultCallback<T.Response>) -> URLSessionDataTask? {
@@ -42,6 +50,7 @@ public class APIClient: APIClientProtocol {
                 guard let sSelf = self else { return }
                 if let error = error {
                     completion(.failure(APIError(domain: sSelf.moduleName, error: error)))
+                    return
                 }
                 guard let data = data, let response = response as? HTTPURLResponse else {
                     completion(.failure(APIError(domain: sSelf.moduleName, message: errTryAgain)))
