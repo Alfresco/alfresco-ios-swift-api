@@ -26,7 +26,10 @@ public class AuthPkcePresenter {
         }
         OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) {  [weak self] pkceConfiguration, error in
             guard let sSelf = self else { return }
-            guard let viewController = sSelf.presentingViewController else { return }
+            guard let viewController = sSelf.presentingViewController else {
+                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "ViewController is nil!")))
+                return
+            }
             if let error = error {
                 sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, error: error)))
                 return

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AuthConfiguration: Encodable {
+public struct AuthConfiguration: Encodable, Equatable {
     enum Key: CodingKey {
         case clientID
         case clientSecret
@@ -17,13 +17,15 @@ public struct AuthConfiguration: Encodable {
         case redirectURI
     }
     
-    var clientID: String
+    var clientID: String!
     var clientSecret: String?
-    var baseUrl: String
-    var realm: String
+    var baseUrl: String!
+    var realm: String!
     var redirectURI: String?
     
-    public init(baseUrl: String, clientID: String, realm: String, clientSecret: String? = nil, redirectURI: String = "") {
+    init() { }
+    
+    public init(baseUrl: String, clientID: String, realm: String, clientSecret: String = "", redirectURI: String = "") {
         self.clientID = clientID
         self.baseUrl = baseUrl
         self.realm = realm

@@ -11,5 +11,5 @@ import AlfrescoCore
 
 public protocol NetworkServiceProtocol {
     var authDelegate: AlfrescoAuthDelegate? { get set }
-    var apiClient: APIClient { get }
+    var apiClient: APIClientProtocol { get }
 }

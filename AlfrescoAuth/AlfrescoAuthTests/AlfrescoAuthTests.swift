@@ -11,15 +11,13 @@ import AlfrescoCore
 @testable import AlfrescoAuth
 
 class AlfrescoAuthTests: XCTestCase {
-    
-    var expectationForDidRevicedCall = XCTestExpectation(description: "Delegate didReceivced call")
-    var expectationForSuccessInDidRecivedCall = XCTestExpectation(description: "Wait for delegate to login with success with username and password.")
-    var expectationForErrorInDidRecivedCall = XCTestExpectation(description: "Wait for delegate to login with error with wrong username or password.")
     var sut: AlfrescoAuth!
+    var expectationForDidRevicedCall = XCTestExpectation(description: "Wait for delegate.")
+    var expectationForSuccessInDidRecivedCall = XCTestExpectation(description: "Success in DidRecivedCall")
+    var expectationForFailureInDidRecivedCall = XCTestExpectation(description: "Failure in DidRecivedCall")
 
     override func setUp() {
         super.setUp()
-        
         sut = AlfrescoAuth(configuration: TestData.configuration)
     }
 
@@ -32,84 +30,59 @@ class AlfrescoAuthTests: XCTestCase {
         XCTAssertNotNil(sut)
     }
     
-    //MARK: - SAML web auth tests
-    func testGetAuthViewControllerOfTypeWebIsAAuthWebViewController() {
+    func testWebAuthReturnsAuthWebViewController() {
         let viewController = sut.webAuth(delegate: AlfrescoAuthDelegateStub())
         XCTAssert(viewController.isKind(of: AuthWebViewController.self))
     }
     
-    func testGetAuthViewControllerOfTypeWebSetsAuthDelegateOnPresenter() {
-        let viewController = sut.webAuth(delegate: AlfrescoAuthDelegateStub()) as! AuthWebViewController
-        XCTAssertNotNil(viewController.presenter?.authDelegate)
-    }
-    
-    func testGetAuthViewControllerOfTypeWebSetsURLStringToLoad() {
+    func testWebAuthSetsURLString() {
         let viewController = sut.webAuth(delegate: AlfrescoAuthDelegateStub()) as! AuthWebViewController
         XCTAssertNotNil(TestData.urlStringToLoadGood, viewController.urlString!)
     }
     
-    func testGetAuthWithUsernameAndPasswordWithSuccess() {
-        let delegateStub = AlfrescoAuthDelegateStub()
-        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
-        delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
-        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
-        sut.basicAuth(username: TestData.username1, password: TestData.password1, delegate: delegateStub)
-    
-        wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
+    func testWebAuthSetsAuthDelegateToViewController() {
+        let viewController = sut.webAuth(delegate: AlfrescoAuthDelegateStub()) as! AuthWebViewController
+        XCTAssertNotNil(viewController.presenter?.authDelegate)
     }
     
-    func testGetAuthWithUsernameAndPasswordWithErrorFromServer() {
-        let delegateStub = AlfrescoAuthDelegateStub()
-        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
-        delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
-        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
-        sut.basicAuth(username: TestData.username1, password: TestData.password2, delegate: delegateStub)
-    
-        wait(for: [expectationForDidRevicedCall, expectationForErrorInDidRecivedCall], timeout: 10.0)
+    func testWebAuthSetsPresenter() {
+        _ = sut.webAuth(delegate: AlfrescoAuthDelegateStub())
+        XCTAssertNotNil(sut.webPresenter)
+        XCTAssertNotNil(sut.webPresenter?.authDelegate)
     }
     
-    func testRefreshSessionWithSuccess() {
-        let delegateStub = AlfrescoAuthDelegateStub()
-        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
-        delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
-        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
-        let credential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
-        sut.refreshSession(credential: credential, delegate: delegateStub)
+    func testBasicAuthSetsPresenter() {
+        sut.basicAuth(username: TestData.username1, password: TestData.password1, delegate: AlfrescoAuthDelegateStub())
+        XCTAssertNotNil(sut.basicPresenter)
+        XCTAssertNotNil(sut.basicPresenter?.authDelegate)
+    }
+    
+    func testRefreshSessionSetsPresenter() {
+        let alfrescoCredential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
+        sut.refreshSession(credential: alfrescoCredential, delegate: AlfrescoAuthDelegateStub())
+        XCTAssertNotNil(sut.refreshPresenter)
+        XCTAssertNotNil(sut.refreshPresenter?.authDelegate)
+    }
+    
+    func testPckeAuthSetsPresenter() {
+        let viewController = UIViewController()
+        _ = sut.pkceAuth(onViewController: viewController, delegate: AlfrescoAuthDelegateStub())
+        XCTAssertNotNil(sut.pkcePresenter)
+        XCTAssertNotNil(sut.pkcePresenter?.authDelegate)
+    }
+    
+    func testPckeAuthReturnsAlfrescoAuthSession() {
+        let viewController = UIViewController()
+        let alfrescoAuthSession = sut.pkceAuth(onViewController: viewController, delegate: AlfrescoAuthDelegateStub())
+        XCTAssertNotNil(alfrescoAuthSession)
+    }
+    
+    func testPckeRefreshSessionhSetsPresenter() {
+        let viewController = UIViewController()
+        _ = sut.pkceAuth(onViewController: viewController, delegate: AlfrescoAuthDelegateStub())
+        sut.pkceRefreshSession(delegate: AlfrescoAuthDelegateStub())
         
-        wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
-    }
-    
-    func testRefreshSessionWithErrorFromServer() {
-        let delegateStub = AlfrescoAuthDelegateStub()
-        delegateStub.expectationRequestLogin = expectationForDidRevicedCall
-        delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
-        delegateStub.expectationForErrorInDidRecivedCall = expectationForErrorInDidRecivedCall
-        let credential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
-        sut.refreshSession(credential: credential, delegate: delegateStub)
-        
-        wait(for: [expectationForDidRevicedCall, expectationForErrorInDidRecivedCall], timeout: 10.0)
-    }
-    
-
-    //MARK: - Doubles
-    class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {
-        var didReceiveCalled = false
-        var expectationRequestLogin: XCTestExpectation!
-        var expectationForSuccessInDidRecivedCall: XCTestExpectation!
-        var expectationForErrorInDidRecivedCall: XCTestExpectation!
-        
-        func didReceive(result: Result<AlfrescoCredential, APIError>) {
-            switch result {
-            case .success(let cred):
-                print(cred)
-                expectationForSuccessInDidRecivedCall.fulfill()
-                didReceiveCalled = true
-            case .failure(let error):
-                print(error)
-                expectationForErrorInDidRecivedCall.fulfill()
-                didReceiveCalled = false
-            }
-            expectationRequestLogin.fulfill()
-        }
+        XCTAssertNotNil(sut.pkcePresenter)
+        XCTAssertNotNil(sut.pkcePresenter?.authDelegate)
     }
 }
