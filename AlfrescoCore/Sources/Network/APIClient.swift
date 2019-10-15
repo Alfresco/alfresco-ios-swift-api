@@ -11,9 +11,19 @@ import Foundation
 public typealias ResultCallback<Value> = (Result<Value, APIError>) -> Void
 
 public protocol APIClientProtocol {
+    /// Base URL based on which request objects will set custom paths.
     var baseURL: URL? { get }
-    init(with base: String)
     
+    /** Designated initializer
+    - Parameter base: Base URL adress used to generate requests
+    - Parameter session: Session object on which the requests should be performed
+    */
+    init(with base: String, session: URLSessionProtocol)
+    
+    /** Asynchronously executes a request and return the result back the result via a completion block.
+    - Parameter request: Request object to be executed
+    - Parameter completion: Completion block containing the response object and an optional error parameter
+    */
     func send<T: APIRequest>(_ request: T, completion: @escaping ResultCallback<T.Response>) -> URLSessionDataTask?
 }
 
