@@ -28,70 +28,8 @@ struct TestData {
     static let clientSecret = "secret"
     static var response = ["name" : "test"]
     static var invalidResponse = "response"
+    static let errorDomain = "domain"
+    static let errorCode = 1000
+    static let errorMessage = "message"
+    static let errorObj = APIError(domain: "test", code: 0, message: "error message")
 }
-
-struct TestAPIRequest: APIRequest {
-    typealias Response = [String : String]
-    
-    var path: String {
-        return TestData.testAPIRequestPath
-    }
-    
-    var method: HttpMethod {
-        return .get
-    }
-    
-    var headers: [String : ContentType] {
-        return ["Content-Type": .urlencoded]
-    }
-    
-    var parameters: [String : String] {
-        return ["client_id": TestData.clientID,
-                "client_secret": TestData.clientSecret]
-    }
-}
-
-struct TestPOSTAPIRequest: APIRequest {
-    typealias Response = String
-    
-    var path: String {
-        return TestData.testAPIRequestPath
-    }
-    
-    var method: HttpMethod {
-        return .post
-        
-    }
-    
-    var headers: [String : ContentType] {
-        return ["Content-Type": .urlencoded]
-    }
-    
-    var parameters: [String : String] {
-        return ["client_id": TestData.clientID,
-                "client_secret": TestData.clientSecret]
-    }
-}
-
-struct TestAPIRequestWithInvalidPath: APIRequest {
-    typealias Response = String
-    
-    var path: String {
-        return TestData.invalidAPIRequestPath
-    }
-    
-    var method: HttpMethod {
-        return .get
-    }
-    
-    var headers: [String : ContentType] {
-        return ["Content-Type": .urlencoded]
-    }
-    
-    var parameters: [String : String] {
-        return ["client_id": TestData.clientID,
-                "client_secret": TestData.clientSecret]
-    }
-}
-
-

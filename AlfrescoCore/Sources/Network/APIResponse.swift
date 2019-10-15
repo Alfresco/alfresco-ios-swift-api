@@ -8,6 +8,4 @@
 
 import Foundation
 
-public protocol APIResponse: Decodable {
-    
-}
+public protocol APIResponse: Decodable { }

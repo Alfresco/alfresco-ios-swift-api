@@ -29,6 +29,8 @@
 		2BAFC1B1230D99C3000CB1A9 /* AlfrescoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAFC1A7230D99C2000CB1A9 /* AlfrescoCore.framework */; };
 		2BAFC1B6230D99C3000CB1A9 /* AlfrescoCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAFC1B5230D99C3000CB1A9 /* AlfrescoCoreTests.swift */; };
 		2BAFC1B8230D99C3000CB1A9 /* AlfrescoCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BAFC1AA230D99C2000CB1A9 /* AlfrescoCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B98B23202355AFC3002EF9EC /* APIErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B231F2355AFC3002EF9EC /* APIErrorTests.swift */; };
+		B98B23222355BEE0002EF9EC /* APIErrorMockedObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B23212355BEE0002EF9EC /* APIErrorMockedObjects.swift */; };
 		B9FDA34D2350B39900329E35 /* MockedObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FDA34C2350B39900329E35 /* MockedObjects.swift */; };
 		B9FDA3502350B8A500329E35 /* Bundle+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FDA34E2350B7E100329E35 /* Bundle+Helpers.swift */; };
 		B9FDA3522350BC4400329E35 /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FDA3512350BC4400329E35 /* APIClientTests.swift */; };
@@ -62,6 +64,8 @@
 		2BAFC1B0230D99C3000CB1A9 /* AlfrescoCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlfrescoCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BAFC1B5230D99C3000CB1A9 /* AlfrescoCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoCoreTests.swift; sourceTree = "<group>"; };
 		2BAFC1B7230D99C3000CB1A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B98B231F2355AFC3002EF9EC /* APIErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorTests.swift; sourceTree = "<group>"; };
+		B98B23212355BEE0002EF9EC /* APIErrorMockedObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorMockedObjects.swift; sourceTree = "<group>"; };
 		B9FDA34C2350B39900329E35 /* MockedObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedObjects.swift; sourceTree = "<group>"; };
 		B9FDA34E2350B7E100329E35 /* Bundle+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Helpers.swift"; sourceTree = "<group>"; };
 		B9FDA3512350BC4400329E35 /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
@@ -143,10 +147,10 @@
 		2BAFC1A9230D99C2000CB1A9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				2B7D2D472315548B004930BF /* Supporting files */,
-				2B7D2D4623155477004930BF /* Network */,
-				2B7D2D4523155464004930BF /* Extensions */,
 				2B7D2D432314211C004930BF /* AlfrescoCore.swift */,
+				2B7D2D4523155464004930BF /* Extensions */,
+				2B7D2D4623155477004930BF /* Network */,
+				2B7D2D472315548B004930BF /* Supporting files */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -161,6 +165,8 @@
 				2BAFC1B5230D99C3000CB1A9 /* AlfrescoCoreTests.swift */,
 				2B7D2D4B2315582E004930BF /* NetworkRequestBuilderTests.swift */,
 				B9FDA3512350BC4400329E35 /* APIClientTests.swift */,
+				B98B23212355BEE0002EF9EC /* APIErrorMockedObjects.swift */,
+				B98B231F2355AFC3002EF9EC /* APIErrorTests.swift */,
 			);
 			path = AlfrescoCoreTests;
 			sourceTree = "<group>";
@@ -317,6 +323,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B7D2D4C2315582E004930BF /* NetworkRequestBuilderTests.swift in Sources */,
+				B98B23222355BEE0002EF9EC /* APIErrorMockedObjects.swift in Sources */,
+				B98B23202355AFC3002EF9EC /* APIErrorTests.swift in Sources */,
 				2BAFC1B6230D99C3000CB1A9 /* AlfrescoCoreTests.swift in Sources */,
 				2B7D2D4A231557A0004930BF /* TestData.swift in Sources */,
 				B9FDA3522350BC4400329E35 /* APIClientTests.swift in Sources */,

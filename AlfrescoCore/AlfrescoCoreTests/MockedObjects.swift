@@ -9,49 +9,66 @@
 import Foundation
 @testable import AlfrescoCore
 
-class MockURLSessionWithError: URLSessionProtocol {
-    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskResult) -> URLSessionDataTask {
-        completionHandler(nil, nil, APIError(domain:"test"))
+struct TestAPIRequest: APIRequest {
+    typealias Response = [String : String]
+    
+    var path: String {
+        return TestData.testAPIRequestPath
+    }
+    
+    var method: HttpMethod {
+        return .get
+    }
+    
+    var headers: [String : ContentType] {
+        return ["Content-Type": .urlencoded]
+    }
+    
+    var parameters: [String : String] {
+        return ["client_id": TestData.clientID,
+                "client_secret": TestData.clientSecret]
+    }
+}
+
+struct TestPOSTAPIRequest: APIRequest {
+    typealias Response = String
+    
+    var path: String {
+        return TestData.testAPIRequestPath
+    }
+    
+    var method: HttpMethod {
+        return .post
         
-        return URLSession.init(configuration: .default).dataTask(with: URL(string: TestData.testAPIRequestPath)!)
+    }
+    
+    var headers: [String : ContentType] {
+        return ["Content-Type": .urlencoded]
+    }
+    
+    var parameters: [String : String] {
+        return ["client_id": TestData.clientID,
+                "client_secret": TestData.clientSecret]
     }
 }
 
-class MockURLSessionWithInvalidDataAndResponse: URLSessionProtocol {
-    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskResult) -> URLSessionDataTask {
-        completionHandler(nil, nil, nil)
-        
-        return URLSession.init(configuration: .default).dataTask(with: URL(string: TestData.testAPIRequestPath)!)
+struct TestAPIRequestWithInvalidPath: APIRequest {
+    typealias Response = String
+    
+    var path: String {
+        return TestData.invalidAPIRequestPath
     }
-}
-
-class MOCKURLSessionWithSuccessfullResponse: URLSessionProtocol {
-    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskResult) -> URLSessionDataTask {
-        do {
-            let data = try JSONSerialization.data(withJSONObject: TestData.response, options: .prettyPrinted)
-            let response = HTTPURLResponse(url: URL(string: TestData.testAPIRequestPath)!, statusCode: 200, httpVersion: nil, headerFields: nil)
-            completionHandler(data, response, nil)
-        } catch {}
-        return URLSession.init(configuration: .default).dataTask(with: URL(string: TestData.testAPIRequestPath)!)
+    
+    var method: HttpMethod {
+        return .get
     }
-}
-
-class MOCKURLSessionWithInvalidResponse: URLSessionProtocol {
-    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskResult) -> URLSessionDataTask {
-        let data = TestData.invalidResponse.data(using: .utf8)
-        let response = HTTPURLResponse(url: URL(string: TestData.testAPIRequestPath)!, statusCode: 200, httpVersion: nil, headerFields: nil)
-        completionHandler(data, response, nil)
-        return URLSession.init(configuration: .default).dataTask(with: URL(string: TestData.testAPIRequestPath)!)
+    
+    var headers: [String : ContentType] {
+        return ["Content-Type": .urlencoded]
     }
-}
-
-class MOCKURLSessionWithInvalidStatusCodeResponse: URLSessionProtocol {
-    func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskResult) -> URLSessionDataTask {
-        do {
-            let data = try JSONSerialization.data(withJSONObject: [:], options: .prettyPrinted)
-            let response = HTTPURLResponse(url: URL(string: TestData.testAPIRequestPath)!, statusCode: 400, httpVersion: nil, headerFields: nil)
-            completionHandler(data, response, nil)
-        } catch {}
-        return URLSession.init(configuration: .default).dataTask(with: URL(string: TestData.testAPIRequestPath)!)
+    
+    var parameters: [String : String] {
+        return ["client_id": TestData.clientID,
+                "client_secret": TestData.clientSecret]
     }
 }
