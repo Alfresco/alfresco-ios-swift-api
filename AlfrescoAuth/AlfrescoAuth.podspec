@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name                  = 'AlfrescoAuth'
-s.version               = '0.2.0'
+s.version               = '0.2.1'
 s.summary               = 'Alfresco DBP SDK Auth module'
 s.homepage              = 'http://alfresco-identity-service.mobile.dev.alfresco.me'
 # 'https://github.com/Alfresco/ios-dbp-sdk'
@@ -11,7 +11,7 @@ s.source                = {:git => 'https://github.com/Alfresco/ios-dbp-sdk.git'
 s.source_files 			= 'AlfrescoAuth/Sources/**/*.{swift,h,m}'
 s.exclude_files			= ['AlfrescoAuth/AlfrescoAuthTests', 'AlfrescoAuth/Sources/**/*.plist']
 s.ios.deployment_target = '12.0'
-s.swift_version         = '5.0'
+s.swift_version         = '4.2'
 s.framework 			= ['WebKit']
 s.resources 			= ["AlfrescoAuth/Sources/**/*.storyboard"]
 s.dependency 			 'AlfrescoCore'
