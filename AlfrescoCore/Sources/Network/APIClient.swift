@@ -68,11 +68,16 @@ public class APIClient: APIClientProtocol {
                     }
                     return
                 }
-                do {
-                    let model = try JSONDecoder().decode(T.Response.self, from: data)
-                    completion(.success(model))
-                } catch {
-                    completion(.failure(APIError(domain: sSelf.moduleName, error: error)))
+                
+                if (data.isEmpty) {
+                    completion(.success(sSelf.statusCodeResponse(T.Response.self, responseCode: response.statusCode)))
+                } else {
+                    do {
+                        let model = try JSONDecoder().decode(T.Response.self, from: data)
+                        completion(.success(model))
+                    } catch {
+                        completion(.failure(APIError(domain: sSelf.moduleName, error: error)))
+                    }
                 }
             }
             task.resume()
@@ -111,5 +116,9 @@ public class APIClient: APIClientProtocol {
         }
         
         return urlRequest
+    }
+    
+    func statusCodeResponse<T>(_ type: T.Type, responseCode: Int) -> T where T : Decodable {
+        return StatusCodeResponse(responseCode: responseCode) as! T
     }
 }
