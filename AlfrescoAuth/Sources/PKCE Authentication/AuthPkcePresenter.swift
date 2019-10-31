@@ -8,15 +8,48 @@
 
 import Foundation
 import AppAuth
+import AlfrescoCore
+
+public enum AvailableAuthType {
+    case basicAuth
+    case aimsAuth
+}
 
 public class AuthPkcePresenter {
     var configuration: AuthConfiguration
     var presentingViewController: UIViewController?
     var authSession: AlfrescoAuthSession?
     var authDelegate: AlfrescoAuthDelegate?
+    var apiClient: APIClientProtocol
     
     init(configuration: AuthConfiguration) {
         self.configuration = configuration
+        self.apiClient = APIClient(with: configuration.baseUrl)
+    }
+    
+    func availableAuthType(for serviceDocument:String, handler: @escaping((Result<AvailableAuthType, APIError>) -> Void)) {
+        guard let issuer = URL(string: configuration.baseUrl) else {
+            handler(.failure(APIError(domain: moduleName, message: "Can't create issuer from base url!")))
+            return
+        }
+        
+        OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) {[weak self] pkceConfiguration, error in
+            guard let sSelf = self else { return }
+            
+            if error != nil {
+                // Check if the request succeeds for an instance configured with basic auth
+                _ = sSelf.apiClient.send(HeadServiceDocumentInstance(serviceDocumentInstanceURL: serviceDocument), completion: { (result) in
+                    switch result {
+                    case .success(_):
+                        handler(.success(.basicAuth))
+                    case .failure(_):
+                        handler(.failure(APIError(domain: moduleName, message: "No authentication service can be found at the provided AlfrescoURL")))
+                    }
+                })
+            } else {
+                handler(.success(.aimsAuth))
+            }
+        }
     }
     
     func execute() {
@@ -45,7 +78,7 @@ public class AuthPkcePresenter {
                                                   redirectURL: URL(string: sSelf.configuration.redirectURI ?? "")!,
                                                   responseType: OIDResponseTypeCode,
                                                   additionalParameters: nil)
-
+            
             sSelf.authSession?.authorizationFlow = OIDAuthState.authState(byPresenting: request, presenting: viewController) { authState, error in
                 if let error = error {
                     sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, error: error)))

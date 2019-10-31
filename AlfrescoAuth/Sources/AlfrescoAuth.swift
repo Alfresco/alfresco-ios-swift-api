@@ -94,6 +94,18 @@ public struct AlfrescoAuth {
         return authSession
     }
     
+    /** Given a path component,  it returns via a closure the available authentication type for the base URL defined in the AlfrescoConfiguration
+     object and the defined path. If the path is not defined, then only the base URL will be used as reference.
+     - Parameter serviceDocument: service path for which the authentication type check is performed
+     - Parameter handler: Closure delivering updates on the authentication type. Possible values are base auth, AIMS and an optional error
+     */
+    public mutating func availableAuthType(for serviceDocument: String = "", handler:@escaping ((Result<AvailableAuthType, APIError>) -> Void)) {
+        pkcePresenter = AuthPkcePresenter(configuration: configuration)
+        pkcePresenter?.availableAuthType(for: serviceDocument, handler: { result in
+            handler(result)
+        })
+    }
+    
     /** Designated safe session refresh method with Identity Service  using PKCE protocol.
     - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the re-authentication request
     */

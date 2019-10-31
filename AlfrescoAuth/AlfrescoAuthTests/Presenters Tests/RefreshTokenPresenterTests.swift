@@ -39,7 +39,7 @@ class RefreshTokenPresenterTests: XCTestCase {
     func testExecuteRefreshWithSuccess() {
         let alfrescoCredential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
         let delegateStub = AlfrescoAuthDelegateStub()
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         
         apiClientSub.successResponse = true
         delegateStub.expectationForDidRevicedCall = expectationForDidRevicedCall
@@ -55,7 +55,7 @@ class RefreshTokenPresenterTests: XCTestCase {
     func testExecuteRefreshWithFailure() {
         let alfrescoCredential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
         let delegateStub = AlfrescoAuthDelegateStub()
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         
         apiClientSub.successResponse = false
         delegateStub.expectationForDidRevicedCall = expectationForDidRevicedCall
@@ -70,7 +70,7 @@ class RefreshTokenPresenterTests: XCTestCase {
     
     func testRequestTokenWithSuccess() {
         let alfrescoCredential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         apiClientSub.successResponse = true
         sut.apiClient = apiClientSub
         sut.requestToken(with: alfrescoCredential) { (result) in
@@ -87,7 +87,7 @@ class RefreshTokenPresenterTests: XCTestCase {
     
     func testRequestTokenWithFailure() {
         let alfrescoCredential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         apiClientSub.successResponse = false
         sut.apiClient = apiClientSub
         sut.requestToken(with: alfrescoCredential) { (result) in

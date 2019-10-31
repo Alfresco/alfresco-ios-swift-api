@@ -38,7 +38,7 @@ class AuthBasicPresenterTests: XCTestCase {
     
     func testExecuteWithSuccess() {
         let delegateStub = AlfrescoAuthDelegateStub()
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         
         apiClientSub.successResponse = true
         delegateStub.expectationForDidRevicedCall = expectationForDidRevicedCall
@@ -53,7 +53,7 @@ class AuthBasicPresenterTests: XCTestCase {
     
     func testExecuteWithFailure() {
         let delegateStub = AlfrescoAuthDelegateStub()
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         
         apiClientSub.successResponse = false
         delegateStub.expectationForDidRevicedCall = expectationForDidRevicedCall
@@ -67,7 +67,7 @@ class AuthBasicPresenterTests: XCTestCase {
     }
     
     func testRequestTokenWithSuccess() {
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         apiClientSub.successResponse = true
         sut.apiClient = apiClientSub
         sut.requestToken(with: TestData.username1, and: TestData.password1, completion: { (result) in
@@ -83,7 +83,7 @@ class AuthBasicPresenterTests: XCTestCase {
     }
     
     func testRequestTokenWithFailure() {
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         apiClientSub.successResponse = false
         sut.apiClient = apiClientSub
         sut.requestToken(with: TestData.username1, and: TestData.password2, completion: { (result) in
