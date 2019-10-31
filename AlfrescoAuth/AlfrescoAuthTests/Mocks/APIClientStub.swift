@@ -14,7 +14,7 @@ class APIClientStub: APIClientProtocol {
     var baseURL: URL?
     var successResponse: Bool = true
     
-    required init(with base: String) {
+    required init(with base: String, session: URLSessionProtocol) {
         self.baseURL = URL(string: base)
     }
     
