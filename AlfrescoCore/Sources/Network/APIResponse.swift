@@ -9,3 +9,7 @@
 import Foundation
 
 public protocol APIResponse: Decodable { }
+
+public struct StatusCodeResponse: APIResponse {
+    let responseCode: Int
+}
