@@ -40,7 +40,7 @@ class AuthWebPresenterTests: XCTestCase {
     }
     
     func testSutParseReturnWKNavigationActionPolicyCancel() {
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         sut.apiClient = apiClientSub
         navigationActionStub.sendCodeUrl = true
         
@@ -55,7 +55,7 @@ class AuthWebPresenterTests: XCTestCase {
     }
     
     func testSutParseCallsWithSuccess() {
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         let delegateStub = AlfrescoAuthDelegateStub()
         
         delegateStub.expectationForDidRevicedCall = expectationForDidRevicedCall
@@ -70,7 +70,7 @@ class AuthWebPresenterTests: XCTestCase {
     }
     
     func testSutParseCallsWithFailure() {
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         let delegateStub = AlfrescoAuthDelegateStub()
         
         delegateStub.expectationForDidRevicedCall = expectationForDidRevicedCall
@@ -85,7 +85,7 @@ class AuthWebPresenterTests: XCTestCase {
     }
     
     func testRequestTokenWithSuccess() {
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         apiClientSub.successResponse = true
         sut.apiClient = apiClientSub
         sut.requestToken(with: TestData.codeGood) { (result) in
@@ -101,7 +101,7 @@ class AuthWebPresenterTests: XCTestCase {
     }
     
     func testRequestTokenWithFailure() {
-        let apiClientSub = APIClientStub(with: TestData.baseUrlGood)
+        let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         apiClientSub.successResponse = false
         sut.apiClient = apiClientSub
         sut.requestToken(with: TestData.codeGood) { (result) in
