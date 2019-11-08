@@ -96,12 +96,12 @@ public struct AlfrescoAuth {
     
     /** Given a path component,  it returns via a closure the available authentication type for the base URL defined in the AlfrescoConfiguration
      object and the defined path. If the path is not defined, then only the base URL will be used as reference.
-     - Parameter serviceDocument: service path for which the authentication type check is performed
+     - Parameter issuer: URL path for which the authentication type check is performed
      - Parameter handler: Closure delivering updates on the authentication type. Possible values are base auth, AIMS and an optional error
      */
-    public mutating func availableAuthType(for serviceDocument: String = "", handler:@escaping ((Result<AvailableAuthType, APIError>) -> Void)) {
+    public mutating func availableAuthType(for issuer: String = "", handler:@escaping ((Result<AvailableAuthType, APIError>) -> Void)) {
         pkcePresenter = AuthPkcePresenter(configuration: configuration)
-        pkcePresenter?.availableAuthType(for: serviceDocument, handler: { result in
+        pkcePresenter?.availableAuthType(for: issuer, handler: { result in
             handler(result)
         })
     }
