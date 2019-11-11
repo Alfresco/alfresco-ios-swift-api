@@ -27,18 +27,18 @@ public class AuthPkcePresenter {
         self.apiClient = APIClient(with: configuration.baseUrl)
     }
     
-    func availableAuthType(for serviceDocument:String, handler: @escaping((Result<AvailableAuthType, APIError>) -> Void)) {
-        guard let issuer = URL(string: configuration.baseUrl) else {
+    func availableAuthType(for issuer: String, handler: @escaping((Result<AvailableAuthType, APIError>) -> Void)) {
+        guard let issuerURL = URL(string: String(format: kIssuerPKCE, configuration.baseUrl, configuration.realm)) else {
             handler(.failure(APIError(domain: moduleName, message: "Can't create issuer from base url!")))
             return
         }
         
-        OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) {[weak self] pkceConfiguration, error in
+        OIDAuthorizationService.discoverConfiguration(forIssuer: issuerURL) {[weak self] pkceConfiguration, error in
             guard let sSelf = self else { return }
             
             if error != nil {
                 // Check if the request succeeds for an instance configured with basic auth
-                _ = sSelf.apiClient.send(HeadServiceDocumentInstance(serviceDocumentInstanceURL: serviceDocument), completion: { (result) in
+                _ = sSelf.apiClient.send(HeadServiceDocumentInstance(serviceDocumentInstanceURL: issuer), completion: { (result) in
                     switch result {
                     case .success(_):
                         handler(.success(.basicAuth))
