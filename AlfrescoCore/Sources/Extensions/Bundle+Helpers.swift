@@ -9,7 +9,7 @@
 import Foundation
 
 extension Bundle {
-    var bundleName: String? {
+    public var bundleName: String? {
         return object(forInfoDictionaryKey: "CFBundleName") as? String
     }
 }
