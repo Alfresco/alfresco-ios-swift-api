@@ -29,8 +29,12 @@ class RefreshTokenPresenter: NSObject, NetworkServiceProtocol {
     }
     
     func requestToken(with credential: AlfrescoCredential, completion: @escaping (Result<AlfrescoCredential, APIError>) -> Void) {
-        _ = apiClient.send(GetAlfrescoCredential(refreshToken: credential.refreshToken, configuration: configuration), completion: { (result) in
-            completion(result)
-        })
+        if let refreshToken = credential.refreshToken {
+            _ = apiClient.send(GetAlfrescoCredential(refreshToken: refreshToken, configuration: configuration), completion: { (result) in
+                completion(result)
+            })
+        } else {
+            completion(.failure(APIError(domain: Bundle.main.bundleName ?? "AlfrescoAuth", message: "Cannot request token because refresh token is missing")))
+        }
     }
 }

@@ -10,12 +10,12 @@ import Foundation
 import AppAuth
 
 public struct AlfrescoCredential: Decodable {
-    var tokenType: String!
-    var accessToken: String!
-    var accessTokenExpiresIn: Int!
-    var refreshToken: String!
-    var refreshTokenExpiresIn: Int!
-    var sessionState: String!
+    public var tokenType: String?
+    public var accessToken: String?
+    public var accessTokenExpiresIn: Int?
+    public var refreshToken: String?
+    public var refreshTokenExpiresIn: Int?
+    public var sessionState: String?
 
     enum CodingKeys: String, CodingKey {
         case tokenType = "token_type"
