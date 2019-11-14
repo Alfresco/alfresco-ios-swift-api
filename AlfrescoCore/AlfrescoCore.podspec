@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name                  = 'AlfrescoCore'
-s.version               = '0.2.0'
+s.version               = '0.2.1'
 s.summary               = 'Alfresco DBP SDK Core module'
 s.homepage              = 'http://alfresco-identity-service.mobile.dev.alfresco.me'
 # 'https://github.com/Alfresco/ios-dbp-sdk'
