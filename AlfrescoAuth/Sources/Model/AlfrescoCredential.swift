@@ -9,7 +9,7 @@
 import Foundation
 import AppAuth
 
-public struct AlfrescoCredential: Decodable {
+public struct AlfrescoCredential: Codable {
     public var tokenType: String?
     public var accessToken: String?
     public var accessTokenExpiresIn: Int?
