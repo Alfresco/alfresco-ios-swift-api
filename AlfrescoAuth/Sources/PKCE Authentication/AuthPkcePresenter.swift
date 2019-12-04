@@ -89,7 +89,7 @@ public class AuthPkcePresenter {
                     return
                 }
                 sSelf.authSession?.authState = authState
-                sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState.lastTokenResponse)))
+                sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState.lastTokenResponse)), session: sSelf.authSession)
             }
         }
     }
@@ -108,7 +108,7 @@ public class AuthPkcePresenter {
                     return
                 }
                 
-                sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState.lastTokenResponse)))
+                sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState.lastTokenResponse)), session: sSelf.authSession)
             }
         }
     }

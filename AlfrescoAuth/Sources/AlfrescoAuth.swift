@@ -14,9 +14,17 @@ import AlfrescoCore
 public protocol AlfrescoAuthDelegate {
     
     /** Called when a response coming from the Identity Service is available.
-    - Parameter result: Object containing token related information  used to authorize further requests or an optional error parameter.
+    - Parameter result:  Convenience object containing token related information  used to authorize further requests or an optional error parameter.
+    - Parameter session: Optional session object relevant to PKCE authentication type containing token related information which must be serialized
+                         in order to restore session information at a later point. Properties of object implement NSSecureCoding
     */
-    func didReceive(result: Result<AlfrescoCredential, APIError>)
+    func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?)
+}
+
+extension AlfrescoAuthDelegate {
+    func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession? = nil) {
+        didReceive(result: result, session: session)
+    }
 }
 
 public struct AlfrescoAuth {
@@ -81,7 +89,7 @@ public struct AlfrescoAuth {
     - Parameter viewController: Thew view controller from which to present the SFSafariViewController.
     - Parameter delegate: Delegate used to report the state and response of the authentication request
     */
-    public mutating func pkceAuth(onViewController viewController: UIViewController, delegate: AlfrescoAuthDelegate) -> AlfrescoAuthSession {
+    public mutating func pkceAuth(onViewController viewController: UIViewController, delegate: AlfrescoAuthDelegate) {
         pkcePresenter = AuthPkcePresenter(configuration: configuration)
         pkcePresenter?.presentingViewController = viewController
         pkcePresenter?.authDelegate = delegate
@@ -90,8 +98,6 @@ public struct AlfrescoAuth {
         pkcePresenter?.authSession = authSession
         
         pkcePresenter?.execute()
-        
-        return authSession
     }
     
     /** Given a path component,  it returns via a closure the available authentication type for the base URL defined in the AlfrescoConfiguration
@@ -100,7 +106,10 @@ public struct AlfrescoAuth {
      - Parameter handler: Closure delivering updates on the authentication type. Possible values are base auth, AIMS and an optional error
      */
     public mutating func availableAuthType(for issuer: String = "", handler:@escaping ((Result<AvailableAuthType, APIError>) -> Void)) {
-        pkcePresenter = AuthPkcePresenter(configuration: configuration)
+        if pkcePresenter == nil {
+            pkcePresenter = AuthPkcePresenter(configuration: configuration)
+        }
+        
         pkcePresenter?.availableAuthType(for: issuer, handler: { result in
             handler(result)
         })
@@ -108,8 +117,14 @@ public struct AlfrescoAuth {
     
     /** Designated safe session refresh method with Identity Service  using PKCE protocol.
     - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the re-authentication request
-    */
-    public mutating func pkceRefreshSession(delegate: AlfrescoAuthDelegate) {
+    - Parameter session: Valid session object that was created as a result of a successfull PKCE authentication.
+     */
+    public mutating func pkceRefresh(session: AlfrescoAuthSession, delegate: AlfrescoAuthDelegate) {
+        if pkcePresenter == nil {
+            pkcePresenter = AuthPkcePresenter(configuration: configuration)
+        }
+        
+        pkcePresenter?.authSession = session
         pkcePresenter?.authDelegate = delegate
         pkcePresenter?.executeRefreshSession()
     }
