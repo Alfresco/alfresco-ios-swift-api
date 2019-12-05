@@ -88,9 +88,8 @@ public struct AlfrescoAuth {
     /** Designated safe authetication method with Identity Service using PKCE protocol.
     - Parameter viewController: Thew view controller from which to present the SFSafariViewController.
     - Parameter delegate: Delegate used to report the state and response of the authentication request
-    - Returns: Initialized session object containing credential information.
     */
-    public mutating func pkceAuth(onViewController viewController: UIViewController, delegate: AlfrescoAuthDelegate) -> AlfrescoAuthSession {
+    public mutating func pkceAuth(onViewController viewController: UIViewController, delegate: AlfrescoAuthDelegate) {
         pkcePresenter = AuthPkcePresenter(configuration: configuration)
         pkcePresenter?.presentingViewController = viewController
         pkcePresenter?.authDelegate = delegate
@@ -99,8 +98,6 @@ public struct AlfrescoAuth {
         pkcePresenter?.authSession = authSession
         
         pkcePresenter?.execute()
-        
-        return authSession
     }
     
     /** Given a path component,  it returns via a closure the available authentication type for the base URL defined in the AlfrescoConfiguration
