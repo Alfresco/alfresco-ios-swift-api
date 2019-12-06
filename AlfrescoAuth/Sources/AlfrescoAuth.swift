@@ -19,11 +19,21 @@ public protocol AlfrescoAuthDelegate {
                          in order to restore session information at a later point. Properties of object implement NSSecureCoding
     */
     func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?)
+    
+    
+    /** Called when a response coming from the identity Service is available as a result to a logout request.
+    - Parameter result: Status code for the logout request or an optional error parameter.
+     */
+    func didLogOut(result: Result<Int, APIError>)
 }
 
 extension AlfrescoAuthDelegate {
     func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession? = nil) {
         didReceive(result: result, session: session)
+    }
+    
+    func didLogOut(result: Result<Int, APIError>) {
+        // Make this method optional
     }
 }
 
@@ -33,6 +43,7 @@ public struct AlfrescoAuth {
     var basicPresenter: AuthBasicPresenter?
     var refreshPresenter: RefreshTokenPresenter?
     var pkcePresenter: AuthPkcePresenter?
+    var logoutPresenter: LogoutPresenter?
     
     // Configuration
     var configuration: AuthConfiguration
@@ -127,6 +138,17 @@ public struct AlfrescoAuth {
         pkcePresenter?.authSession = session
         pkcePresenter?.authDelegate = delegate
         pkcePresenter?.executeRefreshSession()
+    }
+    
+    public mutating func logout(delegate: AlfrescoAuthDelegate) {
+        if pkcePresenter != nil {
+            // Invalidate any ongoing session
+            pkcePresenter?.authSession = nil
+        }
+        
+        logoutPresenter = LogoutPresenter(configuration: configuration)
+        logoutPresenter?.authDelegate = delegate
+        logoutPresenter?.execute()
     }
 }
 
