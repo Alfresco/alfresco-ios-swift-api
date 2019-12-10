@@ -140,6 +140,12 @@ public struct AlfrescoAuth {
         pkcePresenter?.executeRefreshSession()
     }
     
+    
+    /** Logs out the user  by expiring the refresh token for the current auth configuration.
+     - Remark: the access token remains valid for it's designated lifespan, but the next time a request to refresh the session it is received
+               the server will refuse and return a 401 Unauthorised response.
+     - Parameter delegate: Delegate used to report the state of the logout request.
+     */
     public mutating func logout(delegate: AlfrescoAuthDelegate) {
         if pkcePresenter != nil {
             // Invalidate any ongoing session

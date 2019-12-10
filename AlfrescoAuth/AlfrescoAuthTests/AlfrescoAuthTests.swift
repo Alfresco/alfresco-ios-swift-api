@@ -12,9 +12,6 @@ import AlfrescoCore
 
 class AlfrescoAuthTests: XCTestCase {
     var sut: AlfrescoAuth!
-    var expectationForDidRevicedCall = XCTestExpectation(description: "Wait for delegate.")
-    var expectationForSuccessInDidRecivedCall = XCTestExpectation(description: "Success in DidRecivedCall")
-    var expectationForFailureInDidRecivedCall = XCTestExpectation(description: "Failure in DidRecivedCall")
 
     override func setUp() {
         super.setUp()
@@ -71,16 +68,10 @@ class AlfrescoAuthTests: XCTestCase {
         XCTAssertNotNil(sut.pkcePresenter?.authDelegate)
     }
     
-    func testPckeAuthReturnsAlfrescoAuthSession() {
-        let viewController = UIViewController()
-        let alfrescoAuthSession = sut.pkceAuth(onViewController: viewController, delegate: AlfrescoAuthDelegateStub())
-        XCTAssertNotNil(alfrescoAuthSession)
-    }
-    
     func testPckeRefreshSessionhSetsPresenter() {
         let viewController = UIViewController()
         _ = sut.pkceAuth(onViewController: viewController, delegate: AlfrescoAuthDelegateStub())
-        sut.pkceRefreshSession(delegate: AlfrescoAuthDelegateStub())
+        sut.pkceRefresh(session: AlfrescoAuthSession(), delegate: AlfrescoAuthDelegateStub())
         
         XCTAssertNotNil(sut.pkcePresenter)
         XCTAssertNotNil(sut.pkcePresenter?.authDelegate)
