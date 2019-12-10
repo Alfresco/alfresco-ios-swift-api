@@ -13,9 +13,9 @@ import AlfrescoCore
 
 class AuthPkcePresenterTests: XCTestCase {
     var sut: AuthPkcePresenter!
-    var expectationForDidRevicedCall = XCTestExpectation(description: "Wait for delegate.")
-    var expectationForSuccessInDidRecivedCall = XCTestExpectation(description: "Success in DidRecivedCall")
-    var expectationForFailureInDidRecivedCall = XCTestExpectation(description: "Failure in DidRecivedCall")
+    var expectationForDidReceivedCall = XCTestExpectation(description: "Wait for did receive call.")
+    var expectationForSuccessInDidReceivedCall = XCTestExpectation(description: "Success in DidRecivedCall")
+    var expectationForFailureInDidReceivedCall = XCTestExpectation(description: "Failure in DidRecivedCall")
     
     override func setUp() {
         super.setUp()
@@ -33,25 +33,25 @@ class AuthPkcePresenterTests: XCTestCase {
     
     func testExecuteWithViewControllerNil() {
         let delegateStub = AlfrescoAuthDelegateStub()
-        delegateStub.expectationForDidRevicedCall = expectationForDidRevicedCall
-        delegateStub.expectationForFailureInDidRecivedCall = expectationForFailureInDidRecivedCall
+        delegateStub.expectationForDidReceivedCall = expectationForDidReceivedCall
+        delegateStub.expectationForFailureInDidReceivedCall = expectationForFailureInDidReceivedCall
         
         sut.authDelegate = delegateStub
         sut.execute()
         
-        wait(for: [expectationForDidRevicedCall, expectationForFailureInDidRecivedCall], timeout: 10.0)
+        wait(for: [expectationForDidReceivedCall, expectationForFailureInDidReceivedCall], timeout: 10.0)
     }
     
     func testExecuteWithWrongConfiguration() {
         let delegateStub = AlfrescoAuthDelegateStub()
-        delegateStub.expectationForDidRevicedCall = expectationForDidRevicedCall
-        delegateStub.expectationForFailureInDidRecivedCall = expectationForFailureInDidRecivedCall
+        delegateStub.expectationForDidReceivedCall = expectationForDidReceivedCall
+        delegateStub.expectationForFailureInDidReceivedCall = expectationForFailureInDidReceivedCall
         
         sut.configuration.realm = "test"
         sut.authDelegate = delegateStub
         sut.presentingViewController = UIViewController()
         sut.execute()
         
-        wait(for: [expectationForDidRevicedCall, expectationForFailureInDidRecivedCall], timeout: 10.0)
+        wait(for: [expectationForDidReceivedCall, expectationForFailureInDidReceivedCall], timeout: 10.0)
     }
 }

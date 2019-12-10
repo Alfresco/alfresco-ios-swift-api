@@ -63,8 +63,8 @@ public class AuthPkcePresenter {
                 sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "ViewController is nil!")))
                 return
             }
-            if let error = error {
-                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, error: error)))
+            if let error = error as NSError? {
+                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: error.code, error: error)))
                 return
             }
             guard let pkceConfiguration = pkceConfiguration else {

@@ -10,22 +10,33 @@ import Foundation
 import AlfrescoCore
 @testable import AlfrescoAuth
 
+enum APICLientStubResponse {
+    case validCredential
+    case validResponseCode
+    case error
+}
+
 class APIClientStub: APIClientProtocol {
     var baseURL: URL?
-    var successResponse: Bool = true
+    var responseType: APICLientStubResponse = .validCredential
     
     required init(with base: String, session: URLSessionProtocol) {
         self.baseURL = URL(string: base)
     }
     
     func send<T>(_ request: T, completion: @escaping (Result<T.Response, APIError>) -> Void) -> URLSessionDataTask? where T : APIRequest {
-        if successResponse {
+        switch responseType {
+        case .validCredential:
             let alfrescoCredential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
             completion(.success(alfrescoCredential as! T.Response))
-        } else {
+        case .validResponseCode:
+            let statusCodeResponse = StatusCodeResponse.init(responseCode: 200)
+            completion(.success(statusCodeResponse as! T.Response))
+        case .error:
             let error = APIError(domain: "Tests")
             completion(.failure(error))
         }
+        
         return nil
     }
 }

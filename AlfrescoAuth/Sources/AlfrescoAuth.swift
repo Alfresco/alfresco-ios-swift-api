@@ -19,11 +19,21 @@ public protocol AlfrescoAuthDelegate {
                          in order to restore session information at a later point. Properties of object implement NSSecureCoding
     */
     func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?)
+    
+    
+    /** Called when a response coming from the identity Service is available as a result to a logout request.
+    - Parameter result: Status code for the logout request or an optional error parameter.
+     */
+    func didLogOut(result: Result<Int, APIError>)
 }
 
 extension AlfrescoAuthDelegate {
     func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession? = nil) {
         didReceive(result: result, session: session)
+    }
+    
+    func didLogOut(result: Result<Int, APIError>) {
+        // Make this method optional
     }
 }
 
@@ -33,6 +43,7 @@ public struct AlfrescoAuth {
     var basicPresenter: AuthBasicPresenter?
     var refreshPresenter: RefreshTokenPresenter?
     var pkcePresenter: AuthPkcePresenter?
+    var logoutPresenter: LogoutPresenter?
     
     // Configuration
     var configuration: AuthConfiguration
@@ -127,6 +138,23 @@ public struct AlfrescoAuth {
         pkcePresenter?.authSession = session
         pkcePresenter?.authDelegate = delegate
         pkcePresenter?.executeRefreshSession()
+    }
+    
+    
+    /** Logs out the user  by expiring the refresh token for the current auth configuration.
+     - Remark: the access token remains valid for it's designated lifespan, but the next time a request to refresh the session it is received
+               the server will refuse and return a 401 Unauthorised response.
+     - Parameter delegate: Delegate used to report the state of the logout request.
+     */
+    public mutating func logout(delegate: AlfrescoAuthDelegate) {
+        if pkcePresenter != nil {
+            // Invalidate any ongoing session
+            pkcePresenter?.authSession = nil
+        }
+        
+        logoutPresenter = LogoutPresenter(configuration: configuration)
+        logoutPresenter?.authDelegate = delegate
+        logoutPresenter?.execute()
     }
 }
 
