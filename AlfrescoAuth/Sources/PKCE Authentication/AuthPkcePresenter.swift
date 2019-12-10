@@ -80,8 +80,8 @@ public class AuthPkcePresenter {
                                                   additionalParameters: nil)
             
             sSelf.authSession?.authorizationFlow = OIDAuthState.authState(byPresenting: request, presenting: viewController) { authState, error in
-                if let error = error {
-                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, error: error)))
+                if let error = error as NSError? {
+                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: error.code, error: error)))
                     return
                 }
                 guard let authState = authState else {

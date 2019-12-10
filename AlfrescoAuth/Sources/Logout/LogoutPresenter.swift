@@ -19,7 +19,8 @@ public class LogoutPresenter {
     }
     
     func execute() {
-        _ = apiClient.send(LogoutRequest(serviceDocumentInstanceURL: configuration.baseUrl), completion: { [weak self] result in
+        let baseURLWithIssuer = String(format: kIssuerPKCE, configuration.baseUrl, configuration.realm)
+        _ = apiClient.send(LogoutRequest(serviceDocumentInstanceURL: baseURLWithIssuer), completion: { [weak self] result in
             guard let sSelf = self else { return }
             
             switch result {
