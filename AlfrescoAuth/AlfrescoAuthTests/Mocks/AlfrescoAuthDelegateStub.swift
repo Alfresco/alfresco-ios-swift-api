@@ -12,20 +12,29 @@ import AlfrescoCore
 import XCTest
 
 class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {
-    var successResponse = false
-    var expectationForDidRevicedCall: XCTestExpectation!
-    var expectationForSuccessInDidRecivedCall: XCTestExpectation!
-    var expectationForFailureInDidRecivedCall: XCTestExpectation!
+    var expectationForDidReceivedCall: XCTestExpectation!
+    var expectationForSuccessInDidReceivedCall: XCTestExpectation!
+    var expectationForFailureInDidReceivedCall: XCTestExpectation!
     
-    func didReceive(result: Result<AlfrescoCredential, APIError>) {
+    var expectationForSuccessInDidLogoutCall: XCTestExpectation!
+    var expectationForFailureInDidLogoutCall: XCTestExpectation!
+    
+    func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?) {
         switch result {
         case .success(_):
-            expectationForSuccessInDidRecivedCall.fulfill()
-            successResponse = true
+            expectationForSuccessInDidReceivedCall.fulfill()
         case .failure(_):
-            expectationForFailureInDidRecivedCall.fulfill()
-            successResponse = false
+            expectationForFailureInDidReceivedCall.fulfill()
         }
-        expectationForDidRevicedCall.fulfill()
+        expectationForDidReceivedCall.fulfill()
+    }
+    
+    func didLogOut(result: Result<Int, APIError>) {
+        switch result {
+        case .success(_):
+            expectationForSuccessInDidLogoutCall.fulfill()
+        case .failure(_) :
+            expectationForFailureInDidLogoutCall.fulfill()
+        }
     }
 }

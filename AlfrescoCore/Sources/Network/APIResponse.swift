@@ -11,5 +11,9 @@ import Foundation
 public protocol APIResponse: Decodable { }
 
 public struct StatusCodeResponse: APIResponse {
-   public let responseCode: Int
+    public let responseCode: Int
+    
+    public init(responseCode: Int) {
+        self.responseCode = responseCode
+    }
 }

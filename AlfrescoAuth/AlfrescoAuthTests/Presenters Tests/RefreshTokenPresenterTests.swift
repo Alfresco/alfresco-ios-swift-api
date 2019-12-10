@@ -13,9 +13,9 @@ import AlfrescoCore
 
 class RefreshTokenPresenterTests: XCTestCase {
     var sut: RefreshTokenPresenter!
-    var expectationForDidRevicedCall = XCTestExpectation(description: "Wait for delegate.")
-    var expectationForSuccessInDidRecivedCall = XCTestExpectation(description: "Success in DidRecivedCall")
-    var expectationForFailureInDidRecivedCall = XCTestExpectation(description: "Failure in DidRecivedCall")
+    var expectationForDidReceivedCall = XCTestExpectation(description: "Wait for delegate.")
+    var expectationForSuccessInDidReceivedCall = XCTestExpectation(description: "Success in DidReceivedCall")
+    var expectationForFailureInDidReceivedCall = XCTestExpectation(description: "Failure in DidReceivedCall")
     
     override func setUp() {
         super.setUp()
@@ -41,15 +41,15 @@ class RefreshTokenPresenterTests: XCTestCase {
         let delegateStub = AlfrescoAuthDelegateStub()
         let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         
-        apiClientSub.successResponse = true
-        delegateStub.expectationForDidRevicedCall = expectationForDidRevicedCall
-        delegateStub.expectationForSuccessInDidRecivedCall = expectationForSuccessInDidRecivedCall
+        apiClientSub.responseType = .validCredential
+        delegateStub.expectationForDidReceivedCall = expectationForDidReceivedCall
+        delegateStub.expectationForSuccessInDidReceivedCall = expectationForSuccessInDidReceivedCall
         
         sut.authDelegate = delegateStub
         sut.apiClient = apiClientSub
         sut.executeRefresh(alfrescoCredential)
         
-        wait(for: [expectationForDidRevicedCall, expectationForSuccessInDidRecivedCall], timeout: 10.0)
+        wait(for: [expectationForDidReceivedCall, expectationForSuccessInDidReceivedCall], timeout: 10.0)
     }
     
     func testExecuteRefreshWithFailure() {
@@ -57,21 +57,21 @@ class RefreshTokenPresenterTests: XCTestCase {
         let delegateStub = AlfrescoAuthDelegateStub()
         let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         
-        apiClientSub.successResponse = false
-        delegateStub.expectationForDidRevicedCall = expectationForDidRevicedCall
-        delegateStub.expectationForFailureInDidRecivedCall = expectationForFailureInDidRecivedCall
+        apiClientSub.responseType = .error
+        delegateStub.expectationForDidReceivedCall = expectationForDidReceivedCall
+        delegateStub.expectationForFailureInDidReceivedCall = expectationForFailureInDidReceivedCall
         
         sut.authDelegate = delegateStub
         sut.apiClient = apiClientSub
         sut.executeRefresh(alfrescoCredential)
         
-        wait(for: [expectationForDidRevicedCall, expectationForFailureInDidRecivedCall], timeout: 10.0)
+        wait(for: [expectationForDidReceivedCall, expectationForFailureInDidReceivedCall], timeout: 10.0)
     }
     
     func testRequestTokenWithSuccess() {
         let alfrescoCredential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
         let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
-        apiClientSub.successResponse = true
+        apiClientSub.responseType = .validCredential
         sut.apiClient = apiClientSub
         sut.requestToken(with: alfrescoCredential) { (result) in
             var success = false
@@ -88,7 +88,7 @@ class RefreshTokenPresenterTests: XCTestCase {
     func testRequestTokenWithFailure() {
         let alfrescoCredential = AlfrescoCredential(with: TestData.dictionaryAlfrescoCredentialGood)
         let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
-        apiClientSub.successResponse = false
+        apiClientSub.responseType = .error
         sut.apiClient = apiClientSub
         sut.requestToken(with: alfrescoCredential) { (result) in
             var success = false
