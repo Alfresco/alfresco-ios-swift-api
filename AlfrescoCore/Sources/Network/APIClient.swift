@@ -56,7 +56,7 @@ public class APIClient: APIClientProtocol {
                     completion(.failure(APIError(domain: sSelf.moduleName, message: errTryAgain)))
                     return
                 }
-                guard (200 ... 299) ~= response.statusCode else {
+                guard (StatusCodes.Code200OK.code ... StatusCodes.Code209IMUsed.code) ~= response.statusCode else {
                     do {
                         if let errorDictionary = try data.convertToDictionary() {
                             completion(.failure(APIError(domain: sSelf.moduleName, code: response.statusCode, userInfo: errorDictionary)))
