@@ -1,5 +1,5 @@
 PODS:
-  - AlfrescoCore (0.2.2)
+  - AlfrescoCore (0.2.4)
   - AppAuth (1.3.0):
     - AppAuth/Core (= 1.3.0)
     - AppAuth/ExternalUserAgent (= 1.3.0)
@@ -17,7 +17,7 @@ SPEC REPOS:
     - AppAuth
 
 SPEC CHECKSUMS:
-  AlfrescoCore: ec685f2e6dc7613c77609c0c00735c5c9172868f
+  AlfrescoCore: d0ceba616f182ed19f77d85ea324c6292fb0fc5d
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
 
 PODFILE CHECKSUM: ee8029c35ac981562be8cb81d91ea5a79299318f

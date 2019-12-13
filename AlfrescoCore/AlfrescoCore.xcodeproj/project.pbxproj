@@ -28,6 +28,7 @@
 		2BAFC1B1230D99C3000CB1A9 /* AlfrescoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAFC1A7230D99C2000CB1A9 /* AlfrescoCore.framework */; };
 		2BAFC1B6230D99C3000CB1A9 /* AlfrescoCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAFC1B5230D99C3000CB1A9 /* AlfrescoCoreTests.swift */; };
 		2BAFC1B8230D99C3000CB1A9 /* AlfrescoCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BAFC1AA230D99C2000CB1A9 /* AlfrescoCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B937C1CA23A3DBAC0040312D /* StatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B937C1C923A3DBAC0040312D /* StatusCodes.swift */; };
 		B98B23202355AFC3002EF9EC /* APIErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B231F2355AFC3002EF9EC /* APIErrorTests.swift */; };
 		B98B23222355BEE0002EF9EC /* APIClientMockedObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98B23212355BEE0002EF9EC /* APIClientMockedObjects.swift */; };
 		B9FDA34D2350B39900329E35 /* APIRequestsMockedObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FDA34C2350B39900329E35 /* APIRequestsMockedObjects.swift */; };
@@ -62,6 +63,7 @@
 		2BAFC1B0230D99C3000CB1A9 /* AlfrescoCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlfrescoCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BAFC1B5230D99C3000CB1A9 /* AlfrescoCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoCoreTests.swift; sourceTree = "<group>"; };
 		2BAFC1B7230D99C3000CB1A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B937C1C923A3DBAC0040312D /* StatusCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCodes.swift; sourceTree = "<group>"; };
 		B98B231F2355AFC3002EF9EC /* APIErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorTests.swift; sourceTree = "<group>"; };
 		B98B23212355BEE0002EF9EC /* APIClientMockedObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientMockedObjects.swift; sourceTree = "<group>"; };
 		B9FDA34C2350B39900329E35 /* APIRequestsMockedObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestsMockedObjects.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				E3C38EF02327B139007FCF8B /* APIRequest.swift */,
 				E3C38EF22327B226007FCF8B /* APIResponse.swift */,
 				E37CFB7D233119A100C14FB2 /* APIError.swift */,
+				B937C1C923A3DBAC0040312D /* StatusCodes.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			files = (
 				2B7D2D4223141CA5004930BF /* CharacterSet+Helpers.swift in Sources */,
 				E3C38EEF2327B0D1007FCF8B /* APIClient.swift in Sources */,
+				B937C1CA23A3DBAC0040312D /* StatusCodes.swift in Sources */,
 				E31311F7231FD93B00D6829E /* Data+Helpers.swift in Sources */,
 				2B7D2D442314211C004930BF /* AlfrescoCore.swift in Sources */,
 				E3C38EF12327B139007FCF8B /* APIRequest.swift in Sources */,
