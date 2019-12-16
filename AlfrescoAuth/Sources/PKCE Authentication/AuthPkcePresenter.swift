@@ -22,6 +22,9 @@ public class AuthPkcePresenter {
     var authDelegate: AlfrescoAuthDelegate?
     var apiClient: APIClientProtocol
     
+    private var userAgent: OIDExternalUserAgentIOS?
+    private var logoutSession: OIDExternalUserAgentSession?
+    
     init(configuration: AuthConfiguration) {
         self.configuration = configuration
         self.apiClient = APIClient(with: configuration.baseUrl)
@@ -90,6 +93,52 @@ public class AuthPkcePresenter {
                 }
                 sSelf.authSession?.authState = authState
                 sSelf.authDelegate?.didReceive(result: .success(AlfrescoCredential(with: authState.lastTokenResponse)), session: sSelf.authSession)
+            }
+        }
+    }
+    
+    func logout(forCredential credential: AlfrescoCredential) {
+        guard let issuer = URL(string: String(format: kIssuerPKCE, configuration.baseUrl, configuration.realm)) else {
+            self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Can't create issuer from base url!")))
+            return
+        }
+        
+        OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) {  [weak self] pkceConfiguration, error in
+            guard let sSelf = self else { return }
+            
+            guard let viewController = sSelf.presentingViewController else {
+                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "ViewController is nil!")))
+                return
+            }
+            
+            if let error = error as NSError? {
+                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: error.code, error: error)))
+                return
+            }
+            guard let pkceConfiguration = pkceConfiguration else {
+                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Can't create issuer from base url!")))
+                return
+            }
+            
+            let logoutRequest = OIDEndSessionRequest(configuration: pkceConfiguration,
+                                                     idTokenHint: credential.accessToken ?? "",
+                                                     postLogoutRedirectURL: URL(string: sSelf.configuration.redirectURI ?? "")!,
+                                                     state: (self?.authSession?.authState?.lastAuthorizationResponse.state) ?? "",
+                                                     additionalParameters: nil)
+            
+            sSelf.userAgent = OIDExternalUserAgentIOS(presenting: viewController)
+            if let userAgent = sSelf.userAgent {
+                sSelf.logoutSession = OIDAuthorizationService.present(logoutRequest,
+                                                                      externalUserAgent: userAgent,
+                                                                      callback: { [weak self] (authorizationState, error) in
+                                                                        guard let sSelf = self else { return }
+                                                                        
+                                                                        if error != nil {
+                                                                            sSelf.authDelegate?.didLogOut(result: .failure(APIError(domain: moduleName, error: error)))
+                                                                        } else {
+                                                                            sSelf.authDelegate?.didLogOut(result: .success(StatusCodes.Code200OK.code))
+                                                                        }
+                })
             }
         }
     }
