@@ -133,8 +133,8 @@ public class AuthPkcePresenter {
                                                                       callback: { [weak self] (authorizationState, error) in
                                                                         guard let sSelf = self else { return }
                                                                         
-                                                                        if error != nil {
-                                                                            sSelf.authDelegate?.didLogOut(result: .failure(APIError(domain: moduleName, error: error)))
+                                                                        if let authError = error as NSError?  {
+                                                                            sSelf.authDelegate?.didLogOut(result: .failure(APIError(domain: moduleName, code: authError.code, error: authError )))
                                                                         } else {
                                                                             sSelf.authDelegate?.didLogOut(result: .success(StatusCodes.Code200OK.code))
                                                                         }
