@@ -55,6 +55,13 @@ public struct AlfrescoAuth {
         self.configuration = configuration
     }
     
+    /** Convenience method to update the configuration of the AlfrescoAuthModule
+    - Parameter configuration: Identity Service related configuration parameters.
+     */
+    public mutating func update(configuration: AuthConfiguration) {
+        self.configuration = configuration
+    }
+    
     /** Alternative method used to authenticate with Identity Service when it is set up to work with an exernal provider that invokes the use of web view components.
     - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the authentication request
     */
@@ -103,10 +110,7 @@ public struct AlfrescoAuth {
         pkcePresenter = AuthPkcePresenter(configuration: configuration)
         pkcePresenter?.presentingViewController = viewController
         pkcePresenter?.authDelegate = delegate
-        
-        let authSession = AlfrescoAuthSession()
-        pkcePresenter?.authSession = authSession
-        
+        pkcePresenter?.authSession = AlfrescoAuthSession()
         pkcePresenter?.execute()
     }
     
@@ -116,10 +120,7 @@ public struct AlfrescoAuth {
     - Parameter handler: Closure delivering updates on the authentication type. Possible values are base auth, AIMS and an optional error
      */
     public mutating func availableAuthType(for issuer: String = "", handler:@escaping ((Result<AvailableAuthType, APIError>) -> Void)) {
-        if pkcePresenter == nil {
-            pkcePresenter = AuthPkcePresenter(configuration: configuration)
-        }
-        
+        pkcePresenter = AuthPkcePresenter(configuration: configuration)
         pkcePresenter?.availableAuthType(for: issuer, handler: { result in
             handler(result)
         })
@@ -130,10 +131,7 @@ public struct AlfrescoAuth {
     - Parameter session: Valid session object that was created as a result of a successfull PKCE authentication.
      */
     public mutating func pkceRefresh(session: AlfrescoAuthSession, delegate: AlfrescoAuthDelegate) {
-        if pkcePresenter == nil {
-            pkcePresenter = AuthPkcePresenter(configuration: configuration)
-        }
-        
+        pkcePresenter = AuthPkcePresenter(configuration: configuration)
         pkcePresenter?.authSession = session
         pkcePresenter?.authDelegate = delegate
         pkcePresenter?.executeRefreshSession()
@@ -150,12 +148,8 @@ public struct AlfrescoAuth {
     - Parameter credential: Alfresco credential for which the logout is requested
      */
     public mutating func logout(onViewController viewController:UIViewController, delegate: AlfrescoAuthDelegate, forCredential credential: AlfrescoCredential) {
-        if pkcePresenter == nil {
-            pkcePresenter = AuthPkcePresenter(configuration: configuration)
-            let authSession = AlfrescoAuthSession()
-            pkcePresenter?.authSession = authSession
-        }
-        
+        pkcePresenter = AuthPkcePresenter(configuration: configuration)
+        pkcePresenter?.authSession = AlfrescoAuthSession()
         pkcePresenter?.presentingViewController = viewController
         pkcePresenter?.authDelegate = delegate
         pkcePresenter?.logout(forCredential: credential)
