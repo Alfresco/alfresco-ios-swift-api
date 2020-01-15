@@ -69,7 +69,7 @@ public class APIClient: APIClientProtocol {
                     return
                 }
                 
-                if (data.isEmpty) {
+                if (T.Response.self == StatusCodeResponse.self) {
                     completion(.success(sSelf.statusCodeResponse(T.Response.self, responseCode: response.statusCode)))
                 } else {
                     do {
