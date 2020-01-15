@@ -41,7 +41,7 @@ public class AuthPkcePresenter {
             
             if error != nil {
                 // Check if the request succeeds for an instance configured with basic auth
-                _ = sSelf.apiClient.send(HeadServiceDocumentInstance(serviceDocumentInstanceURL: issuer), completion: { (result) in
+                _ = sSelf.apiClient.send(GetServiceDocumentInstance(serviceDocumentInstanceURL: issuer), completion: { (result) in
                     switch result {
                     case .success(_):
                         handler(.success(.basicAuth))

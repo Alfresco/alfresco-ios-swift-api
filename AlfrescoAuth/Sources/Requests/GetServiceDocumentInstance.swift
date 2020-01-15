@@ -10,7 +10,7 @@ import Foundation
 import AlfrescoCore
 
 
-struct HeadServiceDocumentInstance: APIRequest {
+struct GetServiceDocumentInstance: APIRequest {
     typealias Response = StatusCodeResponse
     
     let serviceDocumentInstanceURL: String
@@ -20,7 +20,7 @@ struct HeadServiceDocumentInstance: APIRequest {
     }
     
     var method: HttpMethod {
-        return .head
+        return .get
     }
     
     var headers: [String : ContentType] {
