@@ -106,9 +106,12 @@ public class APIClient: APIClientProtocol {
                 urlRequest?.httpBody = request.parameters.percentEscaped().data(using: .utf8)
             case .get:
                 var urlComponents = URLComponents(string: url.absoluteString)
-                urlComponents?.queryItems = request.parameters.map {
-                    URLQueryItem(name: $0, value: $1)
+                if request.parameters.count > 0 {
+                    urlComponents?.queryItems = request.parameters.map {
+                        URLQueryItem(name: $0, value: $1)
+                    }
                 }
+                
                 urlRequest?.url = urlComponents?.url
             default:
                 break
