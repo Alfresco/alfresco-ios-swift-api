@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "5446A13C-88EC-4DDF-A8B3-564867F34E43",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:AlfrescoAuth.xcodeproj",
+        "identifier" : "2BD6E14B22F442C900949E44",
+        "name" : "AlfrescoAuthTests"
+      }
+    }
+  ],
+  "version" : 1
+}

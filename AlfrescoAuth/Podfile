@@ -1,0 +1,16 @@
+source 'https://github.com/Alfresco/alfresco-private-podspecs-ios-sdk'
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '12.0'
+
+target 'AlfrescoAuth' do
+  use_frameworks!
+
+  pod 'AlfrescoCore', '~> 0.1'
+  pod 'AppAuth'
+
+  target 'AlfrescoAuthTests' do
+   
+  end
+
+end
