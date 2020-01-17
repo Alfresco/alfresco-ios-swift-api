@@ -32,7 +32,7 @@ public class AuthPkcePresenter {
     
     func availableAuthType(for issuer: String, handler: @escaping((Result<AvailableAuthType, APIError>) -> Void)) {
         guard let issuerURL = URL(string: String(format: kIssuerPKCE, configuration.baseUrl, configuration.realm)) else {
-            handler(.failure(APIError(domain: moduleName, message: "Can't create issuer from base url!")))
+            handler(.failure(APIError(domain: moduleName, code: ModuleErrorType.errorIssuerNil.code, message: errorIssuerNil)))
             return
         }
         
@@ -46,7 +46,7 @@ public class AuthPkcePresenter {
                     case .success(_):
                         handler(.success(.basicAuth))
                     case .failure(_):
-                        handler(.failure(APIError(domain: moduleName, message: "No authentication service can be found at the provided AlfrescoURL")))
+                        handler(.failure(APIError(domain: moduleName, code: ModuleErrorType.errorAuthenticationServiceNotFound.code, message: errorAuthenticationServiceNotFound)))
                     }
                 })
             } else {
@@ -57,13 +57,13 @@ public class AuthPkcePresenter {
     
     func execute() {
         guard let issuer = URL(string: String(format: kIssuerPKCE, configuration.baseUrl, configuration.realm)) else {
-            self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Can't create issuer from base url!")))
+            self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorIssuerNil.code, message: errorIssuerNil)))
             return
         }
         OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) {  [weak self] pkceConfiguration, error in
             guard let sSelf = self else { return }
             guard let viewController = sSelf.presentingViewController else {
-                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "ViewController is nil!")))
+                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorViewControllerNil.code, message: errorViewControllerNil)))
                 return
             }
             if let error = error as NSError? {
@@ -71,7 +71,7 @@ public class AuthPkcePresenter {
                 return
             }
             guard let pkceConfiguration = pkceConfiguration else {
-                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Can't create issuer from base url!")))
+                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorIssuerNil.code, message: errorIssuerNil)))
                 return
             }
             let request = OIDAuthorizationRequest(configuration: pkceConfiguration,
@@ -88,7 +88,7 @@ public class AuthPkcePresenter {
                     return
                 }
                 guard let authState = authState else {
-                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Can't authentificate!")))
+                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorAuthStateNil.code, message: errorAuthStateNil)))
                     return
                 }
                 sSelf.authSession?.authState = authState
@@ -99,7 +99,7 @@ public class AuthPkcePresenter {
     
     func logout(forCredential credential: AlfrescoCredential) {
         guard let issuer = URL(string: String(format: kIssuerPKCE, configuration.baseUrl, configuration.realm)) else {
-            self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Can't create issuer from base url!")))
+            self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorIssuerNil.code, message: errorIssuerNil)))
             return
         }
         
@@ -107,7 +107,7 @@ public class AuthPkcePresenter {
             guard let sSelf = self else { return }
             
             guard let viewController = sSelf.presentingViewController else {
-                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "ViewController is nil!")))
+                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorViewControllerNil.code, message: errorViewControllerNil)))
                 return
             }
             
@@ -116,7 +116,7 @@ public class AuthPkcePresenter {
                 return
             }
             guard let pkceConfiguration = pkceConfiguration else {
-                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Can't create issuer from base url!")))
+                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorIssuerNil.code, message: errorIssuerNil)))
                 return
             }
             
@@ -153,7 +153,7 @@ public class AuthPkcePresenter {
                 }
                 
                 guard accessToken != nil else {
-                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Failed to retrieve a fresh access token")))
+                    sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorRetriveFreshToken.code, message: errorRetriveFreshToken)))
                     return
                 }
                 
