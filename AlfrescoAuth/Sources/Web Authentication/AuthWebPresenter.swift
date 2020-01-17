@@ -36,7 +36,7 @@ class AuthWebPresenter: NSObject, NetworkServiceProtocol {
                         return .cancel
                     }
                 }
-                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "Couldn't find AUTHORIZATION CODE!")))
+                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorAuthCodeNotFound.code, message: errorAuthCodeNotFound)))
                 return .cancel
             }
         }

@@ -53,7 +53,7 @@ public class APIClient: APIClientProtocol {
                     return
                 }
                 guard let data = data, let response = response as? HTTPURLResponse else {
-                    completion(.failure(APIError(domain: sSelf.moduleName, message: errTryAgain)))
+                    completion(.failure(APIError(domain: sSelf.moduleName, code: ModuleErrorType.errorDataTaskResultNil.code, message: errorDataTaskResultNil)))
                     return
                 }
                 guard (StatusCodes.Code200OK.code ... StatusCodes.Code209IMUsed.code) ~= response.statusCode else {
@@ -61,7 +61,7 @@ public class APIClient: APIClientProtocol {
                         if let errorDictionary = try data.convertToDictionary() {
                             completion(.failure(APIError(domain: sSelf.moduleName, code: response.statusCode, userInfo: errorDictionary)))
                         } else {
-                            completion(.failure(APIError(domain: sSelf.moduleName, code: response.statusCode, message: errTryAgain)))
+                            completion(.failure(APIError(domain: sSelf.moduleName, code: ModuleErrorType.errorResponseConvertToDictionary.code, message: errorResponseConvertToDictionary)))
                         }
                     } catch {
                         completion(.failure(APIError(domain: sSelf.moduleName, error: error)))
@@ -83,7 +83,7 @@ public class APIClient: APIClientProtocol {
             task.resume()
             return task
         } else {
-            completion(.failure(APIError(domain: self.moduleName, message: errRequestUnavailable)))
+            completion(.failure(APIError(domain: self.moduleName, code: ModuleErrorType.errorRequestUnavailable.code, message: errorRequestUnavailable)))
         }
         return nil
     }

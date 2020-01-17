@@ -34,7 +34,7 @@ class RefreshTokenPresenter: NSObject, NetworkServiceProtocol {
                 completion(result)
             })
         } else {
-            completion(.failure(APIError(domain: Bundle.main.bundleName ?? "AlfrescoAuth", message: "Cannot request token because refresh token is missing")))
+            completion(.failure(APIError(domain: Bundle.main.bundleName ?? "AlfrescoAuth", code: ModuleErrorType.errorRefreshTokenNil.code, message: errorRefreshTokenNil)))
         }
     }
 }

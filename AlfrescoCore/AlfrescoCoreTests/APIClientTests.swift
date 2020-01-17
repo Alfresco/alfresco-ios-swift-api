@@ -57,7 +57,7 @@ class APIClientTests: XCTestCase {
         _ = sut.send(TestAPIRequest()) { result in
             if case .failure (let error) = result {
                 XCTAssertNotNil(error)
-                XCTAssertEqual(errTryAgain, error.localizedDescription)
+                XCTAssertEqual(errorDataTaskResultNil, error.localizedDescription)
                 expectation.fulfill()
             }
         }
@@ -72,7 +72,7 @@ class APIClientTests: XCTestCase {
         _ = sut.send(TestAPIRequestWithInvalidPath()) { result in
             if case .failure (let error) = result {
                 XCTAssertNotNil(error)
-                XCTAssertEqual(errRequestUnavailable, error.localizedDescription)
+                XCTAssertEqual(errorRequestUnavailable, error.localizedDescription)
                 expectation.fulfill()
             }
         }

@@ -8,9 +8,6 @@
 
 import Foundation
 
-let errTryAgain =  "Some error has occurred, try again!"
-let errRequestUnavailable = "Request unavailable."
-
 public struct APIError: Error {
     public let domain: String
     public var userInfo: [String: Any]
