@@ -27,13 +27,24 @@ class AuthBasicPresenter: NSObject, NetworkServiceProtocol {
     
     func verify(string: String?, type: InputType) -> String? {
         guard let string = string else {
-            self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "\(type.rawValue) field can't be empty!")))
+            switch type {
+            case .username:
+                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorUsernameNotEmpty.code, message: errorUsernameNotEmpty)))
+            case .password:
+                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorPasswordNotEmpty.code, message: errorPasswordNotEmpty)))
+            }
+            
             return nil
         }
         
         let stringTrim = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if stringTrim.isEmpty {
-            self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, message: "\(type.rawValue) field can't be empty!")))
+            switch type {
+            case .username:
+                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorUsernameNotEmpty.code, message: errorUsernameNotEmpty)))
+            case .password:
+                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorPasswordNotEmpty.code, message: errorPasswordNotEmpty)))
+            }
             return nil
         }
         return string
