@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name                  = 'AlfrescoAuth'
-s.version               = '2.0.0'
+s.version               = '2.1.0'
 s.summary               = 'Alfresco DBP SDK Auth module'
 s.homepage              = 'http://alfresco-identity-service.mobile.dev.alfresco.me'
 # 'https://github.com/Alfresco/ios-dbp-sdk'
