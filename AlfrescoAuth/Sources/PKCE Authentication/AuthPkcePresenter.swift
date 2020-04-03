@@ -30,7 +30,7 @@ public class AuthPkcePresenter {
         self.apiClient = APIClient(with: configuration.baseUrl)
     }
     
-    func availableAuthType(for issuer: String, handler: @escaping((Result<AvailableAuthType, APIError>) -> Void)) {
+    func availableAuthType(handler: @escaping((Result<AvailableAuthType, APIError>) -> Void)) {
         guard let issuerURL = URL(string: String(format: kIssuerPKCE, configuration.baseUrl, configuration.realm)) else {
             handler(.failure(APIError(domain: moduleName, code: ModuleErrorType.errorIssuerNil.code, message: errorIssuerNil)))
             return
@@ -41,7 +41,7 @@ public class AuthPkcePresenter {
             
             if error != nil {
                 // Check if the request succeeds for an instance configured with basic auth
-                _ = sSelf.apiClient.send(GetServiceDocumentInstance(serviceDocumentInstanceURL: issuer), completion: { (result) in
+                _ = sSelf.apiClient.send(GetServiceDocumentInstance(serviceDocumentInstanceURL: sSelf.configuration.baseUrl), completion: { (result) in
                     switch result {
                     case .success(_):
                         handler(.success(.basicAuth))
