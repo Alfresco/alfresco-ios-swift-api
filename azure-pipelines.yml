@@ -11,6 +11,13 @@ pr:
 pool:
   vmImage: 'macos-latest'
 
+variables:
+  - group: cs-ios-signing
+  - name: configuration
+    value: 'Release'
+  - name: sdk
+    value: 'iphoneos'
+
 steps:
 - checkout: self
   persistCredentials: true
