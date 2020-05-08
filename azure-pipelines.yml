@@ -14,11 +14,18 @@ pool:
 steps:
 - checkout: self
   persistCredentials: true
+
+- task: CmdLine@2
+  displayName: Adding Alfresco private podspec repository
+  inputs:
+    script: |
+      pod repo add AlfrescoPodspec https://$(gitUser):$(gitPAT)@github.com/Alfresco/alfresco-private-podspecs-ios-sdk.git
+
 # ---------------------------------------
 # Run core module tests
 # ---------------------------------------
 - task: Xcode@5
-  displayName: 'Running tests'
+  displayName: 'Running core module tests'
   inputs:
     actions: 'clean test'
     sdk: 'iphonesimulator'
@@ -29,6 +36,32 @@ steps:
     destinationPlatform: 'iOS'
     destinationSimulators: 'iPhone 11'
     xcWorkspacePath: 'AlfrescoCore/AlfrescoCore.xcodeproj'
+    useXcpretty: true
+    publishJUnitResults: 'build/reports/junit.xml'
+
+- task: CmdLine@2
+  displayName: Installing pods for AlfrescoAuth
+  inputs:
+    script: |
+      pod repo update
+      cd AlfrescoAuth
+      pod install
+
+# ---------------------------------------
+# Run auth module tests
+# ---------------------------------------
+- task: Xcode@5
+  displayName: 'Running auth module tests'
+  inputs:
+    actions: 'clean test'
+    sdk: 'iphonesimulator'
+    xcodeVersion: 11
+    scheme: 'AlfrescoAuth'
+    configuration: 'Debug'
+    destinationPlatformOption: 'custom'
+    destinationPlatform: 'iOS'
+    destinationSimulators: 'iPhone 11'
+    xcWorkspacePath: 'AlfrescoAuth/AlfrescoAuth.xcworkspace'
     useXcpretty: true
     publishJUnitResults: 'build/reports/junit.xml'
 
