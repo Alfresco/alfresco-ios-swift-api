@@ -13,6 +13,7 @@ pool:
 
 variables:
   - group: cs-ios-signing
+  - group: git-credentials
   - name: configuration
     value: 'Release'
   - name: sdk
@@ -106,11 +107,30 @@ steps:
     archiveFile: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core-framework.zip'
 
 # ---------------------------------------
+# Package auth module
+# ---------------------------------------
+- task: ArchiveFiles@2
+  displayName: 'Package auth module framework into a zip file'
+  inputs:
+    rootFolderOrFile: 'AlfrescoCore/AlfrescoAuthInternalRelease/'
+    archiveFile: '$(build.artifactStagingDirectory)/ios-dbp-sdk-auth-framework.zip'
+
+# ---------------------------------------
 # Publish artifacts
 # ---------------------------------------
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish build artifacts'
+  displayName: 'Publish core build artifacts'
   inputs:
     pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core-framework.zip'
-    artifactName: 'framework-files'
+    artifactName: 'core-framework-files'
+    artifactType: 'container'
+
+# ---------------------------------------
+# Publish artifacts
+# ---------------------------------------
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish auth build artifacts'
+  inputs:
+    pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-auth-framework.zip'
+    artifactName: 'auth-framework-files'
     artifactType: 'container'
