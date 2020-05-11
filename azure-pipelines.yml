@@ -112,7 +112,7 @@ steps:
 - task: ArchiveFiles@2
   displayName: 'Package auth module framework into a zip file'
   inputs:
-    rootFolderOrFile: 'AlfrescoCore/AlfrescoAuthInternalRelease/'
+    rootFolderOrFile: 'AlfrescoAuth/AlfrescoAuthInternalRelease/'
     archiveFile: '$(build.artifactStagingDirectory)/ios-dbp-sdk-auth-framework.zip'
 
 # ---------------------------------------
