@@ -98,6 +98,19 @@ steps:
     xcodeVersion: '11'
 
 # ---------------------------------------
+# Build auth module
+# ---------------------------------------
+- task: Xcode@5
+  displayName: 'Building Alfresco iOS DBP SDK - auth module'
+  inputs:
+    actions: 'clean build'
+    scheme: 'Package iOS'
+    sdk: 'iphoneos'
+    configuration: 'Release'
+    xcWorkspacePath: 'AlfrescoAuth/AlfrescoAuth.xcworkspace'
+    xcodeVersion: '11'
+
+# ---------------------------------------
 # Package core module
 # ---------------------------------------
 - task: ArchiveFiles@2
