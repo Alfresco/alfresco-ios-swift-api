@@ -92,6 +92,7 @@ steps:
 # Build auth module
 # ---------------------------------------
 - task: Xcode@5
+  continueOnError: true
   displayName: 'Building Alfresco iOS DBP SDK - auth module'
   inputs:
     actions: 'clean build'
