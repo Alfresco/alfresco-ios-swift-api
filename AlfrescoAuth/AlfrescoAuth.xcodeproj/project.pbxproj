@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -139,7 +139,6 @@
 				2BD6E14522F442C900949E44 /* Sources */,
 				2BD6E15022F442C900949E44 /* AlfrescoAuthTests */,
 				2BD6E14422F442C900949E44 /* Products */,
-				AB3C1AD3D13B3A1CF3CBB4BC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -202,13 +201,6 @@
 				E3C38EFC2327E50E007FCF8B /* URL+Helpers.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		AB3C1AD3D13B3A1CF3CBB4BC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		B96B8562239A8A180018E39A /* Requests */ = {
