@@ -18,4 +18,5 @@ steps:
   displayName: Check integrity of swagger library
   inputs:
     script: |
-      pod spec lint AlfrescoContentServices/AlfrescoContentServices.podspec --allow-warnings
+      pod repo add AlfrescoSwiftDBPSDK https://$(gitUser):$(gitPAT)@github.com/Alfresco/ios-dbp-sdk.git
+      pod spec lint --sources='https://github.com/Alfresco/ios-dbp-sdk.git,https://github.com/CocoaPods/Specs.git' --allow-warnings
