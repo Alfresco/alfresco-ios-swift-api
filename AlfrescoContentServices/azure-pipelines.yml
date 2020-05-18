@@ -1,0 +1,23 @@
+trigger:
+  - master
+  - develop
+
+pr: none
+
+pool:
+  vmImage: 'macos-latest'
+
+variables:
+  - group: git-credentials
+
+steps:
+- checkout: self
+  persistCredentials: true
+
+- task: CmdLine@2
+  displayName: Check integrity of swagger library
+  inputs:
+    script: |
+      cd AlfrescoContentServices
+      pod repo add AlfrescoSwiftDBPSDK https://$(gitUser):$(gitPAT)@github.com/Alfresco/ios-dbp-sdk.git
+      pod spec lint --sources='https://github.com/Alfresco/ios-dbp-sdk.git,https://github.com/CocoaPods/Specs.git' --allow-warnings
