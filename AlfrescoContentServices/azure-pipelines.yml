@@ -18,4 +18,4 @@ steps:
   displayName: Check integrity of swagger library
   inputs:
     script: |
-      pod spec lint AlfrescoContentServices.podspec --allow-warnings
+      pod spec lint AlfrescoContentServices/AlfrescoContentServices.podspec --allow-warnings
