@@ -6,6 +6,20 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		B9D0227A24657C360019CB37 /* Package iOS */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B9D0227D24657C360019CB37 /* Build configuration list for PBXAggregateTarget "Package iOS" */;
+			buildPhases = (
+				B9D0227E24657C5C0019CB37 /* Generate Universal Library */,
+			);
+			dependencies = (
+			);
+			name = "Package iOS";
+			productName = "Package iOS";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		2BD6E14D22F442C900949E44 /* AlfrescoAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD6E14322F442C900949E44 /* AlfrescoAuth.framework */; };
 		2BD6E15222F442C900949E44 /* AlfrescoAuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD6E15122F442C900949E44 /* AlfrescoAuthTests.swift */; };
@@ -369,6 +383,9 @@
 					2BD6E14B22F442C900949E44 = {
 						CreatedOnToolsVersion = 11.0;
 					};
+					B9D0227A24657C360019CB37 = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
 				};
 			};
 			buildConfigurationList = 2BD6E13D22F442C800949E44 /* Build configuration list for PBXProject "AlfrescoAuth" */;
@@ -386,6 +403,7 @@
 			targets = (
 				2BD6E14222F442C800949E44 /* AlfrescoAuth */,
 				2BD6E14B22F442C900949E44 /* AlfrescoAuthTests */,
+				B9D0227A24657C360019CB37 /* Package iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -407,6 +425,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B9D0227E24657C5C0019CB37 /* Generate Universal Library */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Universal Library";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\n# Step 1: Define Macros\nRELEASE_TYPE=\"InternalRelease\"\n\n# Step 2: Define OS and directories\nTEMPORARY_WORK_DIR=${PROJECT_DIR}/\"temp\"\nUNIVERSAL_OUTPUTFOLDER=${TEMPORARY_WORK_DIR}/${CONFIGURATION}-universal\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}\nDEVICE_OS=\"iphoneos\"\nDEVICE_SIMULATOR=\"iphonesimulator\"\n\n# Step 3: Make sure the output directories exists\nmkdir -p \"${TEMPORARY_WORK_DIR}\"\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 4: Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -workspace \"${PROJECT_NAME}.xcworkspace\" -scheme \"${PROJECT_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS}  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/\" \"${TEMPORARY_WORK_DIR}/dev\"\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\nsleep 5s\n\nxcodebuild -workspace \"${PROJECT_NAME}.xcworkspace\" -scheme \"${PROJECT_NAME}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/\" \"${TEMPORARY_WORK_DIR}/sim\"\n\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\nsleep 5s\n\n# Step 5: Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${TEMPORARY_WORK_DIR}/sim/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${TEMPORARY_WORK_DIR}/dev/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 6: Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 7: Clean up\nrm -rf ${TEMPORARY_WORK_DIR}\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2BD6E13F22F442C800949E44 /* Sources */ = {
@@ -594,10 +633,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = W8N95J537P;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -611,6 +650,8 @@
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alfresco.mobile.AlfrescoAuth;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -621,10 +662,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = W8N95J537P;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -638,6 +679,8 @@
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alfresco.mobile.AlfrescoAuth;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -679,6 +722,24 @@
 			};
 			name = Release;
 		};
+		B9D0227B24657C360019CB37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W8N95J537P;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B9D0227C24657C360019CB37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W8N95J537P;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -705,6 +766,15 @@
 			buildConfigurations = (
 				2BD6E15B22F442C900949E44 /* Debug */,
 				2BD6E15C22F442C900949E44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9D0227D24657C360019CB37 /* Build configuration list for PBXAggregateTarget "Package iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9D0227B24657C360019CB37 /* Debug */,
+				B9D0227C24657C360019CB37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
