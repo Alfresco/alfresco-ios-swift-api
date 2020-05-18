@@ -1,0 +1,21 @@
+trigger:
+  - master
+  - develop
+
+pr: none
+
+pool:
+  vmImage: 'macos-latest'
+
+variables:
+  - group: git-credentials
+
+steps:
+- checkout: self
+  persistCredentials: true
+
+- task: CmdLine@2
+  displayName: Check integrity of swagger library
+  inputs:
+    script: |
+      pod spec lint AlfrescoContentServices.podspec --allow-warnings
