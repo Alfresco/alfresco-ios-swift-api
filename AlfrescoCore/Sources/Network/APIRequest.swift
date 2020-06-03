@@ -36,7 +36,7 @@ public protocol APIRequest: Encodable {
     // HTTP verb of the request
     var method: HttpMethod { get }
     // Request header parameters
-    var headers: [String: ContentType] { get }
+    var headers: [String: String] { get }
     // Additional request parameters
     var parameters: [String: String] { get }
 }
