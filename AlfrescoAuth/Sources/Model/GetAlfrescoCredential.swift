@@ -26,8 +26,8 @@ struct GetAlfrescoCredential: APIRequest {
         return .post
     }
     
-    var headers: [String : ContentType] {
-        return ["Content-Type": .urlencoded]
+    var headers: [String : String] {
+        return ["Content-Type": ContentType.urlencoded.rawValue]
     }
     
     var parameters: [String : String] {
