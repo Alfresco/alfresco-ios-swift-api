@@ -20,8 +20,8 @@ struct TestAPIRequest: APIRequest {
         return .get
     }
     
-    var headers: [String : ContentType] {
-        return ["Content-Type": .urlencoded]
+    var headers: [String : String] {
+        return ["Content-Type": ContentType.urlencoded.rawValue]
     }
     
     var parameters: [String : String] {
@@ -42,8 +42,8 @@ struct TestPOSTAPIRequest: APIRequest {
         
     }
     
-    var headers: [String : ContentType] {
-        return ["Content-Type": .urlencoded]
+    var headers: [String : String] {
+        return ["Content-Type": ContentType.urlencoded.rawValue]
     }
     
     var parameters: [String : String] {
@@ -63,8 +63,8 @@ struct TestAPIRequestWithInvalidPath: APIRequest {
         return .get
     }
     
-    var headers: [String : ContentType] {
-        return ["Content-Type": .urlencoded]
+    var headers: [String : String] {
+        return ["Content-Type": ContentType.urlencoded.rawValue]
     }
     
     var parameters: [String : String] {
