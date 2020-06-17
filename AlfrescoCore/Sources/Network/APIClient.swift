@@ -98,7 +98,7 @@ public class APIClient: APIClientProtocol {
             urlRequest?.httpMethod = request.method.rawValue
             
             for (key, value) in request.headers {
-                urlRequest?.setValue(value.rawValue, forHTTPHeaderField: key)
+                urlRequest?.setValue(value, forHTTPHeaderField: key)
             }
             
             switch request.method {

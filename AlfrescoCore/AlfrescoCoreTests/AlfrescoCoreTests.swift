@@ -25,7 +25,7 @@ class AlfrescoCoreTests: XCTestCase {
     func testAPIRequestProtocolConformanceForAdopter () {
         XCTAssertEqual("/path", sut.path)
         XCTAssertEqual(HttpMethod.get, sut.method)
-        XCTAssertEqual(["Content-Type" : ContentType.urlencoded], sut.headers)
+        XCTAssertEqual(["Content-Type" : ContentType.urlencoded.rawValue], sut.headers)
         XCTAssertEqual(["client_id": "id",
                         "client_secret": "secret"], sut.parameters)
     }

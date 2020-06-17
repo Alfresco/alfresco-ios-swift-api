@@ -23,7 +23,7 @@ struct GetServiceDocumentInstance: APIRequest {
         return .get
     }
     
-    var headers: [String : ContentType] {
+    var headers: [String : String] {
         return [:]
     }
     
