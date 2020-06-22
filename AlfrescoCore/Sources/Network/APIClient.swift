@@ -68,8 +68,9 @@ public class APIClient: APIClientProtocol {
                     }
                     return
                 }
-                
-                if (T.Response.self == StatusCodeResponse.self) {
+                if T.Response.self == Data.self {
+                    completion(.success(data as! T.Response))
+                } else if (T.Response.self == StatusCodeResponse.self) {
                     completion(.success(sSelf.statusCodeResponse(T.Response.self, responseCode: response.statusCode)))
                 } else {
                     do {
