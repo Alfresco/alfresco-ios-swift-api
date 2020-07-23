@@ -39,7 +39,153 @@ open class FavoritesAPI {
     "targetGuid" : "targetGuid",
     "createdAt" : "2000-01-23T04:56:07.000+00:00",
     "properties" : "{}",
-    "target" : "{}"
+    "target" : {
+      "site" : {
+        "role" : "SiteConsumer",
+        "visibility" : "PRIVATE",
+        "guid" : "guid",
+        "description" : "description",
+        "id" : "id",
+        "preset" : "preset",
+        "title" : "title"
+      },
+      "file" : {
+        "isLink" : true,
+        "isFile" : true,
+        "createdByUser" : {
+          "displayName" : "displayName",
+          "id" : "id"
+        },
+        "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
+        "nodeType" : "nodeType",
+        "parentId" : "parentId",
+        "content" : {
+          "sizeInBytes" : 0,
+          "mimeTypeName" : "mimeTypeName",
+          "mimeTypeGroup" : "mimeTypeGroup",
+          "mimeType" : "mimeType",
+          "encoding" : "encoding"
+        },
+        "aspectNames" : [ "aspectNames", "aspectNames" ],
+        "createdAt" : "2000-01-23T04:56:07.000+00:00",
+        "path" : {
+          "elements" : [ {
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "name" : "name",
+            "id" : "id",
+            "nodeType" : "nodeType"
+          }, {
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "name" : "name",
+            "id" : "id",
+            "nodeType" : "nodeType"
+          } ],
+          "name" : "name",
+          "isComplete" : true
+        },
+        "isFolder" : true,
+        "permissions" : {
+          "isInheritanceEnabled" : true,
+          "settable" : [ "settable", "settable" ],
+          "locallySet" : [ {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          }, {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          } ],
+          "inherited" : [ {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          }, {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          } ]
+        },
+        "isLocked" : false,
+        "modifiedByUser" : {
+          "displayName" : "displayName",
+          "id" : "id"
+        },
+        "name" : "name",
+        "id" : "id",
+        "properties" : "{}",
+        "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
+        "isFavorite" : true
+      },
+      "folder" : {
+        "isLink" : true,
+        "isFile" : true,
+        "createdByUser" : {
+          "displayName" : "displayName",
+          "id" : "id"
+        },
+        "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
+        "nodeType" : "nodeType",
+        "parentId" : "parentId",
+        "content" : {
+          "sizeInBytes" : 0,
+          "mimeTypeName" : "mimeTypeName",
+          "mimeTypeGroup" : "mimeTypeGroup",
+          "mimeType" : "mimeType",
+          "encoding" : "encoding"
+        },
+        "aspectNames" : [ "aspectNames", "aspectNames" ],
+        "createdAt" : "2000-01-23T04:56:07.000+00:00",
+        "path" : {
+          "elements" : [ {
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "name" : "name",
+            "id" : "id",
+            "nodeType" : "nodeType"
+          }, {
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "name" : "name",
+            "id" : "id",
+            "nodeType" : "nodeType"
+          } ],
+          "name" : "name",
+          "isComplete" : true
+        },
+        "isFolder" : true,
+        "permissions" : {
+          "isInheritanceEnabled" : true,
+          "settable" : [ "settable", "settable" ],
+          "locallySet" : [ {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          }, {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          } ],
+          "inherited" : [ {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          }, {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          } ]
+        },
+        "isLocked" : false,
+        "modifiedByUser" : {
+          "displayName" : "displayName",
+          "id" : "id"
+        },
+        "name" : "name",
+        "id" : "id",
+        "properties" : "{}",
+        "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
+        "isFavorite" : true
+      }
+    }
   }
 }}]
      
@@ -247,7 +393,153 @@ open class FavoritesAPI {
     "targetGuid" : "targetGuid",
     "createdAt" : "2000-01-23T04:56:07.000+00:00",
     "properties" : "{}",
-    "target" : "{}"
+    "target" : {
+      "site" : {
+        "role" : "SiteConsumer",
+        "visibility" : "PRIVATE",
+        "guid" : "guid",
+        "description" : "description",
+        "id" : "id",
+        "preset" : "preset",
+        "title" : "title"
+      },
+      "file" : {
+        "isLink" : true,
+        "isFile" : true,
+        "createdByUser" : {
+          "displayName" : "displayName",
+          "id" : "id"
+        },
+        "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
+        "nodeType" : "nodeType",
+        "parentId" : "parentId",
+        "content" : {
+          "sizeInBytes" : 0,
+          "mimeTypeName" : "mimeTypeName",
+          "mimeTypeGroup" : "mimeTypeGroup",
+          "mimeType" : "mimeType",
+          "encoding" : "encoding"
+        },
+        "aspectNames" : [ "aspectNames", "aspectNames" ],
+        "createdAt" : "2000-01-23T04:56:07.000+00:00",
+        "path" : {
+          "elements" : [ {
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "name" : "name",
+            "id" : "id",
+            "nodeType" : "nodeType"
+          }, {
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "name" : "name",
+            "id" : "id",
+            "nodeType" : "nodeType"
+          } ],
+          "name" : "name",
+          "isComplete" : true
+        },
+        "isFolder" : true,
+        "permissions" : {
+          "isInheritanceEnabled" : true,
+          "settable" : [ "settable", "settable" ],
+          "locallySet" : [ {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          }, {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          } ],
+          "inherited" : [ {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          }, {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          } ]
+        },
+        "isLocked" : false,
+        "modifiedByUser" : {
+          "displayName" : "displayName",
+          "id" : "id"
+        },
+        "name" : "name",
+        "id" : "id",
+        "properties" : "{}",
+        "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
+        "isFavorite" : true
+      },
+      "folder" : {
+        "isLink" : true,
+        "isFile" : true,
+        "createdByUser" : {
+          "displayName" : "displayName",
+          "id" : "id"
+        },
+        "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
+        "nodeType" : "nodeType",
+        "parentId" : "parentId",
+        "content" : {
+          "sizeInBytes" : 0,
+          "mimeTypeName" : "mimeTypeName",
+          "mimeTypeGroup" : "mimeTypeGroup",
+          "mimeType" : "mimeType",
+          "encoding" : "encoding"
+        },
+        "aspectNames" : [ "aspectNames", "aspectNames" ],
+        "createdAt" : "2000-01-23T04:56:07.000+00:00",
+        "path" : {
+          "elements" : [ {
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "name" : "name",
+            "id" : "id",
+            "nodeType" : "nodeType"
+          }, {
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "name" : "name",
+            "id" : "id",
+            "nodeType" : "nodeType"
+          } ],
+          "name" : "name",
+          "isComplete" : true
+        },
+        "isFolder" : true,
+        "permissions" : {
+          "isInheritanceEnabled" : true,
+          "settable" : [ "settable", "settable" ],
+          "locallySet" : [ {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          }, {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          } ],
+          "inherited" : [ {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          }, {
+            "authorityId" : "authorityId",
+            "name" : "name",
+            "accessStatus" : "ALLOWED"
+          } ]
+        },
+        "isLocked" : false,
+        "modifiedByUser" : {
+          "displayName" : "displayName",
+          "id" : "id"
+        },
+        "name" : "name",
+        "id" : "id",
+        "properties" : "{}",
+        "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
+        "isFavorite" : true
+      }
+    }
   }
 }}]
      
@@ -457,14 +749,306 @@ open class FavoritesAPI {
         "targetGuid" : "targetGuid",
         "createdAt" : "2000-01-23T04:56:07.000+00:00",
         "properties" : "{}",
-        "target" : "{}"
+        "target" : {
+          "site" : {
+            "role" : "SiteConsumer",
+            "visibility" : "PRIVATE",
+            "guid" : "guid",
+            "description" : "description",
+            "id" : "id",
+            "preset" : "preset",
+            "title" : "title"
+          },
+          "file" : {
+            "isLink" : true,
+            "isFile" : true,
+            "createdByUser" : {
+              "displayName" : "displayName",
+              "id" : "id"
+            },
+            "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
+            "nodeType" : "nodeType",
+            "parentId" : "parentId",
+            "content" : {
+              "sizeInBytes" : 0,
+              "mimeTypeName" : "mimeTypeName",
+              "mimeTypeGroup" : "mimeTypeGroup",
+              "mimeType" : "mimeType",
+              "encoding" : "encoding"
+            },
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "createdAt" : "2000-01-23T04:56:07.000+00:00",
+            "path" : {
+              "elements" : [ {
+                "aspectNames" : [ "aspectNames", "aspectNames" ],
+                "name" : "name",
+                "id" : "id",
+                "nodeType" : "nodeType"
+              }, {
+                "aspectNames" : [ "aspectNames", "aspectNames" ],
+                "name" : "name",
+                "id" : "id",
+                "nodeType" : "nodeType"
+              } ],
+              "name" : "name",
+              "isComplete" : true
+            },
+            "isFolder" : true,
+            "permissions" : {
+              "isInheritanceEnabled" : true,
+              "settable" : [ "settable", "settable" ],
+              "locallySet" : [ {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              }, {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              } ],
+              "inherited" : [ {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              }, {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              } ]
+            },
+            "isLocked" : false,
+            "modifiedByUser" : {
+              "displayName" : "displayName",
+              "id" : "id"
+            },
+            "name" : "name",
+            "id" : "id",
+            "properties" : "{}",
+            "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
+            "isFavorite" : true
+          },
+          "folder" : {
+            "isLink" : true,
+            "isFile" : true,
+            "createdByUser" : {
+              "displayName" : "displayName",
+              "id" : "id"
+            },
+            "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
+            "nodeType" : "nodeType",
+            "parentId" : "parentId",
+            "content" : {
+              "sizeInBytes" : 0,
+              "mimeTypeName" : "mimeTypeName",
+              "mimeTypeGroup" : "mimeTypeGroup",
+              "mimeType" : "mimeType",
+              "encoding" : "encoding"
+            },
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "createdAt" : "2000-01-23T04:56:07.000+00:00",
+            "path" : {
+              "elements" : [ {
+                "aspectNames" : [ "aspectNames", "aspectNames" ],
+                "name" : "name",
+                "id" : "id",
+                "nodeType" : "nodeType"
+              }, {
+                "aspectNames" : [ "aspectNames", "aspectNames" ],
+                "name" : "name",
+                "id" : "id",
+                "nodeType" : "nodeType"
+              } ],
+              "name" : "name",
+              "isComplete" : true
+            },
+            "isFolder" : true,
+            "permissions" : {
+              "isInheritanceEnabled" : true,
+              "settable" : [ "settable", "settable" ],
+              "locallySet" : [ {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              }, {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              } ],
+              "inherited" : [ {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              }, {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              } ]
+            },
+            "isLocked" : false,
+            "modifiedByUser" : {
+              "displayName" : "displayName",
+              "id" : "id"
+            },
+            "name" : "name",
+            "id" : "id",
+            "properties" : "{}",
+            "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
+            "isFavorite" : true
+          }
+        }
       }
     }, {
       "entry" : {
         "targetGuid" : "targetGuid",
         "createdAt" : "2000-01-23T04:56:07.000+00:00",
         "properties" : "{}",
-        "target" : "{}"
+        "target" : {
+          "site" : {
+            "role" : "SiteConsumer",
+            "visibility" : "PRIVATE",
+            "guid" : "guid",
+            "description" : "description",
+            "id" : "id",
+            "preset" : "preset",
+            "title" : "title"
+          },
+          "file" : {
+            "isLink" : true,
+            "isFile" : true,
+            "createdByUser" : {
+              "displayName" : "displayName",
+              "id" : "id"
+            },
+            "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
+            "nodeType" : "nodeType",
+            "parentId" : "parentId",
+            "content" : {
+              "sizeInBytes" : 0,
+              "mimeTypeName" : "mimeTypeName",
+              "mimeTypeGroup" : "mimeTypeGroup",
+              "mimeType" : "mimeType",
+              "encoding" : "encoding"
+            },
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "createdAt" : "2000-01-23T04:56:07.000+00:00",
+            "path" : {
+              "elements" : [ {
+                "aspectNames" : [ "aspectNames", "aspectNames" ],
+                "name" : "name",
+                "id" : "id",
+                "nodeType" : "nodeType"
+              }, {
+                "aspectNames" : [ "aspectNames", "aspectNames" ],
+                "name" : "name",
+                "id" : "id",
+                "nodeType" : "nodeType"
+              } ],
+              "name" : "name",
+              "isComplete" : true
+            },
+            "isFolder" : true,
+            "permissions" : {
+              "isInheritanceEnabled" : true,
+              "settable" : [ "settable", "settable" ],
+              "locallySet" : [ {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              }, {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              } ],
+              "inherited" : [ {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              }, {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              } ]
+            },
+            "isLocked" : false,
+            "modifiedByUser" : {
+              "displayName" : "displayName",
+              "id" : "id"
+            },
+            "name" : "name",
+            "id" : "id",
+            "properties" : "{}",
+            "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
+            "isFavorite" : true
+          },
+          "folder" : {
+            "isLink" : true,
+            "isFile" : true,
+            "createdByUser" : {
+              "displayName" : "displayName",
+              "id" : "id"
+            },
+            "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
+            "nodeType" : "nodeType",
+            "parentId" : "parentId",
+            "content" : {
+              "sizeInBytes" : 0,
+              "mimeTypeName" : "mimeTypeName",
+              "mimeTypeGroup" : "mimeTypeGroup",
+              "mimeType" : "mimeType",
+              "encoding" : "encoding"
+            },
+            "aspectNames" : [ "aspectNames", "aspectNames" ],
+            "createdAt" : "2000-01-23T04:56:07.000+00:00",
+            "path" : {
+              "elements" : [ {
+                "aspectNames" : [ "aspectNames", "aspectNames" ],
+                "name" : "name",
+                "id" : "id",
+                "nodeType" : "nodeType"
+              }, {
+                "aspectNames" : [ "aspectNames", "aspectNames" ],
+                "name" : "name",
+                "id" : "id",
+                "nodeType" : "nodeType"
+              } ],
+              "name" : "name",
+              "isComplete" : true
+            },
+            "isFolder" : true,
+            "permissions" : {
+              "isInheritanceEnabled" : true,
+              "settable" : [ "settable", "settable" ],
+              "locallySet" : [ {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              }, {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              } ],
+              "inherited" : [ {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              }, {
+                "authorityId" : "authorityId",
+                "name" : "name",
+                "accessStatus" : "ALLOWED"
+              } ]
+            },
+            "isLocked" : false,
+            "modifiedByUser" : {
+              "displayName" : "displayName",
+              "id" : "id"
+            },
+            "name" : "name",
+            "id" : "id",
+            "properties" : "{}",
+            "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
+            "isFavorite" : true
+          }
+        }
       }
     } ],
     "pagination" : {
