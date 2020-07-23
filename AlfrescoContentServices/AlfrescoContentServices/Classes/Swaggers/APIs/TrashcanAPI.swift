@@ -30,7 +30,7 @@ open class TrashcanAPI {
 
     /**
      Permanently delete a deleted node
-     - DELETE /deleted-nodes/{nodeId}
+     - DELETE /alfresco/versions/1/deleted-nodes/{nodeId}
      - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Permanently deletes the deleted node **nodeId**. 
      - BASIC:
        - type: basic
@@ -41,7 +41,7 @@ open class TrashcanAPI {
      - returns: RequestBuilder<Void> 
      */
     open class func deleteDeletedNodeWithRequestBuilder(nodeId: String) -> RequestBuilder<Void> {
-        var path = "/deleted-nodes/{nodeId}"
+        var path = "/alfresco/versions/1/deleted-nodes/{nodeId}"
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
@@ -71,7 +71,7 @@ open class TrashcanAPI {
 
     /**
      Get rendition information for a deleted node
-     - GET /deleted-nodes/{nodeId}/renditions/{renditionId}
+     - GET /alfresco/versions/1/deleted-nodes/{nodeId}/renditions/{renditionId}
      - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets the rendition information for **renditionId** of file **nodeId**. 
      - BASIC:
        - type: basic
@@ -96,7 +96,7 @@ open class TrashcanAPI {
      - returns: RequestBuilder<RenditionEntry> 
      */
     open class func getArchivedNodeRenditionWithRequestBuilder(nodeId: String, renditionId: String) -> RequestBuilder<RenditionEntry> {
-        var path = "/deleted-nodes/{nodeId}/renditions/{renditionId}"
+        var path = "/alfresco/versions/1/deleted-nodes/{nodeId}/renditions/{renditionId}"
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
@@ -133,7 +133,7 @@ open class TrashcanAPI {
 
     /**
      Get rendition content of a deleted node
-     - GET /deleted-nodes/{nodeId}/renditions/{renditionId}/content
+     - GET /alfresco/versions/1/deleted-nodes/{nodeId}/renditions/{renditionId}/content
      - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets the rendition content for **renditionId** of file **nodeId**. 
      - BASIC:
        - type: basic
@@ -150,7 +150,7 @@ open class TrashcanAPI {
      - returns: RequestBuilder<URL> 
      */
     open class func getArchivedNodeRenditionContentWithRequestBuilder(nodeId: String, renditionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil, placeholder: Bool? = nil) -> RequestBuilder<URL> {
-        var path = "/deleted-nodes/{nodeId}/renditions/{renditionId}/content"
+        var path = "/alfresco/versions/1/deleted-nodes/{nodeId}/renditions/{renditionId}/content"
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
@@ -192,7 +192,7 @@ open class TrashcanAPI {
 
     /**
      Get a deleted node
-     - GET /deleted-nodes/{nodeId}
+     - GET /alfresco/versions/1/deleted-nodes/{nodeId}
      - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets the specific deleted node **nodeId**. 
      - BASIC:
        - type: basic
@@ -207,7 +207,7 @@ open class TrashcanAPI {
      - returns: RequestBuilder<DeletedNodeEntry> 
      */
     open class func getDeletedNodeWithRequestBuilder(nodeId: String, include: [String]? = nil) -> RequestBuilder<DeletedNodeEntry> {
-        var path = "/deleted-nodes/{nodeId}"
+        var path = "/alfresco/versions/1/deleted-nodes/{nodeId}"
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
@@ -242,7 +242,7 @@ open class TrashcanAPI {
 
     /**
      Get deleted node content
-     - GET /deleted-nodes/{nodeId}/content
+     - GET /alfresco/versions/1/deleted-nodes/{nodeId}/content
      - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets the content of the deleted node with identifier **nodeId**. 
      - BASIC:
        - type: basic
@@ -257,7 +257,7 @@ open class TrashcanAPI {
      - returns: RequestBuilder<URL> 
      */
     open class func getDeletedNodeContentWithRequestBuilder(nodeId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil) -> RequestBuilder<URL> {
-        var path = "/deleted-nodes/{nodeId}/content"
+        var path = "/alfresco/versions/1/deleted-nodes/{nodeId}/content"
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
@@ -295,7 +295,7 @@ open class TrashcanAPI {
 
     /**
      List renditions for a deleted node
-     - GET /deleted-nodes/{nodeId}/renditions
+     - GET /alfresco/versions/1/deleted-nodes/{nodeId}/renditions
      - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets a list of the rendition information for each rendition of the file **nodeId**, including the rendition id.  Each rendition returned has a **status**: CREATED means it is available to view or download, NOT_CREATED means the rendition can be requested.  You can use the **where** parameter to filter the returned renditions by **status**. For example, the following **where** clause will return just the CREATED renditions:  ``` (status='CREATED') ``` 
      - BASIC:
        - type: basic
@@ -343,7 +343,7 @@ open class TrashcanAPI {
      - returns: RequestBuilder<RenditionPaging> 
      */
     open class func listDeletedNodeRenditionsWithRequestBuilder(nodeId: String, _where: String? = nil) -> RequestBuilder<RenditionPaging> {
-        var path = "/deleted-nodes/{nodeId}/renditions"
+        var path = "/alfresco/versions/1/deleted-nodes/{nodeId}/renditions"
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
@@ -377,7 +377,7 @@ open class TrashcanAPI {
 
     /**
      List deleted nodes
-     - GET /deleted-nodes
+     - GET /alfresco/versions/1/deleted-nodes
      - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets a list of deleted nodes for the current user.  If the current user is an administrator deleted nodes for all users will be returned.  The list of deleted nodes will be ordered with the most recently deleted node at the top of the list. 
      - BASIC:
        - type: basic
@@ -406,7 +406,7 @@ open class TrashcanAPI {
      - returns: RequestBuilder<DeletedNodesPaging> 
      */
     open class func listDeletedNodesWithRequestBuilder(skipCount: Int? = nil, maxItems: Int? = nil, include: [String]? = nil) -> RequestBuilder<DeletedNodesPaging> {
-        let path = "/deleted-nodes"
+        let path = "/alfresco/versions/1/deleted-nodes"
         let URLString = AlfrescoContentServicesAPI.basePath + path
         let parameters: [String:Any]? = nil
         
@@ -439,7 +439,7 @@ open class TrashcanAPI {
 
     /**
      Restore a deleted node
-     - POST /deleted-nodes/{nodeId}/restore
+     - POST /alfresco/versions/1/deleted-nodes/{nodeId}/restore
      - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Attempts to restore the deleted node **nodeId** to its original location or to a new location.  If the node is successfully restored to its former primary parent, then only the  primary child association will be restored, including recursively for any primary  children. It should be noted that no other secondary child associations or peer  associations will be restored, for any of the nodes within the primary parent-child  hierarchy of restored nodes, irrespective of whether these associations were to  nodes within or outside of the restored hierarchy.   Also, any previously shared link will not be restored since it is deleted at the time  of delete of each node. 
      - BASIC:
        - type: basic
@@ -522,7 +522,7 @@ open class TrashcanAPI {
      - returns: RequestBuilder<NodeEntry> 
      */
     open class func restoreDeletedNodeWithRequestBuilder(nodeId: String, fields: [String]? = nil, deletedNodeBodyRestore: DeletedNodeBodyRestore? = nil) -> RequestBuilder<NodeEntry> {
-        var path = "/deleted-nodes/{nodeId}/restore"
+        var path = "/alfresco/versions/1/deleted-nodes/{nodeId}/restore"
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
