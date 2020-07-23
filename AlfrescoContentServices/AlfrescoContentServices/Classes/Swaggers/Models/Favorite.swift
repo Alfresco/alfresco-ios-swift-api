@@ -16,11 +16,11 @@ public struct Favorite: Codable {
     public var targetGuid: String
     /** The time the object was made a favorite. */
     public var createdAt: Date?
-    public var target: JSONValue
+    public var target: FavoriteTarget
     /** A subset of the target favorite properties, system properties and properties already available in the target are excluded. */
     public var properties: JSONValue?
 
-    public init(targetGuid: String, createdAt: Date?, target: JSONValue, properties: JSONValue?) {
+    public init(targetGuid: String, createdAt: Date?, target: FavoriteTarget, properties: JSONValue?) {
         self.targetGuid = targetGuid
         self.createdAt = createdAt
         self.target = target
