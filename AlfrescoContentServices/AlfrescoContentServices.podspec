@@ -11,6 +11,14 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/Alfresco/ios-dbp-sdk'
   s.summary = 'Alfresco Content Services module'
   s.source_files = 'AlfrescoContentServices/**/*'
-  s.exclude_files = ['AlfrescoContentServices/template', 'AlfrescoContentServices/AlfrescoContentServicesSwaggerConfiguration.json']
+  s.exclude_files = ['AlfrescoContentServices/template', 
+    'AlfrescoContentServices/AlfrescoContentServicesSwaggerConfiguration.json', 
+    'AlfrescoContentServices/AlfrescoContentServices.podspec', 
+    'AlfrescoContentServices/definitions', 
+    'AlfrescoContentServices/auth.yaml', 
+    'AlfrescoContentServices/Cartfile',
+    'AlfrescoContentServices/git_push.sh', 
+    'AlfrescoContentServices/LICENSE.md', 
+    'AlfrescoContentServices/README.md']
   s.dependency 'Alamofire', '~> 4.9.0'
 end
