@@ -51,7 +51,7 @@ open class GroupsAPI {
      */
     open class func createGroupWithRequestBuilder(groupBodyCreate: GroupBodyCreate, include: [String]? = nil, fields: [String]? = nil) -> RequestBuilder<GroupEntry> {
         let path = "/alfresco/versions/1/groups"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: groupBodyCreate)
 
         var url = URLComponents(string: URLString)
@@ -60,7 +60,7 @@ open class GroupsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<GroupEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<GroupEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
@@ -106,7 +106,7 @@ open class GroupsAPI {
         let groupIdPreEscape = "\(groupId)"
         let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: groupMembershipBodyCreate)
 
         var url = URLComponents(string: URLString)
@@ -114,7 +114,7 @@ open class GroupsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<GroupMemberEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<GroupMemberEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
@@ -155,7 +155,7 @@ open class GroupsAPI {
         let groupIdPreEscape = "\(groupId)"
         let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -163,7 +163,7 @@ open class GroupsAPI {
             "cascade": cascade
         ])
 
-        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -207,12 +207,12 @@ open class GroupsAPI {
         let groupMemberIdPreEscape = "\(groupMemberId)"
         let groupMemberIdPostEscape = groupMemberIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{groupMemberId}", with: groupMemberIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -260,7 +260,7 @@ open class GroupsAPI {
         let groupIdPreEscape = "\(groupId)"
         let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -269,7 +269,7 @@ open class GroupsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<GroupEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<GroupEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -338,7 +338,7 @@ open class GroupsAPI {
         let groupIdPreEscape = "\(groupId)"
         let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -350,7 +350,7 @@ open class GroupsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<GroupMemberPaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<GroupMemberPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -425,7 +425,7 @@ open class GroupsAPI {
         let personIdPreEscape = "\(personId)"
         let personIdPostEscape = personIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{personId}", with: personIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -438,7 +438,7 @@ open class GroupsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<GroupPaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<GroupPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -508,7 +508,7 @@ open class GroupsAPI {
      */
     open class func listGroupsWithRequestBuilder(skipCount: Int? = nil, maxItems: Int? = nil, orderBy: [String]? = nil, include: [String]? = nil, _where: String? = nil, fields: [String]? = nil) -> RequestBuilder<GroupPaging> {
         let path = "/alfresco/versions/1/groups"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -521,7 +521,7 @@ open class GroupsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<GroupPaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<GroupPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -571,7 +571,7 @@ open class GroupsAPI {
         let groupIdPreEscape = "\(groupId)"
         let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: groupBodyUpdate)
 
         var url = URLComponents(string: URLString)
@@ -580,7 +580,7 @@ open class GroupsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<GroupEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<GroupEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }

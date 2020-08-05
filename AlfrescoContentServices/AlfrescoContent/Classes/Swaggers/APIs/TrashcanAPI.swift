@@ -45,12 +45,12 @@ open class TrashcanAPI {
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -103,12 +103,12 @@ open class TrashcanAPI {
         let renditionIdPreEscape = "\(renditionId)"
         let renditionIdPostEscape = renditionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{renditionId}", with: renditionIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<RenditionEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<RenditionEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -157,7 +157,7 @@ open class TrashcanAPI {
         let renditionIdPreEscape = "\(renditionId)"
         let renditionIdPostEscape = renditionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{renditionId}", with: renditionIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -171,7 +171,7 @@ open class TrashcanAPI {
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<URL>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<URL>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
@@ -211,7 +211,7 @@ open class TrashcanAPI {
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -219,7 +219,7 @@ open class TrashcanAPI {
             "include": include
         ])
 
-        let requestBuilder: RequestBuilder<DeletedNodeEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<DeletedNodeEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -261,7 +261,7 @@ open class TrashcanAPI {
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -274,7 +274,7 @@ open class TrashcanAPI {
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<URL>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<URL>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
@@ -347,7 +347,7 @@ open class TrashcanAPI {
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -355,7 +355,7 @@ open class TrashcanAPI {
             "where": _where
         ])
 
-        let requestBuilder: RequestBuilder<RenditionPaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<RenditionPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -407,7 +407,7 @@ open class TrashcanAPI {
      */
     open class func listDeletedNodesWithRequestBuilder(skipCount: Int? = nil, maxItems: Int? = nil, include: [String]? = nil) -> RequestBuilder<DeletedNodesPaging> {
         let path = "/alfresco/versions/1/deleted-nodes"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -417,7 +417,7 @@ open class TrashcanAPI {
             "include": include
         ])
 
-        let requestBuilder: RequestBuilder<DeletedNodesPaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<DeletedNodesPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -526,7 +526,7 @@ open class TrashcanAPI {
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: deletedNodeBodyRestore)
 
         var url = URLComponents(string: URLString)
@@ -534,7 +534,7 @@ open class TrashcanAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<NodeEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<NodeEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }

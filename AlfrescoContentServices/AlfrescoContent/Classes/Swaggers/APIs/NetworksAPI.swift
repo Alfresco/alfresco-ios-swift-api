@@ -62,7 +62,7 @@ open class NetworksAPI {
         let networkIdPreEscape = "\(networkId)"
         let networkIdPostEscape = networkIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{networkId}", with: networkIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -70,7 +70,7 @@ open class NetworksAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<PersonNetworkEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<PersonNetworkEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -131,7 +131,7 @@ open class NetworksAPI {
         let networkIdPreEscape = "\(networkId)"
         let networkIdPostEscape = networkIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{networkId}", with: networkIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -139,7 +139,7 @@ open class NetworksAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<PersonNetworkEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<PersonNetworkEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -228,7 +228,7 @@ open class NetworksAPI {
         let personIdPreEscape = "\(personId)"
         let personIdPostEscape = personIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{personId}", with: personIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -238,7 +238,7 @@ open class NetworksAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<PersonNetworkPaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<PersonNetworkPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }

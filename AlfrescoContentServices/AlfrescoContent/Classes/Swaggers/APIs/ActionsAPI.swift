@@ -64,12 +64,12 @@ open class ActionsAPI {
         let actionDefinitionIdPreEscape = "\(actionDefinitionId)"
         let actionDefinitionIdPostEscape = actionDefinitionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{actionDefinitionId}", with: actionDefinitionIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<ActionDefinitionEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<ActionDefinitionEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -106,12 +106,12 @@ open class ActionsAPI {
      */
     open class func actionExecWithRequestBuilder(actionBodyExec: ActionBodyExec) -> RequestBuilder<ActionExecResultEntry> {
         let path = "/alfresco/versions/1/action-executions"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: actionBodyExec)
 
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<ActionExecResultEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<ActionExecResultEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
@@ -201,7 +201,7 @@ open class ActionsAPI {
      */
     open class func listActionsWithRequestBuilder(skipCount: Int? = nil, maxItems: Int? = nil, orderBy: [String]? = nil, fields: [String]? = nil) -> RequestBuilder<ActionDefinitionList> {
         let path = "/alfresco/versions/1/action-definitions"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -212,7 +212,7 @@ open class ActionsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<ActionDefinitionList>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<ActionDefinitionList>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -307,7 +307,7 @@ open class ActionsAPI {
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -318,7 +318,7 @@ open class ActionsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<ActionDefinitionList>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<ActionDefinitionList>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }

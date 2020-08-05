@@ -54,7 +54,7 @@ open class PreferencesAPI {
         let preferenceNamePreEscape = "\(preferenceName)"
         let preferenceNamePostEscape = preferenceNamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{preferenceName}", with: preferenceNamePostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -62,7 +62,7 @@ open class PreferencesAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<PreferenceEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<PreferenceEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -125,7 +125,7 @@ open class PreferencesAPI {
         let personIdPreEscape = "\(personId)"
         let personIdPostEscape = personIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{personId}", with: personIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -135,7 +135,7 @@ open class PreferencesAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<PreferencePaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<PreferencePaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }

@@ -270,7 +270,7 @@ open class QueriesAPI {
      */
     open class func findNodesWithRequestBuilder(term: String, rootNodeId: String? = nil, skipCount: Int? = nil, maxItems: Int? = nil, nodeType: String? = nil, include: [String]? = nil, orderBy: [String]? = nil, fields: [String]? = nil) -> RequestBuilder<NodePaging> {
         let path = "/alfresco/versions/1/queries/nodes"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -285,7 +285,7 @@ open class QueriesAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<NodePaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<NodePaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -405,7 +405,7 @@ open class QueriesAPI {
      */
     open class func findPeopleWithRequestBuilder(term: String, skipCount: Int? = nil, maxItems: Int? = nil, fields: [String]? = nil, orderBy: [String]? = nil) -> RequestBuilder<PersonPaging> {
         let path = "/alfresco/versions/1/queries/people"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -417,7 +417,7 @@ open class QueriesAPI {
             "orderBy": orderBy
         ])
 
-        let requestBuilder: RequestBuilder<PersonPaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<PersonPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -489,7 +489,7 @@ open class QueriesAPI {
      */
     open class func findSitesWithRequestBuilder(term: String, skipCount: Int? = nil, maxItems: Int? = nil, orderBy: [String]? = nil, fields: [String]? = nil) -> RequestBuilder<SitePaging> {
         let path = "/alfresco/versions/1/queries/sites"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -501,7 +501,7 @@ open class QueriesAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<SitePaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<SitePaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }

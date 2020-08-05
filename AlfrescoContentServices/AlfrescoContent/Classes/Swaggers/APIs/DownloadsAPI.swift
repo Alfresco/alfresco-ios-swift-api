@@ -45,12 +45,12 @@ open class DownloadsAPI {
         let downloadIdPreEscape = "\(downloadId)"
         let downloadIdPostEscape = downloadIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{downloadId}", with: downloadIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -94,7 +94,7 @@ open class DownloadsAPI {
      */
     open class func createDownloadWithRequestBuilder(downloadBodyCreate: DownloadBodyCreate, fields: [String]? = nil) -> RequestBuilder<DownloadEntry> {
         let path = "/alfresco/versions/1/downloads"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: downloadBodyCreate)
 
         var url = URLComponents(string: URLString)
@@ -102,7 +102,7 @@ open class DownloadsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<DownloadEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<DownloadEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
@@ -149,7 +149,7 @@ open class DownloadsAPI {
         let downloadIdPreEscape = "\(downloadId)"
         let downloadIdPostEscape = downloadIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{downloadId}", with: downloadIdPostEscape, options: .literal, range: nil)
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
@@ -157,7 +157,7 @@ open class DownloadsAPI {
             "fields": fields
         ])
 
-        let requestBuilder: RequestBuilder<DownloadEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<DownloadEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }

@@ -6,6 +6,7 @@ info:
     Provides access to the core features of Alfresco Content Services.
   version: '1'
   title: Alfresco Content Services REST API
+host: www.alfresco.com
 basePath: /alfresco/api/-default-/public
 securityDefinitions:
   basicAuth:

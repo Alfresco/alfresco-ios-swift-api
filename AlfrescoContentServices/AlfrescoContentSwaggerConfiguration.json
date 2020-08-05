@@ -1,0 +1,9 @@
+{
+	"projectName":"AlfrescoContent",
+	"podVersion":"1.0.0",
+	"podAuthors":"{'Alfresco' => 'mobile.alfresco@alfresco.com'}",
+	"podLicense":"{:type => 'Apache License Version 2.0', :file => 'AlfrescoContent/LICENSE.md'}",
+	"podHomepage":"https://github.com/Alfresco/alfresco-ios-swift-api",
+	"podSummary":"Alfresco Content iOS Swift API",
+	"podSource":"{:git => 'https://github.com/Alfresco/alfresco-ios-swift-api', :tag => 'content/'+s.version.to_s}"
+}
