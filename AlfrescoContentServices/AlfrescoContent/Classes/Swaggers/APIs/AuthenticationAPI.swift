@@ -44,12 +44,12 @@ open class AuthenticationAPI {
      */
     open class func createTicketWithRequestBuilder(ticketBodyCreate: TicketBody) -> RequestBuilder<TicketEntry> {
         let path = "/authentication/versions/1/tickets"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: ticketBodyCreate)
 
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<TicketEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<TicketEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
@@ -82,12 +82,12 @@ open class AuthenticationAPI {
      */
     open class func deleteTicketWithRequestBuilder() -> RequestBuilder<Void> {
         let path = "/authentication/versions/1/tickets/-me-"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -121,12 +121,12 @@ open class AuthenticationAPI {
      */
     open class func validateTicketWithRequestBuilder() -> RequestBuilder<ValidTicketEntry> {
         let path = "/authentication/versions/1/tickets/-me-"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<ValidTicketEntry>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<ValidTicketEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }

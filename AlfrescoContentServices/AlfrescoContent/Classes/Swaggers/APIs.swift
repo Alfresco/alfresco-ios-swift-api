@@ -6,8 +6,8 @@
 
 import Foundation
 
-open class AlfrescoContentServicesAPI {
-    public static var basePath = "https://localhost/alfresco/api/-default-/public"
+open class AlfrescoContentAPI {
+    public static var basePath = "https://www.alfresco.com/alfresco/api/-default-/public"
     public static var credential: URLCredential?
     public static var customHeaders: [String:String] = [:]
     public static var requestBuilderFactory: RequestBuilderFactory = AlamofireRequestBuilderFactory()
@@ -31,7 +31,7 @@ open class RequestBuilder<T> {
         self.isBody = isBody
         self.headers = headers
 
-        addHeaders(AlfrescoContentServicesAPI.customHeaders)
+        addHeaders(AlfrescoContentAPI.customHeaders)
     }
 
     open func addHeaders(_ aHeaders:[String:String]) {
@@ -50,7 +50,7 @@ open class RequestBuilder<T> {
     }
 
     open func addCredential() -> Self {
-        self.credential = AlfrescoContentServicesAPI.credential
+        self.credential = AlfrescoContentAPI.credential
         return self
     }
 }

@@ -384,12 +384,12 @@ open class SearchAPI {
      */
     open class func searchWithRequestBuilder(queryBody: SearchRequest) -> RequestBuilder<ResultSetPaging> {
         let path = "/search/versions/1/search"
-        let URLString = AlfrescoContentServicesAPI.basePath + path
+        let URLString = AlfrescoContentAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: queryBody)
 
         let url = URLComponents(string: URLString)
 
-        let requestBuilder: RequestBuilder<ResultSetPaging>.Type = AlfrescoContentServicesAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<ResultSetPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }

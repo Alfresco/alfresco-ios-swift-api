@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   s.description = '{{podDescription}}'{{/podDescription}}{{#podScreenshots}}
   s.screenshots = {{& podScreenshots}}{{/podScreenshots}}{{#podDocumentationURL}}
   s.documentation_url = '{{podDocumentationURL}}'{{/podDocumentationURL}}
-  s.source_files = 'AlfrescoContentServices/**/*'
-  s.exclude_files = ['AlfrescoContentServices/template', 'AlfrescoContentServices/AlfrescoContentServicesSwaggerConfiguration.json']{{#usePromiseKit}}
+  s.source_files = 'AlfrescoContent/**/*'
+  s.exclude_files = ['AlfrescoContent/template', 'AlfrescoContent/AlfrescoContentSwaggerConfiguration.json']{{#usePromiseKit}}
   s.dependency 'PromiseKit/CorePromise', '~> 4.4.0'{{/usePromiseKit}}{{#useRxSwift}}
   s.dependency 'RxSwift', '~> 4.0'{{/useRxSwift}}
   s.dependency 'Alamofire', '~> 4.9.0'
