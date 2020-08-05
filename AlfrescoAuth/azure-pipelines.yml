@@ -62,7 +62,7 @@ steps:
 # ---------------------------------------
 - task: Xcode@5
   continueOnError: true
-  displayName: 'Building Alfresco iOS DBP SDK - auth module'
+  displayName: 'Building Alfresco Auth iOS Swift API'
   inputs:
     actions: 'clean build'
     scheme: 'Package iOS'
@@ -78,7 +78,7 @@ steps:
   displayName: 'Package auth module framework into a zip file'
   inputs:
     rootFolderOrFile: 'AlfrescoAuth/AlfrescoAuthInternalRelease/'
-    archiveFile: '$(build.artifactStagingDirectory)/ios-dbp-sdk-auth-framework.zip'
+    archiveFile: '$(build.artifactStagingDirectory)/alfresco-ios-swift-auth-api.zip'
 
 # ---------------------------------------
 # Publish artifacts
@@ -86,7 +86,7 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish auth build artifacts'
   inputs:
-    pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-auth-framework.zip'
+    pathToPublish: '$(build.artifactStagingDirectory)/alfresco-ios-swift-auth-api.zip'
     artifactName: 'auth-framework-files'
     artifactType: 'container'
   
