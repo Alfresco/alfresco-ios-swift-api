@@ -1,0 +1,41 @@
+PODS:
+  - Alamofire (4.9.1)
+  - AlfrescoAuth (2.1.2):
+    - AlfrescoCore
+    - AppAuth
+  - AlfrescoContent (1.0.0):
+    - Alamofire (~> 4.9.0)
+  - AlfrescoCore (2.0.3)
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
+  - JWTDecode (2.4.1)
+
+DEPENDENCIES:
+  - AlfrescoAuth
+  - AlfrescoContent
+  - JWTDecode
+
+SPEC REPOS:
+  https://github.com/Alfresco/alfresco-private-podspecs-ios-sdk:
+    - AlfrescoAuth
+    - AlfrescoContent
+    - AlfrescoCore
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - AppAuth
+    - JWTDecode
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  AlfrescoAuth: 2814a9ed1c377f500fa5e25c8b50b1fd3f78a3e7
+  AlfrescoContent: 9b9497f6147ff248d9867ef4485e0f14dae67aba
+  AlfrescoCore: 350f2029a789fbd42d54e92125bc63f572e04939
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  JWTDecode: 4bd4da0cdf0f8154fd467fa48499f34ec057fb88
+
+PODFILE CHECKSUM: a2cab610b3bdb56a43deaf92cdedd2857a8c729f
+
+COCOAPODS: 1.9.3
