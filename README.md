@@ -66,28 +66,28 @@ First, your view model will have to initialize the auth module with your configu
 
 ```swift
 class MyLoginViewModel {
-	init() {
-		alfrescoAuth = AlfrescoAuth.init(configuration: authConfig)
-	}
-	...
+  init() {
+    alfrescoAuth = AlfrescoAuth.init(configuration: authConfig)
+  }
+  ...
 }
 ```
 Next call the **pkceAuth** method on the auth module passing in the view controller where you want to show the SSO Webview and delegate class where to receive the updates.
 ```swift
 class  MyLoginViewModel {
-	func login(in viewController: UIViewController) {
-		alfrescoAuth.pkceAuth(onViewController: viewController, delegate: self)
-	}
+  func login(in viewController: UIViewController) {
+    alfrescoAuth.pkceAuth(onViewController: viewController, delegate: self)
+  }
 }
 
 extension MyLoginViewModel: AlfrescoAuthDelegate {
-	func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?) {
-	switch result {
-		case.success(let credential):
-		// Store credential and session object
-			...
-		case .failure(let error):
-			...
+  func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?) {
+    switch result {
+      case.success(let credential):
+        // Store credential and session object
+		...
+	  case .failure(let error):
+		...
 	}
 }
 ```
@@ -119,15 +119,15 @@ To do so, just call the logout method on the AlfrescoAuth module providing the l
 
 ```swift
 class  MyLoginViewModel {
-	func logOut(onViewController viewController: UIViewController, 	lastKnownCredential: AlfrescoCredential, delegate: AlfrescoAuthDelegate) {
-		alfrescoAuth.logout(onViewController: viewController, delegate: self, forCredential: lastKnownCredential)
+  func logOut(onViewController viewController: UIViewController, lastKnownCredential: AlfrescoCredential, delegate: AlfrescoAuthDelegate) {
+    alfrescoAuth.logout(onViewController: viewController, delegate: self, forCredential: lastKnownCredential)
 	}
 }
 
 extension MyLoginViewModel: AlfrescoAuthDelegate {
-	func didLogOut(result: Result<Int, APIError>) {
-	...
-	}
+  func didLogOut(result: Result<Int, APIError>) {
+  ...
+  }
 }
 ```
 
@@ -143,12 +143,12 @@ While for Basic Authentication it's up to you to figure out the integration, for
 
 ```swift
 class  MyLoginViewModel {
-	func refreshSession(delegate: AlfrescoAuthDelegate) {
-		// The session object is the same one provided after the successfull log in
-		if let session = self.session { 
-			alfrescoAuth.pkceRefresh(session: session, delegate: self)
-		}
+  func refreshSession(delegate: AlfrescoAuthDelegate) {
+	// The session object is the same one provided after the successfull log in
+	if let session = self.session { 
+	  alfrescoAuth.pkceRefresh(session: session, delegate: self)
 	}
+  }
 }
 ```
 
@@ -167,14 +167,14 @@ Additionally, you should provide a credential set which you could either attach 
 Now just get a service and make your request:
 ```swift
 class RecentsViewModel {
-	func fetchRecentsList() {
-		AlfrescoContentAPI.customHeaders = ["Authorization": authorizationHeaderValue()]
-		SearchAPI.search(queryBody:"my querry", ...) {
-			if let entries = result?.list?.entries {
-			// handle results
-			}
-		}
+  func fetchRecentsList() {
+    AlfrescoContentAPI.customHeaders = ["Authorization": authorizationHeaderValue()]
+	SearchAPI.search(queryBody:"my querry", ...) {
+	  if let entries = result?.list?.entries {
+	    // handle results
+	  }
 	}
+  }
 }
 ```
 
