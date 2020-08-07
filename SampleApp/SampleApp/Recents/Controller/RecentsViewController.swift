@@ -28,6 +28,14 @@ class RecentsViewController: UIViewController {
 
         viewModel?.fetchRecentsList()
     }
+    
+    @IBAction func logoutTapped(_ sender: Any) {
+        viewModel?.logout(on: self)
+    }
+
+    @IBAction func refreshSessionTapped(_ sender: Any) {
+        viewModel?.refreshSession()
+    }
 }
 
 extension RecentsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -46,6 +54,17 @@ extension RecentsViewController: UICollectionViewDataSource, UICollectionViewDel
 }
 
 extension RecentsViewController: RecentsViewModelDelegate {
+    func didLogout() {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+
+    func didRefreshSession() {
+        let alert = UIAlertController.init(title: "", message: "Session refreshed", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
+
     func didLoadRecents() {
         collectionView.reloadData()
     }

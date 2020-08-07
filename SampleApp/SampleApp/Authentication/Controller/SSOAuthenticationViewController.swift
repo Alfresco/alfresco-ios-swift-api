@@ -21,13 +21,15 @@ import AlfrescoAuth
 
 class SSOAuthenticationViewController: UIViewController {
     var viewModel: SSOAuthenticationViewModel?
-    var authenticationProvider: AuthenticationProviderProtocol?
+    var authenticationProvider: AIMSAuthenticationProvider?
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "sso-recents" {
             if let recentsViewController = segue.destination as? RecentsViewController {
                 let viewModel = RecentsViewModel()
                 viewModel.authenticationProvider = authenticationProvider
+                viewModel.ssoCredential = authenticationProvider?.credential
+                viewModel.authenticationService = self.viewModel?.authenticationService
                 viewModel.delegate = recentsViewController
                 recentsViewController.viewModel = viewModel
             }

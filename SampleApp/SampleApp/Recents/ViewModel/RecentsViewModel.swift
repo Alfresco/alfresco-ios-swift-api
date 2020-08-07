@@ -18,13 +18,20 @@
 
 import Foundation
 import AlfrescoContent
+import AlfrescoAuth
 
 protocol RecentsViewModelDelegate: class {
     func didLoadRecents()
+    func didLogout()
+    func didRefreshSession()
 }
 
 class RecentsViewModel {
     var authenticationProvider: AuthenticationProviderProtocol?
+    var authenticationService: AuthenticationService?
+
+    var ssoCredential: AlfrescoCredential?
+
     var nodes: [ListNode]?
     weak var delegate: RecentsViewModelDelegate?
 
@@ -46,5 +53,39 @@ class RecentsViewModel {
                 }
             }
         }
+    }
+
+    func logout(on viewController: UIViewController) {
+        if let credentials = ssoCredential {
+            authenticationService?.logOut(onViewController: viewController, lastKnownCredential: credentials, delegate: self)
+        } else {
+            delegate?.didLogout()
+        }
+    }
+
+    func refreshSession() {
+        authenticationService?.refreshSession(delegate: self)
+    }
+}
+
+extension RecentsViewModel: AlfrescoAuthDelegate {
+    func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?) {
+        switch result {
+        case .success(let credential):
+            DispatchQueue.main.async { [weak self] in
+                guard let sSelf = self else { return }
+
+                sSelf.authenticationProvider = AIMSAuthenticationProvider(with: credential)
+                sSelf.delegate?.didRefreshSession()
+            }
+        case .failure(let error):
+            print(error)
+        }
+    }
+
+    func didLogOut(result: Result<Int, APIError>) {
+        authenticationService?.session = nil
+        authenticationProvider = nil
+        delegate?.didLogout()
     }
 }

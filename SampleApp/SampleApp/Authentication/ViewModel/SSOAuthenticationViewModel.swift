@@ -41,6 +41,8 @@ extension SSOAuthenticationViewModel: AlfrescoAuthDelegate {
             DispatchQueue.main.async { [weak self] in
                 guard let sSelf = self else { return }
 
+                sSelf.authenticationService?.session = session
+
                 if let parameters = sSelf.authenticationService?.parameters {
                     let basePath = "\(parameters.fullContentURL)/\(parameters.serviceDocument)/api/-default-/public"
                     AlfrescoContentAPI.basePath = basePath

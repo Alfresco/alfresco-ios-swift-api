@@ -31,6 +31,7 @@ class BasicAuthViewController: UIViewController {
             if let recentsViewController = segue.destination as? RecentsViewController {
                 let viewModel = RecentsViewModel()
                 viewModel.authenticationProvider = authenticationProvider
+                viewModel.authenticationService = self.viewModel?.authenticationService
                 viewModel.delegate = recentsViewController
                 recentsViewController.viewModel = viewModel
             }
