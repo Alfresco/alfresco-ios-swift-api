@@ -85,10 +85,10 @@ extension MyLoginViewModel: AlfrescoAuthDelegate {
     switch result {
       case.success(let credential):
         // Store credential and session object
-		...
-	  case .failure(let error):
-		...
-	}
+	...
+      case .failure(let error):
+        ...
+    }
 }
 ```
 Upon successful login the server will callback with your token using the callback URI in your `Info.plist`.
@@ -121,12 +121,12 @@ To do so, just call the logout method on the AlfrescoAuth module providing the l
 class  MyLoginViewModel {
   func logOut(onViewController viewController: UIViewController, lastKnownCredential: AlfrescoCredential, delegate: AlfrescoAuthDelegate) {
     alfrescoAuth.logout(onViewController: viewController, delegate: self, forCredential: lastKnownCredential)
-	}
+  }
 }
 
 extension MyLoginViewModel: AlfrescoAuthDelegate {
   func didLogOut(result: Result<Int, APIError>) {
-  ...
+    ...
   }
 }
 ```
@@ -144,10 +144,10 @@ While for Basic Authentication it's up to you to figure out the integration, for
 ```swift
 class  MyLoginViewModel {
   func refreshSession(delegate: AlfrescoAuthDelegate) {
-	// The session object is the same one provided after the successfull log in
-	if let session = self.session { 
-	  alfrescoAuth.pkceRefresh(session: session, delegate: self)
-	}
+    // The session object is the same one provided after the successfull log in
+    if let session = self.session {  
+      alfrescoAuth.pkceRefresh(session: session, delegate: self)
+    }
   }
 }
 ```
@@ -169,11 +169,11 @@ Now just get a service and make your request:
 class RecentsViewModel {
   func fetchRecentsList() {
     AlfrescoContentAPI.customHeaders = ["Authorization": authorizationHeaderValue()]
-	SearchAPI.search(queryBody:"my querry", ...) {
-	  if let entries = result?.list?.entries {
-	    // handle results
-	  }
-	}
+    SearchAPI.search(queryBody:"my querry", ...) {
+      if let entries = result?.list?.entries {
+        // handle results
+      }
+    }
   }
 }
 ```
