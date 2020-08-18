@@ -126,7 +126,7 @@ open class RenditionsAPI {
      - parameter placeholder: (query) If **true** and there is no rendition for this **nodeId** and **renditionId**,  then the placeholder image for the mime type of this rendition is returned, rather  than a 404 response.  (optional, default to false)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getRenditionContent(nodeId: String, renditionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil, placeholder: Bool? = nil, completion: @escaping ((_ data: URL?,_ error: Error?) -> Void)) {
+    open class func getRenditionContent(nodeId: String, renditionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil, placeholder: Bool? = nil, completion: @escaping ((_ data: Data?,_ error: Error?) -> Void)) {
         getRenditionContentWithRequestBuilder(nodeId: nodeId, renditionId: renditionId, attachment: attachment, ifModifiedSince: ifModifiedSince, range: range, placeholder: placeholder).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
@@ -149,9 +149,9 @@ open class RenditionsAPI {
      - parameter range: (header) The Range header indicates the part of a document that the server should return. Single part request supported, for example: bytes&#x3D;1-10.  (optional)
      - parameter placeholder: (query) If **true** and there is no rendition for this **nodeId** and **renditionId**,  then the placeholder image for the mime type of this rendition is returned, rather  than a 404 response.  (optional, default to false)
 
-     - returns: RequestBuilder<URL> 
+     - returns: RequestBuilder<Data> 
      */
-    open class func getRenditionContentWithRequestBuilder(nodeId: String, renditionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil, placeholder: Bool? = nil) -> RequestBuilder<URL> {
+    open class func getRenditionContentWithRequestBuilder(nodeId: String, renditionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil, placeholder: Bool? = nil) -> RequestBuilder<Data> {
         var path = "/alfresco/versions/1/nodes/{nodeId}/renditions/{renditionId}/content"
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -173,7 +173,7 @@ open class RenditionsAPI {
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<URL>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<Data>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
