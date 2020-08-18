@@ -141,7 +141,7 @@ open class PeopleAPI {
      - parameter placeholder: (query) If **true** and there is no avatar for this **personId**  then the placeholder image is returned, rather than a 404 response.  (optional, default to true)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getAvatarImage(personId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, placeholder: Bool? = nil, completion: @escaping ((_ data: URL?,_ error: Error?) -> Void)) {
+    open class func getAvatarImage(personId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, placeholder: Bool? = nil, completion: @escaping ((_ data: Data?,_ error: Error?) -> Void)) {
         getAvatarImageWithRequestBuilder(personId: personId, attachment: attachment, ifModifiedSince: ifModifiedSince, placeholder: placeholder).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
@@ -162,9 +162,9 @@ open class PeopleAPI {
      - parameter ifModifiedSince: (header) Only returns the content if it has been modified since the date provided. Use the date format defined by HTTP. For example, &#x60;Wed, 09 Mar 2016 16:56:34 GMT&#x60;.  (optional)
      - parameter placeholder: (query) If **true** and there is no avatar for this **personId**  then the placeholder image is returned, rather than a 404 response.  (optional, default to true)
 
-     - returns: RequestBuilder<URL> 
+     - returns: RequestBuilder<Data> 
      */
-    open class func getAvatarImageWithRequestBuilder(personId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, placeholder: Bool? = nil) -> RequestBuilder<URL> {
+    open class func getAvatarImageWithRequestBuilder(personId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, placeholder: Bool? = nil) -> RequestBuilder<Data> {
         var path = "/alfresco/versions/1/people/{personId}/avatar"
         let personIdPreEscape = "\(personId)"
         let personIdPostEscape = personIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -182,7 +182,7 @@ open class PeopleAPI {
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<URL>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<Data>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }

@@ -139,7 +139,7 @@ open class VersionsAPI {
      - parameter range: (header) The Range header indicates the part of a document that the server should return. Single part request supported, for example: bytes&#x3D;1-10.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getVersionContent(nodeId: String, versionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil, completion: @escaping ((_ data: URL?,_ error: Error?) -> Void)) {
+    open class func getVersionContent(nodeId: String, versionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil, completion: @escaping ((_ data: Data?,_ error: Error?) -> Void)) {
         getVersionContentWithRequestBuilder(nodeId: nodeId, versionId: versionId, attachment: attachment, ifModifiedSince: ifModifiedSince, range: range).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
@@ -161,9 +161,9 @@ open class VersionsAPI {
      - parameter ifModifiedSince: (header) Only returns the content if it has been modified since the date provided. Use the date format defined by HTTP. For example, &#x60;Wed, 09 Mar 2016 16:56:34 GMT&#x60;.  (optional)
      - parameter range: (header) The Range header indicates the part of a document that the server should return. Single part request supported, for example: bytes&#x3D;1-10.  (optional)
 
-     - returns: RequestBuilder<URL> 
+     - returns: RequestBuilder<Data> 
      */
-    open class func getVersionContentWithRequestBuilder(nodeId: String, versionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil) -> RequestBuilder<URL> {
+    open class func getVersionContentWithRequestBuilder(nodeId: String, versionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil) -> RequestBuilder<Data> {
         var path = "/alfresco/versions/1/nodes/{nodeId}/versions/{versionId}/content"
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -184,7 +184,7 @@ open class VersionsAPI {
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<URL>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<Data>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
