@@ -1,9 +1,0 @@
-{
-	"projectName":"AlfrescoContentServices",
-	"podVersion":"0.0.1",
-	"podAuthors":"{'Alfresco' => 'mobile.alfresco@alfresco.com'}",
-	"podLicense":"{:type => 'Apache License Version 2.0', :file => 'AlfrescoContentServices/LICENSE.md'}",
-	"podHomepage":"https://github.com/Alfresco/ios-dbp-sdk",
-	"podSummary":"Alfresco Content Services module",
-	"podSource":"{:git => 'https://github.com/Alfresco/ios-dbp-sdk', :tag => 'content-services/'+s.version.to_s}"
-}

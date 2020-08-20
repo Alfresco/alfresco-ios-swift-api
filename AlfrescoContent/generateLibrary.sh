@@ -1,0 +1,2 @@
+# Generates Swift API bindings using the merged definitions of Auth, Core and Search APIs whilst decorating the podspec file
+swagger-codegen generate -i definitions/merged.yaml -l swift5 -c ./AlfrescoContentSwaggerConfiguration.json -o . -t ./template --type-mappings file=Data

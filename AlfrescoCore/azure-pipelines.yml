@@ -47,7 +47,7 @@ steps:
 # Build core module
 # ---------------------------------------
 - task: Xcode@5
-  displayName: 'Building Alfresco iOS DBP SDK - core module'
+  displayName: 'Building Alfresco Core iOS Swift API'
   inputs:
     actions: 'clean build'
     scheme: 'Package iOS'
@@ -63,7 +63,7 @@ steps:
   displayName: 'Package core module framework into a zip file'
   inputs:
     rootFolderOrFile: 'AlfrescoCore/AlfrescoCoreInternalRelease/'
-    archiveFile: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core-framework.zip'
+    archiveFile: '$(build.artifactStagingDirectory)/alfresco-ios-swift-core-api.zip'
 
 # ---------------------------------------
 # Publish artifacts
@@ -71,7 +71,7 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish core build artifacts'
   inputs:
-    pathToPublish: '$(build.artifactStagingDirectory)/ios-dbp-sdk-core-framework.zip'
+    pathToPublish: '$(build.artifactStagingDirectory)/alfresco-ios-swift-core-api.zip'
     artifactName: 'core-framework-files'
     artifactType: 'container'
     
