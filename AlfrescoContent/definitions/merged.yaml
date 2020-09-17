@@ -9384,7 +9384,6 @@ definitions:
     type: object
     required:
       - mimeType
-      - sizeInBytes
     properties:
       mimeType:
         type: string
