@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.screenshots = {{& podScreenshots}}{{/podScreenshots}}{{#podDocumentationURL}}
   s.documentation_url = '{{podDocumentationURL}}'{{/podDocumentationURL}}
   s.source_files = 'AlfrescoContent/**/*'
-  s.exclude_files = ['AlfrescoContent/template', 'AlfrescoContent/AlfrescoContentSwaggerConfiguration.json']{{#usePromiseKit}}
+  s.exclude_files = ['AlfrescoContent/template', 'AlfrescoContent/AlfrescoContentSwaggerConfiguration.json', 'AlfrescoContent/definitions', 'AlfrescoContent/AlfrescoContent.podspec', 'AlfrescoContent/azure-pipelines.yml', 'AlfrescoContent/Cartfile', 'AlfrescoContent/LICENSE.md']{{#usePromiseKit}}
   s.dependency 'PromiseKit/CorePromise', '~> 4.4.0'{{/usePromiseKit}}{{#useRxSwift}}
   s.dependency 'RxSwift', '~> 4.0'{{/useRxSwift}}
   s.dependency 'Alamofire', '~> 4.9.0'
