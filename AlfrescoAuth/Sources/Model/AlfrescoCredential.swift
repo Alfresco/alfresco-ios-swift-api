@@ -1,14 +1,23 @@
 //
-//  AlfrescoCredential.swift
-//  AlfrescoAuth
+// Copyright (C) 2005-2020 Alfresco Software Limited.
 //
-//  Created by Silviu Odobescu on 02/08/2019.
-//  Copyright © 2019 Alfresco. All rights reserved.
+// This file is part of the Alfresco Content Mobile iOS App.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import Foundation
 import AppAuth
-
 public struct AlfrescoCredential: Codable {
     public var tokenType: String?
     public var accessToken: String?
@@ -16,7 +25,7 @@ public struct AlfrescoCredential: Codable {
     public var refreshToken: String?
     public var refreshTokenExpiresIn: Int?
     public var sessionState: String?
-
+    public var idToken: String?
     enum CodingKeys: String, CodingKey {
         case tokenType = "token_type"
         case accessToken = "access_token"
@@ -24,10 +33,9 @@ public struct AlfrescoCredential: Codable {
         case refreshToken = "refresh_token"
         case refreshTokenExpiresIn = "refresh_expires_in"
         case sessionState = "session_state"
+        case idToken = "id_token"
     }
-    
     init() { }
-    
     init(with dictionary: [String: Any]) {
         for (key, value) in dictionary {
             switch key {
@@ -43,11 +51,12 @@ public struct AlfrescoCredential: Codable {
                 refreshToken = value as? String
             case "refresh_expires_in":
                 refreshTokenExpiresIn = value as? Int
+            case "id_token":
+                idToken = value as? String
             default: break
             }
         }
     }
-    
     init(with response: OIDTokenResponse?) {
         self.tokenType = response?.tokenType
         self.accessToken = response?.accessToken
@@ -55,9 +64,8 @@ public struct AlfrescoCredential: Codable {
         self.refreshToken = response?.refreshToken
         self.refreshTokenExpiresIn = 0
         self.sessionState = ""
+        self.idToken = response?.idToken
     }
-    
-    
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         tokenType = try values.decode(String.self, forKey: .tokenType)
@@ -66,5 +74,6 @@ public struct AlfrescoCredential: Codable {
         refreshToken = try values.decode(String.self, forKey: .refreshToken)
         refreshTokenExpiresIn = try values.decode(Int.self, forKey: .refreshTokenExpiresIn)
         sessionState = try values.decode(String.self, forKey: .sessionState)
+        idToken = try values.decode(String.self, forKey: .idToken)
     }
 }
