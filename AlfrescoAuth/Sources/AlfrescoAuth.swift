@@ -1,9 +1,19 @@
 //
-//  AuthProvider.swift
-//  AlfrescoAuth
+// Copyright (C) 2005-2020 Alfresco Software Limited.
 //
-//  Created by Silviu Odobescu on 02/08/2019.
-//  Copyright © 2019 Alfresco. All rights reserved.
+// This file is part of the Alfresco Content Mobile iOS App.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import UIKit
@@ -14,8 +24,10 @@ import AlfrescoCore
 public protocol AlfrescoAuthDelegate {
     
     /** Called when a response coming from the Identity Service is available.
-    - Parameter result:  Convenience object containing token related information  used to authorize further requests or an optional error parameter.
-    - Parameter session: Optional session object relevant to PKCE authentication type containing token related information which must be serialized
+    - Parameter result:  Convenience object containing token related information  used to authorize further requests or an
+                         optional error parameter.
+    - Parameter session: Optional session object relevant to PKCE authentication type containing token related information which
+                         must be serialized
                          in order to restore session information at a later point. Properties of object implement NSSecureCoding
     */
     func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?)
@@ -28,7 +40,8 @@ public protocol AlfrescoAuthDelegate {
 }
 
 extension AlfrescoAuthDelegate {
-    func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession? = nil) {
+    func didReceive(result: Result<AlfrescoCredential, APIError>,
+                    session: AlfrescoAuthSession? = nil) {
         didReceive(result: result, session: session)
     }
     
@@ -62,7 +75,8 @@ public struct AlfrescoAuth {
         self.configuration = configuration
     }
     
-    /** Alternative method used to authenticate with Identity Service when it is set up to work with an exernal provider that invokes the use of web view components.
+    /** Alternative method used to authenticate with Identity Service when it is set up to work with an exernal provider that invokes
+        the use of web view components.
     - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the authentication request
     */
     public mutating func webAuth(delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) -> UIViewController {
@@ -75,7 +89,9 @@ public struct AlfrescoAuth {
         let controller = storyboard.instantiateViewController(withIdentifier: identifier) as! AuthWebViewController
         
         controller.presenter = webPresenter
-        controller.urlString = String(format: kWebSAMLURLString, configuration.baseUrl, configuration.realm)
+        controller.urlString = String(format: kWebSAMLURLString,
+                                      configuration.baseUrl,
+                                      configuration.realm)
         
         return controller
     }
@@ -85,7 +101,9 @@ public struct AlfrescoAuth {
     - Parameter password: Password for which the authentication request is created
     - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the authentication request
     */
-    public mutating func basicAuth(username: String?, password: String?, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
+    public mutating func basicAuth(username: String?,
+                                   password: String?,
+                                   delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
         basicPresenter = AuthBasicPresenter(configuration: configuration)
         basicPresenter?.authDelegate = alfrescoAuthDelegate
         basicPresenter?.execute(username: username, password: password)
@@ -96,7 +114,8 @@ public struct AlfrescoAuth {
     - Parameter credential: Object containing token related information
     - Parameter alfrescoAuthDelegate: Delegate used to report the state and response of the authentication request
     */
-    public mutating func refreshSession(credential: AlfrescoCredential, delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
+    public mutating func refreshSession(credential: AlfrescoCredential,
+                                        delegate alfrescoAuthDelegate: AlfrescoAuthDelegate) {
         refreshPresenter = RefreshTokenPresenter(configuration: configuration)
         refreshPresenter?.authDelegate = alfrescoAuthDelegate
         refreshPresenter?.executeRefresh(credential)
@@ -106,7 +125,8 @@ public struct AlfrescoAuth {
     - Parameter viewController: Thew view controller from which to present the SFSafariViewController.
     - Parameter delegate: Delegate used to report the state and response of the authentication request
     */
-    public mutating func pkceAuth(onViewController viewController: UIViewController, delegate: AlfrescoAuthDelegate) {
+    public mutating func pkceAuth(onViewController viewController: UIViewController,
+                                  delegate: AlfrescoAuthDelegate) {
         pkcePresenter = AuthPkcePresenter(configuration: configuration)
         pkcePresenter?.presentingViewController = viewController
         pkcePresenter?.authDelegate = delegate
@@ -114,9 +134,10 @@ public struct AlfrescoAuth {
         pkcePresenter?.execute()
     }
     
-    /** Given a module configuration,  it returns via a closure the available authentication type for the base URL defined in the AlfrescoConfiguration
-        object.
-    - Parameter handler: Closure delivering updates on the authentication type. Possible values are base auth, AIMS and an optional error
+    /** Given a module configuration,  it returns via a closure the available authentication type for the base URL defined in the
+        AlfrescoConfiguration object.
+    - Parameter handler: Closure delivering updates on the authentication type. Possible values are base auth, AIMS and an
+        optional error
      */
     public mutating func availableAuthType(handler:@escaping ((Result<AvailableAuthType, APIError>) -> Void)) {
         pkcePresenter = AuthPkcePresenter(configuration: configuration)
@@ -129,7 +150,8 @@ public struct AlfrescoAuth {
     - Parameter delegate: Delegate used to report the state and response of the re-authentication request
     - Parameter session: Valid session object that was created as a result of a successfull PKCE authentication.
      */
-    public mutating func pkceRefresh(session: AlfrescoAuthSession, delegate: AlfrescoAuthDelegate) {
+    public mutating func pkceRefresh(session: AlfrescoAuthSession,
+                                     delegate: AlfrescoAuthDelegate) {
         pkcePresenter = AuthPkcePresenter(configuration: configuration)
         pkcePresenter?.authSession = session
         pkcePresenter?.authDelegate = delegate
@@ -140,15 +162,20 @@ public struct AlfrescoAuth {
     /** Logs out the user  by expiring the refresh token for the current auth configuration.
     - Remark: the access token remains valid for it's designated lifespan, but the next time a request to refresh the session it is received
               the server will refuse and return a 401 Unauthorised response. Starting with iOS 12 and up, cookies are no longer reliably
-              shared with developers and as a workaround the logout request will take place under the same session they have been created
-              in the first place. To that end, a ASWebAuthenticationSession object will be used to run the logout request, thus deleting the remaining cookies.
+              shared with developers and as a workaround the logout request will take place under the same session they have
+              been created in the first place. To that end, a ASWebAuthenticationSession object will be used to run the logout request,
+              thus deleting the remaining cookies.
     - Parameter viewController: View controller on which to present the logout web view component
     - Parameter delegate: Delegate used to report the state of the logout request.
+    - Parameter session: Valid session object that was created as a result of a successfull PKCE authentication.
     - Parameter credential: Alfresco credential for which the logout is requested
      */
-    public mutating func logout(onViewController viewController:UIViewController, delegate: AlfrescoAuthDelegate, forCredential credential: AlfrescoCredential) {
+    public mutating func logout(onViewController viewController:UIViewController,
+                                delegate: AlfrescoAuthDelegate,
+                                session: AlfrescoAuthSession,
+                                forCredential credential: AlfrescoCredential) {
         pkcePresenter = AuthPkcePresenter(configuration: configuration)
-        pkcePresenter?.authSession = AlfrescoAuthSession()
+        pkcePresenter?.authSession = session
         pkcePresenter?.presentingViewController = viewController
         pkcePresenter?.authDelegate = delegate
         pkcePresenter?.logout(forCredential: credential)
