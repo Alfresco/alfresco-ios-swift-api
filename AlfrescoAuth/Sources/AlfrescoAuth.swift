@@ -36,7 +36,7 @@ public protocol AlfrescoAuthDelegate {
     /** Called when a response coming from the identity Service is available as a result to a logout request.
     - Parameter result: Status code for the logout request or an optional error parameter.
      */
-    func didLogOut(result: Result<Int, APIError>)
+    func didLogOut(result: Result<Int, APIError>, session: AlfrescoAuthSession?)
 }
 
 extension AlfrescoAuthDelegate {
@@ -45,8 +45,8 @@ extension AlfrescoAuthDelegate {
         didReceive(result: result, session: session)
     }
     
-    func didLogOut(result: Result<Int, APIError>) {
-        // Make this method optional
+    func didLogOut(result: Result<Int, APIError>, session: AlfrescoAuthSession? = nil) {
+        didLogOut(result: result, session: session)
     }
 }
 

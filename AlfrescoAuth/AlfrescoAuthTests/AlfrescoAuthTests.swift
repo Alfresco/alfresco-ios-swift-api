@@ -73,14 +73,14 @@ class AlfrescoAuthTests: XCTestCase {
     
     func testPckeAuthSetsPresenter() {
         let viewController = UIViewController()
-        _ = sut.pkceAuth(onViewController: viewController, delegate: AlfrescoAuthDelegateStub())
+        sut.pkceAuth(onViewController: viewController, delegate: AlfrescoAuthDelegateStub())
         XCTAssertNotNil(sut.pkcePresenter)
         XCTAssertNotNil(sut.pkcePresenter?.authDelegate)
     }
     
     func testPckeRefreshSessionhSetsPresenter() {
         let viewController = UIViewController()
-        _ = sut.pkceAuth(onViewController: viewController, delegate: AlfrescoAuthDelegateStub())
+        sut.pkceAuth(onViewController: viewController, delegate: AlfrescoAuthDelegateStub())
         sut.pkceRefresh(session: AlfrescoAuthSession(), delegate: AlfrescoAuthDelegateStub())
         
         XCTAssertNotNil(sut.pkcePresenter)

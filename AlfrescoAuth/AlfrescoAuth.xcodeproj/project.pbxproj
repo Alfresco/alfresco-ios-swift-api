@@ -36,6 +36,7 @@
 		B95789F12344971B00F19594 /* AuthPkcePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95789F02344971B00F19594 /* AuthPkcePresenter.swift */; };
 		B96C65E02369DA03004E1402 /* GetServiceDocumentInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C65DF2369DA03004E1402 /* GetServiceDocumentInstance.swift */; };
 		B98D87DB2344D47000BC0259 /* AlfrescoAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98D87DA2344D47000BC0259 /* AlfrescoAuthSession.swift */; };
+		B9B8E8E225342872004EF9BE /* OIDExternalUserAgentIOSSafariViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B8E8E125342872004EF9BE /* OIDExternalUserAgentIOSSafariViewController.swift */; };
 		E31B47E122F97C53002B6BC5 /* AuthWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */; };
 		E31FE3432355B5CE0024B376 /* AlfrescoAuthDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FE3422355B5CE0024B376 /* AlfrescoAuthDelegateStub.swift */; };
 		E31FE3452355B6140024B376 /* APIClientStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31FE3442355B6140024B376 /* APIClientStub.swift */; };
@@ -89,6 +90,7 @@
 		B95789F02344971B00F19594 /* AuthPkcePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPkcePresenter.swift; sourceTree = "<group>"; };
 		B96C65DF2369DA03004E1402 /* GetServiceDocumentInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServiceDocumentInstance.swift; sourceTree = "<group>"; };
 		B98D87DA2344D47000BC0259 /* AlfrescoAuthSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlfrescoAuthSession.swift; sourceTree = "<group>"; };
+		B9B8E8E125342872004EF9BE /* OIDExternalUserAgentIOSSafariViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OIDExternalUserAgentIOSSafariViewController.swift; sourceTree = "<group>"; };
 		E31B47DF22F97844002B6BC5 /* AlfrescoAuth.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = AlfrescoAuth.xctestplan; sourceTree = "<group>"; };
 		E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWebViewControllerTests.swift; sourceTree = "<group>"; };
 		E31FE3422355B5CE0024B376 /* AlfrescoAuthDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoAuthDelegateStub.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 			children = (
 				B95789F02344971B00F19594 /* AuthPkcePresenter.swift */,
 				B98D87DA2344D47000BC0259 /* AlfrescoAuthSession.swift */,
+				B9B8E8E125342872004EF9BE /* OIDExternalUserAgentIOSSafariViewController.swift */,
 			);
 			path = "PKCE Authentication";
 			sourceTree = "<group>";
@@ -373,7 +376,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Alfresco;
 				TargetAttributes = {
 					2BD6E14222F442C800949E44 = {
@@ -461,6 +464,7 @@
 				2BD6E16322F4475700949E44 /* Constants.swift in Sources */,
 				2BD6E16D22F47FFE00949E44 /* AlfrescoCredential.swift in Sources */,
 				E3C38EF52327B4EA007FCF8B /* GetAlfrescoCredential.swift in Sources */,
+				B9B8E8E225342872004EF9BE /* OIDExternalUserAgentIOSSafariViewController.swift in Sources */,
 				E3267D4523420E4C00ED429C /* AuthConfiguration.swift in Sources */,
 				E3C38EFD2327E50E007FCF8B /* URL+Helpers.swift in Sources */,
 				2BE921A8230C26DF0009F470 /* String+Helpers.swift in Sources */,
@@ -533,6 +537,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -597,6 +602,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
