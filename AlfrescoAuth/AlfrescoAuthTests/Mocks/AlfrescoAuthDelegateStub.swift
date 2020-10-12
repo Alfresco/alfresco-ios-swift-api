@@ -22,6 +22,7 @@ import AlfrescoCore
 import XCTest
 
 class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {
+
     var expectationForDidReceivedCall: XCTestExpectation!
     var expectationForSuccessInDidReceivedCall: XCTestExpectation!
     var expectationForFailureInDidReceivedCall: XCTestExpectation!
@@ -39,7 +40,7 @@ class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {
         expectationForDidReceivedCall.fulfill()
     }
     
-    func didLogOut(result: Result<Int, APIError>) {
+    func didLogOut(result: Result<Int, APIError>, session: AlfrescoAuthSession?) {
         switch result {
         case .success(_):
             expectationForSuccessInDidLogoutCall.fulfill()
