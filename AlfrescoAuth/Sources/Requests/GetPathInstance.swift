@@ -20,13 +20,13 @@ import Foundation
 import AlfrescoCore
 
 
-struct GetServiceDocumentInstance: APIRequest {
+struct GetPathInstance: APIRequest {
     typealias Response = StatusCodeResponse
     
-    let serviceDocumentInstanceURL: String
+    let pathInstanceURL: String
     
     var path: String {
-        return serviceDocumentInstanceURL
+        return pathInstanceURL
     }
     
     var method: HttpMethod {
@@ -41,7 +41,7 @@ struct GetServiceDocumentInstance: APIRequest {
         return [:]
     }
 
-    init(serviceDocumentInstanceURL: String) {
-        self.serviceDocumentInstanceURL = serviceDocumentInstanceURL
+    init(pathInstanceURL: String) {
+        self.pathInstanceURL = pathInstanceURL
     }
 }
