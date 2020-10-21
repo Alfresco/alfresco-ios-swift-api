@@ -24,14 +24,14 @@ steps:
 
 - task: Cache@2
   inputs:
-    key: 'cocoapods | Podfile.lock'
+    key: 'cocoapods | AlfrescoAuth/Podfile.lock'
     restoreKeys: cocoapods
     path: $(cocoapods_path)
   displayName: Cache CocoaPods Specs
 
 - task: Cache@2
   inputs:
-    key: 'pods | Podfile.lock'
+    key: 'pods | AlfrescoAuth/Podfile.lock'
     restoreKeys: pods
     path: Pods
   displayName: Cache Pods
