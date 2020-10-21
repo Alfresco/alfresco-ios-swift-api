@@ -57,8 +57,8 @@ public class AuthPkcePresenter {
             if error != nil {
                 // Check if the request succeeds for an instance configured with basic auth
                 let url = sSelf.configuration.baseUrl
-                let getServiceDocumentRequest = GetServiceDocumentInstance(serviceDocumentInstanceURL: url)
-                _ = sSelf.apiClient.send(getServiceDocumentRequest, completion: { (result) in
+                let getPathRequest = GetPathInstance(pathInstanceURL: url)
+                _ = sSelf.apiClient.send(getPathRequest, completion: { (result) in
                     switch result {
                     case .success(_):
                         handler(.success(.basicAuth))
