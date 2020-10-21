@@ -9,6 +9,8 @@ pool:
 
 variables:
   - group: git-credentials
+  - name: cocoapods_path
+    value: $(Pipeline.Workspace)/.cocoapods
 
 steps:
 - checkout: self
@@ -19,6 +21,29 @@ steps:
   inputs:
     script: |
       pod repo add AlfrescoPodspec https://$(gitUser):$(gitPAT)@github.com/Alfresco/alfresco-private-podspecs-ios-sdk.git
+
+- task: Cache@2
+  inputs:
+    key: 'cocoapods | AlfrescoAuth/Podfile.lock'
+    restoreKeys: cocoapods
+    path: $(cocoapods_path)
+  displayName: Cache CocoaPods Specs
+
+- task: Cache@2
+  inputs:
+    key: 'pods | AlfrescoAuth/Podfile.lock'
+    restoreKeys: pods
+    path: Pods
+  displayName: Cache Pods
+
+- task: CmdLine@2
+  displayName: Installing pods
+  inputs:
+    script: |
+      cd AlfrescoAuth 
+      pod install || pod install --repo-update
+  env:
+    CP_HOME_DIR: $(cocoapods_path)
 
 - task: CmdLine@2
   displayName: Installing pods for AlfrescoAuth
