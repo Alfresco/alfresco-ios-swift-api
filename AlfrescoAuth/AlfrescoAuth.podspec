@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name                  = 'AlfrescoAuth'
-s.version               = '2.2.2'
+s.version               = '0.1.0'
 s.summary               = 'Alfresco Auth iOS Swift API'
 s.homepage              = 'https://github.com/Alfresco/alfresco-ios-swift-api'
 s.author                = {'Alfresco' => 'mobile.alfresco@alfresco.com' }
