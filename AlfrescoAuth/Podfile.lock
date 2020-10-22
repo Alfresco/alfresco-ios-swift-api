@@ -1,5 +1,5 @@
 PODS:
-  - AlfrescoCore (2.0.1)
+  - AlfrescoCore (0.1.0)
   - AppAuth (1.4.0):
     - AppAuth/Core (= 1.4.0)
     - AppAuth/ExternalUserAgent (= 1.4.0)
@@ -11,15 +11,15 @@ DEPENDENCIES:
   - AppAuth
 
 SPEC REPOS:
-  https://github.com/Alfresco/alfresco-private-podspecs-ios-sdk:
+  https://github.com/Alfresco/alfresco-private-podspecs-ios-sdk.git:
     - AlfrescoCore
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - AppAuth
 
 SPEC CHECKSUMS:
-  AlfrescoCore: f6a118f7b271d8843143ad5e2c28794f5a50b150
+  AlfrescoCore: f91560a073007d7f49781be273b7b8df21c18573
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
 
-PODFILE CHECKSUM: 7223929b26b67c7db77fb6795fe983407269b3e8
+PODFILE CHECKSUM: 561d9124c8da7d89714091e4917fd5bbe746574a
 
 COCOAPODS: 1.9.3

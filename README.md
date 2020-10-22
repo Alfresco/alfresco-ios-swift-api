@@ -1,18 +1,14 @@
+
 # <img title="Alfresco" alt='Alfresco' src='docs/logo.svg' height="32px" /> iOS Swift API
 
 Support libraries which enable easier development of iOS applications that work with Alfresco products.
 
 ## Installation
-The libraries are available as independent frameworks via Cocoapods. Currently they are distributed as [private pods](https://guides.cocoapods.org/making/private-cocoapods.html) and are in-house hosted at [https://github.com/Alfresco/alfresco-private-podspecs-ios-sdk](https://github.com/Alfresco/alfresco-private-podspecs-ios-sdk). Future plans include migration to the Cocoapods official repository.
+The libraries are available as independent frameworks via Cocoapods. 
 
-To install them you first need to add our own private pods repo (**step also needed to run the [Sample App](https://github.com/Alfresco/alfresco-ios-swift-api/tree/develop/SampleApp)**):
-
-    pod repo add AlfrescoPodspec https://github.com/Alfresco/alfresco-private-podspecs-ios-sdk
-
-Then, head over to project folder, create a pod file by issuing `pod init` into the terminal, edit it and add the following:
+Head over to project folder, create a pod file by issuing `pod init` into the terminal, edit it and add the following:
 ```
-source 'https://github.com/Alfresco/alfresco-private-podspecs-ios-sdk.git'
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 ```
 followed by your desired pod configuration. 
 E.g.  :
@@ -20,6 +16,8 @@ E.g.  :
 `pod 'AlfrescoContentServices'`
 
 For more details on how to set up Cocoapods, please refer to the  [official documentation](https://cocoapods.org/).
+
+We use semantic versioning when publishing our libraries. You can read more about it [here](https://semver.org).
 
 The libraries require **iOS 12**+ and **Swift 5**+.
 
@@ -85,7 +83,7 @@ extension MyLoginViewModel: AlfrescoAuthDelegate {
     switch result {
       case.success(let credential):
         // Store credential and session object
-	...
+  ...
       case .failure(let error):
         ...
     }
