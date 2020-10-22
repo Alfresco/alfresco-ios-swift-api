@@ -1,5 +1,5 @@
 
-# <img title="Alfresco" alt='Alfresco' src='docs/logo.svg' height="32px" /> iOS Swift API
+# <img title="Alfresco" alt='Alfresco' src='https://raw.githubusercontent.com/Alfresco/alfresco-ios-swift-api/master/docs/logo.svg' height="32px" /> iOS Swift API
 
 Support libraries which enable easier development of iOS applications that work with Alfresco products.
 
@@ -13,7 +13,7 @@ source 'https://cdn.cocoapods.org/'
 followed by your desired pod configuration. 
 E.g.  :
 `pod 'AlfrescoAuth'`
-`pod 'AlfrescoContentServices'`
+`pod 'AlfrescoContent'`
 
 For more details on how to set up Cocoapods, please refer to the  [official documentation](https://cocoapods.org/).
 
