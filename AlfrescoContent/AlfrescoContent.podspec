@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
   s.version = '0.1.1'
   s.source = {:git => 'https://github.com/Alfresco/alfresco-ios-swift-api.git', :tag => 'content/'+s.version.to_s}
-  s.authors = '{&#39;Alfresco&#39; &#x3D;&gt; &#39;mobile.alfresco@alfresco.com&#39;}'
+  s.authors = {'Alfresco' => 'mobile.alfresco@alfresco.com' }
   s.license = {:type => 'Apache License Version 2.0', :file => 'AlfrescoContent/LICENSE.md'}
   s.homepage = 'https://github.com/Alfresco/alfresco-ios-swift-api'
   s.summary = 'Alfresco Content iOS Swift API'
