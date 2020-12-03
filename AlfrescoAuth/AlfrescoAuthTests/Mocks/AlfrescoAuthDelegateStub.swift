@@ -26,25 +26,25 @@ class AlfrescoAuthDelegateStub: AlfrescoAuthDelegate {
     var expectationForDidReceivedCall: XCTestExpectation!
     var expectationForSuccessInDidReceivedCall: XCTestExpectation!
     var expectationForFailureInDidReceivedCall: XCTestExpectation!
-    
+
     var expectationForSuccessInDidLogoutCall: XCTestExpectation!
     var expectationForFailureInDidLogoutCall: XCTestExpectation!
-    
-    func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?) {
+
+    func didReceive(result: Result<AlfrescoCredential?, APIError>, session: AlfrescoAuthSession?) {
         switch result {
-        case .success(_):
+        case .success:
             expectationForSuccessInDidReceivedCall.fulfill()
-        case .failure(_):
+        case .failure:
             expectationForFailureInDidReceivedCall.fulfill()
         }
         expectationForDidReceivedCall.fulfill()
     }
-    
+
     func didLogOut(result: Result<Int, APIError>, session: AlfrescoAuthSession?) {
         switch result {
-        case .success(_):
+        case .success:
             expectationForSuccessInDidLogoutCall.fulfill()
-        case .failure(_) :
+        case .failure:
             expectationForFailureInDidLogoutCall.fulfill()
         }
     }

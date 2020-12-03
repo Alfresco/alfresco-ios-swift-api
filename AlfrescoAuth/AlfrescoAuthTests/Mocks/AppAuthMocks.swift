@@ -36,21 +36,21 @@ class OIDTokenResponseStub: OIDTokenResponse {
 
 class OIDExternalUserAgentSessionStub: NSObject, OIDExternalUserAgentSession {
     var successResponse: Bool = true
-    
+
     func resumeExternalUserAgentFlow(with URL: URL) -> Bool {
         return successResponse
     }
-    
+
     func cancel() { }
-    
+
     func cancel(completion: (() -> Void)? = nil) { }
-    
+
     func failExternalUserAgentFlowWithError(_ error: Error) { }
 }
 
 class OIDAuthStateStub: OIDAuthState {
     var successResponse: Bool = true
-    
+
     override func performAction(freshTokens action: @escaping OIDAuthStateAction) {
         if successResponse {
             action(TestData.accessTokenGood, "", nil)

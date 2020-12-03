@@ -19,25 +19,24 @@
 import Foundation
 import AlfrescoCore
 
-
 struct GetPathInstance: APIRequest {
     typealias Response = StatusCodeResponse
-    
+
     let pathInstanceURL: String
-    
+
     var path: String {
         return pathInstanceURL
     }
-    
+
     var method: HttpMethod {
         return .get
     }
-    
-    var headers: [String : String] {
+
+    var headers: [String: String] {
         return [:]
     }
-    
-    var parameters: [String : String] {
+
+    var parameters: [String: String] {
         return [:]
     }
 

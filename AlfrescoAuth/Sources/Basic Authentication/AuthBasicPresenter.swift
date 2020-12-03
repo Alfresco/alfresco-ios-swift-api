@@ -20,49 +20,33 @@ import Foundation
 import UIKit
 import AlfrescoCore
 
-enum InputType: String {
-    case username = "Username"
-    case password = "Password"
-}
-
 class AuthBasicPresenter: NSObject, NetworkServiceProtocol {
-    var authDelegate: AlfrescoAuthDelegate? = nil
+    weak var authDelegate: AlfrescoAuthDelegate?
     var apiClient: APIClientProtocol
     var configuration: AuthConfiguration
-    
+
     init(configuration: AuthConfiguration) {
         self.configuration = configuration
         self.apiClient = APIClient(with: configuration.baseUrl)
     }
-    
-    func verify(string: String?, type: InputType) -> String? {
+
+    func verify(string: String?) -> String? {
         guard let string = string else {
-            switch type {
-            case .username:
-                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorUsernameNotEmpty.code, message: errorUsernameNotEmpty)))
-            case .password:
-                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorPasswordNotEmpty.code, message: errorPasswordNotEmpty)))
-            }
-            
+            self.authDelegate?.didReceive(result: self.credentialErrorResult())
             return nil
         }
-        
+
         let stringTrim = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if stringTrim.isEmpty {
-            switch type {
-            case .username:
-                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorUsernameNotEmpty.code, message: errorUsernameNotEmpty)))
-            case .password:
-                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorPasswordNotEmpty.code, message: errorPasswordNotEmpty)))
-            }
+            self.authDelegate?.didReceive(result: self.credentialErrorResult())
             return nil
         }
         return string
     }
 
     func execute(username: String?, password: String?) {
-        let username = verify(string: username, type: .username)
-        let password = verify(string: password, type: .password)
+        let username = verify(string: username)
+        let password = verify(string: password)
         if let username = username, let password = password {
             requestToken(with: username, and: password) { [weak self] (result) in
                 guard let sSelf = self else { return }
@@ -72,10 +56,22 @@ class AuthBasicPresenter: NSObject, NetworkServiceProtocol {
             }
         }
     }
-    
-    func requestToken(with username: String, and password: String, completion: @escaping (Result<AlfrescoCredential, APIError>) -> Void) {
-        _ = apiClient.send(GetAlfrescoCredential(username: username, password: password, configuration: configuration)) { (result) in
+
+    func requestToken(with username: String,
+                      and password: String,
+                      completion: @escaping (Result<AlfrescoCredential?, APIError>) -> Void) {
+        _ = apiClient.send(GetAlfrescoCredential(username: username,
+                                                 password: password,
+                                                 configuration: configuration)) { (result) in
             completion(result)
         }
+    }
+
+    // MARK: - Private interface
+
+    private func credentialErrorResult() -> Result<AlfrescoCredential?, APIError> {
+        return .failure(APIError(domain: moduleName,
+                                 code: ModuleErrorType.errorCredentialsNotEmpty.code,
+                                 message: errorCredentialNotEmpty))
     }
 }

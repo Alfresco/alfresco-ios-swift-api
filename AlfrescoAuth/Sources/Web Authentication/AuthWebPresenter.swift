@@ -21,15 +21,15 @@ import WebKit
 import AlfrescoCore
 
 class AuthWebPresenter: NSObject, NetworkServiceProtocol {
-    var authDelegate: AlfrescoAuthDelegate? = nil
+    weak var authDelegate: AlfrescoAuthDelegate?
     var apiClient: APIClientProtocol
     var configuration: AuthConfiguration
-    
+
     init(configuration: AuthConfiguration) {
         self.configuration = configuration
         self.apiClient = APIClient(with: configuration.baseUrl)
     }
-    
+
     func parse(action: WKNavigationAction) -> WKNavigationActionPolicy {
         let url = action.request.url
         if let urlString = url?.absoluteString {
@@ -46,23 +46,30 @@ class AuthWebPresenter: NSObject, NetworkServiceProtocol {
                         return .cancel
                     }
                 }
-                self.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorAuthCodeNotFound.code, message: errorAuthCodeNotFound)))
+                let error = APIError(domain: moduleName,
+                                     code: ModuleErrorType.errorAuthCodeNotFound.code,
+                                     message: errorAuthCodeNotFound)
+                self.authDelegate?.didReceive(result: .failure(error))
                 return .cancel
             }
         }
         return .allow
     }
-    
-    func requestToken(with code: String, completion: @escaping (Result<AlfrescoCredential, APIError>) -> Void) {
-        _ = apiClient.send(GetAlfrescoCredential(code: code, configuration: configuration), completion: { (result) in
+
+    func requestToken(with code: String,
+                      completion: @escaping (Result<AlfrescoCredential?, APIError>) -> Void) {
+        _ = apiClient.send(GetAlfrescoCredential(code: code,
+                                                 configuration: configuration),
+                           completion: { (result) in
             completion(result)
         })
-        
     }
 }
 
 extension AuthWebPresenter: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         decisionHandler(parse(action: navigationAction))
     }
 }

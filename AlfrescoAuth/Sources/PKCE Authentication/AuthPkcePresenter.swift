@@ -29,40 +29,34 @@ public class AuthPkcePresenter {
     var configuration: AuthConfiguration
     var presentingViewController: UIViewController?
     var authSession: AlfrescoAuthSession?
-    var authDelegate: AlfrescoAuthDelegate?
+    weak var authDelegate: AlfrescoAuthDelegate?
     var apiClient: APIClientProtocol
-    
-    private var logoutUserAgent: OIDExternalUserAgentIOSSafariViewController?
-    
+
+    private var logoutUserAgent: OIDExternalUserAgentIOSSafari?
+
     init(configuration: AuthConfiguration) {
         self.configuration = configuration
         self.apiClient = APIClient(with: configuration.baseUrl)
     }
-    
+
     func availableAuthType(handler: @escaping((Result<AvailableAuthType, APIError>) -> Void)) {
-        guard let issuerURL = URL(string: String(format: kIssuerPKCE,
-                                                 configuration.baseUrl,
-                                                 configuration.realm)) else {
-            handler(.failure(APIError(domain: moduleName,
-                                      code: ModuleErrorType.errorIssuerNil.code,
-                                      message: errorIssuerNil)))
+        guard let issuerURL = issuerURL() else {
+            handler(.failure(nilIssuerError()))
             return
         }
-        
-        OIDAuthorizationService.discoverConfiguration(forIssuer: issuerURL) {
-            [weak self] pkceConfiguration, error in
 
+        OIDAuthorizationService.discoverConfiguration(forIssuer: issuerURL) { [weak self] _, error in
             guard let sSelf = self else { return }
-            
+
             if error != nil {
                 // Check if the request succeeds for an instance configured with basic auth
                 let url = sSelf.configuration.baseUrl
                 let getPathRequest = GetPathInstance(pathInstanceURL: url)
                 _ = sSelf.apiClient.send(getPathRequest, completion: { (result) in
                     switch result {
-                    case .success(_):
+                    case .success:
                         handler(.success(.basicAuth))
-                    case .failure(_):
+                    case .failure:
                         let error = APIError(domain: moduleName,
                                              code: ModuleErrorType.errorAuthenticationServiceNotFound.code,
                                              message: errorAuthenticationServiceNotFound)
@@ -74,37 +68,28 @@ public class AuthPkcePresenter {
             }
         }
     }
-    
-    func execute() {
-        let issuerNilError =  APIError(domain: moduleName,
-                                       code: ModuleErrorType.errorIssuerNil.code,
-                                       message: errorIssuerNil)
 
-        guard let issuer = URL(string: String(format: kIssuerPKCE,
-                                              configuration.baseUrl,
-                                              configuration.realm)) else {
-            self.authDelegate?.didReceive(result: .failure(issuerNilError))
+    func execute() {
+        guard let issuer = issuerURL() else {
+            self.authDelegate?.didReceive(result: .failure(nilIssuerError()))
             return
         }
 
-        OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) {
-            [weak self] pkceConfiguration, error in
-
+        OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) {[weak self] pkceConfiguration, error in
             guard let sSelf = self else { return }
+
             guard let viewController = sSelf.presentingViewController else {
-                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName, code: ModuleErrorType.errorViewControllerNil.code, message: errorViewControllerNil)))
+                sSelf.authDelegate?.didReceive(result: .failure(sSelf.nilViewControllerError()))
                 return
             }
 
             if let error = error as NSError? {
-                sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName,
-                                                                         code: error.code,
-                                                                         error: error)))
+                sSelf.authDelegate?.didReceive(result: .failure(sSelf.apiError(for: error)))
                 return
             }
 
             guard let pkceConfiguration = pkceConfiguration else {
-                sSelf.authDelegate?.didReceive(result: .failure(issuerNilError))
+                sSelf.authDelegate?.didReceive(result: .failure(sSelf.nilIssuerError()))
                 return
             }
 
@@ -115,14 +100,12 @@ public class AuthPkcePresenter {
                                                   redirectURL: URL(string: sSelf.configuration.redirectURI ?? "")!,
                                                   responseType: OIDResponseTypeCode,
                                                   additionalParameters: nil)
-            
+
             sSelf.authSession?.authorizationFlow =
                 OIDAuthState.authState(byPresenting: request,
                                        presenting: viewController) { authState, error in
                     if let error = error as NSError? {
-                        sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName,
-                                                                                 code: error.code,
-                                                                                 error: error)))
+                        sSelf.authDelegate?.didReceive(result: .failure(sSelf.apiError(for: error)))
                         return
                     }
                     guard let authState = authState else {
@@ -140,31 +123,21 @@ public class AuthPkcePresenter {
                 }
         }
     }
-    
+
     func logout(forCredential credential: AlfrescoCredential) {
-        guard let issuer = URL(string: String(format: kIssuerPKCE,
-                                              configuration.baseUrl,
-                                              configuration.realm)) else {
-            let error = APIError(domain: moduleName,
-                                 code: ModuleErrorType.errorIssuerNil.code,
-                                 message: errorIssuerNil)
-            self.authDelegate?.didReceive(result: .failure(error))
+        guard let issuer = issuerURL() else {
+            self.authDelegate?.didReceive(result: .failure(nilIssuerError()))
             return
         }
-        
-        OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) {
-            [weak self] pkceConfiguration, error in
 
+        OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) { [weak self] pkceConfiguration, error in
             guard let sSelf = self else { return }
-            
+
             guard let viewController = sSelf.presentingViewController else {
-                let error = APIError(domain: moduleName,
-                                     code: ModuleErrorType.errorViewControllerNil.code,
-                                     message: errorViewControllerNil)
-                sSelf.authDelegate?.didReceive(result: .failure(error))
+                sSelf.authDelegate?.didReceive(result: .failure(sSelf.nilViewControllerError()))
                 return
             }
-            
+
             if let error = error as NSError? {
                 sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName,
                                                                          code: error.code,
@@ -172,10 +145,7 @@ public class AuthPkcePresenter {
                 return
             }
             guard let pkceConfiguration = pkceConfiguration else {
-                let error = APIError(domain: moduleName,
-                                     code: ModuleErrorType.errorIssuerNil.code,
-                                     message: errorIssuerNil)
-                sSelf.authDelegate?.didReceive(result: .failure(error))
+                sSelf.authDelegate?.didReceive(result: .failure(sSelf.nilIssuerError()))
                 return
             }
 
@@ -187,15 +157,14 @@ public class AuthPkcePresenter {
                                      additionalParameters: nil)
 
             sSelf.logoutUserAgent =
-                OIDExternalUserAgentIOSSafariViewController(presentingViewController: viewController)
+                OIDExternalUserAgentIOSSafari(presentingViewController: viewController)
 
             if let userAgent = sSelf.logoutUserAgent {
                 sSelf.authSession?.authorizationFlow =
                     OIDAuthorizationService.present(
                         logoutRequest,
                         externalUserAgent: userAgent,
-                        callback: {
-                            [weak self] (authorizationState, error) in
+                        callback: {[weak self] (_, error) in
                             guard let sSelf = self else { return }
 
                             if let authError = error as NSError? {
@@ -203,23 +172,23 @@ public class AuthPkcePresenter {
                                                                                         code: authError.code,
                                                                                         error: authError )))
                             } else {
-                                sSelf.authDelegate?.didLogOut(result: .success(StatusCodes.Code200OK.code))
+                                sSelf.authDelegate?.didLogOut(result: .success(StatusCodes.code200OK.code))
                             }
                         })
             }
         }
     }
-    
+
     func executeRefreshSession() {
         if let authState = self.authSession?.authState {
-            authState.performAction { [weak self] (accessToken, idTOken, error) in
+            authState.performAction { [weak self] (accessToken, _, error) in
                 guard let sSelf = self else { return }
                 if let error = error {
                     sSelf.authDelegate?.didReceive(result: .failure(APIError(domain: moduleName,
                                                                              error: error)))
                     return
                 }
-                
+
                 guard accessToken != nil else {
                     let error = APIError(domain: moduleName,
                                          code: ModuleErrorType.errorRetriveFreshToken.code,
@@ -233,5 +202,31 @@ public class AuthPkcePresenter {
                                                session: sSelf.authSession)
             }
         }
+    }
+
+    // MARK: - Private interface
+
+    func nilIssuerError() -> APIError {
+        return APIError(domain: moduleName,
+                        code: ModuleErrorType.errorIssuerNil.code,
+                        message: errorIssuerNil)
+    }
+
+    func nilViewControllerError() -> APIError {
+        return APIError(domain: moduleName,
+                        code: ModuleErrorType.errorViewControllerNil.code,
+                        message: errorViewControllerNil)
+    }
+
+    func issuerURL() -> URL? {
+        return URL(string: String(format: kIssuerPKCE,
+                                  configuration.baseUrl,
+                                  configuration.realm))
+    }
+
+    func apiError(for error: NSError) -> APIError {
+        return APIError(domain: moduleName,
+                        code: error.code,
+                        error: error)
     }
 }
