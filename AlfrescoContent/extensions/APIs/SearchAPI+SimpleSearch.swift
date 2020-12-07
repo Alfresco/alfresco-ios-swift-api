@@ -1,11 +1,11 @@
 import Foundation
 
-enum SearchInclude: String {
+public enum SearchInclude: String {
     case files = "cm:content"
     case folders = "cm:folder"
 }
 
-class SimpleSearchRequest {
+public class SimpleSearchRequest {
     let querry: String
     var parentId: String?
     let skipCount: Int
@@ -25,7 +25,7 @@ class SimpleSearchRequest {
     }
 }
 
-class RecentFilesRequest {
+public class RecentFilesRequest {
     let userId: String
     let days: Int
     let skipCount: Int
@@ -54,7 +54,7 @@ extension SearchAPI {
     }
 
 
-    class func simpleSearch(searchRequest: SimpleSearchRequest,
+    public class func simpleSearch(searchRequest: SimpleSearchRequest,
                             completion: @escaping ((_ data: ResultSetPaging?,_ error: Error?) -> Void)) {
         let querry = requestQuery(searchRequest.querry + "*")
         let paginationRequest = requestPagination(maxItems: searchRequest.maxItems,
@@ -110,7 +110,7 @@ extension SearchAPI {
                          completion: completion)
     }
 
-    class func recentFiles(recentFilesRequest: RecentFilesRequest,
+    public class func recentFiles(recentFilesRequest: RecentFilesRequest,
                            completion: @escaping ((_ data: ResultSetPaging?,_ error: Error?) -> Void)) {
         let querry = requestQuery("*")
         let paginationRequest = requestPagination(maxItems: recentFilesRequest.maxItems,
