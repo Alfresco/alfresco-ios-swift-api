@@ -16,7 +16,7 @@ open class NodesAPI {
      
      - parameter nodeId: (path) The identifier of a node. 
      - parameter nodeBodyCopy: (body) The targetParentId and, optionally, a new name which should include the file extension. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -98,6 +98,63 @@ open class NodesAPI {
       "id" : "id"
     },
     "name" : "name",
+    "definition" : {
+      "properties" : [ {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      }, {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      } ]
+    },
     "id" : "id",
     "properties" : "{}",
     "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -107,7 +164,7 @@ open class NodesAPI {
      
      - parameter nodeId: (path) The identifier of a node. 
      - parameter nodeBodyCopy: (body) The targetParentId and, optionally, a new name which should include the file extension. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<NodeEntry> 
@@ -190,12 +247,14 @@ open class NodesAPI {
      - parameter nodeId: (path) The identifier of a node. You can also use one of these well-known aliases: * -my- * -shared- * -root-  
      - parameter nodeBodyCreate: (body) The node information to create. 
      - parameter autoRename: (query) If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix. (optional)
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter majorVersion: (query) If true, then created node will be version *1.0 MAJOR*. If false, then created node will be version *0.1 MINOR*. (optional)
+     - parameter versioningEnabled: (query) If true, then created node will be versioned. If false, then created node will be unversioned and auto-versioning disabled. (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createNode(nodeId: String, nodeBodyCreate: NodeBodyCreate, autoRename: Bool? = nil, include: [String]? = nil, fields: [String]? = nil, completion: @escaping ((_ data: NodeEntry?,_ error: Error?) -> Void)) {
-        createNodeWithRequestBuilder(nodeId: nodeId, nodeBodyCreate: nodeBodyCreate, autoRename: autoRename, include: include, fields: fields).execute { (response, error) -> Void in
+    open class func createNode(nodeId: String, nodeBodyCreate: NodeBodyCreate, autoRename: Bool? = nil, majorVersion: Bool? = nil, versioningEnabled: Bool? = nil, include: [String]? = nil, fields: [String]? = nil, completion: @escaping ((_ data: NodeEntry?,_ error: Error?) -> Void)) {
+        createNodeWithRequestBuilder(nodeId: nodeId, nodeBodyCreate: nodeBodyCreate, autoRename: autoRename, majorVersion: majorVersion, versioningEnabled: versioningEnabled, include: include, fields: fields).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -204,7 +263,7 @@ open class NodesAPI {
     /**
      Create a node
      - POST /alfresco/versions/1/nodes/{nodeId}/children
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Create a node and add it as a primary child of node **nodeId**.  This endpoint supports both JSON and multipart/form-data (file upload).  **Using multipart/form-data**  Use the **filedata** field to represent the content to upload, for example, the following curl command will create a node with the contents of test.txt in the test user's home folder.  ```curl -utest:test -X POST host:port/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children -F filedata=@test.txt```  You can use the **name** field to give an alternative name for the new file.  You can use the **nodeType** field to create a specific type. The default is cm:content.  You can use the **renditions** field to create renditions (e.g. doclib) asynchronously upon upload. Also, as requesting rendition is a background process, any rendition failure (e.g. No transformer is currently available) will not fail the whole upload and has the potential to silently fail.  Use **overwrite** to overwrite an existing file, matched by name. If the file is versionable, the existing content is replaced.  When you overwrite existing content, you can set the **majorVersion** boolean field to **true** to indicate a major version should be created. The default for **majorVersion** is **false**. Setting  **majorVersion** enables versioning of the node, if it is not already versioned.  When you overwrite existing content, you can use the **comment** field to add a version comment that appears in the version history. This also enables versioning of this node, if it is not already versioned.  You can set the **autoRename** boolean field to automatically resolve name clashes. If there is a name clash, then the API method tries to create a unique name using an integer suffix.  You can use the **relativePath** field to specify the folder structure to create relative to the node **nodeId**. Folders in the **relativePath** that do not exist are created before the node is created.  Any other field provided will be treated as a property to set on the newly created node.  **Note:** setting properties of type d:content and d:category are not supported.  **Using JSON**  You must specify at least a **name** and **nodeType**. For example, to create a folder: ```JSON {   \"name\":\"My Folder\",   \"nodeType\":\"cm:folder\" } ```  You can create an empty file like this: ```JSON {   \"name\":\"My text file.txt\",   \"nodeType\":\"cm:content\" } ``` You can update binary content using the ```PUT /nodes/{nodeId}``` API method.  You can create a folder, or other node, inside a folder hierarchy: ```JSON {   \"name\":\"My Special Folder\",   \"nodeType\":\"cm:folder\",   \"relativePath\":\"X/Y/Z\" } ``` The **relativePath** specifies the folder structure to create relative to the node **nodeId**. Folders in the **relativePath** that do not exist are created before the node is created.  You can set properties when you create a new node: ```JSON {   \"name\":\"My Other Folder\",   \"nodeType\":\"cm:folder\",   \"properties\":   {     \"cm:title\":\"Folder title\",     \"cm:description\":\"This is an important folder\"   } } ```  You can set multi-value properties when you create a new node which supports properties of type multiple.  ```JSON {   \"name\":\"My Other Folder\",   \"nodeType\":\"custom:destination\",   \"properties\":   {     \"cm:title\":\"Folder title\",     \"cm:description\":\"This is an important folder\",     \"custom:locations\": [                          \"location X\",                          \"location Y\"                         ]   } } ```  Any missing aspects are applied automatically. For example, **cm:titled** in the JSON shown above. You can set aspects explicitly, if needed, using an **aspectNames** field.  **Note:** setting properties of type d:content and d:category are not supported.  You can also optionally disable (or enable) inherited permissions via *isInheritanceEnabled* flag: ```JSON {   \"permissions\":     {       \"isInheritanceEnabled\": false,       \"locallySet\":         [           {\"authorityId\": \"GROUP_special\", \"name\": \"Read\", \"accessStatus\":\"DENIED\"},           {\"authorityId\": \"testuser\", \"name\": \"Contributor\", \"accessStatus\":\"ALLOWED\"}         ]     } } ```  Typically, for files and folders, the primary children are created within the parent folder using the default \"cm:contains\" assocType.  If the content model allows then it is also possible to create primary children with a different assoc type. For example: ```JSON {   \"name\":\"My Node\",   \"nodeType\":\"my:specialNodeType\",   \"association\":   {     \"assocType\":\"my:specialAssocType\"   } } ```   Additional associations can be added after creating a node. You can also add associations at the time the node is created. This is  required, for example, if the content model specifies that a node has mandatory associations to one or more existing nodes. You can optionally  specify an array of **secondaryChildren** to create one or more secondary child associations, such that the newly created node acts as a parent node.  You can optionally specify an array of **targets** to create one or more peer associations such that the newly created node acts as a source node.  For example, to associate one or more secondary children at time of creation: ```JSON {   \"name\":\"My Folder\",   \"nodeType\":\"cm:folder\",   \"secondaryChildren\":     [ {\"childId\":\"abcde-01234-...\", \"assocType\":\"my:specialChildAssocType\"} ] } ```  For example, to associate one or more targets at time of creation: ```JSON {   \"name\":\"My Folder\",   \"nodeType\":\"cm:folder\",   \"targets\":     [ {\"targetId\":\"abcde-01234-...\", \"assocType\":\"my:specialPeerAssocType\"} ] } ```  **Note:** You can create more than one child by  specifying a list of nodes in the JSON body. For example, the following JSON body creates two folders inside the specified **nodeId**, if the **nodeId** identifies a folder:  ```JSON [   {     \"name\":\"My Folder 1\",     \"nodeType\":\"cm:folder\"   },   {     \"name\":\"My Folder 2\",     \"nodeType\":\"cm:folder\"   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {           ...         }       }     ]   } } ``` 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Create a node and add it as a primary child of node **nodeId**.  This endpoint supports both JSON and multipart/form-data (file upload).  **Using multipart/form-data**  Use the **filedata** field to represent the content to upload, for example, the following curl command will create a node with the contents of test.txt in the test user's home folder.  ```curl -utest:test -X POST host:port/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children -F filedata=@test.txt```  You can use the **name** field to give an alternative name for the new file.  You can use the **nodeType** field to create a specific type. The default is cm:content.  You can use the **renditions** field to create renditions (e.g. doclib) asynchronously upon upload. Also, as requesting rendition is a background process, any rendition failure (e.g. No transformer is currently available) will not fail the whole upload and has the potential to silently fail.  Use **overwrite** to overwrite an existing file, matched by name. If the file is versionable, the existing content is replaced.  When you overwrite existing content, you can set the **majorVersion** boolean field to **true** to indicate a major version should be created. The default for **majorVersion** is **false**. Setting  **majorVersion** enables versioning of the node, if it is not already versioned.  When you overwrite existing content, you can use the **comment** field to add a version comment that appears in the version history. This also enables versioning of this node, if it is not already versioned.  You can set the **autoRename** boolean field to automatically resolve name clashes. If there is a name clash, then the API method tries to create a unique name using an integer suffix.  You can use the **relativePath** field to specify the folder structure to create relative to the node **nodeId**. Folders in the **relativePath** that do not exist are created before the node is created.  Any other field provided will be treated as a property to set on the newly created node.  **Note:** setting properties of type d:content and d:category are not supported.  **Note:** When creating a new node using multipart/form-data by default versioning is enabled and set to MAJOR Version. Since Alfresco 6.2.3 **versioningEnabled** flag was introduced offering better control over the new node Versioning.  | **versioningEnabled** | **majorVersion** | **Version Type** | |-----------------------|------------------|------------------| |        unset          |        unset     |    MAJOR         | |        unset          |        true      |    MAJOR         | |        unset          |        false     |    MINOR         | |        true           |        unset     |    MAJOR         | |        true           |        true      |    MAJOR         | |        true           |        false     |    MINOR         | |        false          |        true      |    Unversioned   | |        false          |        false     |    Unversioned   | |        false          |        true      |    Unversioned   | <br>  **Using JSON**  You must specify at least a **name** and **nodeType**. For example, to create a folder: ```JSON {   \"name\":\"My Folder\",   \"nodeType\":\"cm:folder\" } ```  You can create an empty file like this: ```JSON {   \"name\":\"My text file.txt\",   \"nodeType\":\"cm:content\" } ``` You can update binary content using the ```PUT /nodes/{nodeId}``` API method.  You can create a folder, or other node, inside a folder hierarchy: ```JSON {   \"name\":\"My Special Folder\",   \"nodeType\":\"cm:folder\",   \"relativePath\":\"X/Y/Z\" } ``` The **relativePath** specifies the folder structure to create relative to the node **nodeId**. Folders in the **relativePath** that do not exist are created before the node is created.  You can set properties when you create a new node: ```JSON {   \"name\":\"My Other Folder\",   \"nodeType\":\"cm:folder\",   \"properties\":   {     \"cm:title\":\"Folder title\",     \"cm:description\":\"This is an important folder\"   } } ```  You can set multi-value properties when you create a new node which supports properties of type multiple.  ```JSON {   \"name\":\"My Other Folder\",   \"nodeType\":\"custom:destination\",   \"properties\":   {     \"cm:title\":\"Folder title\",     \"cm:description\":\"This is an important folder\",     \"custom:locations\": [                          \"location X\",                          \"location Y\"                         ]   } } ```  Any missing aspects are applied automatically. For example, **cm:titled** in the JSON shown above. You can set aspects explicitly, if needed, using an **aspectNames** field.  **Note:** setting properties of type d:content and d:category are not supported.  You can also optionally disable (or enable) inherited permissions via *isInheritanceEnabled* flag: ```JSON {   \"permissions\":     {       \"isInheritanceEnabled\": false,       \"locallySet\":         [           {\"authorityId\": \"GROUP_special\", \"name\": \"Read\", \"accessStatus\":\"DENIED\"},           {\"authorityId\": \"testuser\", \"name\": \"Contributor\", \"accessStatus\":\"ALLOWED\"}         ]     } } ```  Typically, for files and folders, the primary children are created within the parent folder using the default \"cm:contains\" assocType. If the content model allows then it is also possible to create primary children with a different assoc type. For example: ```JSON {   \"name\":\"My Node\",   \"nodeType\":\"my:specialNodeType\",   \"association\":   {     \"assocType\":\"my:specialAssocType\"   } } ```  Additional associations can be added after creating a node. You can also add associations at the time the node is created. This is required, for example, if the content model specifies that a node has mandatory associations to one or more existing nodes. You can optionally specify an array of **secondaryChildren** to create one or more secondary child associations, such that the newly created node acts as a parent node. You can optionally specify an array of **targets** to create one or more peer associations such that the newly created node acts as a source node. For example, to associate one or more secondary children at time of creation: ```JSON {   \"name\":\"My Folder\",   \"nodeType\":\"cm:folder\",   \"secondaryChildren\":     [ {\"childId\":\"abcde-01234-...\", \"assocType\":\"my:specialChildAssocType\"} ] } ``` For example, to associate one or more targets at time of creation: ```JSON {   \"name\":\"My Folder\",   \"nodeType\":\"cm:folder\",   \"targets\":     [ {\"targetId\":\"abcde-01234-...\", \"assocType\":\"my:specialPeerAssocType\"} ] } ```  **Note:** You can create more than one child by specifying a list of nodes in the JSON body. For example, the following JSON body creates two folders inside the specified **nodeId**, if the **nodeId** identifies a folder:  ```JSON [   {     \"name\":\"My Folder 1\",     \"nodeType\":\"cm:folder\"   },   {     \"name\":\"My Folder 2\",     \"nodeType\":\"cm:folder\"   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {           ...         }       }     ]   } } ``` **Note:** When creating a new node using JSON by default versioning is disabled. Since Alfresco 6.2.3 **versioningEnabled** flag was introduced offering better control over the new node Versioning.  | **versioningEnabled** | **majorVersion** | **Version Type** | |-----------------------|------------------|------------------| |        unset          |        unset     |    Unversioned   | |        unset          |        true      |    MAJOR         | |        unset          |        false     |    MINOR         | |        true           |        unset     |    MAJOR         | |        true           |        true      |    MAJOR         | |        true           |        false     |    MINOR         | |        false          |        true      |    Unversioned   | |        false          |        false     |    Unversioned   | |        false          |        true      |    Unversioned   | <br> 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -272,6 +331,63 @@ open class NodesAPI {
       "id" : "id"
     },
     "name" : "name",
+    "definition" : {
+      "properties" : [ {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      }, {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      } ]
+    },
     "id" : "id",
     "properties" : "{}",
     "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -282,12 +398,14 @@ open class NodesAPI {
      - parameter nodeId: (path) The identifier of a node. You can also use one of these well-known aliases: * -my- * -shared- * -root-  
      - parameter nodeBodyCreate: (body) The node information to create. 
      - parameter autoRename: (query) If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix. (optional)
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter majorVersion: (query) If true, then created node will be version *1.0 MAJOR*. If false, then created node will be version *0.1 MINOR*. (optional)
+     - parameter versioningEnabled: (query) If true, then created node will be versioned. If false, then created node will be unversioned and auto-versioning disabled. (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<NodeEntry> 
      */
-    open class func createNodeWithRequestBuilder(nodeId: String, nodeBodyCreate: NodeBodyCreate, autoRename: Bool? = nil, include: [String]? = nil, fields: [String]? = nil) -> RequestBuilder<NodeEntry> {
+    open class func createNodeWithRequestBuilder(nodeId: String, nodeBodyCreate: NodeBodyCreate, autoRename: Bool? = nil, majorVersion: Bool? = nil, versioningEnabled: Bool? = nil, include: [String]? = nil, fields: [String]? = nil) -> RequestBuilder<NodeEntry> {
         var path = "/alfresco/versions/1/nodes/{nodeId}/children"
         let nodeIdPreEscape = "\(nodeId)"
         let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -298,6 +416,8 @@ open class NodesAPI {
         var url = URLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems([
             "autoRename": autoRename, 
+            "majorVersion": majorVersion, 
+            "versioningEnabled": versioningEnabled, 
             "include": include, 
             "fields": fields
         ])
@@ -325,7 +445,7 @@ open class NodesAPI {
     /**
      Create secondary child
      - POST /alfresco/versions/1/nodes/{nodeId}/secondary-children
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Create a secondary child association, with the given association type, between the parent **nodeId** and a child node.  **Note:** You can create more than one secondary child association by  specifying a list of associations in the JSON body like this:  ```JSON [   {     \"childId\": \"string\",     \"assocType\": \"string\"   },   {     \"childId\": \"string\",     \"assocType\": \"string\"   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {           ...         }       }     ]   } } ``` 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Create a secondary child association, with the given association type, between the parent **nodeId** and a child node.  **Note:** You can create more than one secondary child association by specifying a list of associations in the JSON body like this:  ```JSON [   {     \"childId\": \"string\",     \"assocType\": \"string\"   },   {     \"childId\": \"string\",     \"assocType\": \"string\"   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {           ...         }       }     ]   } } ``` 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -382,7 +502,7 @@ open class NodesAPI {
     /**
      Delete node association(s)
      - DELETE /alfresco/versions/1/nodes/{nodeId}/targets/{targetId}
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Delete an association, or associations, from the source **nodeId* to a target node for the given association type.  If the association type is **not** specified, then all peer associations, of any type, in the direction  from source to target, are deleted.  **Note:** After removal of the peer association, or associations, from source to target, the two nodes may still have peer associations in the other direction. 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Delete an association, or associations, from the source **nodeId* to a target node for the given association type.  If the association type is **not** specified, then all peer associations, of any type, in the direction from source to target, are deleted.  **Note:** After removal of the peer association, or associations, from source to target, the two nodes may still have peer associations in the other direction. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -435,7 +555,7 @@ open class NodesAPI {
     /**
      Delete a node
      - DELETE /alfresco/versions/1/nodes/{nodeId}
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Deletes the node **nodeId**.  If **nodeId** is a folder, then its children are also deleted.  Deleted nodes move to the trashcan unless the **permanent** query parameter is **true** and the current user is the owner of the node or an admin.  Deleting a node deletes it from its primary parent and also from any secondary parents. Peer associations are also deleted, where the deleted  node is either a source or target of an association. This applies recursively to any hierarchy of primary children of the deleted node.   **Note:** If the node is not permanently deleted, and is later successfully restored to its former primary parent, then the primary  child association is restored. This applies recursively for any primary children. No other secondary child associations or  peer associations are restored for any of the nodes in the primary parent-child hierarchy of restored nodes, regardless of whether the original  associations were to nodes inside or outside the restored hierarchy. 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Deletes the node **nodeId**.  If **nodeId** is a folder, then its children are also deleted.  Deleted nodes move to the trashcan unless the **permanent** query parameter is **true** and the current user is the owner of the node or an admin.  Deleting a node deletes it from its primary parent and also from any secondary parents. Peer associations are also deleted, where the deleted node is either a source or target of an association. This applies recursively to any hierarchy of primary children of the deleted node.  **Note:** If the node is not permanently deleted, and is later successfully restored to its former primary parent, then the primary child association is restored. This applies recursively for any primary children. No other secondary child associations or peer associations are restored for any of the nodes in the primary parent-child hierarchy of restored nodes, regardless of whether the original associations were to nodes inside or outside the restored hierarchy. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -485,7 +605,7 @@ open class NodesAPI {
     /**
      Delete secondary child or children
      - DELETE /alfresco/versions/1/nodes/{nodeId}/secondary-children/{childId}
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Delete secondary child associations between the parent **nodeId** and child nodes for the given association type.  If the association type is **not** specified, then all secondary child associations, of any type in the direction  from parent to secondary child, will be deleted. The child will still have a primary parent and may still be associated as a secondary child with other secondary parents. 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Delete secondary child associations between the parent **nodeId** and child nodes for the given association type.  If the association type is **not** specified, then all secondary child associations, of any type in the direction from parent to secondary child, will be deleted. The child will still have a primary parent and may still be associated as a secondary child with other secondary parents. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -521,8 +641,8 @@ open class NodesAPI {
      Get a node
      
      - parameter nodeId: (path) The identifier of a node. You can also use one of these well-known aliases: * -my- * -shared- * -root-  
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
-     - parameter relativePath: (query) A path relative to the **nodeId**. If you set this,  information is returned on the node resolved by this path.  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
+     - parameter relativePath: (query) A path relative to the **nodeId**. If you set this, information is returned on the node resolved by this path.  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -604,6 +724,63 @@ open class NodesAPI {
       "id" : "id"
     },
     "name" : "name",
+    "definition" : {
+      "properties" : [ {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      }, {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      } ]
+    },
     "id" : "id",
     "properties" : "{}",
     "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -612,8 +789,8 @@ open class NodesAPI {
 }}]
      
      - parameter nodeId: (path) The identifier of a node. You can also use one of these well-known aliases: * -my- * -shared- * -root-  
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
-     - parameter relativePath: (query) A path relative to the **nodeId**. If you set this,  information is returned on the node resolved by this path.  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
+     - parameter relativePath: (query) A path relative to the **nodeId**. If you set this, information is returned on the node resolved by this path.  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<NodeEntry> 
@@ -697,8 +874,8 @@ open class NodesAPI {
      List node children
      
      - parameter nodeId: (path) The identifier of a node. You can also use one of these well-known aliases: * -my- * -shared- * -root-  
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter _where: (query) Optionally filter the list. Here are some examples:  *   &#x60;&#x60;&#x60;where&#x3D;(isFolder&#x3D;true)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(isFile&#x3D;true)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(nodeType&#x3D;&#39;my:specialNodeType&#39;)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(nodeType&#x3D;&#39;my:specialNodeType INCLUDESUBTYPES&#39;)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(isPrimary&#x3D;true)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(assocType&#x3D;&#39;my:specialAssocType&#39;)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(isPrimary&#x3D;false and assocType&#x3D;&#39;my:specialAssocType&#39;)&#x60;&#x60;&#x60;  (optional)
      - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * aspectNames * association * isLink * isFavorite * isLocked * path * properties * permissions  (optional)
@@ -717,7 +894,7 @@ open class NodesAPI {
     /**
      List node children
      - GET /alfresco/versions/1/nodes/{nodeId}/children
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets a list of children of the parent node **nodeId**.  Minimal information for each child is returned by default.  You can use the **include** parameter to return additional information.  The list of child nodes includes primary children and secondary children, if there are any.  You can use the **include** parameter (include=association) to return child association details  for each child, including the **assocTyp**e and the **isPrimary** flag.  The default sort order for the returned list is for folders to be sorted before files, and by ascending name.  You can override the default using **orderBy** to specify one or more fields to sort by. The default order is always ascending, but you can use an optional **ASC** or **DESC** modifier to specify an ascending or descending sort order.       For example, specifying ```orderBy=name DESC``` returns a mixed folder/file list in descending **name** order.  You can use any of the following fields to order the results: * isFolder * name * mimeType * nodeType * sizeInBytes * modifiedAt * createdAt * modifiedByUser * createdByUser 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets a list of children of the parent node **nodeId**.  Minimal information for each child is returned by default.  You can use the **include** parameter to return additional information.  The list of child nodes includes primary children and secondary children, if there are any.  You can use the **include** parameter (include=association) to return child association details for each child, including the **assocTyp**e and the **isPrimary** flag.  The default sort order for the returned list is for folders to be sorted before files, and by ascending name.  You can override the default using **orderBy** to specify one or more fields to sort by. The default order is always ascending, but you can use an optional **ASC** or **DESC** modifier to specify an ascending or descending sort order.  For example, specifying ```orderBy=name DESC``` returns a mixed folder/file list in descending **name** order.  You can use any of the following fields to order the results: * isFolder * name * mimeType * nodeType * sizeInBytes * modifiedAt * createdAt * modifiedByUser * createdByUser 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -798,6 +975,63 @@ open class NodesAPI {
         "id" : "id"
       },
       "name" : "name",
+      "definition" : {
+        "properties" : [ {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        }, {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        } ]
+      },
       "id" : "id",
       "properties" : "{}",
       "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -807,8 +1041,8 @@ open class NodesAPI {
 }}]
      
      - parameter nodeId: (path) The identifier of a node. You can also use one of these well-known aliases: * -my- * -shared- * -root-  
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter _where: (query) Optionally filter the list. Here are some examples:  *   &#x60;&#x60;&#x60;where&#x3D;(isFolder&#x3D;true)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(isFile&#x3D;true)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(nodeType&#x3D;&#39;my:specialNodeType&#39;)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(nodeType&#x3D;&#39;my:specialNodeType INCLUDESUBTYPES&#39;)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(isPrimary&#x3D;true)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(assocType&#x3D;&#39;my:specialAssocType&#39;)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(isPrimary&#x3D;false and assocType&#x3D;&#39;my:specialAssocType&#39;)&#x60;&#x60;&#x60;  (optional)
      - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * aspectNames * association * isLink * isFavorite * isLocked * path * properties * permissions  (optional)
@@ -849,8 +1083,8 @@ open class NodesAPI {
      - parameter nodeId: (path) The identifier of a child node. You can also use one of these well-known aliases: * -my- * -shared- * -root-  
      - parameter _where: (query) Optionally filter the list by **assocType** and/or **isPrimary**. Here are some example filters:  *   &#x60;&#x60;&#x60;where&#x3D;(assocType&#x3D;&#39;my:specialAssocType&#39;)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(isPrimary&#x3D;true)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(isPrimary&#x3D;false and assocType&#x3D;&#39;my:specialAssocType&#39;)&#x60;&#x60;&#x60;  (optional)
      - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * aspectNames * isLink * isFavorite * isLocked * path * properties  (optional)
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter includeSource: (query) Also include **source** (in addition to **entries**) with folder information on **nodeId** (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
@@ -946,6 +1180,63 @@ open class NodesAPI {
         "id" : "id"
       },
       "name" : "name",
+      "definition" : {
+        "properties" : [ {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        }, {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        } ]
+      },
       "id" : "id",
       "properties" : "{}",
       "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -957,8 +1248,8 @@ open class NodesAPI {
      - parameter nodeId: (path) The identifier of a child node. You can also use one of these well-known aliases: * -my- * -shared- * -root-  
      - parameter _where: (query) Optionally filter the list by **assocType** and/or **isPrimary**. Here are some example filters:  *   &#x60;&#x60;&#x60;where&#x3D;(assocType&#x3D;&#39;my:specialAssocType&#39;)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(isPrimary&#x3D;true)&#x60;&#x60;&#x60;  *   &#x60;&#x60;&#x60;where&#x3D;(isPrimary&#x3D;false and assocType&#x3D;&#39;my:specialAssocType&#39;)&#x60;&#x60;&#x60;  (optional)
      - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * aspectNames * isLink * isFavorite * isLocked * path * properties  (optional)
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter includeSource: (query) Also include **source** (in addition to **entries**) with folder information on **nodeId** (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
@@ -993,8 +1284,8 @@ open class NodesAPI {
      - parameter nodeId: (path) The identifier of a parent node. You can also use one of these well-known aliases: * -my- * -shared- * -root-  
      - parameter _where: (query) Optionally filter the list by assocType. Here&#39;s an example:  *   &#x60;&#x60;&#x60;where&#x3D;(assocType&#x3D;&#39;my:specialAssocType&#39;)&#x60;&#x60;&#x60;  (optional)
      - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * aspectNames * isLink * isFavorite * isLocked * path * properties  (optional)
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter includeSource: (query) Also include **source** (in addition to **entries**) with folder information on **nodeId** (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
@@ -1090,6 +1381,63 @@ open class NodesAPI {
         "id" : "id"
       },
       "name" : "name",
+      "definition" : {
+        "properties" : [ {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        }, {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        } ]
+      },
       "id" : "id",
       "properties" : "{}",
       "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -1101,8 +1449,8 @@ open class NodesAPI {
      - parameter nodeId: (path) The identifier of a parent node. You can also use one of these well-known aliases: * -my- * -shared- * -root-  
      - parameter _where: (query) Optionally filter the list by assocType. Here&#39;s an example:  *   &#x60;&#x60;&#x60;where&#x3D;(assocType&#x3D;&#39;my:specialAssocType&#39;)&#x60;&#x60;&#x60;  (optional)
      - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * aspectNames * isLink * isFavorite * isLocked * path * properties  (optional)
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter includeSource: (query) Also include **source** (in addition to **entries**) with folder information on **nodeId** (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
@@ -1231,6 +1579,63 @@ open class NodesAPI {
         "id" : "id"
       },
       "name" : "name",
+      "definition" : {
+        "properties" : [ {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        }, {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        } ]
+      },
       "id" : "id",
       "properties" : "{}",
       "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -1366,6 +1771,63 @@ open class NodesAPI {
         "id" : "id"
       },
       "name" : "name",
+      "definition" : {
+        "properties" : [ {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        }, {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        } ]
+      },
       "id" : "id",
       "properties" : "{}",
       "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -1406,7 +1868,7 @@ open class NodesAPI {
      
      - parameter nodeId: (path) The identifier of a node. 
      - parameter nodeBodyLock: (body) Lock details. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -1420,7 +1882,7 @@ open class NodesAPI {
     /**
      Lock a node
      - POST /alfresco/versions/1/nodes/{nodeId}/lock
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Places a lock on node **nodeId**.  **Note:** you can only lock files. More specifically, a node can only be locked if it is of type `cm:content` or a subtype of `cm:content`.  The lock is owned by the current user, and prevents other users or processes from making updates to the node until the lock is released.    If the **timeToExpire** is not set or is zero, then the lock never expires.  Otherwise, the **timeToExpire** is the number of seconds before the lock expires.    When a lock expires, the lock is released.  If the node is already locked, and the user is the lock owner, then the lock is renewed with the new **timeToExpire**.          By default, a lock is applied that allows the owner to update or delete the node. You can use **type** to change the lock type to one of the following:  * **ALLOW_OWNER_CHANGES** (default) changes to the node can be made only by the lock owner. This enum is the same value as the deprecated WRITE_LOCK described in `org.alfresco.service.cmr.lock.LockType` in the Alfresco Public Java API. This is the default value. * **FULL** no changes by any user are allowed. This enum is the same value as the deprecated READ_ONLY_LOCK described in `org.alfresco.service.cmr.lock.LockType` in the Alfresco Public Java API.  By default, a lock is persisted in the database. You can create a volatile in-memory lock by setting the **lifetime** property to EPHEMERAL. You might choose use EPHEMERAL locks, for example, if you are taking frequent short-term locks that you don't need  to be kept over a restart of the repository. In this case you don't need the  overhead of writing the locks to the database.  If a lock on the node cannot be taken, then an error is returned.          
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Places a lock on node **nodeId**.  **Note:** you can only lock files. More specifically, a node can only be locked if it is of type `cm:content` or a subtype of `cm:content`.  The lock is owned by the current user, and prevents other users or processes from making updates to the node until the lock is released.  If the **timeToExpire** is not set or is zero, then the lock never expires.  Otherwise, the **timeToExpire** is the number of seconds before the lock expires.  When a lock expires, the lock is released.  If the node is already locked, and the user is the lock owner, then the lock is renewed with the new **timeToExpire**.  By default, a lock is applied that allows the owner to update or delete the node. You can use **type** to change the lock type to one of the following: * **ALLOW_OWNER_CHANGES** (default) changes to the node can be made only by the lock owner. This enum is the same value as the deprecated WRITE_LOCK described in `org.alfresco.service.cmr.lock.LockType` in the Alfresco Public Java API. This is the default value. * **FULL** no changes by any user are allowed. This enum is the same value as the deprecated READ_ONLY_LOCK described in `org.alfresco.service.cmr.lock.LockType` in the Alfresco Public Java API.  By default, a lock is persisted in the database. You can create a volatile in-memory lock by setting the **lifetime** property to EPHEMERAL. You might choose use EPHEMERAL locks, for example, if you are taking frequent short-term locks that you don't need to be kept over a restart of the repository. In this case you don't need the overhead of writing the locks to the database.  If a lock on the node cannot be taken, then an error is returned. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -1488,6 +1950,63 @@ open class NodesAPI {
       "id" : "id"
     },
     "name" : "name",
+    "definition" : {
+      "properties" : [ {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      }, {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      } ]
+    },
     "id" : "id",
     "properties" : "{}",
     "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -1497,7 +2016,7 @@ open class NodesAPI {
      
      - parameter nodeId: (path) The identifier of a node. 
      - parameter nodeBodyLock: (body) Lock details. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<NodeEntry> 
@@ -1526,7 +2045,7 @@ open class NodesAPI {
      
      - parameter nodeId: (path) The identifier of a node. 
      - parameter nodeBodyMove: (body) The targetParentId and, optionally, a new name which should include the file extension. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -1608,6 +2127,63 @@ open class NodesAPI {
       "id" : "id"
     },
     "name" : "name",
+    "definition" : {
+      "properties" : [ {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      }, {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      } ]
+    },
     "id" : "id",
     "properties" : "{}",
     "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -1617,7 +2193,7 @@ open class NodesAPI {
      
      - parameter nodeId: (path) The identifier of a node. 
      - parameter nodeBodyMove: (body) The targetParentId and, optionally, a new name which should include the file extension. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<NodeEntry> 
@@ -1645,7 +2221,7 @@ open class NodesAPI {
      Unlock a node
      
      - parameter nodeId: (path) The identifier of a node. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -1727,6 +2303,63 @@ open class NodesAPI {
       "id" : "id"
     },
     "name" : "name",
+    "definition" : {
+      "properties" : [ {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      }, {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      } ]
+    },
     "id" : "id",
     "properties" : "{}",
     "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -1735,7 +2368,7 @@ open class NodesAPI {
 }}]
      
      - parameter nodeId: (path) The identifier of a node. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<NodeEntry> 
@@ -1764,7 +2397,7 @@ open class NodesAPI {
      
      - parameter nodeId: (path) The identifier of a node. 
      - parameter nodeBodyUpdate: (body) The node information to update. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -1846,6 +2479,63 @@ open class NodesAPI {
       "id" : "id"
     },
     "name" : "name",
+    "definition" : {
+      "properties" : [ {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      }, {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      } ]
+    },
     "id" : "id",
     "properties" : "{}",
     "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -1855,7 +2545,7 @@ open class NodesAPI {
      
      - parameter nodeId: (path) The identifier of a node. 
      - parameter nodeBodyUpdate: (body) The node information to update. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<NodeEntry> 
@@ -1886,8 +2576,8 @@ open class NodesAPI {
      - parameter contentBodyUpdate: (body) The binary content 
      - parameter majorVersion: (query) If **true**, create a major version. Setting this parameter also enables versioning of this node, if it is not already versioned.  (optional, default to false)
      - parameter comment: (query) Add a version comment which will appear in version history. Setting this parameter also enables versioning of this node, if it is not already versioned.  (optional)
-     - parameter name: (query) Optional new name. This should include the file extension. The name must not contain spaces or the following special characters: * \&quot; &lt; &gt; \\ / ? : and |.  The character &#x60;.&#x60; must not be used at the end of the name.   (optional)
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter name: (query) Optional new name. This should include the file extension. The name must not contain spaces or the following special characters: * \&quot; &lt; &gt; \\ / ? : and |. The character &#x60;.&#x60; must not be used at the end of the name.  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -1901,7 +2591,7 @@ open class NodesAPI {
     /**
      Update node content
      - PUT /alfresco/versions/1/nodes/{nodeId}/content
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Updates the content of the node with identifier **nodeId**.  The request body for this endpoint can be any text or binary stream.  The **majorVersion** and **comment** parameters can be used to control versioning behaviour. If the content is versionable, a new minor version is created by default.  Optionally a new **name** parameter can also be specified that must be unique within the parent folder. If specified and valid then this  will rename the node. If invalid then an error is returned and the content is not updated.  **Note:** This API method accepts any content type, but for testing with this tool text based content can be provided. This is because the OpenAPI Specification does not allow a wildcard to be provided or the ability for tooling to accept an arbitrary file. 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Updates the content of the node with identifier **nodeId**.  The request body for this endpoint can be any text or binary stream.  The **majorVersion** and **comment** parameters can be used to control versioning behaviour. If the content is versionable, a new minor version is created by default.  Optionally a new **name** parameter can also be specified that must be unique within the parent folder. If specified and valid then this will rename the node. If invalid then an error is returned and the content is not updated.  **Note:** This API method accepts any content type, but for testing with this tool text based content can be provided. This is because the OpenAPI Specification does not allow a wildcard to be provided or the ability for tooling to accept an arbitrary file. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -1969,6 +2659,63 @@ open class NodesAPI {
       "id" : "id"
     },
     "name" : "name",
+    "definition" : {
+      "properties" : [ {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      }, {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      } ]
+    },
     "id" : "id",
     "properties" : "{}",
     "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -1980,8 +2727,8 @@ open class NodesAPI {
      - parameter contentBodyUpdate: (body) The binary content 
      - parameter majorVersion: (query) If **true**, create a major version. Setting this parameter also enables versioning of this node, if it is not already versioned.  (optional, default to false)
      - parameter comment: (query) Add a version comment which will appear in version history. Setting this parameter also enables versioning of this node, if it is not already versioned.  (optional)
-     - parameter name: (query) Optional new name. This should include the file extension. The name must not contain spaces or the following special characters: * \&quot; &lt; &gt; \\ / ? : and |.  The character &#x60;.&#x60; must not be used at the end of the name.   (optional)
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter name: (query) Optional new name. This should include the file extension. The name must not contain spaces or the following special characters: * \&quot; &lt; &gt; \\ / ? : and |. The character &#x60;.&#x60; must not be used at the end of the name.  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<NodeEntry> 

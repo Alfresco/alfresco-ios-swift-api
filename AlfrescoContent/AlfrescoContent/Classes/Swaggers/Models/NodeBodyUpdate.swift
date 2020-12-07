@@ -15,10 +15,10 @@ public struct NodeBodyUpdate: Codable {
     public var name: String?
     public var nodeType: String?
     public var aspectNames: [String]?
-    public var properties: JSONValue?
+    public var properties: [String:String]?
     public var permissions: PermissionsBody?
 
-    public init(name: String?, nodeType: String?, aspectNames: [String]?, properties: JSONValue?, permissions: PermissionsBody?) {
+    public init(name: String?, nodeType: String?, aspectNames: [String]?, properties: [String:String]?, permissions: PermissionsBody?) {
         self.name = name
         self.nodeType = nodeType
         self.aspectNames = aspectNames

@@ -14,7 +14,7 @@ public struct SharedLink: Codable {
     public var _id: String?
     public var expiresAt: Date?
     public var nodeId: String?
-    /** The name must not contain spaces or the following special characters: * \&quot; &lt; &gt; \\ / ? : and |.  The character . must not be used at the end of the name.  */
+    /** The name must not contain spaces or the following special characters: * \&quot; &lt; &gt; \\ / ? : and |. The character . must not be used at the end of the name.  */
     public var name: String?
     public var title: String?
     public var _description: String?
@@ -30,8 +30,9 @@ public struct SharedLink: Codable {
     /** A subset of the target node&#39;s properties, system properties and properties already available in the SharedLink are excluded.  */
     public var properties: JSONValue?
     public var aspectNames: [String]?
+    public var path: PathInfo?
 
-    public init(_id: String?, expiresAt: Date?, nodeId: String?, name: String?, title: String?, _description: String?, modifiedAt: Date?, modifiedByUser: UserInfo?, sharedByUser: UserInfo?, content: ContentInfo?, allowableOperations: [String]?, allowableOperationsOnTarget: [String]?, isFavorite: Bool?, properties: JSONValue?, aspectNames: [String]?) {
+    public init(_id: String?, expiresAt: Date?, nodeId: String?, name: String?, title: String?, _description: String?, modifiedAt: Date?, modifiedByUser: UserInfo?, sharedByUser: UserInfo?, content: ContentInfo?, allowableOperations: [String]?, allowableOperationsOnTarget: [String]?, isFavorite: Bool?, properties: JSONValue?, aspectNames: [String]?, path: PathInfo?) {
         self._id = _id
         self.expiresAt = expiresAt
         self.nodeId = nodeId
@@ -47,6 +48,7 @@ public struct SharedLink: Codable {
         self.isFavorite = isFavorite
         self.properties = properties
         self.aspectNames = aspectNames
+        self.path = path
     }
 
     public enum CodingKeys: String, CodingKey { 
@@ -65,6 +67,7 @@ public struct SharedLink: Codable {
         case isFavorite
         case properties
         case aspectNames
+        case path
     }
 
 

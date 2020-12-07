@@ -14,17 +14,21 @@ public struct SiteMembershipRequestBodyCreate: Codable {
     public var message: String?
     public var _id: String
     public var title: String?
+    /** Optional client name used when sending an email to the end user, defaults to \&quot;share\&quot; if not provided. **Note:** The client must be registered before this API can send an email. **Note:** This is available in Alfresco 7.0.0 and newer versions.  */
+    public var client: String?
 
-    public init(message: String?, _id: String, title: String?) {
+    public init(message: String?, _id: String, title: String?, client: String?) {
         self.message = message
         self._id = _id
         self.title = title
+        self.client = client
     }
 
     public enum CodingKeys: String, CodingKey { 
         case message
         case _id = "id"
         case title
+        case client
     }
 
 

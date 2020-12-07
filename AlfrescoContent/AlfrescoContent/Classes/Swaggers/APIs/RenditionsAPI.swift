@@ -123,7 +123,7 @@ open class RenditionsAPI {
      - parameter attachment: (query) **true** enables a web browser to download the file as an attachment. **false** means a web browser may preview the file in a new tab or window, but not download the file.  You can only set this parameter to **false** if the content type of the file is in the supported list; for example, certain image files and PDF files.  If the content type is not supported for preview, then a value of **false**  is ignored, and the attachment will be returned in the response.  (optional, default to true)
      - parameter ifModifiedSince: (header) Only returns the content if it has been modified since the date provided. Use the date format defined by HTTP. For example, &#x60;Wed, 09 Mar 2016 16:56:34 GMT&#x60;.  (optional)
      - parameter range: (header) The Range header indicates the part of a document that the server should return. Single part request supported, for example: bytes&#x3D;1-10.  (optional)
-     - parameter placeholder: (query) If **true** and there is no rendition for this **nodeId** and **renditionId**,  then the placeholder image for the mime type of this rendition is returned, rather  than a 404 response.  (optional, default to false)
+     - parameter placeholder: (query) If **true** and there is no rendition for this **nodeId** and **renditionId**, then the placeholder image for the mime type of this rendition is returned, rather than a 404 response.  (optional, default to false)
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func getRenditionContent(nodeId: String, renditionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil, placeholder: Bool? = nil, completion: @escaping ((_ data: Data?,_ error: Error?) -> Void)) {
@@ -147,7 +147,7 @@ open class RenditionsAPI {
      - parameter attachment: (query) **true** enables a web browser to download the file as an attachment. **false** means a web browser may preview the file in a new tab or window, but not download the file.  You can only set this parameter to **false** if the content type of the file is in the supported list; for example, certain image files and PDF files.  If the content type is not supported for preview, then a value of **false**  is ignored, and the attachment will be returned in the response.  (optional, default to true)
      - parameter ifModifiedSince: (header) Only returns the content if it has been modified since the date provided. Use the date format defined by HTTP. For example, &#x60;Wed, 09 Mar 2016 16:56:34 GMT&#x60;.  (optional)
      - parameter range: (header) The Range header indicates the part of a document that the server should return. Single part request supported, for example: bytes&#x3D;1-10.  (optional)
-     - parameter placeholder: (query) If **true** and there is no rendition for this **nodeId** and **renditionId**,  then the placeholder image for the mime type of this rendition is returned, rather  than a 404 response.  (optional, default to false)
+     - parameter placeholder: (query) If **true** and there is no rendition for this **nodeId** and **renditionId**, then the placeholder image for the mime type of this rendition is returned, rather than a 404 response.  (optional, default to false)
 
      - returns: RequestBuilder<Data> 
      */
@@ -195,7 +195,7 @@ open class RenditionsAPI {
     /**
      List renditions
      - GET /alfresco/versions/1/nodes/{nodeId}/renditions
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets a list of the rendition information for each rendition of the the file **nodeId**, including the rendition id.  Each rendition returned has a **status**: CREATED means it is available to view or download, NOT_CREATED means the rendition can be requested.  You can use the **where** parameter to filter the returned renditions by **status**. For example, the following **where**  clause will return just the CREATED renditions:    ``` (status='CREATED') ``` 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets a list of the rendition information for each rendition of the the file **nodeId**, including the rendition id.  Each rendition returned has a **status**: CREATED means it is available to view or download, NOT_CREATED means the rendition can be requested.  You can use the **where** parameter to filter the returned renditions by **status**. For example, the following **where** clause will return just the CREATED renditions:  ``` (status='CREATED') ``` 
      - BASIC:
        - type: basic
        - name: basicAuth

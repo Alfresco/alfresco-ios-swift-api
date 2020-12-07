@@ -23,11 +23,11 @@ public struct Activity: Codable {
     /** The feed on which this activity was posted */
     public var feedPersonId: String
     /** An object summarizing the activity */
-    public var activitySummary: JSONValue?
+    public var activitySummary: [String:String]?
     /** The type of the activity posted */
     public var activityType: String
 
-    public init(postPersonId: String, _id: Int64, siteId: String?, postedAt: Date?, feedPersonId: String, activitySummary: JSONValue?, activityType: String) {
+    public init(postPersonId: String, _id: Int64, siteId: String?, postedAt: Date?, feedPersonId: String, activitySummary: [String:String]?, activityType: String) {
         self.postPersonId = postPersonId
         self._id = _id
         self.siteId = siteId

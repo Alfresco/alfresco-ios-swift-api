@@ -29,12 +29,13 @@ open class TagsAPI {
     /**
      Create a tag for a node
      - POST /alfresco/versions/1/nodes/{nodeId}/tags
-     - Creates a tag on the node **nodeId**. You specify the tag in a JSON body like this:  ```JSON {   \"tag\":\"test-tag-1\" } ```  **Note:** You can create more than one tag by  specifying a list of tags in the JSON body like this:  ```JSON [   {     \"tag\":\"test-tag-1\"   },   {     \"tag\":\"test-tag-2\"   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {          ...         }       }     ]   } } ``` 
+     - Creates a tag on the node **nodeId**. You specify the tag in a JSON body like this:  ```JSON {   \"tag\":\"test-tag-1\" } ```  **Note:** You can create more than one tag by specifying a list of tags in the JSON body like this:  ```JSON [   {     \"tag\":\"test-tag-1\"   },   {     \"tag\":\"test-tag-2\"   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {          ...         }       }     ]   } } ``` 
      - BASIC:
        - type: basic
        - name: basicAuth
      - examples: [{contentType=application/json, example={
   "entry" : {
+    "count" : 0.80082819046101150206595775671303272247314453125,
     "id" : "id",
     "tag" : "tag"
   }
@@ -165,8 +166,8 @@ open class TagsAPI {
     /**
      List tags
      
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter include: (query) Returns additional information about the tag. The following optional fields can be requested: * count  (optional)
      - parameter completion: completion handler to receive the data and the error objects
@@ -189,11 +190,13 @@ open class TagsAPI {
   "list" : {
     "entries" : [ {
       "entry" : {
+        "count" : 0.80082819046101150206595775671303272247314453125,
         "id" : "id",
         "tag" : "tag"
       }
     }, {
       "entry" : {
+        "count" : 0.80082819046101150206595775671303272247314453125,
         "id" : "id",
         "tag" : "tag"
       }
@@ -208,8 +211,8 @@ open class TagsAPI {
   }
 }}]
      
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter include: (query) Returns additional information about the tag. The following optional fields can be requested: * count  (optional)
 
@@ -237,8 +240,8 @@ open class TagsAPI {
      List tags for a node
      
      - parameter nodeId: (path) The identifier of a node. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -260,11 +263,13 @@ open class TagsAPI {
   "list" : {
     "entries" : [ {
       "entry" : {
+        "count" : 0.80082819046101150206595775671303272247314453125,
         "id" : "id",
         "tag" : "tag"
       }
     }, {
       "entry" : {
+        "count" : 0.80082819046101150206595775671303272247314453125,
         "id" : "id",
         "tag" : "tag"
       }
@@ -280,8 +285,8 @@ open class TagsAPI {
 }}]
      
      - parameter nodeId: (path) The identifier of a node. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<TagPaging> 
@@ -330,6 +335,7 @@ open class TagsAPI {
        - name: basicAuth
      - examples: [{contentType=application/json, example={
   "entry" : {
+    "count" : 0.80082819046101150206595775671303272247314453125,
     "id" : "id",
     "tag" : "tag"
   }
