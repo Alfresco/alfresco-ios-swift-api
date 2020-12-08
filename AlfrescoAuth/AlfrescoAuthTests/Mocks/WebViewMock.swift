@@ -22,7 +22,7 @@ import WebKit
 class WebViewMock: WKWebView {
     var loadWasCalled = false
     var urlString = ""
-    
+
     override func load(_ request: URLRequest) -> WKNavigation? {
         loadWasCalled = true
         urlString = request.url?.absoluteString ?? ""

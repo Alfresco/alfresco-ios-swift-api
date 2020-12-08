@@ -20,12 +20,11 @@ import UIKit
 import WebKit
 
 class AuthWebViewController: UIViewController {
-    
     @IBOutlet weak var webView: WKWebView!
-    
+
     var presenter: AuthWebPresenter?
     var urlString: String?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = presenter

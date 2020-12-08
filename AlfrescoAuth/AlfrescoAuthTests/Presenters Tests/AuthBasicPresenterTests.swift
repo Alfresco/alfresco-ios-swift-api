@@ -26,56 +26,56 @@ class AuthBasicPresenterTests: XCTestCase {
     var expectationForDidReceivedCall = XCTestExpectation(description: "Wait for delegate.")
     var expectationForSuccessInDidReceivedCall = XCTestExpectation(description: "Success in DidReceivedCall")
     var expectationForFailureInDidReceivedCall = XCTestExpectation(description: "Failure in DidReceivedCall")
-    
+
     override func setUp() {
         super.setUp()
         sut = AuthBasicPresenter(configuration: TestData.configuration)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testSutIsNotNil() {
         XCTAssertNotNil(sut)
     }
-    
+
     func testInitWithConfiguration() {
         sut = AuthBasicPresenter(configuration: TestData.configuration)
         XCTAssertEqual(sut.configuration, TestData.configuration)
     }
-    
+
     func testExecuteWithSuccess() {
         let delegateStub = AlfrescoAuthDelegateStub()
         let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
-        
+
         apiClientSub.responseType = .validCredential
         delegateStub.expectationForDidReceivedCall = expectationForDidReceivedCall
         delegateStub.expectationForSuccessInDidReceivedCall = expectationForSuccessInDidReceivedCall
-        
+
         sut.authDelegate = delegateStub
         sut.apiClient = apiClientSub
         sut.execute(username: TestData.username1, password: TestData.password1)
-        
+
         wait(for: [expectationForDidReceivedCall, expectationForSuccessInDidReceivedCall], timeout: 10.0)
     }
-    
+
     func testExecuteWithFailure() {
         let delegateStub = AlfrescoAuthDelegateStub()
         let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
-        
+
         apiClientSub.responseType = .error
         delegateStub.expectationForDidReceivedCall = expectationForDidReceivedCall
         delegateStub.expectationForFailureInDidReceivedCall = expectationForFailureInDidReceivedCall
-        
+
         sut.authDelegate = delegateStub
         sut.apiClient = apiClientSub
         sut.execute(username: TestData.username1, password: TestData.password2)
-        
+
         wait(for: [expectationForDidReceivedCall, expectationForFailureInDidReceivedCall], timeout: 10.0)
     }
-    
+
     func testRequestTokenWithSuccess() {
         let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         apiClientSub.responseType = .validCredential
@@ -83,15 +83,15 @@ class AuthBasicPresenterTests: XCTestCase {
         sut.requestToken(with: TestData.username1, and: TestData.password1, completion: { (result) in
             var success = false
             switch result {
-            case .success(_):
+            case .success:
                 success = true
-            case .failure(_):
+            case .failure:
                 success = false
             }
             XCTAssertTrue(success)
         })
     }
-    
+
     func testRequestTokenWithFailure() {
         let apiClientSub = APIClientStub(with: TestData.baseUrlGood, session: URLSession(configuration: .default))
         apiClientSub.responseType = .error
@@ -99,43 +99,42 @@ class AuthBasicPresenterTests: XCTestCase {
         sut.requestToken(with: TestData.username1, and: TestData.password2, completion: { (result) in
             var success = false
             switch result {
-            case .success(_):
+            case .success:
                 success = true
-            case .failure(_):
+            case .failure:
                 success = false
             }
             XCTAssertFalse(success)
         })
     }
-    
+
     func testSutVerifyCallsWithInputTypeUsernameAndStringNotNil() {
-        let string = sut.verify(string: TestData.username1, type: .username)
+        let string = sut.verify(string: TestData.username1)
         XCTAssertNotNil(string)
     }
-    
+
     func testSutVerifyCallsWithInputTypeUsernameAndNilStringNotNil() {
-        let string = sut.verify(string: nil, type: .username)
+        let string = sut.verify(string: nil)
         XCTAssertNil(string)
     }
-    
+
     func testSutVerifyCallsWithInputTypeUsernameAndEmptyStringNotNil() {
-        let string = sut.verify(string: "", type: .username)
+        let string = sut.verify(string: "")
         XCTAssertNil(string)
     }
-    
+
     func testSutVerifyCallsWithInputTypePasswordAndStringNotNil() {
-        let string = sut.verify(string: TestData.password1, type: .password)
+        let string = sut.verify(string: TestData.password1)
         XCTAssertNotNil(string)
     }
-    
+
     func testSutVerifyCallsWithInputTypePasswordAndNilStringNotNil() {
-        let string = sut.verify(string: nil, type: .password)
+        let string = sut.verify(string: nil)
         XCTAssertNil(string)
     }
-    
+
     func testSutVerifyCallsWithInputTypePasswordAndEmptyStringNotNil() {
-        let string = sut.verify(string: "", type: .password)
+        let string = sut.verify(string: "")
         XCTAssertNil(string)
     }
 }
-

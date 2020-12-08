@@ -31,10 +31,11 @@ public struct DeletedNode: Codable {
     public var allowableOperations: [String]?
     public var path: PathInfo?
     public var permissions: PermissionsInfo?
+    public var definition: Definition?
     public var archivedByUser: UserInfo
     public var archivedAt: Date
 
-    public init(_id: String, name: String, nodeType: String, isFolder: Bool, isFile: Bool, isLocked: Bool?, modifiedAt: Date, modifiedByUser: UserInfo, createdAt: Date, createdByUser: UserInfo, parentId: String?, isLink: Bool?, isFavorite: Bool?, content: ContentInfo?, aspectNames: [String]?, properties: JSONValue?, allowableOperations: [String]?, path: PathInfo?, permissions: PermissionsInfo?, archivedByUser: UserInfo, archivedAt: Date) {
+    public init(_id: String, name: String, nodeType: String, isFolder: Bool, isFile: Bool, isLocked: Bool?, modifiedAt: Date, modifiedByUser: UserInfo, createdAt: Date, createdByUser: UserInfo, parentId: String?, isLink: Bool?, isFavorite: Bool?, content: ContentInfo?, aspectNames: [String]?, properties: JSONValue?, allowableOperations: [String]?, path: PathInfo?, permissions: PermissionsInfo?, definition: Definition?, archivedByUser: UserInfo, archivedAt: Date) {
         self._id = _id
         self.name = name
         self.nodeType = nodeType
@@ -54,6 +55,7 @@ public struct DeletedNode: Codable {
         self.allowableOperations = allowableOperations
         self.path = path
         self.permissions = permissions
+        self.definition = definition
         self.archivedByUser = archivedByUser
         self.archivedAt = archivedAt
     }
@@ -78,6 +80,7 @@ public struct DeletedNode: Codable {
         case allowableOperations
         case path
         case permissions
+        case definition
         case archivedByUser
         case archivedAt
     }

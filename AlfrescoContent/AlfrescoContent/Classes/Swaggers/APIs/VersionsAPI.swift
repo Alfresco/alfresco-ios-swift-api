@@ -12,6 +12,57 @@ import Alamofire
 
 open class VersionsAPI {
     /**
+     Create rendition for a file version
+     
+     - parameter nodeId: (path) The identifier of a node. 
+     - parameter versionId: (path) The identifier of a version, ie. version label, within the version history of a node. 
+     - parameter renditionBodyCreate: (body) The rendition \&quot;id\&quot;. 
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func createVersionRendition(nodeId: String, versionId: String, renditionBodyCreate: RenditionBodyCreate, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        createVersionRenditionWithRequestBuilder(nodeId: nodeId, versionId: versionId, renditionBodyCreate: renditionBodyCreate).execute { (response, error) -> Void in
+            if error == nil {
+                completion((), error)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+
+
+    /**
+     Create rendition for a file version
+     - POST /alfresco/versions/1/nodes/{nodeId}/versions/{versionId}/renditions
+     - **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.  An asynchronous request to create a rendition for version of file **nodeId** and **versionId**.  The version rendition is specified by name **id** in the request body: ```JSON {   \"id\":\"doclib\" } ```   Multiple names may be specified as a comma separated list or using a list format: ```JSON [   {       \"id\": \"doclib\"   },   {       \"id\": \"avatar\"   } ] ``` 
+     - BASIC:
+       - type: basic
+       - name: basicAuth
+     
+     - parameter nodeId: (path) The identifier of a node. 
+     - parameter versionId: (path) The identifier of a version, ie. version label, within the version history of a node. 
+     - parameter renditionBodyCreate: (body) The rendition \&quot;id\&quot;. 
+
+     - returns: RequestBuilder<Void> 
+     */
+    open class func createVersionRenditionWithRequestBuilder(nodeId: String, versionId: String, renditionBodyCreate: RenditionBodyCreate) -> RequestBuilder<Void> {
+        var path = "/alfresco/versions/1/nodes/{nodeId}/versions/{versionId}/renditions"
+        let nodeIdPreEscape = "\(nodeId)"
+        let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
+        let versionIdPreEscape = "\(versionId)"
+        let versionIdPostEscape = versionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{versionId}", with: versionIdPostEscape, options: .literal, range: nil)
+        let URLString = AlfrescoContentAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: renditionBodyCreate)
+
+        let url = URLComponents(string: URLString)
+
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
+    /**
      Delete a version
      
      - parameter nodeId: (path) The identifier of a node. 
@@ -32,7 +83,7 @@ open class VersionsAPI {
     /**
      Delete a version
      - DELETE /alfresco/versions/1/nodes/{nodeId}/versions/{versionId}
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Delete the version identified by **versionId** and **nodeId*.  If the version is successfully deleted then the content and metadata for that versioned node will be deleted and will no longer appear in the version history. This operation cannot be undone.  If the most recent version is deleted the live node will revert to the next most recent version.  We currently do not allow the last version to be deleted. If you wish to clear the history then you can remove the \"cm:versionable\" aspect (via update node) which will also disable versioning. In this case, you can re-enable versioning by adding back the \"cm:versionable\" aspect or using the version  params (majorVersion and comment) on a subsequent file content update. 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Delete the version identified by **versionId** and **nodeId*.  If the version is successfully deleted then the content and metadata for that versioned node will be deleted and will no longer appear in the version history. This operation cannot be undone.  If the most recent version is deleted the live node will revert to the next most recent version.  We currently do not allow the last version to be deleted. If you wish to clear the history then you can remove the \"cm:versionable\" aspect (via update node) which will also disable versioning. In this case, you can re-enable versioning by adding back the \"cm:versionable\" aspect or using the version params (majorVersion and comment) on a subsequent file content update. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -190,13 +241,144 @@ open class VersionsAPI {
     }
 
     /**
+     Get rendition information for a file version
+     
+     - parameter nodeId: (path) The identifier of a node. 
+     - parameter versionId: (path) The identifier of a version, ie. version label, within the version history of a node. 
+     - parameter renditionId: (path) The name of a thumbnail rendition, for example *doclib*, or *pdf*. 
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func getVersionRendition(nodeId: String, versionId: String, renditionId: String, completion: @escaping ((_ data: RenditionEntry?,_ error: Error?) -> Void)) {
+        getVersionRenditionWithRequestBuilder(nodeId: nodeId, versionId: versionId, renditionId: renditionId).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+
+    /**
+     Get rendition information for a file version
+     - GET /alfresco/versions/1/nodes/{nodeId}/versions/{versionId}/renditions/{renditionId}
+     - **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.  Gets the rendition information for **renditionId** of version of file **nodeId** and **versionId**. 
+     - BASIC:
+       - type: basic
+       - name: basicAuth
+     - examples: [{contentType=application/json, example={
+  "entry" : {
+    "id" : "id",
+    "content" : {
+      "sizeInBytes" : 0,
+      "mimeTypeName" : "mimeTypeName",
+      "mimeTypeGroup" : "mimeTypeGroup",
+      "mimeType" : "mimeType",
+      "encoding" : "encoding"
+    },
+    "status" : "CREATED"
+  }
+}}]
+     
+     - parameter nodeId: (path) The identifier of a node. 
+     - parameter versionId: (path) The identifier of a version, ie. version label, within the version history of a node. 
+     - parameter renditionId: (path) The name of a thumbnail rendition, for example *doclib*, or *pdf*. 
+
+     - returns: RequestBuilder<RenditionEntry> 
+     */
+    open class func getVersionRenditionWithRequestBuilder(nodeId: String, versionId: String, renditionId: String) -> RequestBuilder<RenditionEntry> {
+        var path = "/alfresco/versions/1/nodes/{nodeId}/versions/{versionId}/renditions/{renditionId}"
+        let nodeIdPreEscape = "\(nodeId)"
+        let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
+        let versionIdPreEscape = "\(versionId)"
+        let versionIdPostEscape = versionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{versionId}", with: versionIdPostEscape, options: .literal, range: nil)
+        let renditionIdPreEscape = "\(renditionId)"
+        let renditionIdPostEscape = renditionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{renditionId}", with: renditionIdPostEscape, options: .literal, range: nil)
+        let URLString = AlfrescoContentAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        let url = URLComponents(string: URLString)
+
+        let requestBuilder: RequestBuilder<RenditionEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+     Get rendition content for a file version
+     
+     - parameter nodeId: (path) The identifier of a node. 
+     - parameter versionId: (path) The identifier of a version, ie. version label, within the version history of a node. 
+     - parameter renditionId: (path) The name of a thumbnail rendition, for example *doclib*, or *pdf*. 
+     - parameter attachment: (query) **true** enables a web browser to download the file as an attachment. **false** means a web browser may preview the file in a new tab or window, but not download the file.  You can only set this parameter to **false** if the content type of the file is in the supported list; for example, certain image files and PDF files.  If the content type is not supported for preview, then a value of **false**  is ignored, and the attachment will be returned in the response.  (optional, default to true)
+     - parameter ifModifiedSince: (header) Only returns the content if it has been modified since the date provided. Use the date format defined by HTTP. For example, &#x60;Wed, 09 Mar 2016 16:56:34 GMT&#x60;.  (optional)
+     - parameter range: (header) The Range header indicates the part of a document that the server should return. Single part request supported, for example: bytes&#x3D;1-10.  (optional)
+     - parameter placeholder: (query) If **true** and there is no rendition for this **nodeId** and **renditionId**, then the placeholder image for the mime type of this rendition is returned, rather than a 404 response.  (optional, default to false)
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func getVersionRenditionContent(nodeId: String, versionId: String, renditionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil, placeholder: Bool? = nil, completion: @escaping ((_ data: Data?,_ error: Error?) -> Void)) {
+        getVersionRenditionContentWithRequestBuilder(nodeId: nodeId, versionId: versionId, renditionId: renditionId, attachment: attachment, ifModifiedSince: ifModifiedSince, range: range, placeholder: placeholder).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+
+    /**
+     Get rendition content for a file version
+     - GET /alfresco/versions/1/nodes/{nodeId}/versions/{versionId}/renditions/{renditionId}/content
+     - **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.  Gets the rendition content for **renditionId** of version of file **nodeId** and **versionId**. 
+     - BASIC:
+       - type: basic
+       - name: basicAuth
+     - examples: [{output=none}]
+     
+     - parameter nodeId: (path) The identifier of a node. 
+     - parameter versionId: (path) The identifier of a version, ie. version label, within the version history of a node. 
+     - parameter renditionId: (path) The name of a thumbnail rendition, for example *doclib*, or *pdf*. 
+     - parameter attachment: (query) **true** enables a web browser to download the file as an attachment. **false** means a web browser may preview the file in a new tab or window, but not download the file.  You can only set this parameter to **false** if the content type of the file is in the supported list; for example, certain image files and PDF files.  If the content type is not supported for preview, then a value of **false**  is ignored, and the attachment will be returned in the response.  (optional, default to true)
+     - parameter ifModifiedSince: (header) Only returns the content if it has been modified since the date provided. Use the date format defined by HTTP. For example, &#x60;Wed, 09 Mar 2016 16:56:34 GMT&#x60;.  (optional)
+     - parameter range: (header) The Range header indicates the part of a document that the server should return. Single part request supported, for example: bytes&#x3D;1-10.  (optional)
+     - parameter placeholder: (query) If **true** and there is no rendition for this **nodeId** and **renditionId**, then the placeholder image for the mime type of this rendition is returned, rather than a 404 response.  (optional, default to false)
+
+     - returns: RequestBuilder<Data> 
+     */
+    open class func getVersionRenditionContentWithRequestBuilder(nodeId: String, versionId: String, renditionId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, range: String? = nil, placeholder: Bool? = nil) -> RequestBuilder<Data> {
+        var path = "/alfresco/versions/1/nodes/{nodeId}/versions/{versionId}/renditions/{renditionId}/content"
+        let nodeIdPreEscape = "\(nodeId)"
+        let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
+        let versionIdPreEscape = "\(versionId)"
+        let versionIdPostEscape = versionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{versionId}", with: versionIdPostEscape, options: .literal, range: nil)
+        let renditionIdPreEscape = "\(renditionId)"
+        let renditionIdPostEscape = renditionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{renditionId}", with: renditionIdPostEscape, options: .literal, range: nil)
+        let URLString = AlfrescoContentAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+            "attachment": attachment, 
+            "placeholder": placeholder
+        ])
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON(),
+            "Range": range
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        let requestBuilder: RequestBuilder<Data>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
+    }
+
+    /**
      List version history
      
      - parameter nodeId: (path) The identifier of a node. 
      - parameter include: (query) Returns additional information about the version node. The following optional fields can be requested: * properties * aspectNames  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func listVersionHistory(nodeId: String, include: [String]? = nil, fields: [String]? = nil, skipCount: Int? = nil, maxItems: Int? = nil, completion: @escaping ((_ data: VersionPaging?,_ error: Error?) -> Void)) {
@@ -209,7 +391,7 @@ open class VersionsAPI {
     /**
      List version history
      - GET /alfresco/versions/1/nodes/{nodeId}/versions
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets the version history as an ordered list of versions for the specified **nodeId**.  The list is ordered in descending modified order. So the most recent version is first and  the original version is last in the list.  
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets the version history as an ordered list of versions for the specified **nodeId**.  The list is ordered in descending modified order. So the most recent version is first and the original version is last in the list. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -275,8 +457,8 @@ open class VersionsAPI {
      - parameter nodeId: (path) The identifier of a node. 
      - parameter include: (query) Returns additional information about the version node. The following optional fields can be requested: * properties * aspectNames  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
 
      - returns: RequestBuilder<VersionPaging> 
      */
@@ -297,6 +479,92 @@ open class VersionsAPI {
         ])
 
         let requestBuilder: RequestBuilder<VersionPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+     List renditions for a file version
+     
+     - parameter nodeId: (path) The identifier of a node. 
+     - parameter versionId: (path) The identifier of a version, ie. version label, within the version history of a node. 
+     - parameter _where: (query) A string to restrict the returned objects by using a predicate. (optional)
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func listVersionRenditions(nodeId: String, versionId: String, _where: String? = nil, completion: @escaping ((_ data: RenditionPaging?,_ error: Error?) -> Void)) {
+        listVersionRenditionsWithRequestBuilder(nodeId: nodeId, versionId: versionId, _where: _where).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+
+    /**
+     List renditions for a file version
+     - GET /alfresco/versions/1/nodes/{nodeId}/versions/{versionId}/renditions
+     - **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.  Gets a list of the rendition information for each rendition of the version of file **nodeId** and **versionId**, including the rendition id.  Each rendition returned has a **status**: CREATED means it is available to view or download, NOT_CREATED means the rendition can be requested.  You can use the **where** parameter to filter the returned renditions by **status**. For example, the following **where** clause will return just the CREATED renditions:  ``` (status='CREATED') ``` 
+     - BASIC:
+       - type: basic
+       - name: basicAuth
+     - examples: [{contentType=application/json, example={
+  "list" : {
+    "entries" : [ {
+      "entry" : {
+        "id" : "id",
+        "content" : {
+          "sizeInBytes" : 0,
+          "mimeTypeName" : "mimeTypeName",
+          "mimeTypeGroup" : "mimeTypeGroup",
+          "mimeType" : "mimeType",
+          "encoding" : "encoding"
+        },
+        "status" : "CREATED"
+      }
+    }, {
+      "entry" : {
+        "id" : "id",
+        "content" : {
+          "sizeInBytes" : 0,
+          "mimeTypeName" : "mimeTypeName",
+          "mimeTypeGroup" : "mimeTypeGroup",
+          "mimeType" : "mimeType",
+          "encoding" : "encoding"
+        },
+        "status" : "CREATED"
+      }
+    } ],
+    "pagination" : {
+      "maxItems" : 5,
+      "hasMoreItems" : true,
+      "totalItems" : 6,
+      "count" : 0,
+      "skipCount" : 1
+    }
+  }
+}}]
+     
+     - parameter nodeId: (path) The identifier of a node. 
+     - parameter versionId: (path) The identifier of a version, ie. version label, within the version history of a node. 
+     - parameter _where: (query) A string to restrict the returned objects by using a predicate. (optional)
+
+     - returns: RequestBuilder<RenditionPaging> 
+     */
+    open class func listVersionRenditionsWithRequestBuilder(nodeId: String, versionId: String, _where: String? = nil) -> RequestBuilder<RenditionPaging> {
+        var path = "/alfresco/versions/1/nodes/{nodeId}/versions/{versionId}/renditions"
+        let nodeIdPreEscape = "\(nodeId)"
+        let nodeIdPostEscape = nodeIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{nodeId}", with: nodeIdPostEscape, options: .literal, range: nil)
+        let versionIdPreEscape = "\(versionId)"
+        let versionIdPostEscape = versionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{versionId}", with: versionIdPostEscape, options: .literal, range: nil)
+        let URLString = AlfrescoContentAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+            "where": _where
+        ])
+
+        let requestBuilder: RequestBuilder<RenditionPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }

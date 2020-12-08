@@ -23,37 +23,35 @@ import AppAuth
 
 class AlfrescoAuthSessionTests: XCTestCase {
     var sut: AlfrescoAuthSession!
-    
+
     override func setUp() {
         super.setUp()
         sut = AlfrescoAuthSession()
     }
-    
+
     override func tearDown() {
         super.tearDown()
     }
-    
+
     func testSutIsNotNil() {
         XCTAssertNotNil(sut)
     }
-    
+
     func testResumeExternalUserAgentFlowTrue() {
         let authorizationFlowStub = OIDExternalUserAgentSessionStub()
         authorizationFlowStub.successResponse = true
         sut.authorizationFlow = authorizationFlowStub
-        
+
         let resumeAgentResponse = sut.resumeExternalUserAgentFlow(with: URL(string: TestData.urlStringToLoadGood)!)
         XCTAssertTrue(resumeAgentResponse)
     }
-    
+
     func testResumeExternalUserAgentFlowFalse() {
         let authorizationFlowStub = OIDExternalUserAgentSessionStub()
         authorizationFlowStub.successResponse = false
         sut.authorizationFlow = authorizationFlowStub
-        
+
         let resumeAgentResponse = sut.resumeExternalUserAgentFlow(with: URL(string: TestData.urlStringToLoadGood)!)
         XCTAssertFalse(resumeAgentResponse)
     }
-    
-    
 }

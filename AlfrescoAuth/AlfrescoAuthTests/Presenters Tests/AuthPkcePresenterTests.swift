@@ -26,42 +26,42 @@ class AuthPkcePresenterTests: XCTestCase {
     var expectationForDidReceivedCall = XCTestExpectation(description: "Wait for did receive call.")
     var expectationForSuccessInDidReceivedCall = XCTestExpectation(description: "Success in DidRecivedCall")
     var expectationForFailureInDidReceivedCall = XCTestExpectation(description: "Failure in DidRecivedCall")
-    
+
     override func setUp() {
         super.setUp()
         sut = AuthPkcePresenter(configuration: TestData.configuration)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testSutIsNotNil() {
         XCTAssertNotNil(sut)
     }
-    
+
     func testExecuteWithViewControllerNil() {
         let delegateStub = AlfrescoAuthDelegateStub()
         delegateStub.expectationForDidReceivedCall = expectationForDidReceivedCall
         delegateStub.expectationForFailureInDidReceivedCall = expectationForFailureInDidReceivedCall
-        
+
         sut.authDelegate = delegateStub
         sut.execute()
-        
+
         wait(for: [expectationForDidReceivedCall, expectationForFailureInDidReceivedCall], timeout: 10.0)
     }
-    
+
     func testExecuteWithWrongConfiguration() {
         let delegateStub = AlfrescoAuthDelegateStub()
         delegateStub.expectationForDidReceivedCall = expectationForDidReceivedCall
         delegateStub.expectationForFailureInDidReceivedCall = expectationForFailureInDidReceivedCall
-        
+
         sut.configuration.realm = "test"
         sut.authDelegate = delegateStub
         sut.presentingViewController = UIViewController()
         sut.execute()
-        
+
         wait(for: [expectationForDidReceivedCall, expectationForFailureInDidReceivedCall], timeout: 10.0)
     }
 }

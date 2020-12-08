@@ -27,20 +27,20 @@ enum GrantType: String {
 
 struct GetAlfrescoCredential: APIRequest {
     typealias Response = AlfrescoCredential
-    
+
     var path: String {
         return String(format: kTokenEndPoint, configuration.realm)
     }
-    
+
     var method: HttpMethod {
         return .post
     }
-    
-    var headers: [String : String] {
+
+    var headers: [String: String] {
         return ["Content-Type": ContentType.urlencoded.rawValue]
     }
-    
-    var parameters: [String : String] {
+
+    var parameters: [String: String] {
         switch grantType {
         case .code:
             return ["grant_type": grantType?.rawValue ?? "",
@@ -61,10 +61,10 @@ struct GetAlfrescoCredential: APIRequest {
                     "password": password ?? ""]
         case .none: break
         }
-        
+
         return ["": ""]
     }
-    
+
     var code: String?
     var username: String?
     var password: String?
@@ -72,20 +72,20 @@ struct GetAlfrescoCredential: APIRequest {
     var grantType: GrantType?
     var configuration: AuthConfiguration
     var redirectUri = ""
-    
+
     init(code: String, configuration: AuthConfiguration) {
         self.code = code
         self.grantType = .code
         self.configuration = configuration
     }
-    
+
     init(username: String, password: String, configuration: AuthConfiguration) {
         self.username = username
         self.password = password
         self.grantType = .password
         self.configuration = configuration
     }
-    
+
     init(refreshToken: String, configuration: AuthConfiguration) {
         self.refreshToken = refreshToken
         self.grantType = .refresh
@@ -100,7 +100,7 @@ extension GrantType: Codable {
     enum CodingError: Error {
         case unknownValue
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         let rawValue = try container.decode(String.self, forKey: .rawValue)
@@ -115,7 +115,7 @@ extension GrantType: Codable {
             throw CodingError.unknownValue
         }
     }
-    
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: Key.self)
         switch self {

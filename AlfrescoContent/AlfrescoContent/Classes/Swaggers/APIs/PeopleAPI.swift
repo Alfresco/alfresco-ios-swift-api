@@ -37,7 +37,11 @@ open class PeopleAPI {
     "googleId" : "googleId",
     "lastName" : "lastName",
     "userStatus" : "userStatus",
-    "capabilities" : "{}",
+    "capabilities" : {
+      "isMutable" : true,
+      "isGuest" : true,
+      "isAdmin" : true
+    },
     "displayName" : "displayName",
     "jobTitle" : "jobTitle",
     "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -64,7 +68,9 @@ open class PeopleAPI {
     },
     "id" : "id",
     "email" : "email",
-    "properties" : "{}"
+    "properties" : {
+      "key" : "properties"
+    }
   }
 }}]
      
@@ -138,7 +144,7 @@ open class PeopleAPI {
      - parameter personId: (path) The identifier of a person. 
      - parameter attachment: (query) **true** enables a web browser to download the file as an attachment. **false** means a web browser may preview the file in a new tab or window, but not download the file.  You can only set this parameter to **false** if the content type of the file is in the supported list; for example, certain image files and PDF files.  If the content type is not supported for preview, then a value of **false**  is ignored, and the attachment will be returned in the response.  (optional, default to true)
      - parameter ifModifiedSince: (header) Only returns the content if it has been modified since the date provided. Use the date format defined by HTTP. For example, &#x60;Wed, 09 Mar 2016 16:56:34 GMT&#x60;.  (optional)
-     - parameter placeholder: (query) If **true** and there is no avatar for this **personId**  then the placeholder image is returned, rather than a 404 response.  (optional, default to true)
+     - parameter placeholder: (query) If **true** and there is no avatar for this **personId** then the placeholder image is returned, rather than a 404 response.  (optional, default to true)
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func getAvatarImage(personId: String, attachment: Bool? = nil, ifModifiedSince: Date? = nil, placeholder: Bool? = nil, completion: @escaping ((_ data: Data?,_ error: Error?) -> Void)) {
@@ -151,7 +157,7 @@ open class PeopleAPI {
     /**
      Get avatar image
      - GET /alfresco/versions/1/people/{personId}/avatar
-     - **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.  Gets the avatar image related to the person **personId**. If the person has no related avatar then  the **placeholder** query parameter can be optionally used to request a placeholder image to be returned.  You can use the `-me-` string in place of `<personId>` to specify the currently authenticated user. 
+     - **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.  Gets the avatar image related to the person **personId**. If the person has no related avatar then the **placeholder** query parameter can be optionally used to request a placeholder image to be returned.  You can use the `-me-` string in place of `<personId>` to specify the currently authenticated user. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -160,7 +166,7 @@ open class PeopleAPI {
      - parameter personId: (path) The identifier of a person. 
      - parameter attachment: (query) **true** enables a web browser to download the file as an attachment. **false** means a web browser may preview the file in a new tab or window, but not download the file.  You can only set this parameter to **false** if the content type of the file is in the supported list; for example, certain image files and PDF files.  If the content type is not supported for preview, then a value of **false**  is ignored, and the attachment will be returned in the response.  (optional, default to true)
      - parameter ifModifiedSince: (header) Only returns the content if it has been modified since the date provided. Use the date format defined by HTTP. For example, &#x60;Wed, 09 Mar 2016 16:56:34 GMT&#x60;.  (optional)
-     - parameter placeholder: (query) If **true** and there is no avatar for this **personId**  then the placeholder image is returned, rather than a 404 response.  (optional, default to true)
+     - parameter placeholder: (query) If **true** and there is no avatar for this **personId** then the placeholder image is returned, rather than a 404 response.  (optional, default to true)
 
      - returns: RequestBuilder<Data> 
      */
@@ -213,7 +219,11 @@ open class PeopleAPI {
     "googleId" : "googleId",
     "lastName" : "lastName",
     "userStatus" : "userStatus",
-    "capabilities" : "{}",
+    "capabilities" : {
+      "isMutable" : true,
+      "isGuest" : true,
+      "isAdmin" : true
+    },
     "displayName" : "displayName",
     "jobTitle" : "jobTitle",
     "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -240,7 +250,9 @@ open class PeopleAPI {
     },
     "id" : "id",
     "email" : "email",
-    "properties" : "{}"
+    "properties" : {
+      "key" : "properties"
+    }
   }
 }}]
      
@@ -270,8 +282,8 @@ open class PeopleAPI {
     /**
      List people
      
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter include: (query) Returns additional information about the person. The following optional fields can be requested: * properties * aspectNames * capabilities  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
@@ -298,7 +310,11 @@ open class PeopleAPI {
         "googleId" : "googleId",
         "lastName" : "lastName",
         "userStatus" : "userStatus",
-        "capabilities" : "{}",
+        "capabilities" : {
+          "isMutable" : true,
+          "isGuest" : true,
+          "isAdmin" : true
+        },
         "displayName" : "displayName",
         "jobTitle" : "jobTitle",
         "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -325,14 +341,20 @@ open class PeopleAPI {
         },
         "id" : "id",
         "email" : "email",
-        "properties" : "{}"
+        "properties" : {
+          "key" : "properties"
+        }
       }
     }, {
       "entry" : {
         "googleId" : "googleId",
         "lastName" : "lastName",
         "userStatus" : "userStatus",
-        "capabilities" : "{}",
+        "capabilities" : {
+          "isMutable" : true,
+          "isGuest" : true,
+          "isAdmin" : true
+        },
         "displayName" : "displayName",
         "jobTitle" : "jobTitle",
         "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -359,7 +381,9 @@ open class PeopleAPI {
         },
         "id" : "id",
         "email" : "email",
-        "properties" : "{}"
+        "properties" : {
+          "key" : "properties"
+        }
       }
     } ],
     "pagination" : {
@@ -372,8 +396,8 @@ open class PeopleAPI {
   }
 }}]
      
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter include: (query) Returns additional information about the person. The following optional fields can be requested: * properties * aspectNames * capabilities  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
@@ -512,7 +536,7 @@ open class PeopleAPI {
     /**
      Update avatar image
      - PUT /alfresco/versions/1/people/{personId}/avatar
-     - **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.  Updates the avatar image related to the person **personId**.  The request body should be the binary stream for the avatar image. The content type of the file  should be an image file. This will be used to generate an \"avatar\" thumbnail rendition.  You must be the person or have admin rights to update a person's avatar.  You can use the `-me-` string in place of `<personId>` to specify the currently authenticated user. 
+     - **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.  Updates the avatar image related to the person **personId**.  The request body should be the binary stream for the avatar image. The content type of the file should be an image file. This will be used to generate an \"avatar\" thumbnail rendition.  You must be the person or have admin rights to update a person's avatar.  You can use the `-me-` string in place of `<personId>` to specify the currently authenticated user. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -564,7 +588,11 @@ open class PeopleAPI {
     "googleId" : "googleId",
     "lastName" : "lastName",
     "userStatus" : "userStatus",
-    "capabilities" : "{}",
+    "capabilities" : {
+      "isMutable" : true,
+      "isGuest" : true,
+      "isAdmin" : true
+    },
     "displayName" : "displayName",
     "jobTitle" : "jobTitle",
     "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -591,7 +619,9 @@ open class PeopleAPI {
     },
     "id" : "id",
     "email" : "email",
-    "properties" : "{}"
+    "properties" : {
+      "key" : "properties"
+    }
   }
 }}]
      

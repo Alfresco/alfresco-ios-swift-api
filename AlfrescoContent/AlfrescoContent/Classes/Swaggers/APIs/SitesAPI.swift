@@ -81,7 +81,7 @@ open class SitesAPI {
     /**
      Create a site
      - POST /alfresco/versions/1/sites
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Creates a default site with the given details.  Unless explicitly specified, the site id will be generated from the site title. The site id must be unique and only contain alphanumeric and/or dash characters.  Note: the id of a site cannot be updated once the site has been created.  For example, to create a public site called \"Marketing\" the following body could be used: ```JSON {   \"title\": \"Marketing\",   \"visibility\": \"PUBLIC\" } ```  The creation of the (surf) configuration files required by Share can be skipped via the **skipConfiguration** query parameter.  **Note:** if skipped then such a site will **not** work within Share.  The addition of the site to the user's site favorites can be skipped via the **skipAddToFavorites** query parameter.  The creator will be added as a member with Site Manager role.  When you create a site, a container called **documentLibrary** is created for you in the new site.  This container is the root folder for content stored in the site. 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Creates a default site with the given details.  Unless explicitly specified, the site id will be generated from the site title. The site id must be unique and only contain alphanumeric and/or dash characters.  Note: the id of a site cannot be updated once the site has been created.  For example, to create a public site called \"Marketing\" the following body could be used: ```JSON {   \"title\": \"Marketing\",   \"visibility\": \"PUBLIC\" } ```  The creation of the (surf) configuration files required by Share can be skipped via the **skipConfiguration** query parameter.  **Note:** if skipped then such a site will **not** work within Share.  The addition of the site to the user's site favorites can be skipped via the **skipAddToFavorites** query parameter.  The creator will be added as a member with Site Manager role.  When you create a site, a container called **documentLibrary** is created for you in the new site. This container is the root folder for content stored in the site. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -122,6 +122,64 @@ open class SitesAPI {
     }
 
     /**
+     Create a site membership for group
+     
+     - parameter siteId: (path) The identifier of a site. 
+     - parameter siteMembershipBodyCreate: (body) The group to add and their role 
+     - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func createSiteGroupMembership(siteId: String, siteMembershipBodyCreate: SiteMembershipBodyCreate, fields: [String]? = nil, completion: @escaping ((_ data: SiteGroupEntry?,_ error: Error?) -> Void)) {
+        createSiteGroupMembershipWithRequestBuilder(siteId: siteId, siteMembershipBodyCreate: siteMembershipBodyCreate, fields: fields).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+
+    /**
+     Create a site membership for group
+     - POST /alfresco/versions/1/sites/{siteId}/group-members
+     - **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.  Creates a site membership for group **groupId** on site **siteId**. You can set the **role** to one of four types: * SiteConsumer * SiteCollaborator * SiteContributor * SiteManager **Note:** You can create more than one site membership by specifying a list of group in the JSON body like this:  ```JSON   [    {      \"role\": \"SiteConsumer\",      \"id\": \"authorityId\"    },    {      \"role\": \"SiteConsumer\",      \"id\": \"authorityId\"    }   ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example: ```JSON   {     \"list\": {       \"pagination\": {         \"count\": 2,         \"hasMoreItems\": false,         \"totalItems\": 2,         \"skipCount\": 0,         \"maxItems\": 100       },       \"entries\": [         {           \"entry\": {             ...           }         },         {           \"entry\": {             ...           }         }       ]     }   } ``` 
+     - BASIC:
+       - type: basic
+       - name: basicAuth
+     - examples: [{contentType=application/json, example={
+  "entry" : {
+    "role" : "SiteConsumer",
+    "id" : "id",
+    "group" : {
+      "displayName" : "displayName",
+      "id" : "id",
+      "memberType" : "GROUP"
+    }
+  }
+}}]
+     
+     - parameter siteId: (path) The identifier of a site. 
+     - parameter siteMembershipBodyCreate: (body) The group to add and their role 
+     - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
+
+     - returns: RequestBuilder<SiteGroupEntry> 
+     */
+    open class func createSiteGroupMembershipWithRequestBuilder(siteId: String, siteMembershipBodyCreate: SiteMembershipBodyCreate, fields: [String]? = nil) -> RequestBuilder<SiteGroupEntry> {
+        var path = "/alfresco/versions/1/sites/{siteId}/group-members"
+        let siteIdPreEscape = "\(siteId)"
+        let siteIdPostEscape = siteIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{siteId}", with: siteIdPostEscape, options: .literal, range: nil)
+        let URLString = AlfrescoContentAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: siteMembershipBodyCreate)
+
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+            "fields": fields
+        ])
+
+        let requestBuilder: RequestBuilder<SiteGroupEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
+    /**
      Create a site membership
      
      - parameter siteId: (path) The identifier of a site. 
@@ -139,7 +197,7 @@ open class SitesAPI {
     /**
      Create a site membership
      - POST /alfresco/versions/1/sites/{siteId}/members
-     - Creates a site membership for person **personId** on site **siteId**.  You can set the **role** to one of four types:  * SiteConsumer * SiteCollaborator * SiteContributor * SiteManager  **Note:** You can create more than one site membership by  specifying a list of people in the JSON body like this:  ```JSON [   {     \"role\": \"SiteConsumer\",     \"id\": \"joe\"   },   {     \"role\": \"SiteConsumer\",     \"id\": \"fred\"   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {           ...         }       }     ]   } } ``` 
+     - Creates a site membership for person **personId** on site **siteId**.  You can set the **role** to one of four types:  * SiteConsumer * SiteCollaborator * SiteContributor * SiteManager  **Note:** You can create more than one site membership by specifying a list of people in the JSON body like this:  ```JSON [   {     \"role\": \"SiteConsumer\",     \"id\": \"joe\"   },   {     \"role\": \"SiteConsumer\",     \"id\": \"fred\"   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {           ...         }       }     ]   } } ``` 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -150,7 +208,11 @@ open class SitesAPI {
       "googleId" : "googleId",
       "lastName" : "lastName",
       "userStatus" : "userStatus",
-      "capabilities" : "{}",
+      "capabilities" : {
+        "isMutable" : true,
+        "isGuest" : true,
+        "isAdmin" : true
+      },
       "displayName" : "displayName",
       "jobTitle" : "jobTitle",
       "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -177,9 +239,12 @@ open class SitesAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : "{}"
+      "properties" : {
+        "key" : "properties"
+      }
     },
-    "id" : "id"
+    "id" : "id",
+    "isMemberOfGroup" : true
   }
 }}]
      
@@ -225,7 +290,7 @@ open class SitesAPI {
     /**
      Create a site membership request
      - POST /alfresco/versions/1/people/{personId}/site-membership-requests
-     - Create a site membership request for yourself on the site with the identifier of **id**, specified in the JSON body.  The result of the request differs depending on the type of site.  * For a **public** site, you join the site immediately as a SiteConsumer. * For a **moderated** site, your request is added to the site membership request list. The request waits for approval from the Site Manager. * You cannot request membership of a **private** site. Members are invited by the site administrator.  You can use the `-me-` string in place of `<personId>` to specify the currently authenticated user.   **Note:** You can create site membership requests for more than one site by  specifying a list of sites in the JSON body like this:  ```JSON [   {     \"message\": \"Please can you add me\",     \"id\": \"test-site-1\",     \"title\": \"Request for test site 1\",   },   {     \"message\": \"Please can you add me\",     \"id\": \"test-site-2\",     \"title\": \"Request for test site 2\",   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {           ...         }       }     ]   } } ``` 
+     - Create a site membership request for yourself on the site with the identifier of **id**, specified in the JSON body. The result of the request differs depending on the type of site.  * For a **public** site, you join the site immediately as a SiteConsumer. * For a **moderated** site, your request is added to the site membership request list. The request waits for approval from the Site Manager. * You cannot request membership of a **private** site. Members are invited by the site administrator.  You can use the `-me-` string in place of `<personId>` to specify the currently authenticated user.   **Note:** You can create site membership requests for more than one site by specifying a list of sites in the JSON body like this:  ```JSON [   {     \"message\": \"Please can you add me\",     \"id\": \"test-site-1\",     \"title\": \"Request for test site 1\",   },   {     \"message\": \"Please can you add me\",     \"id\": \"test-site-2\",     \"title\": \"Request for test site 2\",   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {           ...         }       }     ]   } } ``` 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -313,6 +378,55 @@ open class SitesAPI {
         url?.queryItems = APIHelper.mapValuesToQueryItems([
             "permanent": permanent
         ])
+
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
+
+        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+     Delete a group membership for site
+     
+     - parameter siteId: (path) The identifier of a site. 
+     - parameter groupId: (path) The identifier of a group. 
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func deleteSiteGroupMembership(siteId: String, groupId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteSiteGroupMembershipWithRequestBuilder(siteId: siteId, groupId: groupId).execute { (response, error) -> Void in
+            if error == nil {
+                completion((), error)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+
+
+    /**
+     Delete a group membership for site
+     - DELETE /alfresco/versions/1/sites/{siteId}/group-members/{groupId}
+     - **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.  Deletes group **groupId** as a member of site **siteId**. 
+     - BASIC:
+       - type: basic
+       - name: basicAuth
+     
+     - parameter siteId: (path) The identifier of a site. 
+     - parameter groupId: (path) The identifier of a group. 
+
+     - returns: RequestBuilder<Void> 
+     */
+    open class func deleteSiteGroupMembershipWithRequestBuilder(siteId: String, groupId: String) -> RequestBuilder<Void> {
+        var path = "/alfresco/versions/1/sites/{siteId}/group-members/{groupId}"
+        let siteIdPreEscape = "\(siteId)"
+        let siteIdPostEscape = siteIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{siteId}", with: siteIdPostEscape, options: .literal, range: nil)
+        let groupIdPreEscape = "\(groupId)"
+        let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
+        let URLString = AlfrescoContentAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        let url = URLComponents(string: URLString)
 
         let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
 
@@ -582,6 +696,67 @@ open class SitesAPI {
     }
 
     /**
+     Get information about site membership of group
+     
+     - parameter siteId: (path) The identifier of a site. 
+     - parameter groupId: (path) The identifier of a group. 
+     - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func getSiteGroupMembership(siteId: String, groupId: String, fields: [String]? = nil, completion: @escaping ((_ data: SiteGroupEntry?,_ error: Error?) -> Void)) {
+        getSiteGroupMembershipWithRequestBuilder(siteId: siteId, groupId: groupId, fields: fields).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+
+    /**
+     Get information about site membership of group
+     - GET /alfresco/versions/1/sites/{siteId}/group-members/{groupId}
+     - **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.  Gets site membership information for group **groupId** on site **siteId**. 
+     - BASIC:
+       - type: basic
+       - name: basicAuth
+     - examples: [{contentType=application/json, example={
+  "entry" : {
+    "role" : "SiteConsumer",
+    "id" : "id",
+    "group" : {
+      "displayName" : "displayName",
+      "id" : "id",
+      "memberType" : "GROUP"
+    }
+  }
+}}]
+     
+     - parameter siteId: (path) The identifier of a site. 
+     - parameter groupId: (path) The identifier of a group. 
+     - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
+
+     - returns: RequestBuilder<SiteGroupEntry> 
+     */
+    open class func getSiteGroupMembershipWithRequestBuilder(siteId: String, groupId: String, fields: [String]? = nil) -> RequestBuilder<SiteGroupEntry> {
+        var path = "/alfresco/versions/1/sites/{siteId}/group-members/{groupId}"
+        let siteIdPreEscape = "\(siteId)"
+        let siteIdPostEscape = siteIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{siteId}", with: siteIdPostEscape, options: .literal, range: nil)
+        let groupIdPreEscape = "\(groupId)"
+        let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
+        let URLString = AlfrescoContentAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+            "fields": fields
+        ])
+
+        let requestBuilder: RequestBuilder<SiteGroupEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
      Get a site membership
      
      - parameter siteId: (path) The identifier of a site. 
@@ -610,7 +785,11 @@ open class SitesAPI {
       "googleId" : "googleId",
       "lastName" : "lastName",
       "userStatus" : "userStatus",
-      "capabilities" : "{}",
+      "capabilities" : {
+        "isMutable" : true,
+        "isGuest" : true,
+        "isAdmin" : true
+      },
       "displayName" : "displayName",
       "jobTitle" : "jobTitle",
       "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -637,9 +816,12 @@ open class SitesAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : "{}"
+      "properties" : {
+        "key" : "properties"
+      }
     },
-    "id" : "id"
+    "id" : "id",
+    "isMemberOfGroup" : true
   }
 }}]
      
@@ -800,8 +982,8 @@ open class SitesAPI {
     /**
      Get site membership requests
      
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter _where: (query) A string to restrict the returned objects by using a predicate. (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
@@ -838,7 +1020,11 @@ open class SitesAPI {
           "googleId" : "googleId",
           "lastName" : "lastName",
           "userStatus" : "userStatus",
-          "capabilities" : "{}",
+          "capabilities" : {
+            "isMutable" : true,
+            "isGuest" : true,
+            "isAdmin" : true
+          },
           "displayName" : "displayName",
           "jobTitle" : "jobTitle",
           "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -865,7 +1051,9 @@ open class SitesAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : "{}"
+          "properties" : {
+            "key" : "properties"
+          }
         },
         "id" : "id",
         "message" : "message"
@@ -886,7 +1074,11 @@ open class SitesAPI {
           "googleId" : "googleId",
           "lastName" : "lastName",
           "userStatus" : "userStatus",
-          "capabilities" : "{}",
+          "capabilities" : {
+            "isMutable" : true,
+            "isGuest" : true,
+            "isAdmin" : true
+          },
           "displayName" : "displayName",
           "jobTitle" : "jobTitle",
           "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -913,7 +1105,9 @@ open class SitesAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : "{}"
+          "properties" : {
+            "key" : "properties"
+          }
         },
         "id" : "id",
         "message" : "message"
@@ -929,8 +1123,8 @@ open class SitesAPI {
   }
 }}]
      
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter _where: (query) A string to restrict the returned objects by using a predicate. (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
@@ -958,8 +1152,8 @@ open class SitesAPI {
      List site containers
      
      - parameter siteId: (path) The identifier of a site. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -1001,8 +1195,8 @@ open class SitesAPI {
 }}]
      
      - parameter siteId: (path) The identifier of a site. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<SiteContainerPaging> 
@@ -1028,11 +1222,94 @@ open class SitesAPI {
     }
 
     /**
+     List group membership for site
+     
+     - parameter siteId: (path) The identifier of a site. 
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func listSiteGroups(siteId: String, skipCount: Int? = nil, maxItems: Int? = nil, fields: [String]? = nil, completion: @escaping ((_ data: SiteGroupPaging?,_ error: Error?) -> Void)) {
+        listSiteGroupsWithRequestBuilder(siteId: siteId, skipCount: skipCount, maxItems: maxItems, fields: fields).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+
+    /**
+     List group membership for site
+     - GET /alfresco/versions/1/sites/{siteId}/group-members
+     - **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.  Gets a list of group membership for site **siteId**. 
+     - BASIC:
+       - type: basic
+       - name: basicAuth
+     - examples: [{contentType=application/json, example={
+  "list" : {
+    "entries" : [ {
+      "entry" : {
+        "role" : "SiteConsumer",
+        "id" : "id",
+        "group" : {
+          "displayName" : "displayName",
+          "id" : "id",
+          "memberType" : "GROUP"
+        }
+      }
+    }, {
+      "entry" : {
+        "role" : "SiteConsumer",
+        "id" : "id",
+        "group" : {
+          "displayName" : "displayName",
+          "id" : "id",
+          "memberType" : "GROUP"
+        }
+      }
+    } ],
+    "pagination" : {
+      "maxItems" : 5,
+      "hasMoreItems" : true,
+      "totalItems" : 6,
+      "count" : 0,
+      "skipCount" : 1
+    }
+  }
+}}]
+     
+     - parameter siteId: (path) The identifier of a site. 
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
+
+     - returns: RequestBuilder<SiteGroupPaging> 
+     */
+    open class func listSiteGroupsWithRequestBuilder(siteId: String, skipCount: Int? = nil, maxItems: Int? = nil, fields: [String]? = nil) -> RequestBuilder<SiteGroupPaging> {
+        var path = "/alfresco/versions/1/sites/{siteId}/group-members"
+        let siteIdPreEscape = "\(siteId)"
+        let siteIdPostEscape = siteIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{siteId}", with: siteIdPostEscape, options: .literal, range: nil)
+        let URLString = AlfrescoContentAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+            "skipCount": skipCount?.encodeToJSON(), 
+            "maxItems": maxItems?.encodeToJSON(), 
+            "fields": fields
+        ])
+
+        let requestBuilder: RequestBuilder<SiteGroupPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
      List site membership requests
      
      - parameter personId: (path) The identifier of a person. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -1094,8 +1371,8 @@ open class SitesAPI {
 }}]
      
      - parameter personId: (path) The identifier of a person. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<SiteMembershipRequestPaging> 
@@ -1124,13 +1401,14 @@ open class SitesAPI {
      List site memberships
      
      - parameter siteId: (path) The identifier of a site. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
+     - parameter _where: (query) Optionally filter the list. *   &#x60;&#x60;&#x60;where&#x3D;(isMemberOfGroup&#x3D;false|true)&#x60;&#x60;&#x60;  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func listSiteMemberships(siteId: String, skipCount: Int? = nil, maxItems: Int? = nil, fields: [String]? = nil, completion: @escaping ((_ data: SiteMemberPaging?,_ error: Error?) -> Void)) {
-        listSiteMembershipsWithRequestBuilder(siteId: siteId, skipCount: skipCount, maxItems: maxItems, fields: fields).execute { (response, error) -> Void in
+    open class func listSiteMemberships(siteId: String, skipCount: Int? = nil, maxItems: Int? = nil, fields: [String]? = nil, _where: String? = nil, completion: @escaping ((_ data: SiteMemberPaging?,_ error: Error?) -> Void)) {
+        listSiteMembershipsWithRequestBuilder(siteId: siteId, skipCount: skipCount, maxItems: maxItems, fields: fields, _where: _where).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -1152,7 +1430,11 @@ open class SitesAPI {
           "googleId" : "googleId",
           "lastName" : "lastName",
           "userStatus" : "userStatus",
-          "capabilities" : "{}",
+          "capabilities" : {
+            "isMutable" : true,
+            "isGuest" : true,
+            "isAdmin" : true
+          },
           "displayName" : "displayName",
           "jobTitle" : "jobTitle",
           "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -1179,9 +1461,12 @@ open class SitesAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : "{}"
+          "properties" : {
+            "key" : "properties"
+          }
         },
-        "id" : "id"
+        "id" : "id",
+        "isMemberOfGroup" : true
       }
     }, {
       "entry" : {
@@ -1190,7 +1475,11 @@ open class SitesAPI {
           "googleId" : "googleId",
           "lastName" : "lastName",
           "userStatus" : "userStatus",
-          "capabilities" : "{}",
+          "capabilities" : {
+            "isMutable" : true,
+            "isGuest" : true,
+            "isAdmin" : true
+          },
           "displayName" : "displayName",
           "jobTitle" : "jobTitle",
           "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -1217,9 +1506,12 @@ open class SitesAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : "{}"
+          "properties" : {
+            "key" : "properties"
+          }
         },
-        "id" : "id"
+        "id" : "id",
+        "isMemberOfGroup" : true
       }
     } ],
     "pagination" : {
@@ -1233,13 +1525,14 @@ open class SitesAPI {
 }}]
      
      - parameter siteId: (path) The identifier of a site. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
+     - parameter _where: (query) Optionally filter the list. *   &#x60;&#x60;&#x60;where&#x3D;(isMemberOfGroup&#x3D;false|true)&#x60;&#x60;&#x60;  (optional)
 
      - returns: RequestBuilder<SiteMemberPaging> 
      */
-    open class func listSiteMembershipsWithRequestBuilder(siteId: String, skipCount: Int? = nil, maxItems: Int? = nil, fields: [String]? = nil) -> RequestBuilder<SiteMemberPaging> {
+    open class func listSiteMembershipsWithRequestBuilder(siteId: String, skipCount: Int? = nil, maxItems: Int? = nil, fields: [String]? = nil, _where: String? = nil) -> RequestBuilder<SiteMemberPaging> {
         var path = "/alfresco/versions/1/sites/{siteId}/members"
         let siteIdPreEscape = "\(siteId)"
         let siteIdPostEscape = siteIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -1251,7 +1544,8 @@ open class SitesAPI {
         url?.queryItems = APIHelper.mapValuesToQueryItems([
             "skipCount": skipCount?.encodeToJSON(), 
             "maxItems": maxItems?.encodeToJSON(), 
-            "fields": fields
+            "fields": fields, 
+            "where": _where
         ])
 
         let requestBuilder: RequestBuilder<SiteMemberPaging>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
@@ -1263,8 +1557,8 @@ open class SitesAPI {
      List site memberships
      
      - parameter personId: (path) The identifier of a person. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter relations: (query) Use the relations parameter to include one or more related entities in a single response. (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
@@ -1329,8 +1623,8 @@ open class SitesAPI {
 }}]
      
      - parameter personId: (path) The identifier of a person. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter relations: (query) Use the relations parameter to include one or more related entities in a single response. (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
@@ -1364,8 +1658,8 @@ open class SitesAPI {
     /**
      List sites
      
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter relations: (query) Use the relations parameter to include one or more related entities in a single response. (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
@@ -1419,8 +1713,8 @@ open class SitesAPI {
   }
 }}]
      
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter relations: (query) Use the relations parameter to include one or more related entities in a single response. (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
@@ -1517,7 +1811,7 @@ open class SitesAPI {
     /**
      Update a site
      - PUT /alfresco/versions/1/sites/{siteId}
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Update the details for the given site **siteId**. Site Manager or otherwise a  (site) admin can update title, description or visibility.  Note: the id of a site cannot be updated once the site has been created. 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Update the details for the given site **siteId**. Site Manager or otherwise a (site) admin can update title, description or visibility.  Note: the id of a site cannot be updated once the site has been created. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -1558,6 +1852,69 @@ open class SitesAPI {
     }
 
     /**
+     Update site membership of group
+     
+     - parameter siteId: (path) The identifier of a site. 
+     - parameter groupId: (path) The identifier of a group. 
+     - parameter siteMembershipBodyUpdate: (body) The groupId new role 
+     - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func updateSiteGroupMembership(siteId: String, groupId: String, siteMembershipBodyUpdate: SiteMembershipBodyUpdate, fields: [String]? = nil, completion: @escaping ((_ data: SiteGroupEntry?,_ error: Error?) -> Void)) {
+        updateSiteGroupMembershipWithRequestBuilder(siteId: siteId, groupId: groupId, siteMembershipBodyUpdate: siteMembershipBodyUpdate, fields: fields).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+
+    /**
+     Update site membership of group
+     - PUT /alfresco/versions/1/sites/{siteId}/group-members/{groupId}
+     - **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.  Update the membership of person **groupId** in site **siteId**. You can set the **role** to one of four types: * SiteConsumer * SiteCollaborator * SiteContributor * SiteManager 
+     - BASIC:
+       - type: basic
+       - name: basicAuth
+     - examples: [{contentType=application/json, example={
+  "entry" : {
+    "role" : "SiteConsumer",
+    "id" : "id",
+    "group" : {
+      "displayName" : "displayName",
+      "id" : "id",
+      "memberType" : "GROUP"
+    }
+  }
+}}]
+     
+     - parameter siteId: (path) The identifier of a site. 
+     - parameter groupId: (path) The identifier of a group. 
+     - parameter siteMembershipBodyUpdate: (body) The groupId new role 
+     - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
+
+     - returns: RequestBuilder<SiteGroupEntry> 
+     */
+    open class func updateSiteGroupMembershipWithRequestBuilder(siteId: String, groupId: String, siteMembershipBodyUpdate: SiteMembershipBodyUpdate, fields: [String]? = nil) -> RequestBuilder<SiteGroupEntry> {
+        var path = "/alfresco/versions/1/sites/{siteId}/group-members/{groupId}"
+        let siteIdPreEscape = "\(siteId)"
+        let siteIdPostEscape = siteIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{siteId}", with: siteIdPostEscape, options: .literal, range: nil)
+        let groupIdPreEscape = "\(groupId)"
+        let groupIdPostEscape = groupIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{groupId}", with: groupIdPostEscape, options: .literal, range: nil)
+        let URLString = AlfrescoContentAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: siteMembershipBodyUpdate)
+
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+            "fields": fields
+        ])
+
+        let requestBuilder: RequestBuilder<SiteGroupEntry>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
+    /**
      Update a site membership
      
      - parameter siteId: (path) The identifier of a site. 
@@ -1587,7 +1944,11 @@ open class SitesAPI {
       "googleId" : "googleId",
       "lastName" : "lastName",
       "userStatus" : "userStatus",
-      "capabilities" : "{}",
+      "capabilities" : {
+        "isMutable" : true,
+        "isGuest" : true,
+        "isAdmin" : true
+      },
       "displayName" : "displayName",
       "jobTitle" : "jobTitle",
       "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -1614,9 +1975,12 @@ open class SitesAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : "{}"
+      "properties" : {
+        "key" : "properties"
+      }
     },
-    "id" : "id"
+    "id" : "id",
+    "isMemberOfGroup" : true
   }
 }}]
      

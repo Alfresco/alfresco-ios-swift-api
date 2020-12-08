@@ -31,10 +31,10 @@ public struct Person: Codable {
     public var enabled: Bool
     public var emailNotificationsEnabled: Bool?
     public var aspectNames: [String]?
-    public var properties: JSONValue?
-    public var capabilities: JSONValue?
+    public var properties: [String:String]?
+    public var capabilities: Capabilities?
 
-    public init(_id: String, firstName: String, lastName: String?, displayName: String?, _description: String?, avatarId: String?, email: String, skypeId: String?, googleId: String?, instantMessageId: String?, jobTitle: String?, location: String?, company: Company?, mobile: String?, telephone: String?, statusUpdatedAt: Date?, userStatus: String?, enabled: Bool, emailNotificationsEnabled: Bool?, aspectNames: [String]?, properties: JSONValue?, capabilities: JSONValue?) {
+    public init(_id: String, firstName: String, lastName: String?, displayName: String?, _description: String?, avatarId: String?, email: String, skypeId: String?, googleId: String?, instantMessageId: String?, jobTitle: String?, location: String?, company: Company?, mobile: String?, telephone: String?, statusUpdatedAt: Date?, userStatus: String?, enabled: Bool, emailNotificationsEnabled: Bool?, aspectNames: [String]?, properties: [String:String]?, capabilities: Capabilities?) {
         self._id = _id
         self.firstName = firstName
         self.lastName = lastName

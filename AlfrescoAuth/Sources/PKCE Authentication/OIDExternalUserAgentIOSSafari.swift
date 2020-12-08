@@ -36,7 +36,7 @@ class OIDDefaultSafariViewControllerFactory: NSObject, OIDSafariViewControllerFa
     }
 }
 
-class OIDExternalUserAgentIOSSafariViewController: NSObject {
+class OIDExternalUserAgentIOSSafari: NSObject {
     static var viewControllerFactory: OIDSafariViewControllerFactory?
 
     var presentingViewController: UIViewController = UIViewController.init()
@@ -77,24 +77,23 @@ class OIDExternalUserAgentIOSSafariViewController: NSObject {
     }
 }
 
-
 // MARK: - OIDExternalUserAgent
 
-extension OIDExternalUserAgentIOSSafariViewController: OIDExternalUserAgent {
+extension OIDExternalUserAgentIOSSafari: OIDExternalUserAgent {
     func present(_ request: OIDExternalUserAgentRequest,
                  session: OIDExternalUserAgentSession) -> Bool {
         if externalUserAgentFlowInProgress {
             return false
         }
-        
+
         externalUserAgentFlowInProgress = true
         self.session = session
-        
+
         var openedSafari: Bool = false
         let requestURL = request.externalUserAgentRequestURL()
-        
+
         if #available(iOS 9.0, *) {
-            let factory = OIDExternalUserAgentIOSSafariViewController.safariViewControllerFactory()
+            let factory = OIDExternalUserAgentIOSSafari.safariViewControllerFactory()
             let safariVC = factory.safariViewControllerWithURL(url: requestURL!)
             safariVC.delegate = self
             self.safariVC = safariVC
@@ -103,7 +102,7 @@ extension OIDExternalUserAgentIOSSafariViewController: OIDExternalUserAgent {
         } else {
             openedSafari = UIApplication.shared.canOpenURL(requestURL!)
         }
-        
+
         if !openedSafari {
             self.cleanUp()
             let error = OIDErrorUtilities.error(with: .safariOpenError,
@@ -111,24 +110,24 @@ extension OIDExternalUserAgentIOSSafariViewController: OIDExternalUserAgent {
                                                 description: "Unable to open Safari.")
             session.failExternalUserAgentFlowWithError(error)
         }
-        
+
         return openedSafari
     }
-    
+
     func dismiss(animated: Bool, completion: @escaping () -> Void) {
         if !externalUserAgentFlowInProgress {
             // Ignore this call if there is no authorization flow in progress.
             return
         }
-        
+
         guard let safariVC: SFSafariViewController = safariVC else {
             completion()
             self.cleanUp()
             return
         }
-        
+
         self.cleanUp()
-        
+
         if #available(iOS 9.0, *) {
             safariVC.dismiss(animated: true, completion: completion)
         } else {
@@ -138,18 +137,18 @@ extension OIDExternalUserAgentIOSSafariViewController: OIDExternalUserAgent {
 }
 
 // MARK: - SFSafariViewControllerDelegate
-extension OIDExternalUserAgentIOSSafariViewController: SFSafariViewControllerDelegate {
+extension OIDExternalUserAgentIOSSafari: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         if controller != safariVC {
             // Ignore this call if the safari view controller do not match.
             return
         }
-        
+
         if !externalUserAgentFlowInProgress {
             // Ignore this call if there is no authorization flow in progress.
             return
         }
-        
+
         guard let session = session else { return }
         self.cleanUp()
         let error = OIDErrorUtilities.error(with: .programCanceledAuthorizationFlow,

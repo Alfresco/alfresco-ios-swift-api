@@ -22,18 +22,18 @@ import AppAuth
 @testable import AlfrescoAuth
 
 struct TestData {
-    static let urlStringToLoadGood = "http://alfresco-identity-service.mobile.dev.alfresco.me/auth/?session_state=21d3459e&code=f744e33&scope=profile"
-    static let urlStringWithoutCode = "http://alfresco-identity-service.mobile.dev.alfresco.me/auth/?session_state=21d3459e&scope=profile"
-    static let urlStringWithHashtag = "http://alfresco-identity-service.mobile.dev.alfresco.me/auth/#?session_state=21d3459e"
-    
+    static let urlStringToLoadGood = baseUrlGood + "/auth/?session_state=21d3459e&code=f744e33&scope=profile"
+    static let urlStringWithoutCode = baseUrlGood + "/auth/?session_state=21d3459e&scope=profile"
+    static let urlStringWithHashtag = baseUrlGood + "/auth/#?session_state=21d3459e"
+
     static let username1 = "admin"
     static let password1 = "admin"
     static let password2 = "adm ins"
-    
+
     static let errorMessage1 = "This is an error!"
-    
+
     static let codeGood = "f744e33"
-    
+
     static let accessTokenGood = "eyJhbGciOiJSUzI1NiIsInR5cCIgOi"
     static let accessTokenExpiresInGood = 300
     static let refreshTokenGood = "eyJhbGciOiJIUzI1NiIsInR5cCIgOis"
@@ -47,7 +47,7 @@ struct TestData {
         "refresh_token": refreshTokenGood,
         "token_type": tokenTypeGood,
         "session_state": sessionStateGood
-        ] as [String : Any]
+        ] as [String: Any]
     static let dictionaryAlfrescoCredentialExtra = [
         "access_token": accessTokenGood,
         "expires_in": accessTokenExpiresInGood,
@@ -56,8 +56,8 @@ struct TestData {
         "token_type": tokenTypeGood,
         "session_state": sessionStateGood,
         "scope": "profile email"
-        ] as [String : Any]
-    
+        ] as [String: Any]
+
     static let baseUrlGood = "http://alfresco-identity-service.mobile.dev.alfresco.me"
     static let clientIDGood = "alfresco"
     static let realmGood = "alfresco"

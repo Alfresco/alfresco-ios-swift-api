@@ -180,7 +180,7 @@ open class TrashcanAPI {
      Get a deleted node
      
      - parameter nodeId: (path) The identifier of a node. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
     open class func getDeletedNode(nodeId: String, include: [String]? = nil, completion: @escaping ((_ data: DeletedNodeEntry?,_ error: Error?) -> Void)) {
@@ -202,7 +202,7 @@ open class TrashcanAPI {
 }}]
      
      - parameter nodeId: (path) The identifier of a node. 
-     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions  (optional)
+     - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * association * isLink * isFavorite * isLocked * path * permissions * definition  (optional)
 
      - returns: RequestBuilder<DeletedNodeEntry> 
      */
@@ -363,8 +363,8 @@ open class TrashcanAPI {
     /**
      List deleted nodes
      
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * aspectNames * association * isLink * isFavorite * isLocked * path * properties * permissions  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -399,8 +399,8 @@ open class TrashcanAPI {
   }
 }}]
      
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * aspectNames * association * isLink * isFavorite * isLocked * path * properties * permissions  (optional)
 
      - returns: RequestBuilder<DeletedNodesPaging> 
@@ -440,7 +440,7 @@ open class TrashcanAPI {
     /**
      Restore a deleted node
      - POST /alfresco/versions/1/deleted-nodes/{nodeId}/restore
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Attempts to restore the deleted node **nodeId** to its original location or to a new location.  If the node is successfully restored to its former primary parent, then only the  primary child association will be restored, including recursively for any primary  children. It should be noted that no other secondary child associations or peer  associations will be restored, for any of the nodes within the primary parent-child  hierarchy of restored nodes, irrespective of whether these associations were to  nodes within or outside of the restored hierarchy.   Also, any previously shared link will not be restored since it is deleted at the time  of delete of each node. 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Attempts to restore the deleted node **nodeId** to its original location or to a new location.  If the node is successfully restored to its former primary parent, then only the primary child association will be restored, including recursively for any primary children. It should be noted that no other secondary child associations or peer associations will be restored, for any of the nodes within the primary parent-child hierarchy of restored nodes, irrespective of whether these associations were to nodes within or outside of the restored hierarchy.  Also, any previously shared link will not be restored since it is deleted at the time of delete of each node. 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -508,6 +508,63 @@ open class TrashcanAPI {
       "id" : "id"
     },
     "name" : "name",
+    "definition" : {
+      "properties" : [ {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      }, {
+        "isProtected" : true,
+        "defaultValue" : "defaultValue",
+        "dataType" : "dataType",
+        "isMultiValued" : true,
+        "description" : "description",
+        "isMandatoryEnforced" : true,
+        "id" : "id",
+        "title" : "title",
+        "constraints" : [ {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        }, {
+          "description" : "description",
+          "id" : "id",
+          "type" : "type",
+          "title" : "title",
+          "parameters" : {
+            "key" : "{}"
+          }
+        } ],
+        "isMandatory" : true
+      } ]
+    },
     "id" : "id",
     "properties" : "{}",
     "allowableOperations" : [ "allowableOperations", "allowableOperations" ],

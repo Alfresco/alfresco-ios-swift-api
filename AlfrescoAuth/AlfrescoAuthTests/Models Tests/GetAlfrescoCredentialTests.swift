@@ -23,36 +23,38 @@ import AppAuth
 
 class GetAlfrescoCredentialTests: XCTestCase {
     var sut: GetAlfrescoCredential!
-    
+
     override func setUp() {
         super.setUp()
         sut = GetAlfrescoCredential(code: TestData.codeGood, configuration: TestData.configuration)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testSutIsNotNil() {
         XCTAssertNotNil(sut)
     }
-    
+
     func testInitForGrantTypeCode() {
         sut = GetAlfrescoCredential(code: TestData.codeGood, configuration: TestData.configuration)
         XCTAssertEqual(sut.code, TestData.codeGood)
         XCTAssertEqual(sut.configuration, TestData.configuration)
         XCTAssertEqual(sut.grantType, GrantType.code)
     }
-    
+
     func testInitForGrantTypePassword() {
-        sut = GetAlfrescoCredential(username: TestData.username1, password: TestData.password1, configuration: TestData.configuration)
+        sut = GetAlfrescoCredential(username: TestData.username1,
+                                    password: TestData.password1,
+                                    configuration: TestData.configuration)
         XCTAssertEqual(sut.username, TestData.username1)
         XCTAssertEqual(sut.password, TestData.password1)
         XCTAssertEqual(sut.configuration, TestData.configuration)
         XCTAssertEqual(sut.grantType, GrantType.password)
     }
-    
+
     func testInitForGrantTypeRefresh() {
         sut = GetAlfrescoCredential(refreshToken: TestData.refreshTokenGood, configuration: TestData.configuration)
         XCTAssertEqual(sut.refreshToken, TestData.refreshTokenGood)

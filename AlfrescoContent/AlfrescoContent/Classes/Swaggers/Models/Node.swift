@@ -31,8 +31,9 @@ public struct Node: Codable {
     public var allowableOperations: [String]?
     public var path: PathInfo?
     public var permissions: PermissionsInfo?
+    public var definition: Definition?
 
-    public init(_id: String, name: String, nodeType: String, isFolder: Bool, isFile: Bool, isLocked: Bool?, modifiedAt: Date, modifiedByUser: UserInfo, createdAt: Date, createdByUser: UserInfo, parentId: String?, isLink: Bool?, isFavorite: Bool?, content: ContentInfo?, aspectNames: [String]?, properties: JSONValue?, allowableOperations: [String]?, path: PathInfo?, permissions: PermissionsInfo?) {
+    public init(_id: String, name: String, nodeType: String, isFolder: Bool, isFile: Bool, isLocked: Bool?, modifiedAt: Date, modifiedByUser: UserInfo, createdAt: Date, createdByUser: UserInfo, parentId: String?, isLink: Bool?, isFavorite: Bool?, content: ContentInfo?, aspectNames: [String]?, properties: JSONValue?, allowableOperations: [String]?, path: PathInfo?, permissions: PermissionsInfo?, definition: Definition?) {
         self._id = _id
         self.name = name
         self.nodeType = nodeType
@@ -52,6 +53,7 @@ public struct Node: Codable {
         self.allowableOperations = allowableOperations
         self.path = path
         self.permissions = permissions
+        self.definition = definition
     }
 
     public enum CodingKeys: String, CodingKey { 
@@ -74,6 +76,7 @@ public struct Node: Codable {
         case allowableOperations
         case path
         case permissions
+        case definition
     }
 
 

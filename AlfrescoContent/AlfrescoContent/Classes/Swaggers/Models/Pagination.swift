@@ -17,7 +17,7 @@ public struct Pagination: Codable {
     public var hasMoreItems: Bool
     /** An integer describing the total number of entities in the collection. The API might not be able to determine this value, in which case this property will not be present.  */
     public var totalItems: Int64?
-    /** An integer describing how many entities exist in the collection before those included in this list. If there was no **skipCount** parameter then the  default value is 0.  */
+    /** An integer describing how many entities exist in the collection before those included in this list. If there was no **skipCount** parameter then the default value is 0.  */
     public var skipCount: Int64
     /** The value of the **maxItems** parameter used to generate this list. If there was no **maxItems** parameter then the default value is 100.  */
     public var maxItems: Int64

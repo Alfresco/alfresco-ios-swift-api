@@ -7,9 +7,9 @@ target 'AlfrescoAuth' do
 
   pod 'AlfrescoCore'
   pod 'AppAuth'
+  pod 'SwiftLint'
 
   target 'AlfrescoAuthTests' do
-   
   end
 
 end
