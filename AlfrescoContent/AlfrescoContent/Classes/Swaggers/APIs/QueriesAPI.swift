@@ -16,8 +16,8 @@ open class QueriesAPI {
      
      - parameter term: (query) The term to search for. 
      - parameter rootNodeId: (query) The id of the node to start the search from.  Supports the aliases -my-, -root- and -shared-.  (optional)
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter nodeType: (query) Restrict the returned results to only those of the given node type and its sub-types  (optional)
      - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * aspectNames * isLink * isFavorite * isLocked * path * properties  (optional)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
@@ -104,6 +104,63 @@ open class QueriesAPI {
           "id" : "id"
         },
         "name" : "name",
+        "definition" : {
+          "properties" : [ {
+            "isProtected" : true,
+            "defaultValue" : "defaultValue",
+            "dataType" : "dataType",
+            "isMultiValued" : true,
+            "description" : "description",
+            "isMandatoryEnforced" : true,
+            "id" : "id",
+            "title" : "title",
+            "constraints" : [ {
+              "description" : "description",
+              "id" : "id",
+              "type" : "type",
+              "title" : "title",
+              "parameters" : {
+                "key" : "{}"
+              }
+            }, {
+              "description" : "description",
+              "id" : "id",
+              "type" : "type",
+              "title" : "title",
+              "parameters" : {
+                "key" : "{}"
+              }
+            } ],
+            "isMandatory" : true
+          }, {
+            "isProtected" : true,
+            "defaultValue" : "defaultValue",
+            "dataType" : "dataType",
+            "isMultiValued" : true,
+            "description" : "description",
+            "isMandatoryEnforced" : true,
+            "id" : "id",
+            "title" : "title",
+            "constraints" : [ {
+              "description" : "description",
+              "id" : "id",
+              "type" : "type",
+              "title" : "title",
+              "parameters" : {
+                "key" : "{}"
+              }
+            }, {
+              "description" : "description",
+              "id" : "id",
+              "type" : "type",
+              "title" : "title",
+              "parameters" : {
+                "key" : "{}"
+              }
+            } ],
+            "isMandatory" : true
+          } ]
+        },
         "id" : "id",
         "properties" : "{}",
         "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -173,6 +230,63 @@ open class QueriesAPI {
           "id" : "id"
         },
         "name" : "name",
+        "definition" : {
+          "properties" : [ {
+            "isProtected" : true,
+            "defaultValue" : "defaultValue",
+            "dataType" : "dataType",
+            "isMultiValued" : true,
+            "description" : "description",
+            "isMandatoryEnforced" : true,
+            "id" : "id",
+            "title" : "title",
+            "constraints" : [ {
+              "description" : "description",
+              "id" : "id",
+              "type" : "type",
+              "title" : "title",
+              "parameters" : {
+                "key" : "{}"
+              }
+            }, {
+              "description" : "description",
+              "id" : "id",
+              "type" : "type",
+              "title" : "title",
+              "parameters" : {
+                "key" : "{}"
+              }
+            } ],
+            "isMandatory" : true
+          }, {
+            "isProtected" : true,
+            "defaultValue" : "defaultValue",
+            "dataType" : "dataType",
+            "isMultiValued" : true,
+            "description" : "description",
+            "isMandatoryEnforced" : true,
+            "id" : "id",
+            "title" : "title",
+            "constraints" : [ {
+              "description" : "description",
+              "id" : "id",
+              "type" : "type",
+              "title" : "title",
+              "parameters" : {
+                "key" : "{}"
+              }
+            }, {
+              "description" : "description",
+              "id" : "id",
+              "type" : "type",
+              "title" : "title",
+              "parameters" : {
+                "key" : "{}"
+              }
+            } ],
+            "isMandatory" : true
+          } ]
+        },
         "id" : "id",
         "properties" : "{}",
         "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -249,6 +363,63 @@ open class QueriesAPI {
         "id" : "id"
       },
       "name" : "name",
+      "definition" : {
+        "properties" : [ {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        }, {
+          "isProtected" : true,
+          "defaultValue" : "defaultValue",
+          "dataType" : "dataType",
+          "isMultiValued" : true,
+          "description" : "description",
+          "isMandatoryEnforced" : true,
+          "id" : "id",
+          "title" : "title",
+          "constraints" : [ {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          }, {
+            "description" : "description",
+            "id" : "id",
+            "type" : "type",
+            "title" : "title",
+            "parameters" : {
+              "key" : "{}"
+            }
+          } ],
+          "isMandatory" : true
+        } ]
+      },
       "id" : "id",
       "properties" : "{}",
       "allowableOperations" : [ "allowableOperations", "allowableOperations" ],
@@ -259,8 +430,8 @@ open class QueriesAPI {
      
      - parameter term: (query) The term to search for. 
      - parameter rootNodeId: (query) The id of the node to start the search from.  Supports the aliases -my-, -root- and -shared-.  (optional)
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter nodeType: (query) Restrict the returned results to only those of the given node type and its sub-types  (optional)
      - parameter include: (query) Returns additional information about the node. The following optional fields can be requested: * allowableOperations * aspectNames * isLink * isFavorite * isLocked * path * properties  (optional)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
@@ -294,8 +465,8 @@ open class QueriesAPI {
      Find people
      
      - parameter term: (query) The term to search for.  
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
@@ -310,7 +481,7 @@ open class QueriesAPI {
     /**
      Find people
      - GET /alfresco/versions/1/queries/people
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets a list of people that match the given search criteria.  The search term is used to look for matches against person id, firstname and lastname.  The search term: - must contain a minimum of 2 alphanumeric characters - can optionally use '*' for wildcard matching within the term  You can sort the result list using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter: * id * firstName * lastName        
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets a list of people that match the given search criteria.  The search term is used to look for matches against person id, firstname and lastname.  The search term: - must contain a minimum of 2 alphanumeric characters - can optionally use '*' for wildcard matching within the term  You can sort the result list using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter: * id * firstName * lastName 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -321,7 +492,11 @@ open class QueriesAPI {
         "googleId" : "googleId",
         "lastName" : "lastName",
         "userStatus" : "userStatus",
-        "capabilities" : "{}",
+        "capabilities" : {
+          "isMutable" : true,
+          "isGuest" : true,
+          "isAdmin" : true
+        },
         "displayName" : "displayName",
         "jobTitle" : "jobTitle",
         "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -348,14 +523,20 @@ open class QueriesAPI {
         },
         "id" : "id",
         "email" : "email",
-        "properties" : "{}"
+        "properties" : {
+          "key" : "properties"
+        }
       }
     }, {
       "entry" : {
         "googleId" : "googleId",
         "lastName" : "lastName",
         "userStatus" : "userStatus",
-        "capabilities" : "{}",
+        "capabilities" : {
+          "isMutable" : true,
+          "isGuest" : true,
+          "isAdmin" : true
+        },
         "displayName" : "displayName",
         "jobTitle" : "jobTitle",
         "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -382,7 +563,9 @@ open class QueriesAPI {
         },
         "id" : "id",
         "email" : "email",
-        "properties" : "{}"
+        "properties" : {
+          "key" : "properties"
+        }
       }
     } ],
     "pagination" : {
@@ -396,8 +579,8 @@ open class QueriesAPI {
 }}]
      
      - parameter term: (query) The term to search for.  
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
 
@@ -426,8 +609,8 @@ open class QueriesAPI {
      Find sites
      
      - parameter term: (query) The term to search for. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
@@ -442,7 +625,7 @@ open class QueriesAPI {
     /**
      Find sites
      - GET /alfresco/versions/1/queries/sites
-     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets a list of sites that match the given search criteria.  The search term is used to look for sites that match against site id, title or description.  The search term: - must contain a minimum of 2 alphanumeric characters - can optionally use '*' for wildcard matching within the term  The default sort order for the returned list is for sites to be sorted by ascending id.  You can override the default by using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter: * id * title * description 
+     - **Note:** this endpoint is available in Alfresco 5.2 and newer versions.  Gets a list of sites that match the given search criteria.  The search term is used to look for sites that match against site id, title or description.  The search term: - must contain a minimum of 2 alphanumeric characters - can optionally use '*' for wildcard matching within the term  The default sort order for the returned list is for sites to be sorted by ascending id. You can override the default by using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter: * id * title * description 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -480,8 +663,8 @@ open class QueriesAPI {
 }}]
      
      - parameter term: (query) The term to search for. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter orderBy: (query) A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.  Each field has a default sort order, which is normally ascending order. Read the API method implementation notes above to check if any fields used in this method have a descending default search order.  To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.  (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 

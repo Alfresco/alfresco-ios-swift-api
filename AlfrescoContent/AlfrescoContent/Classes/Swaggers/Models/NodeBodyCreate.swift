@@ -17,17 +17,19 @@ public struct NodeBodyCreate: Codable {
     public var aspectNames: [String]?
     public var properties: JSONValue?
     public var permissions: PermissionsBody?
+    public var definition: Definition?
     public var relativePath: String?
     public var association: NodeBodyCreateAssociation?
     public var secondaryChildren: [ChildAssociationBody]?
     public var targets: [AssociationBody]?
 
-    public init(name: String, nodeType: String, aspectNames: [String]?, properties: JSONValue?, permissions: PermissionsBody?, relativePath: String?, association: NodeBodyCreateAssociation?, secondaryChildren: [ChildAssociationBody]?, targets: [AssociationBody]?) {
+    public init(name: String, nodeType: String, aspectNames: [String]?, properties: JSONValue?, permissions: PermissionsBody?, definition: Definition?, relativePath: String?, association: NodeBodyCreateAssociation?, secondaryChildren: [ChildAssociationBody]?, targets: [AssociationBody]?) {
         self.name = name
         self.nodeType = nodeType
         self.aspectNames = aspectNames
         self.properties = properties
         self.permissions = permissions
+        self.definition = definition
         self.relativePath = relativePath
         self.association = association
         self.secondaryChildren = secondaryChildren

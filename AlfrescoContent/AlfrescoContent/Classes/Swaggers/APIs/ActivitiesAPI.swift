@@ -15,8 +15,8 @@ open class ActivitiesAPI {
      List activities
      
      - parameter personId: (path) The identifier of a person. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter who: (query) A filter to include the user&#39;s activities only &#x60;me&#x60;, other user&#39;s activities only &#x60;others&#x60;&#39;  (optional)
      - parameter siteId: (query) Include only activity feed entries relating to this site. (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
@@ -44,7 +44,9 @@ open class ActivitiesAPI {
         "feedPersonId" : "feedPersonId",
         "postPersonId" : "postPersonId",
         "siteId" : "siteId",
-        "activitySummary" : "{}",
+        "activitySummary" : {
+          "key" : "activitySummary"
+        },
         "id" : 0,
         "activityType" : "activityType"
       }
@@ -54,7 +56,9 @@ open class ActivitiesAPI {
         "feedPersonId" : "feedPersonId",
         "postPersonId" : "postPersonId",
         "siteId" : "siteId",
-        "activitySummary" : "{}",
+        "activitySummary" : {
+          "key" : "activitySummary"
+        },
         "id" : 0,
         "activityType" : "activityType"
       }
@@ -70,8 +74,8 @@ open class ActivitiesAPI {
 }}]
      
      - parameter personId: (path) The identifier of a person. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter who: (query) A filter to include the user&#39;s activities only &#x60;me&#x60;, other user&#39;s activities only &#x60;others&#x60;&#39;  (optional)
      - parameter siteId: (query) Include only activity feed entries relating to this site. (optional)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)

@@ -13,7 +13,7 @@ public struct Version: Codable {
 
     public var _id: String
     public var versionComment: String?
-    /** The name must not contain spaces or the following special characters: * \&quot; &lt; &gt; \\ / ? : and |.  The character . must not be used at the end of the name.  */
+    /** The name must not contain spaces or the following special characters: * \&quot; &lt; &gt; \\ / ? : and |. The character . must not be used at the end of the name.  */
     public var name: String
     public var nodeType: String
     public var isFolder: Bool

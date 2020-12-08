@@ -5,20 +5,24 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
+  - SwiftLint (0.41.0)
 
 DEPENDENCIES:
   - AlfrescoCore
   - AppAuth
+  - SwiftLint
 
 SPEC REPOS:
   trunk:
     - AlfrescoCore
     - AppAuth
+    - SwiftLint
 
 SPEC CHECKSUMS:
   AlfrescoCore: 658f4838e71bccdbe02b3d5e31c7c9559a8cfa92
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
 
-PODFILE CHECKSUM: 2fc687f559ba180db6c39ce833e47d3e0f217d5c
+PODFILE CHECKSUM: d26708ee0447b3b523a0511b623ddb2c32980399
 
 COCOAPODS: 1.10.0

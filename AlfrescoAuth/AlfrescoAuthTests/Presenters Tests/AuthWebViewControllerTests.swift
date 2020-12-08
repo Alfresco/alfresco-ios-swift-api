@@ -25,14 +25,14 @@ class AuthWebViewControllerTests: XCTestCase {
     var sut: AuthWebViewController!
     var webViewMock: WebViewMock!
     var presenterDummy: AuthWebPresenterDummy!
-    
+
     override func setUp() {
         super.setUp()
         sut = AuthWebViewController()
-        
+
         webViewMock = WebViewMock()
         sut.webView = webViewMock
-        
+
         presenterDummy = AuthWebPresenterDummy(configuration: TestData.configuration)
         sut.presenter = presenterDummy
     }
@@ -42,16 +42,16 @@ class AuthWebViewControllerTests: XCTestCase {
         webViewMock = nil
         super.tearDown()
     }
-    
+
     func testSutIsNotNil() {
         XCTAssertNotNil(sut)
     }
-    
+
     func testSutViewDidLoadSetsWebViewNavigationDelegate() {
         sut.viewDidLoad()
         XCTAssertNotNil(webViewMock.navigationDelegate)
     }
-    
+
     func testSutViewDidLoadLoadsURLString() {
         sut.urlString = TestData.urlStringToLoadGood
         sut.viewDidLoad()

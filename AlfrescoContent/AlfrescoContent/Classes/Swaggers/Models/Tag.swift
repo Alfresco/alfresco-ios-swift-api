@@ -13,15 +13,18 @@ public struct Tag: Codable {
 
     public var _id: String
     public var tag: String
+    public var count: Double?
 
-    public init(_id: String, tag: String) {
+    public init(_id: String, tag: String, count: Double?) {
         self._id = _id
         self.tag = tag
+        self.count = count
     }
 
     public enum CodingKeys: String, CodingKey { 
         case _id = "id"
         case tag
+        case count
     }
 
 

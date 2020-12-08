@@ -22,21 +22,21 @@ import XCTest
 
 class URLHelpersTest: XCTestCase {
     var sut: URL!
-    
+
     override func setUp() {
         super.setUp()
         sut = URL(string: TestData.baseUrlGood)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testSutIsNotNil() {
         XCTAssertNotNil(sut)
     }
-    
+
     func testFindAuthorizationCode() {
         sut = URL(string: TestData.urlStringToLoadGood)
         let code = sut.findAuthorizationCode()

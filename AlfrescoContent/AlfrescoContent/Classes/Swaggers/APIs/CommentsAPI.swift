@@ -29,7 +29,7 @@ open class CommentsAPI {
     /**
      Create a comment
      - POST /alfresco/versions/1/nodes/{nodeId}/comments
-     - Creates a comment on node **nodeId**. You specify the comment in a JSON body like this:  ```JSON {   \"content\": \"This is a comment\" } ```  **Note:** You can create more than one comment by  specifying a list of comments in the JSON body like this:  ```JSON [   {     \"content\": \"This is a comment\"   },   {     \"content\": \"This is another comment\"   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {           ...         }       }     ]   } } ``` 
+     - Creates a comment on node **nodeId**. You specify the comment in a JSON body like this:  ```JSON {   \"content\": \"This is a comment\" } ```  **Note:** You can create more than one comment by specifying a list of comments in the JSON body like this:  ```JSON [   {     \"content\": \"This is a comment\"   },   {     \"content\": \"This is another comment\"   } ] ``` If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:  ```JSON {   \"list\": {     \"pagination\": {       \"count\": 2,       \"hasMoreItems\": false,       \"totalItems\": 2,       \"skipCount\": 0,       \"maxItems\": 100     },     \"entries\": [       {         \"entry\": {           ...         }       },       {         \"entry\": {           ...         }       }     ]   } } ``` 
      - BASIC:
        - type: basic
        - name: basicAuth
@@ -40,7 +40,11 @@ open class CommentsAPI {
       "googleId" : "googleId",
       "lastName" : "lastName",
       "userStatus" : "userStatus",
-      "capabilities" : "{}",
+      "capabilities" : {
+        "isMutable" : true,
+        "isGuest" : true,
+        "isAdmin" : true
+      },
       "displayName" : "displayName",
       "jobTitle" : "jobTitle",
       "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -67,7 +71,9 @@ open class CommentsAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : "{}"
+      "properties" : {
+        "key" : "properties"
+      }
     },
     "edited" : true,
     "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -76,7 +82,11 @@ open class CommentsAPI {
       "googleId" : "googleId",
       "lastName" : "lastName",
       "userStatus" : "userStatus",
-      "capabilities" : "{}",
+      "capabilities" : {
+        "isMutable" : true,
+        "isGuest" : true,
+        "isAdmin" : true
+      },
       "displayName" : "displayName",
       "jobTitle" : "jobTitle",
       "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -103,7 +113,9 @@ open class CommentsAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : "{}"
+      "properties" : {
+        "key" : "properties"
+      }
     },
     "canDelete" : true,
     "id" : "id",
@@ -189,8 +201,8 @@ open class CommentsAPI {
      List comments
      
      - parameter nodeId: (path) The identifier of a node. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -217,7 +229,11 @@ open class CommentsAPI {
           "googleId" : "googleId",
           "lastName" : "lastName",
           "userStatus" : "userStatus",
-          "capabilities" : "{}",
+          "capabilities" : {
+            "isMutable" : true,
+            "isGuest" : true,
+            "isAdmin" : true
+          },
           "displayName" : "displayName",
           "jobTitle" : "jobTitle",
           "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -244,7 +260,9 @@ open class CommentsAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : "{}"
+          "properties" : {
+            "key" : "properties"
+          }
         },
         "edited" : true,
         "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -253,7 +271,11 @@ open class CommentsAPI {
           "googleId" : "googleId",
           "lastName" : "lastName",
           "userStatus" : "userStatus",
-          "capabilities" : "{}",
+          "capabilities" : {
+            "isMutable" : true,
+            "isGuest" : true,
+            "isAdmin" : true
+          },
           "displayName" : "displayName",
           "jobTitle" : "jobTitle",
           "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -280,7 +302,9 @@ open class CommentsAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : "{}"
+          "properties" : {
+            "key" : "properties"
+          }
         },
         "canDelete" : true,
         "id" : "id",
@@ -294,7 +318,11 @@ open class CommentsAPI {
           "googleId" : "googleId",
           "lastName" : "lastName",
           "userStatus" : "userStatus",
-          "capabilities" : "{}",
+          "capabilities" : {
+            "isMutable" : true,
+            "isGuest" : true,
+            "isAdmin" : true
+          },
           "displayName" : "displayName",
           "jobTitle" : "jobTitle",
           "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -321,7 +349,9 @@ open class CommentsAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : "{}"
+          "properties" : {
+            "key" : "properties"
+          }
         },
         "edited" : true,
         "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -330,7 +360,11 @@ open class CommentsAPI {
           "googleId" : "googleId",
           "lastName" : "lastName",
           "userStatus" : "userStatus",
-          "capabilities" : "{}",
+          "capabilities" : {
+            "isMutable" : true,
+            "isGuest" : true,
+            "isAdmin" : true
+          },
           "displayName" : "displayName",
           "jobTitle" : "jobTitle",
           "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -357,7 +391,9 @@ open class CommentsAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : "{}"
+          "properties" : {
+            "key" : "properties"
+          }
         },
         "canDelete" : true,
         "id" : "id",
@@ -376,8 +412,8 @@ open class CommentsAPI {
 }}]
      
      - parameter nodeId: (path) The identifier of a node. 
-     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list.  If not supplied then the default value is 0.  (optional, default to 0)
-     - parameter maxItems: (query) The maximum number of items to return in the list.  If not supplied then the default value is 100.  (optional, default to 100)
+     - parameter skipCount: (query) The number of entities that exist in the collection before those included in this list. If not supplied then the default value is 0.  (optional, default to 0)
+     - parameter maxItems: (query) The maximum number of items to return in the list. If not supplied then the default value is 100.  (optional, default to 100)
      - parameter fields: (query) A list of field names.  You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.  The list applies to a returned individual entity or entries within a collection.  If the API method also supports the **include** parameter, then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.  (optional)
 
      - returns: RequestBuilder<CommentPaging> 
@@ -432,7 +468,11 @@ open class CommentsAPI {
       "googleId" : "googleId",
       "lastName" : "lastName",
       "userStatus" : "userStatus",
-      "capabilities" : "{}",
+      "capabilities" : {
+        "isMutable" : true,
+        "isGuest" : true,
+        "isAdmin" : true
+      },
       "displayName" : "displayName",
       "jobTitle" : "jobTitle",
       "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -459,7 +499,9 @@ open class CommentsAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : "{}"
+      "properties" : {
+        "key" : "properties"
+      }
     },
     "edited" : true,
     "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -468,7 +510,11 @@ open class CommentsAPI {
       "googleId" : "googleId",
       "lastName" : "lastName",
       "userStatus" : "userStatus",
-      "capabilities" : "{}",
+      "capabilities" : {
+        "isMutable" : true,
+        "isGuest" : true,
+        "isAdmin" : true
+      },
       "displayName" : "displayName",
       "jobTitle" : "jobTitle",
       "statusUpdatedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -495,7 +541,9 @@ open class CommentsAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : "{}"
+      "properties" : {
+        "key" : "properties"
+      }
     },
     "canDelete" : true,
     "id" : "id",

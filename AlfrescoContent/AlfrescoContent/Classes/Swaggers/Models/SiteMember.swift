@@ -20,17 +20,20 @@ public struct SiteMember: Codable {
     public var _id: String
     public var person: Person
     public var role: Role
+    public var isMemberOfGroup: Bool?
 
-    public init(_id: String, person: Person, role: Role) {
+    public init(_id: String, person: Person, role: Role, isMemberOfGroup: Bool?) {
         self._id = _id
         self.person = person
         self.role = role
+        self.isMemberOfGroup = isMemberOfGroup
     }
 
     public enum CodingKeys: String, CodingKey { 
         case _id = "id"
         case person
         case role
+        case isMemberOfGroup
     }
 
 
