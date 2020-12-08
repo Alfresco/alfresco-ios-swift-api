@@ -10,18 +10,18 @@ public class SimpleSearchRequest {
     var parentId: String?
     let skipCount: Int
     let maxItems: Int
-    let include: [SearchInclude]
+    let searchInclude: [SearchInclude]
 
-    init(querry: String,
+    public init(querry: String,
          parentId: String?,
          skipCount: Int,
          maxItems: Int,
-         include: [SearchInclude]) {
+         searchInclude: [SearchInclude]) {
         self.querry = querry
         self.parentId = parentId
         self.skipCount = skipCount
         self.maxItems = maxItems
-        self.include = include
+        self.searchInclude = searchInclude
     }
 }
 
@@ -31,7 +31,7 @@ public class RecentFilesRequest {
     let skipCount: Int
     let maxItems: Int
 
-    init(userId: String,
+    public init(userId: String,
          days: Int,
          skipCount: Int,
          maxItems: Int) {
@@ -72,11 +72,11 @@ extension SearchAPI {
                                        defaultFieldName: "keywords")
 
         var typeFilter: String
-        if include.isEmpty {
-            let defaultTypes = [SearchInclude.files.rawValue, SearchInclude.folders.rawValue].joined(separator: " OR ")
-            typeFilter = defaultTypes
+        if searchRequest.searchInclude.isEmpty {
+            let defaultTypes = [SearchInclude.files, SearchInclude.folders]
+            typeFilter = defaultTypes.map({ return "+TYPE:'\($0.rawValue)'" }).joined(separator: " OR ")
         } else {
-            typeFilter = include.map({ return "+TYPE:'\($0)'" }).joined(separator: " OR ")
+            typeFilter = searchRequest.searchInclude.map({ return "+TYPE:'\($0.rawValue)'" }).joined(separator: " OR ")
         }
 
         var filter = makeFilterQuerries(filters: typeFilter) + SearchAPI.unsupportedTypes
