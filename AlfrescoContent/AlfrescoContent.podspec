@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/Alfresco/alfresco-ios-swift-api'
   s.summary = 'Alfresco Content iOS Swift API'
   s.source_files = 'AlfrescoContent/**/*'
-  s.exclude_files = ['AlfrescoContent/template', 'AlfrescoContent/AlfrescoContentSwaggerConfiguration.json', 'AlfrescoContent/definitions', 'AlfrescoContent/AlfrescoContent.podspec', 'AlfrescoContent/azure-pipelines.yml', 'AlfrescoContent/Cartfile', 'AlfrescoContent/LICENSE.md', 'AlfrescoContent/generateLibrary.sh']
+  s.exclude_files = ['AlfrescoContent/template', 'AlfrescoContent/AlfrescoContentSwaggerConfiguration.json', 'AlfrescoContent/definitions', 'AlfrescoContent/extensions', 'AlfrescoContent/AlfrescoContent.podspec', 'AlfrescoContent/azure-pipelines.yml', 'AlfrescoContent/Cartfile', 'AlfrescoContent/LICENSE.md', 'AlfrescoContent/generateLibrary.sh']
   s.dependency 'Alamofire', '~> 4.9.0'
 end
