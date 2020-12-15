@@ -71,9 +71,7 @@ open class CommentsAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : {
-        "key" : "properties"
-      }
+      "properties" : "{}"
     },
     "edited" : true,
     "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -113,9 +111,7 @@ open class CommentsAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : {
-        "key" : "properties"
-      }
+      "properties" : "{}"
     },
     "canDelete" : true,
     "id" : "id",
@@ -260,9 +256,7 @@ open class CommentsAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : {
-            "key" : "properties"
-          }
+          "properties" : "{}"
         },
         "edited" : true,
         "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -302,9 +296,7 @@ open class CommentsAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : {
-            "key" : "properties"
-          }
+          "properties" : "{}"
         },
         "canDelete" : true,
         "id" : "id",
@@ -349,9 +341,7 @@ open class CommentsAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : {
-            "key" : "properties"
-          }
+          "properties" : "{}"
         },
         "edited" : true,
         "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -391,9 +381,7 @@ open class CommentsAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : {
-            "key" : "properties"
-          }
+          "properties" : "{}"
         },
         "canDelete" : true,
         "id" : "id",
@@ -499,9 +487,7 @@ open class CommentsAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : {
-        "key" : "properties"
-      }
+      "properties" : "{}"
     },
     "edited" : true,
     "modifiedAt" : "2000-01-23T04:56:07.000+00:00",
@@ -541,9 +527,7 @@ open class CommentsAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : {
-        "key" : "properties"
-      }
+      "properties" : "{}"
     },
     "canDelete" : true,
     "id" : "id",

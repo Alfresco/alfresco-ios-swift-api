@@ -523,9 +523,7 @@ open class QueriesAPI {
         },
         "id" : "id",
         "email" : "email",
-        "properties" : {
-          "key" : "properties"
-        }
+        "properties" : "{}"
       }
     }, {
       "entry" : {
@@ -563,9 +561,7 @@ open class QueriesAPI {
         },
         "id" : "id",
         "email" : "email",
-        "properties" : {
-          "key" : "properties"
-        }
+        "properties" : "{}"
       }
     } ],
     "pagination" : {
