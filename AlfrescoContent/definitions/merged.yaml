@@ -9190,8 +9190,6 @@ definitions:
           type: string
       properties:
         type: object
-        additionalProperties:
-          type: string
       capabilities:
         $ref: '#/definitions/Capabilities'
   Company:

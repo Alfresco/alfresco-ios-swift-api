@@ -239,9 +239,7 @@ open class SitesAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : {
-        "key" : "properties"
-      }
+      "properties" : "{}"
     },
     "id" : "id",
     "isMemberOfGroup" : true
@@ -816,9 +814,7 @@ open class SitesAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : {
-        "key" : "properties"
-      }
+      "properties" : "{}"
     },
     "id" : "id",
     "isMemberOfGroup" : true
@@ -1051,9 +1047,7 @@ open class SitesAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : {
-            "key" : "properties"
-          }
+          "properties" : "{}"
         },
         "id" : "id",
         "message" : "message"
@@ -1105,9 +1099,7 @@ open class SitesAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : {
-            "key" : "properties"
-          }
+          "properties" : "{}"
         },
         "id" : "id",
         "message" : "message"
@@ -1461,9 +1453,7 @@ open class SitesAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : {
-            "key" : "properties"
-          }
+          "properties" : "{}"
         },
         "id" : "id",
         "isMemberOfGroup" : true
@@ -1506,9 +1496,7 @@ open class SitesAPI {
           },
           "id" : "id",
           "email" : "email",
-          "properties" : {
-            "key" : "properties"
-          }
+          "properties" : "{}"
         },
         "id" : "id",
         "isMemberOfGroup" : true
@@ -1975,9 +1963,7 @@ open class SitesAPI {
       },
       "id" : "id",
       "email" : "email",
-      "properties" : {
-        "key" : "properties"
-      }
+      "properties" : "{}"
     },
     "id" : "id",
     "isMemberOfGroup" : true

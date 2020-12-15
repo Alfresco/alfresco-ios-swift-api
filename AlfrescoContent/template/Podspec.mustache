@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.14'
   s.tvos.deployment_target = '12.0'
   s.swift_version = '5.0'
-  s.version = '{{#podVersion}}{{podVersion}}{{/podVersion}}{{^podVersion}}0.1.1{{/podVersion}}'
+  s.version = '{{#podVersion}}{{podVersion}}{{/podVersion}}{{^podVersion}}0.1.3{{/podVersion}}'
   s.source = {{#podSource}}{{& podSource}}{{/podSource}}{{^podSource}}{ :git => 'git@github.com:swagger-api/swagger-mustache.git', :tag => 'v1.0.0' }{{/podSource}}{{#podAuthors}}
   s.authors = '{{podAuthors}}'{{/podAuthors}}{{#podSocialMediaURL}}
   s.social_media_url = '{{podSocialMediaURL}}'{{/podSocialMediaURL}}{{#podDocsetURL}}
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.screenshots = {{& podScreenshots}}{{/podScreenshots}}{{#podDocumentationURL}}
   s.documentation_url = '{{podDocumentationURL}}'{{/podDocumentationURL}}
   s.source_files = 'AlfrescoContent/**/*'
-  s.exclude_files = ['AlfrescoContent/template', 'AlfrescoContent/AlfrescoContentSwaggerConfiguration.json', 'AlfrescoContent/definitions', 'AlfrescoContent/AlfrescoContent.podspec', 'AlfrescoContent/azure-pipelines.yml', 'AlfrescoContent/Cartfile', 'AlfrescoContent/LICENSE.md', 'AlfrescoContent/generateLibrary.sh']{{#usePromiseKit}}
+  s.exclude_files = ['AlfrescoContent/template', 'AlfrescoContent/AlfrescoContentSwaggerConfiguration.json', 'AlfrescoContent/definitions', 'AlfrescoContent/AlfrescoContent.podspec', 'AlfrescoContent/azure-pipelines.yml', 'AlfrescoContent/Cartfile', 'AlfrescoContent/LICENSE.md', 'AlfrescoContent/generateLibrary.sh', 'AlfrescoContent/extensions']{{#usePromiseKit}}
   s.dependency 'PromiseKit/CorePromise', '~> 4.4.0'{{/usePromiseKit}}{{#useRxSwift}}
   s.dependency 'RxSwift', '~> 4.0'{{/useRxSwift}}
   s.dependency 'Alamofire', '~> 4.9.0'
