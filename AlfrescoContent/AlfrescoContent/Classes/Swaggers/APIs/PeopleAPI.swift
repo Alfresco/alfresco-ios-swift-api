@@ -68,9 +68,7 @@ open class PeopleAPI {
     },
     "id" : "id",
     "email" : "email",
-    "properties" : {
-      "key" : "properties"
-    }
+    "properties" : "{}"
   }
 }}]
      
@@ -250,9 +248,7 @@ open class PeopleAPI {
     },
     "id" : "id",
     "email" : "email",
-    "properties" : {
-      "key" : "properties"
-    }
+    "properties" : "{}"
   }
 }}]
      
@@ -341,9 +337,7 @@ open class PeopleAPI {
         },
         "id" : "id",
         "email" : "email",
-        "properties" : {
-          "key" : "properties"
-        }
+        "properties" : "{}"
       }
     }, {
       "entry" : {
@@ -381,9 +375,7 @@ open class PeopleAPI {
         },
         "id" : "id",
         "email" : "email",
-        "properties" : {
-          "key" : "properties"
-        }
+        "properties" : "{}"
       }
     } ],
     "pagination" : {
@@ -619,9 +611,7 @@ open class PeopleAPI {
     },
     "id" : "id",
     "email" : "email",
-    "properties" : {
-      "key" : "properties"
-    }
+    "properties" : "{}"
   }
 }}]
      
