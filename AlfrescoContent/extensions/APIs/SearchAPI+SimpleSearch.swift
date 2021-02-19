@@ -82,7 +82,7 @@ extension SearchAPI {
             typeFilter = searchRequest.searchInclude.map({ return "+TYPE:'\($0.rawValue)'" }).joined(separator: " OR ")
         }
 
-        let filter = makeFilterQuerries(filters: typeFilter) + SearchAPI.unsupportedTypes
+        var filter = makeFilterQuerries(filters: typeFilter) + SearchAPI.unsupportedTypes
 
         if let parentId = searchRequest.parentId {
             let parentIdFilter = "ANCESTOR:'workspace://SpacesStore/\(parentId)'"
@@ -122,7 +122,7 @@ extension SearchAPI {
         let sort = [RequestSortDefinitionInner(type: .field,
                                            field: "cm:modified",
                                            ascending: false)]
-        var filter = makeFilterQuerries(filters: "cm:modified:[NOW/DAY-\(recentFilesRequest.days)DAYS TO NOW/DAY+1DAY]",
+        let filter = makeFilterQuerries(filters: "cm:modified:[NOW/DAY-\(recentFilesRequest.days)DAYS TO NOW/DAY+1DAY]",
                                         "cm:modifier:\(recentFilesRequest.userId) OR cm:creator:\(recentFilesRequest.userId)",
                                         "TYPE:'content'") + SearchAPI.unsupportedTypes
 
