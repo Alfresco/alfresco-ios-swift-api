@@ -44,13 +44,16 @@ public class RecentFilesRequest {
 
 extension SearchAPI {
     static var unsupportedTypes: RequestFilterQueries {
-        return SearchAPI.makeFilterQuerries(filters: "-TYPE:'cm:thumbnail' AND -TYPE:'cm:failedThumbnail' AND -TYPE:'cm:rating'",
-                                  "-cm:creator:System AND -QNAME:comment",
-                                  "-TYPE:'st:site' AND -ASPECT:'st:siteContainer' AND -ASPECT:'sys:hidden'",
-                                  "-TYPE:'dl:dataList' AND -TYPE:'dl:todoList' AND -TYPE:'dl:issue'",
-                                  "-TYPE:'fm:topic' AND -TYPE:'fm:post'",
-                                  "-TYPE:'lnk:link'",
-                                  "-PNAME:'0/wiki'")
+        return SearchAPI.makeFilterQuerries(filters: "-TYPE:'st:site'",
+                                            "-TYPE:'cm:thumbnail' AND -TYPE:'cm:failedThumbnail' AND -TYPE:'cm:rating'",
+                                            "-ASPECT:'st:siteContainer' AND -ASPECT:'sys:hidden'",
+                                            "-TYPE:'dl:dataList' AND -TYPE:'dl:todoList'",
+                                            "-TYPE:'dl:issue' AND -TYPE:'dl:task' AND -TYPE:'dl:simpletask'",
+                                            "-TYPE:'dl:event' AND -TYPE:'dl:eventAgenda' AND -TYPE:'dl:meetingAgenda'",
+                                            "-TYPE:'dl:contact' AND -TYPE:'dl:location'",
+                                            "-TYPE:'fm:forum' AND -TYPE:'fm:topic' AND -TYPE:'fm:post'",
+                                            "-TYPE:'app:filelink' AND -TYPE:'lnk:link' AND -TYPE:'ia:calendarEvent'",
+                                            "-QNAME:comment AND -PNAME:'0/wiki'")
     }
 
 
