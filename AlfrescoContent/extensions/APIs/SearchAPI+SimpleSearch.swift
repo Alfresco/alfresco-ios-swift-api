@@ -82,7 +82,7 @@ extension SearchAPI {
             typeFilter = searchRequest.searchInclude.map({ return "+TYPE:'\($0.rawValue)'" }).joined(separator: " OR ")
         }
 
-        var filter = makeFilterQuerries(filters: typeFilter) + SearchAPI.unsupportedTypes
+        let filter = makeFilterQuerries(filters: typeFilter) + SearchAPI.unsupportedTypes
 
         if let parentId = searchRequest.parentId {
             let parentIdFilter = "ANCESTOR:'workspace://SpacesStore/\(parentId)'"
@@ -160,8 +160,6 @@ extension SearchAPI {
     }
 
     private static func makeFilterQuerries(filters: String...) -> RequestFilterQueries {
-        var querries: RequestFilterQueries = []
-
         return filters.map { filter -> RequestFilterQueriesInner in
             return RequestFilterQueriesInner(query: filter, tags: nil)
         }
