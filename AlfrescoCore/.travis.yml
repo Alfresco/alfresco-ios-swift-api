@@ -5,7 +5,7 @@ jobs:
     - stage: Xcode Tests
       osx_image: xcode12u
       env: 
-        - SCHEME=AlfrescoCore DESTINATION="'platform=iOS Simulator,name=iPhone 11,OS=14.0'" SDK=iphonesimulator14.0
+        - SCHEME=AlfrescoCore DESTINATION="'platform=iOS Simulator,name=iPhone 11,OS=14.0'"
       before_script:
         - sudo gem install xcpretty
       script:
@@ -13,6 +13,6 @@ jobs:
       # eval is used here, otherwise environment variables are not present.
       # `set -o pipefail && ` is so that the return code isn't gobbled by xcpretty (per https://github.com/supermarin/xcpretty#usage)
       # then it's standard xcodebuild | xcpretty.
-        - eval "set -o pipefail && xcodebuild -project AlfrescoCore/AlfrescoCore.xcodeproj -scheme $SCHEME -sdk $SDK -destination $DESTINATION -enableCodeCoverage YES GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES OTHERCFLAGS='-Werror' test | xcpretty"
+        - eval "set -o pipefail && xcodebuild -project AlfrescoCore/AlfrescoCore.xcodeproj -scheme $SCHEME -destination $DESTINATION -enableCodeCoverage YES GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES OTHERCFLAGS='-Werror' test | xcpretty"
       after_success:
         - bash <(curl -s https://codecov.io/bash)
