@@ -135,7 +135,6 @@
 				2BAFC1A9230D99C2000CB1A9 /* Sources */,
 				2BAFC1B4230D99C3000CB1A9 /* AlfrescoCoreTests */,
 				2BAFC1A8230D99C2000CB1A9 /* Products */,
-				437DA90CD631F89DBA620B61 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,13 +170,6 @@
 				B98B231F2355AFC3002EF9EC /* APIErrorTests.swift */,
 			);
 			path = AlfrescoCoreTests;
-			sourceTree = "<group>";
-		};
-		437DA90CD631F89DBA620B61 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		B98B23232355C22E002EF9EC /* Mocks */ = {
