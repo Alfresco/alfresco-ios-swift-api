@@ -2,4 +2,4 @@ language: r
 os: osx
 
 import:
-  - AlfrescoCore/.travis.yml
+- AlfrescoCore/.travis.yml
