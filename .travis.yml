@@ -1,5 +1,2 @@
 language: swift
 os: osx
-
-import:
-- AlfrescoCore/AlfrescoCore.yml
