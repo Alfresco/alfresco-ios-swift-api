@@ -1,2 +1,2 @@
 import:
-- AlfrescoCore/.travis.yml
+  - AlfrescoCore/.travis.yml
