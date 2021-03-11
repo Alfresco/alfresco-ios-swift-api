@@ -3,6 +3,4 @@ version: ~> 1.0
 language: swift
 os: osx
 
-env:
-  - ALFRESCOCORE_DIR=AlfrescoCore
-script: cd $ALFRESCOCORE_DIR
+import: AlfrescoCore/.travis.yml
