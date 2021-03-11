@@ -1,4 +1,4 @@
-language: r
+language: swift
 os: osx
 
 import:
