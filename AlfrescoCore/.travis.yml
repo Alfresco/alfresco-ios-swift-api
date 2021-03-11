@@ -2,9 +2,8 @@ language: swift
 
 jobs:
   include:
-  	- stage: Xcode Tests
+    - stage: Xcode Tests
       osx_image: xcode12u
-      
       env: 
         - SCHEME=AlfrescoCore DESTINATION="'platform=iOS Simulator,name=iPhone 12,OS=14.0'" SDK=iphonesimulator14.0
       before_script:
