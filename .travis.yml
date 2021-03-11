@@ -2,4 +2,4 @@ language: swift
 os: osx
 
 import:
-- AlfrescoCore/.travis.yml
+- AlfrescoCore/AlfrescoCore.yml
