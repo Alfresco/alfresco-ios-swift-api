@@ -3,9 +3,9 @@ language: swift
 jobs:
   include:
     - stage: Xcode Tests
-      osx_image: xcode12u
+      osx_image: xcode12.2
       env: 
-        - SCHEME=AlfrescoCore DESTINATION="'platform=iOS Simulator,name=iPhone 11,OS=12.0'"
+        - SCHEME=AlfrescoCore DESTINATION="'platform=iOS Simulator,name=iPhone 8,OS=12.0'"
       before_script:
         - sudo gem install xcpretty
       script:
