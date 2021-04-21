@@ -76,7 +76,7 @@ extension NodesAPI {
         case .success(let upload, _, _) :
             upload.responseJSON { response in
                 if let error = response.error {
-
+                    completionHandler(nil, error)
                 } else {
                     if let data = response.data {
                         let resultDecode = decode(data: data)
