@@ -684,5 +684,18 @@ open class QueriesAPI {
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
-
+    
+    open class func loadAdvanceSearchConfigurations(withCallback completion: @escaping ((_ data: SearchConfigModel?,_ error: Error?) -> Void)) {
+        self.findAdvanceSearchConfigurationPath().execute { response, error in
+            completion(response?.body, error)
+        }
+    }
+    
+    class func findAdvanceSearchConfigurationPath() -> RequestBuilder<SearchConfigModel> {
+        let URLString = "https://mobileapps.envalfresco.com/adf/app-config.json"
+        let parameters: [String:Any]? = nil
+        let requestBuilder: RequestBuilder<SearchConfigModel>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: false)
+    }
 }
+
