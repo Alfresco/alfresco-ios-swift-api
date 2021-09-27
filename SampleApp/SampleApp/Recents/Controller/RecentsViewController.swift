@@ -27,6 +27,7 @@ class RecentsViewController: UIViewController {
         super.viewDidLoad()
 
         viewModel?.fetchRecentsList()
+        viewModel?.loadAdvanceSearchConfiguration()
     }
     
     @IBAction func logoutTapped(_ sender: Any) {

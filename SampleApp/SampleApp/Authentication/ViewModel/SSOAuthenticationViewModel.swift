@@ -35,7 +35,7 @@ class SSOAuthenticationViewModel {
 }
 
 extension SSOAuthenticationViewModel: AlfrescoAuthDelegate {
-    func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?) {
+    func didReceive(result: Result<AlfrescoCredential?, APIError>, session: AlfrescoAuthSession?) {
         switch result {
         case .success(let credential):
             DispatchQueue.main.async { [weak self] in
@@ -47,7 +47,9 @@ extension SSOAuthenticationViewModel: AlfrescoAuthDelegate {
                     let basePath = "\(parameters.fullContentURL)/\(parameters.serviceDocument)/api/-default-/public"
                     AlfrescoContentAPI.basePath = basePath
                 }
-                sSelf.delegate?.logInSuccessful(with: credential)
+                if let credential = credential {
+                    sSelf.delegate?.logInSuccessful(with: credential)
+                }
             }
         case .failure(let error):
             DispatchQueue.main.async { [weak self] in
@@ -56,7 +58,7 @@ extension SSOAuthenticationViewModel: AlfrescoAuthDelegate {
             }
         }
     }
-
-    func didLogOut(result: Result<Int, APIError>) {}
+    
+    func didLogOut(result: Result<Int, APIError>, session: AlfrescoAuthSession?) {}
 }
 
