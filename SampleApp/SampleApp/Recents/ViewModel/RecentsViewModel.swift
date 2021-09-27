@@ -20,7 +20,7 @@ import Foundation
 import AlfrescoContent
 import AlfrescoAuth
 
-protocol RecentsViewModelDelegate: class {
+protocol RecentsViewModelDelegate: AnyObject {
     func didLoadRecents()
     func didLogout()
     func didRefreshSession()
@@ -66,24 +66,32 @@ class RecentsViewModel {
     func refreshSession() {
         authenticationService?.refreshSession(delegate: self)
     }
+    
+    func loadAdvanceSearchConfiguration() {
+        QueriesAPI.loadAdvanceSearchConfigurations { configuration, error in
+            print(configuration?.search.first?.name)
+        }
+    }
 }
 
 extension RecentsViewModel: AlfrescoAuthDelegate {
-    func didReceive(result: Result<AlfrescoCredential, APIError>, session: AlfrescoAuthSession?) {
+    func didReceive(result: Result<AlfrescoCredential?, APIError>, session: AlfrescoAuthSession?) {
         switch result {
         case .success(let credential):
             DispatchQueue.main.async { [weak self] in
                 guard let sSelf = self else { return }
 
-                sSelf.authenticationProvider = AIMSAuthenticationProvider(with: credential)
+                if let credential = credential {
+                    sSelf.authenticationProvider = AIMSAuthenticationProvider(with: credential)
+                }
                 sSelf.delegate?.didRefreshSession()
             }
         case .failure(let error):
             print(error)
         }
     }
-
-    func didLogOut(result: Result<Int, APIError>) {
+    
+    func didLogOut(result: Result<Int, APIError>, session: AlfrescoAuthSession?) {
         authenticationService?.session = nil
         authenticationProvider = nil
         delegate?.didLogout()

@@ -93,7 +93,9 @@ class AuthenticationService: AuthenticationServiceProtocol {
     }
 
     func logOut(onViewController viewController: UIViewController, lastKnownCredential: AlfrescoCredential, delegate: AlfrescoAuthDelegate) {
-        alfrescoAuth.logout(onViewController: viewController, delegate: delegate, forCredential: lastKnownCredential)
+        if let session = self.session {
+            alfrescoAuth.logout(onViewController: viewController, delegate: delegate, session: session, forCredential: lastKnownCredential)
+        }
     }
 
     func refreshSession(delegate: AlfrescoAuthDelegate) {
