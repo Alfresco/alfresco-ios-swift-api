@@ -16,7 +16,7 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
 // MARK: Advance Search Model
 public class SearchConfigModel: Codable {
