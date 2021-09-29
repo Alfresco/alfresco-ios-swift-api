@@ -18,19 +18,21 @@ open class Response<T> {
     public let statusCode: Int
     public let header: [String: String]
     public let body: T?
+    public let data: Data?
 
-    public init(statusCode: Int, header: [String: String], body: T?) {
+    public init(statusCode: Int, header: [String: String], body: T?, data: Data?) {
         self.statusCode = statusCode
         self.header = header
         self.body = body
+        self.data = data
     }
 
-    public convenience init(response: HTTPURLResponse, body: T?) {
+    public convenience init(response: HTTPURLResponse, body: T?, data: Data?) {
         let rawHeader = response.allHeaderFields
         var header = [String:String]()
         for case let (key, value) as (String, String) in rawHeader {
             header[key] = value
         }
-        self.init(statusCode: response.statusCode, header: header, body: body)
+        self.init(statusCode: response.statusCode, header: header, body: body, data: data)
     }
 }
