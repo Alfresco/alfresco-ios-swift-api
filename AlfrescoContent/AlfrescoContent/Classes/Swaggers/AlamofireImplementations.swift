@@ -140,7 +140,8 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 completion(
                     Response(
                         response: stringResponse.response!,
-                        body: ((stringResponse.result.value ?? "") as! T)
+                        body: ((stringResponse.result.value ?? "") as! T),
+                        data: stringResponse.data
                     ),
                     nil
                 )
@@ -183,7 +184,8 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     completion(
                         Response(
                             response: dataResponse.response!,
-                            body: (filePath as! T)
+                            body: (filePath as! T),
+                            data: dataResponse.data
                         ),
                         nil
                     )
@@ -210,7 +212,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 completion(
                     Response(
                         response: voidResponse.response!,
-                        body: nil),
+                        body: nil, data: voidResponse.data),
                     nil
                 )
             })
@@ -229,7 +231,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 completion(
                     Response(
                         response: dataResponse.response!,
-                        body: (dataResponse.data as! T)
+                        body: (dataResponse.data as! T), data: dataResponse.data
                     ),
                     nil
                 )
@@ -344,7 +346,7 @@ open class AlamofireDecodableRequestBuilder<T:Decodable>: AlamofireRequestBuilde
                 completion(
                     Response(
                         response: stringResponse.response!,
-                        body: ((stringResponse.result.value ?? "") as! T)
+                        body: ((stringResponse.result.value ?? "") as! T), data: stringResponse.data
                     ),
                     nil
                 )
@@ -364,7 +366,7 @@ open class AlamofireDecodableRequestBuilder<T:Decodable>: AlamofireRequestBuilde
                 completion(
                     Response(
                         response: voidResponse.response!,
-                        body: nil),
+                        body: nil, data: voidResponse.data),
                     nil
                 )
             })
@@ -383,7 +385,7 @@ open class AlamofireDecodableRequestBuilder<T:Decodable>: AlamofireRequestBuilde
                 completion(
                     Response(
                         response: dataResponse.response!,
-                        body: (dataResponse.data as! T)
+                        body: (dataResponse.data as! T), data: dataResponse.data
                     ),
                     nil
                 )
@@ -411,12 +413,11 @@ open class AlamofireDecodableRequestBuilder<T:Decodable>: AlamofireRequestBuilde
 
                 let decodeResult: (decodableObj: T?, error: Error?) = CodableHelper.decode(T.self, from: data)
                 if decodeResult.error == nil {
-                    responseObj = Response(response: httpResponse, body: decodeResult.decodableObj)
+                    responseObj = Response(response: httpResponse, body: decodeResult.decodableObj, data: data)
                 }
 
                 completion(responseObj, decodeResult.error)
             })
         }
     }
-
 }
