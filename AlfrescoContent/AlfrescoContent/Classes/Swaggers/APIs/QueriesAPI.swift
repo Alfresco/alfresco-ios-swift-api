@@ -690,9 +690,9 @@ open class QueriesAPI {
      - parameter completion: SearchConfigModel is the output of the API for success and error: Returns error if there is any
      */
     
-    open class func loadAdvanceSearchConfigurations(withCallback completion: @escaping ((_ data: Data?,_ error: Error?) -> Void)) {
-        self.findAdvanceSearchConfigurationPath().execute { response, error in
-            completion(response?.data, error)
+    open class func loadAdvanceSearchConfigurations(for url:String?, withCallback completion: @escaping ((_ configuration: SearchConfigModel?, _ data: Data?, _ error: Error?) -> Void)) {
+        self.findAdvanceSearchConfigurationPath(for: url).execute { response, error in
+            completion(response?.body, response?.data, error)
         }
     }
     
@@ -700,8 +700,8 @@ open class QueriesAPI {
      - GET Advance search configurations API call
         This API is used to fetch configurations from the server. This is GET request
      */
-    class func findAdvanceSearchConfigurationPath() -> RequestBuilder<SearchConfigModel> {
-        let URLString = "https://mobileapps.envalfresco.com/adf/app-config.json"
+    class func findAdvanceSearchConfigurationPath(for url:String?) -> RequestBuilder<SearchConfigModel> {
+        let URLString = url ?? "https://mobileapps.envalfresco.com/adf/app-config.json"
         let parameters: [String:Any]? = nil
         let requestBuilder: RequestBuilder<SearchConfigModel>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: false)
