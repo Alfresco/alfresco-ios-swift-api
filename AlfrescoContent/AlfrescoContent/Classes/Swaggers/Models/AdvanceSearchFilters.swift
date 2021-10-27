@@ -17,14 +17,15 @@
 //
 
 import Foundation
+import SwiftUI
 
 // MARK: Advance Search Model
 public class SearchConfigModel: Codable {
-    public var search = [AdvanceSearchConfigurations]()
+    public var search = [AdvanceSearchFilters]()
 }
 
 // MARK: Advance Search Model
-public class AdvanceSearchConfigurations: Codable {
+public class AdvanceSearchFilters: Codable {
     public var filterWithContains: Bool?
     public var resetButton: Bool?
     public var name: String?
@@ -78,6 +79,7 @@ public class SearchComponentSettings: Codable {
     public var dateFormat: String?
     public var maxDate: String?
     public var options: [SearchComponentOptions]?
+    public var selectedValue: String?
     
     enum CodingKeys: String, CodingKey {
         case pattern
@@ -93,6 +95,7 @@ public class SearchComponentSettings: Codable {
         case dateFormat
         case maxDate
         case options
+        case selectedValue
     }
 }
 
