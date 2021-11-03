@@ -46,10 +46,6 @@ public class AdvanceSearchFilters: Codable {
 // MARK: Filter Queries
 public class FilterQueries: Codable {
     public var query: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case query
-    }
 }
 
 
