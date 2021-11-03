@@ -11,17 +11,20 @@ public class SimpleSearchRequest {
     let skipCount: Int
     let maxItems: Int
     let searchInclude: [SearchInclude]
+    var filterQueries : [String]
 
     public init(querry: String,
-         parentId: String?,
-         skipCount: Int,
-         maxItems: Int,
-         searchInclude: [SearchInclude]) {
+                parentId: String?,
+                skipCount: Int,
+                maxItems: Int,
+                searchInclude: [SearchInclude],
+                filterQueries: [String]) {
         self.querry = querry
         self.parentId = parentId
         self.skipCount = skipCount
         self.maxItems = maxItems
         self.searchInclude = searchInclude
+        self.filterQueries = filterQueries
     }
 }
 
@@ -83,7 +86,13 @@ extension SearchAPI {
         }
 
         var filter = makeFilterQuerries(filters: typeFilter) + SearchAPI.unsupportedTypes
-
+        if !searchRequest.filterQueries.isEmpty {
+            for item in searchRequest.filterQueries {
+                let filterQuery = makeFilterQuerries(filters: item)
+                filter = filter + filterQuery
+            }
+        }
+            
         if let parentId = searchRequest.parentId {
             let parentIdFilter = "ANCESTOR:'workspace://SpacesStore/\(parentId)'"
             filter.append(contentsOf: makeFilterQuerries(filters: parentIdFilter))
