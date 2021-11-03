@@ -30,16 +30,28 @@ public class AdvanceSearchFilters: Codable {
     public var resetButton: Bool?
     public var name: String?
     public var isDefault: Bool? = false
+    public var filterQueries = [FilterQueries]()
     public var categories = [SearchCategories]()
-    
+
     enum CodingKeys: String, CodingKey {
         case filterWithContains
         case resetButton
         case name
         case isDefault = "default"
+        case filterQueries
         case categories
     }
 }
+
+// MARK: Filter Queries
+public class FilterQueries: Codable {
+    public var query: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case query
+    }
+}
+
 
 // MARK: Search Categories
 public class SearchCategories: Codable {
