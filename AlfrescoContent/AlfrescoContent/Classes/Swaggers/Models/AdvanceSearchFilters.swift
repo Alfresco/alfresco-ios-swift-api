@@ -32,6 +32,9 @@ public class AdvanceSearchFilters: Codable {
     public var isDefault: Bool? = false
     public var filterQueries = [FilterQueries]()
     public var categories = [SearchCategories]()
+    public var facetFields: FacetFields?
+    public var facetQueries: FacetQueries?
+    public var facetIntervals: FacetIntervals?
 
     enum CodingKeys: String, CodingKey {
         case filterWithContains
@@ -40,6 +43,9 @@ public class AdvanceSearchFilters: Codable {
         case isDefault = "default"
         case filterQueries
         case categories
+        case facetFields
+        case facetQueries
+        case facetIntervals
     }
 }
 
@@ -118,4 +124,49 @@ public class SearchComponentOptions: Codable {
         case value
         case isDefault = "default"
     }
+}
+
+// MARK: - Facet Fields
+public class FacetFields: Codable {
+    var expanded: Bool? = false
+    var fields = [Fields]()
+}
+
+public class Fields: Codable {
+    var field: String?
+    var mincount: Int?
+    var label: String?
+}
+
+// MARK: - Facet Queries
+public class FacetQueries: Codable {
+    var label: String?
+    var pageSize: Int?
+    var expanded: Bool?
+    var mincount: Int?
+    var queries = [Queries]()
+}
+
+public class Queries: Codable {
+    var query: String?
+    var label: String?
+}
+
+// MARK: - Facet Intervals
+public class FacetIntervals: Codable {
+    var expanded: Bool?
+    var intervals = [Intervals]()
+}
+
+public class Intervals: Codable {
+    var label: String?
+    var field: String?
+    var sets = [Sets]()
+}
+
+public class Sets: Codable {
+    var label: String?
+    var start: String?
+    var end: String?
+    var endInclusive: Bool? = false
 }
