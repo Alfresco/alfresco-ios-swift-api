@@ -154,7 +154,6 @@ public class Queries: Codable {
 
 // MARK: - Facet Intervals
 public class FacetIntervals: Codable {
-    var expanded: Bool?
     var intervals = [Intervals]()
 }
 

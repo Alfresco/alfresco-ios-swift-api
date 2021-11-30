@@ -12,7 +12,7 @@ public class SimpleSearchRequest {
     let maxItems: Int
     let searchInclude: [SearchInclude]
     var filterQueries : [String]
-
+    
     public init(querry: String,
                 parentId: String?,
                 skipCount: Int,
@@ -59,9 +59,11 @@ extension SearchAPI {
                                             "-QNAME:comment AND -PNAME:'0/wiki'")
     }
 
-
     public class func simpleSearch(searchRequest: SimpleSearchRequest,
-                            completion: @escaping ((_ data: ResultSetPaging?,_ error: Error?) -> Void)) {
+                                   facetFields: FacetFields?,
+                                   facetQueries: FacetQueries?,
+                                   facetIntervals: FacetIntervals?,
+                                   completion: @escaping ((_ data: ResultSetPaging?,_ error: Error?) -> Void)) {
         let querry = requestQuery(searchRequest.querry + "*")
         let paginationRequest = requestPagination(maxItems: searchRequest.maxItems,
                                                   skipCount: searchRequest.skipCount)
@@ -108,9 +110,9 @@ extension SearchAPI {
                                           defaults: defaults,
                                           localization: nil,
                                           filterQueries: filter,
-                                          facetQueries: nil,
-                                          facetFields: nil,
-                                          facetIntervals: nil,
+                                          facetQueries: facetQueries,
+                                          facetFields: facetFields,
+                                          facetIntervals: facetIntervals,
                                           pivots: nil,
                                           stats: nil,
                                           spellcheck: nil,
