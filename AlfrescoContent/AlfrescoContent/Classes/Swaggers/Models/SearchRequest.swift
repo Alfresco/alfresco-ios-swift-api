@@ -22,9 +22,6 @@ public struct SearchRequest: Codable {
     public var defaults: RequestDefaults?
     public var localization: RequestLocalization?
     public var filterQueries: RequestFilterQueries?
-    public var facetQueries: RequestFacetQueries?
-    public var facetFields: RequestFacetFields?
-    public var facetIntervals: RequestFacetIntervals?
     public var pivots: [RequestPivot]?
     public var stats: [RequestStats]?
     public var spellcheck: RequestSpellcheck?
@@ -32,8 +29,11 @@ public struct SearchRequest: Codable {
     public var limits: RequestLimits?
     public var highlight: RequestHighlight?
     public var ranges: [RequestRange]?
+    public var facetQueries: [Queries]?
+    public var facetFields: Dictionary<String, [Fields]?>?
+    public var facetIntervals: Dictionary<String, [Intervals]?>?
 
-    public init(query: RequestQuery, paging: RequestPagination?, include: RequestInclude?, includeRequest: Bool?, fields: RequestFields?, sort: RequestSortDefinition?, templates: RequestTemplates?, defaults: RequestDefaults?, localization: RequestLocalization?, filterQueries: RequestFilterQueries?, facetQueries: RequestFacetQueries?, facetFields: RequestFacetFields?, facetIntervals: RequestFacetIntervals?, pivots: [RequestPivot]?, stats: [RequestStats]?, spellcheck: RequestSpellcheck?, scope: RequestScope?, limits: RequestLimits?, highlight: RequestHighlight?, ranges: [RequestRange]?) {
+    public init(query: RequestQuery, paging: RequestPagination?, include: RequestInclude?, includeRequest: Bool?, fields: RequestFields?, sort: RequestSortDefinition?, templates: RequestTemplates?, defaults: RequestDefaults?, localization: RequestLocalization?, filterQueries: RequestFilterQueries?, facetQueries: FacetQueries?, facetFields: FacetFields?, facetIntervals: FacetIntervals?, pivots: [RequestPivot]?, stats: [RequestStats]?, spellcheck: RequestSpellcheck?, scope: RequestScope?, limits: RequestLimits?, highlight: RequestHighlight?, ranges: [RequestRange]?) {
         self.query = query
         self.paging = paging
         self.include = include
@@ -44,9 +44,6 @@ public struct SearchRequest: Codable {
         self.defaults = defaults
         self.localization = localization
         self.filterQueries = filterQueries
-        self.facetQueries = facetQueries
-        self.facetFields = facetFields
-        self.facetIntervals = facetIntervals
         self.pivots = pivots
         self.stats = stats
         self.spellcheck = spellcheck
@@ -54,8 +51,15 @@ public struct SearchRequest: Codable {
         self.limits = limits
         self.highlight = highlight
         self.ranges = ranges
+        
+        self.facetQueries = facetQueries?.queries
+        self.facetFields = nil
+        if let facetFields = facetFields {
+            self.facetFields = ["facets": facetFields.fields]
+        }
+        self.facetIntervals = nil
+        if let facetIntervals = facetIntervals {
+            self.facetIntervals = ["intervals": facetIntervals.intervals]
+        }
     }
-
-
 }
-
