@@ -53,16 +53,13 @@ public struct SearchRequest: Codable {
         self.ranges = ranges
         
         self.facetQueries = facetQueries?.queries
+        self.facetFields = nil
         if let facetFields = facetFields {
             self.facetFields = ["facets": facetFields.fields]
-        } else {
-            self.facetFields = nil
         }
-        
+        self.facetIntervals = nil
         if let facetIntervals = facetIntervals {
             self.facetIntervals = ["intervals": facetIntervals.intervals]
-        } else {
-            self.facetIntervals = nil
         }
     }
 }
