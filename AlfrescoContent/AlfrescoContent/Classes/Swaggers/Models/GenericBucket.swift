@@ -14,6 +14,8 @@ public struct GenericBucket: Codable {
 
     /** The bucket label */
     public var label: String?
+    /** The bucket count */
+    public var count: String?
     /** The filter query you can use to apply this facet */
     public var filterQuery: String?
     /** An optional field for additional display information */
@@ -24,15 +26,14 @@ public struct GenericBucket: Codable {
     public var facets: [JSONValue]?
     public var bucketInfo: GenericBucketBucketInfo?
 
-    public init(label: String?, filterQuery: String?, display: JSONValue?, metrics: [GenericMetric]?, facets: [JSONValue]?, bucketInfo: GenericBucketBucketInfo?) {
+    public init(label: String?, count: String?, filterQuery: String?, display: JSONValue?, metrics: [GenericMetric]?, facets: [JSONValue]?, bucketInfo: GenericBucketBucketInfo?) {
         self.label = label
         self.filterQuery = filterQuery
         self.display = display
         self.metrics = metrics
         self.facets = facets
         self.bucketInfo = bucketInfo
+        self.count = count
     }
-
-
 }
 
