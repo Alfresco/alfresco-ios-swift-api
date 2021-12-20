@@ -119,7 +119,8 @@ extension SearchAPI {
                                           scope: nil,
                                           limits: nil,
                                           highlight: nil,
-                                          ranges: nil)
+                                          ranges: nil,
+                                          facetFormat: "V2")
         SearchAPI.search(queryBody: searchRequest,
                          completion: completion)
     }
@@ -157,7 +158,6 @@ extension SearchAPI {
                                           limits: nil,
                                           highlight: nil,
                                           ranges: nil)
-
         SearchAPI.search(queryBody: searchRequest,
                          completion: completion)
     }

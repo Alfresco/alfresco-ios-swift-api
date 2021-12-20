@@ -128,44 +128,45 @@ public class SearchComponentOptions: Codable {
 
 // MARK: - Facet Fields
 public class FacetFields: Codable {
-    var expanded: Bool? = false
-    var fields = [Fields]()
+    public var expanded: Bool? = false
+    public var fields = [Fields]()
 }
 
 public class Fields: Codable {
-    var field: String?
-    var mincount: Int?
-    var label: String?
+    public var field: String?
+    public var mincount: Int?
+    public var label: String?
 }
 
 // MARK: - Facet Queries
 public class FacetQueries: Codable {
-    var label: String?
-    var pageSize: Int?
-    var expanded: Bool?
-    var mincount: Int?
-    var queries = [Queries]()
+    public var label: String?
+    public var pageSize: Int?
+    public var expanded: Bool?
+    public var mincount: Int?
+    public var queries = [Queries]()
 }
 
 public class Queries: Codable {
-    var query: String?
-    var label: String?
+    public var query: String?
+    public var label: String?
+    public var group: String?
 }
 
 // MARK: - Facet Intervals
 public class FacetIntervals: Codable {
-    var intervals = [Intervals]()
+    public var intervals = [Intervals]()
 }
 
 public class Intervals: Codable {
-    var label: String?
-    var field: String?
-    var sets = [Sets]()
+    public var label: String?
+    public var field: String?
+    public var sets = [Sets]()
 }
 
 public class Sets: Codable {
-    var label: String?
-    var start: String?
-    var end: String?
-    var endInclusive: Bool? = false
+    public var label: String?
+    public var start: String?
+    public var end: String?
+    public var endInclusive: Bool? = false
 }

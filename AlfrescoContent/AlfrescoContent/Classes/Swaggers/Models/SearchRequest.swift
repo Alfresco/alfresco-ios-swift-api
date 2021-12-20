@@ -32,8 +32,9 @@ public struct SearchRequest: Codable {
     public var facetQueries: [Queries]?
     public var facetFields: Dictionary<String, [Fields]?>?
     public var facetIntervals: Dictionary<String, [Intervals]?>?
+    public var facetFormat: String?
 
-    public init(query: RequestQuery, paging: RequestPagination?, include: RequestInclude?, includeRequest: Bool?, fields: RequestFields?, sort: RequestSortDefinition?, templates: RequestTemplates?, defaults: RequestDefaults?, localization: RequestLocalization?, filterQueries: RequestFilterQueries?, facetQueries: FacetQueries?, facetFields: FacetFields?, facetIntervals: FacetIntervals?, pivots: [RequestPivot]?, stats: [RequestStats]?, spellcheck: RequestSpellcheck?, scope: RequestScope?, limits: RequestLimits?, highlight: RequestHighlight?, ranges: [RequestRange]?) {
+    public init(query: RequestQuery, paging: RequestPagination?, include: RequestInclude?, includeRequest: Bool?, fields: RequestFields?, sort: RequestSortDefinition?, templates: RequestTemplates?, defaults: RequestDefaults?, localization: RequestLocalization?, filterQueries: RequestFilterQueries?, facetQueries: FacetQueries?, facetFields: FacetFields?, facetIntervals: FacetIntervals?, pivots: [RequestPivot]?, stats: [RequestStats]?, spellcheck: RequestSpellcheck?, scope: RequestScope?, limits: RequestLimits?, highlight: RequestHighlight?, ranges: [RequestRange]?, facetFormat: String? = nil) {
         self.query = query
         self.paging = paging
         self.include = include
@@ -60,6 +61,7 @@ public struct SearchRequest: Codable {
         self.facetIntervals = nil
         if let facetIntervals = facetIntervals {
             self.facetIntervals = ["intervals": facetIntervals.intervals]
+            self.facetFormat = facetFormat
         }
     }
 }
