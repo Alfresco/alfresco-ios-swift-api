@@ -60,6 +60,8 @@ class RecentsViewModel {
     func getTasksList() {
         let parameters = TaskListParams.init(page: 0)
         TasksAPI.getTasksList(params: parameters) { data, error in
+            print("*** data ***", data)
+            print("*** error ***", error?.localizedDescription)
         }
     }
 
