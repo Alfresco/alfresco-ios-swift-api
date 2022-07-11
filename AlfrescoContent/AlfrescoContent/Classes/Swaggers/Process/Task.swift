@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: Task List Model
 public class TaskList: Codable {
     public var size: Int
     public var total: Int
@@ -14,7 +15,7 @@ public class TaskList: Codable {
     public var data = [Task]()
 }
 
-// MARK: Task List Model
+// MARK: Tasks
 public class Task: Codable {
     public var id: String?
     public var name: String?
@@ -49,7 +50,7 @@ public class Task: Codable {
     public var managerOfCandidateGroup: Bool?
 }
 
-// MARK: Task List Model
+// MARK: Task Assignee
 public class TaskAssignee: Codable {
     public var id: Int
     public var firstName: String?

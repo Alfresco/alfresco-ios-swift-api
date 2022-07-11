@@ -60,8 +60,6 @@ class RecentsViewModel {
     func getTasksList() {
         let parameters = TaskListParams.init(page: 0)
         TasksAPI.getTasksList(params: parameters) { data, error in
-            print("***** Task List Data *****", data)
-            print("***** Task List Error *****", error.debugDescription)
         }
     }
 
@@ -79,7 +77,6 @@ class RecentsViewModel {
     
     func loadAdvanceSearchConfiguration() {
         QueriesAPI.loadAdvanceSearchConfigurations { configuration, error in
-            print(configuration?.search.first?.name)
         }
     }
 }
