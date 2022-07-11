@@ -22,6 +22,11 @@ import AlfrescoAuth
 class AuthenticationViewController: UIViewController {
     @IBOutlet weak var urlTextField: UITextField!
     var viewModel: AuthenticationViewModel?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        urlTextField.text = "mobileapps.envalfresco.com"
+    }
 
     @IBAction func signInTapped(_ sender: Any) {
         viewModel?.availableAuthType(for: urlTextField.text ?? "")

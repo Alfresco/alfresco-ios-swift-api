@@ -46,6 +46,7 @@ extension SSOAuthenticationViewModel: AlfrescoAuthDelegate {
                 if let parameters = sSelf.authenticationService?.parameters {
                     let basePath = "\(parameters.fullContentURL)/\(parameters.serviceDocument)/api/-default-/public"
                     AlfrescoContentAPI.basePath = basePath
+                    AlfrescoProcessAPI.basePath = "\(parameters.fullContentURL)"
                 }
                 if let credential = credential {
                     sSelf.delegate?.logInSuccessful(with: credential)
