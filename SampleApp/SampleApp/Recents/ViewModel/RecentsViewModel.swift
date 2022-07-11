@@ -39,19 +39,27 @@ class RecentsViewModel {
         guard let provider = authenticationProvider else { return }
         AlfrescoContentAPI.customHeaders = provider.authorizationHeader()
 
-        SearchAPI.search(queryBody: SearchRequestBuilder.recentRequest(provider.identifier(), pagination: nil)) { [weak self] (result, error) in
-            guard let sSelf = self else { return }
-            var listNodes: [ListNode]?
-            if let entries = result?.list?.entries {
-                listNodes = ResultsNodeMapper.map(entries)
-
-                sSelf.nodes = listNodes
-                sSelf.delegate?.didLoadRecents()
-            } else {
-                if let error = error {
-                    print(error)
-                }
-            }
+//        SearchAPI.search(queryBody: SearchRequestBuilder.recentRequest(provider.identifier(), pagination: nil)) { [weak self] (result, error) in
+//            guard let sSelf = self else { return }
+//            var listNodes: [ListNode]?
+//            if let entries = result?.list?.entries {
+//                listNodes = ResultsNodeMapper.map(entries)
+//
+//                sSelf.nodes = listNodes
+//                sSelf.delegate?.didLoadRecents()
+//            } else {
+//                if let error = error {
+//                    print(error)
+//                }
+//            }
+//        }
+        
+        getTasksList()
+    }
+    
+    func getTasksList() {
+        let parameters = TaskListParams.init(page: 0)
+        TasksAPI.getTasksList(params: parameters) { data, error in
         }
     }
 
@@ -69,7 +77,6 @@ class RecentsViewModel {
     
     func loadAdvanceSearchConfiguration() {
         QueriesAPI.loadAdvanceSearchConfigurations { configuration, error in
-            print(configuration?.search.first?.name)
         }
     }
 }

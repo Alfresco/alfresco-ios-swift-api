@@ -25,7 +25,7 @@ class AuthenticationParameters: Codable {
     var https: Bool {
         return port == "80" ? false : true
     }
-    var port: String = "80"
+    var port: String = "443"
     var serviceDocument: String = "alfresco"
     var realm: String = "alfresco" // Leave empty to log in with Basic Auth
     var clientID: String = "alfresco-ios-acs-app"
