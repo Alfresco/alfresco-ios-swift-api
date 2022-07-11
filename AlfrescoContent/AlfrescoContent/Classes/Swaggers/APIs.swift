@@ -13,6 +13,10 @@ open class AlfrescoContentAPI {
     public static var requestBuilderFactory: RequestBuilderFactory = AlamofireRequestBuilderFactory()
 }
 
+open class AlfrescoProcessAPI {
+    public static var basePath = "https://www.alfresco.com/activiti-app/api/enterprise"
+}
+
 open class RequestBuilder<T> {
     var credential: URLCredential?
     var headers: [String:String]
