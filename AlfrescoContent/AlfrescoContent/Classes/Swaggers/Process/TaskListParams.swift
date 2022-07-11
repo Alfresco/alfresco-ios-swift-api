@@ -5,7 +5,7 @@
 //  Created by global on 10/07/22.
 //
 
-import UIKit
+import Foundation
 
 public struct TaskListParams: Codable {
 

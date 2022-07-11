@@ -5,7 +5,7 @@
 //  Created by global on 04/07/22.
 //
 
-import UIKit
+import Foundation
 
 open class TasksAPI: NSObject {
 
