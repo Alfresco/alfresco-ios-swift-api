@@ -39,8 +39,10 @@ class BasicAuthenticationViewModel {
 
                     if let parameters = sSelf.authenticationService?.parameters {
                         let basePath = "\(parameters.fullHostnameURL)/\(parameters.serviceDocument)/api/-default-/public"
+                        let processServiceBasePath = "\(parameters.fullHostnameURL)/\(parameters.processAppClientID)/\(parameters.processAppQueryString)/\(parameters.processAppDefinition)"
+                        
                         AlfrescoContentAPI.basePath = basePath
-                        AlfrescoProcessAPI.basePath = "\(parameters.fullHostnameURL)"
+                        AlfrescoProcessAPI.basePath = processServiceBasePath
                         sSelf.delegate?.logInSuccessful(with: basicAuthCredential)
                     }
                 }
