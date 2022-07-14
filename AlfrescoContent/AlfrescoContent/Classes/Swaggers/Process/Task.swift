@@ -22,9 +22,9 @@ public class Task: Codable {
     public var description: String?
     public var category: String?
     public var assignee: TaskAssignee?
-    public var created: String?
-    public var dueDate: String?
-    public var endDate: String?
+    public var created: Date?
+    public var dueDate: Date?
+    public var endDate: Date?
     public var duration: String?
     public var priority: Int?
     public var parentTaskId: Int?
