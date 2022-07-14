@@ -13,15 +13,15 @@ public struct TaskListParams: Codable {
     public var assignment: String?
     public var dueAfter: String?
     public var dueBefore: String?
-    public var includeProcessInstance: Bool = true
-    public var includeProcessVariables: Bool = true
-    public var includeTaskLocalVariables: Bool = true
-    public var page: Int = 0
+    public var includeProcessInstance: Bool? = true
+    public var includeProcessVariables: Bool? = true
+    public var includeTaskLocalVariables: Bool? = true
+    public var page: Int? = 0
     public var processDefinitionId: String?
     public var processInstanceId: String?
-    public var size: Int = 25
+    public var size: Int? = 25
     public var sort: String?
-    public var start: Int = 0
+    public var start: Int? = 0
     public var state: String?
     public var taskId: String?
     public var text: String?
@@ -30,15 +30,15 @@ public struct TaskListParams: Codable {
                 assignment: String? = nil,
                 dueAfter: String? = nil,
                 dueBefore: String? = nil,
-                includeProcessInstance: Bool = true,
-                includeProcessVariables: Bool = true,
-                includeTaskLocalVariables: Bool = true,
-                page: Int,
+                includeProcessInstance: Bool? = true,
+                includeProcessVariables: Bool? = true,
+                includeTaskLocalVariables: Bool? = true,
+                page: Int?,
                 processDefinitionId: String? = nil,
                 processInstanceId: String? = nil,
-                size: Int = 25,
+                size: Int? = 25,
                 sort: String? = nil,
-                start: Int = 0,
+                start: Int? = nil,
                 state: String? = nil,
                 taskId: String? = nil,
                 text: String? = nil) {
