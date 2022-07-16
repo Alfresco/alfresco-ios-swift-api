@@ -5,7 +5,7 @@
 //  Created by global on 16/07/22.
 //
 
-import UIKit
+import Foundation
 
 // MARK: Task Filters List Model
 public class TaskFiltersList: Codable {
