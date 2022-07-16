@@ -58,8 +58,13 @@ class RecentsViewModel {
     }
     
     func getTasksList() {
-        let parameters = TaskListParams.init(page: 0)
-        TasksAPI.getTasksList(params: parameters) { data, error in
+//        let parameters = TaskListParams.init(page: 0)
+//        TasksAPI.getTasksList(params: parameters) { data, error in
+//            print("*** data ***", data)
+//            print("*** error ***", error?.localizedDescription)
+//        }
+        
+        TasksAPI.getTasksFilters { data, error in
             print("*** data ***", data)
             print("*** error ***", error?.localizedDescription)
         }
@@ -78,8 +83,8 @@ class RecentsViewModel {
     }
     
     func loadAdvanceSearchConfiguration() {
-        QueriesAPI.loadAdvanceSearchConfigurations { configuration, error in
-        }
+//        QueriesAPI.loadAdvanceSearchConfigurations { configuration, error in
+//        }
     }
 }
 
