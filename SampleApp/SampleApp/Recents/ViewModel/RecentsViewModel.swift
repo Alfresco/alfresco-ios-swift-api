@@ -54,17 +54,11 @@ class RecentsViewModel {
 //            }
 //        }
         
-        getTasksList()
+        getTasksDetails()
     }
     
-    func getTasksList() {
-//        let parameters = TaskListParams.init(page: 0)
-//        TasksAPI.getTasksList(params: parameters) { data, error in
-//            print("*** data ***", data)
-//            print("*** error ***", error?.localizedDescription)
-//        }
-        
-        TasksAPI.getTasksFilters { data, error in
+    func getTasksDetails() {
+        TasksAPI.getTasksDetails(with: "116") { data, error in
             print("*** data ***", data)
             print("*** error ***", error?.localizedDescription)
         }
