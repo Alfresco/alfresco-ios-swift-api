@@ -25,7 +25,7 @@ public class Task: Codable {
     public var created: Date?
     public var dueDate: Date?
     public var endDate: Date?
-    public var duration: Int?
+    public var duration: String?
     public var priority: Int?
     public var parentTaskId: Int?
     public var parentTaskName: String?
@@ -48,6 +48,7 @@ public class Task: Codable {
     public var memberOfCandidateGroup: Bool?
     public var memberOfCandidateUsers: Bool?
     public var managerOfCandidateGroup: Bool?
+    public var involvedPeople: [TaskAssignee]?
 }
 
 // MARK: Task Assignee
@@ -57,3 +58,4 @@ public class TaskAssignee: Codable {
     public var lastName: String?
     public var email: String?
 }
+

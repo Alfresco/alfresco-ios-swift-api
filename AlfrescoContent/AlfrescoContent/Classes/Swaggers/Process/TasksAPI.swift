@@ -10,7 +10,7 @@ import Foundation
 open class TasksAPI: NSObject {
 
     open class func getTasksList(params: TaskListParams, withCallback completion: @escaping ((_ data: TaskList?,_ error: Error?) -> Void)) {
-        self.listTaks(params: params).execute { response, error in
+        self.listTasks(params: params).execute { response, error in
             completion(response?.body, error)
         }
     }
@@ -19,7 +19,7 @@ open class TasksAPI: NSObject {
      - GET Tasks list API call
         This API is used to fetch list of tasks from the server. This is POST request
      */
-    class func listTaks(params: TaskListParams) -> RequestBuilder<TaskList> {
+    class func listTasks(params: TaskListParams) -> RequestBuilder<TaskList> {
         let path = "/tasks/query"
         let URLString = AlfrescoProcessAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: params)
@@ -44,5 +44,28 @@ open class TasksAPI: NSObject {
         let requestBuilder: RequestBuilder<TaskFiltersList>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
         return requestBuilder.init(method: "GET", URLString: (URLString), parameters: parameters, isBody: false)
     }
-}
+    
+    /**
+     - GET task detail by id
+     This API is used to get detail of a task
+     */
+    
+    open class func getTasksDetails(with taskId: String, withCallback completion: @escaping ((_ data: Task?, _ error: Error?) -> Void)) {
+        self.taskDetails(taskId: taskId).execute { response, error in
+            completion(response?.body, error)
+        }
+    }
+    
+    class func taskDetails(taskId: String) -> RequestBuilder<Task> {
+        var path = "/tasks/{taskId}"
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        let parameters: [String:Any]? = nil
 
+        let requestBuilder: RequestBuilder<Task>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+}
