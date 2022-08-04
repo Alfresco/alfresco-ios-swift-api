@@ -25,7 +25,7 @@ public class Task: Codable {
     public var created: Date?
     public var dueDate: Date?
     public var endDate: Date?
-    public var duration: String?
+    public var duration: Int?
     public var priority: Int?
     public var parentTaskId: Int?
     public var parentTaskName: String?
