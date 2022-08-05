@@ -58,9 +58,20 @@ class RecentsViewModel {
     }
     
     func getTasksDetails() {
-        TasksAPI.getTasksDetails(with: "116") { data, error in
+//        TasksAPI.getTasksDetails(with: "116") { data, error in
+//            print("*** data ***", data)
+//            print("*** error ***", error?.localizedDescription)
+//        }
+        
+//        TaskCommentsAPI.getTaskComments(with: "109") { data, error in
+//            print("*** data ***", data)
+//            print("*** error ***", error)
+//        }
+        
+        let params = TaskCommentParams(message: "JSR")
+        TaskCommentsAPI.postTaskComment(taskId: "109", params: params) { data, error in
             print("*** data ***", data)
-            print("*** error ***", error?.localizedDescription)
+            print("*** error ***", error)
         }
     }
 
