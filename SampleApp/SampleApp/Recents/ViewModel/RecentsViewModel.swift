@@ -68,8 +68,13 @@ class RecentsViewModel {
 //            print("*** error ***", error)
 //        }
         
-        let params = TaskCommentParams(message: "JSR")
-        TaskCommentsAPI.postTaskComment(taskId: "109", params: params) { data, error in
+//        let params = TaskCommentParams(message: "JSR")
+//        TaskCommentsAPI.postTaskComment(taskId: "109", params: params) { data, error in
+//            print("*** data ***", data)
+//            print("*** error ***", error)
+//        }
+        
+        TaskAttachmentsAPI.getTaskAttachments(with: "181") { data, error in
             print("*** data ***", data)
             print("*** error ***", error)
         }
