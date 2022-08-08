@@ -5,7 +5,7 @@
 //  Created by global on 09/08/22.
 //
 
-import UIKit
+import Foundation
 
 class TaskAttachmentsAPI: NSObject {
 
