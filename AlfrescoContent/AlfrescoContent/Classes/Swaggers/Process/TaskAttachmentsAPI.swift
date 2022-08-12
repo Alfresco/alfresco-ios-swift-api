@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TaskAttachmentsAPI: NSObject {
+open class TaskAttachmentsAPI: NSObject {
 
     // MARK: - Attachments List
     /**
