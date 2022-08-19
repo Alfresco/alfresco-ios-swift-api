@@ -33,4 +33,24 @@ open class TaskAttachmentsAPI: NSObject {
         let requestBuilder: RequestBuilder<TaskAttachmentsModel>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
+    
+    open class func getTaskAttachmentContent(contentId: String, completion: @escaping ((_ data: Data?,_ error: Error?) -> Void)) {
+        getAttachmentContentWithRequestBuilder(contentId: contentId).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+    
+    class func getAttachmentContentWithRequestBuilder(contentId: String) -> RequestBuilder<Data> {
+        var path = "/content/{contentId}/raw"
+        let contentPreEscape = "\(contentId)"
+        let contentPostEscape = contentPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{contentId}", with: contentPostEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        let url = URLComponents(string: URLString)
+        let requestBuilder: RequestBuilder<Data>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
 }

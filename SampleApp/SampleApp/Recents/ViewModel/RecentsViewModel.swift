@@ -73,8 +73,8 @@ class RecentsViewModel {
 //            print("*** data ***", data)
 //            print("*** error ***", error)
 //        }
-        
-        TaskAttachmentsAPI.getTaskAttachments(with: "181") { data, error in
+                
+        TaskAttachmentsAPI.getTaskAttachmentContent(contentId: "9") { data, error in
             print("*** data ***", data)
             print("*** error ***", error)
         }
