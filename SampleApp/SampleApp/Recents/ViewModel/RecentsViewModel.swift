@@ -38,43 +38,11 @@ class RecentsViewModel {
     func fetchRecentsList() {
         guard let provider = authenticationProvider else { return }
         AlfrescoContentAPI.customHeaders = provider.authorizationHeader()
-
-//        SearchAPI.search(queryBody: SearchRequestBuilder.recentRequest(provider.identifier(), pagination: nil)) { [weak self] (result, error) in
-//            guard let sSelf = self else { return }
-//            var listNodes: [ListNode]?
-//            if let entries = result?.list?.entries {
-//                listNodes = ResultsNodeMapper.map(entries)
-//
-//                sSelf.nodes = listNodes
-//                sSelf.delegate?.didLoadRecents()
-//            } else {
-//                if let error = error {
-//                    print(error)
-//                }
-//            }
-//        }
-        
         getTasksDetails()
     }
     
     func getTasksDetails() {
-//        TasksAPI.getTasksDetails(with: "116") { data, error in
-//            print("*** data ***", data)
-//            print("*** error ***", error?.localizedDescription)
-//        }
-        
-//        TaskCommentsAPI.getTaskComments(with: "109") { data, error in
-//            print("*** data ***", data)
-//            print("*** error ***", error)
-//        }
-        
-//        let params = TaskCommentParams(message: "JSR")
-//        TaskCommentsAPI.postTaskComment(taskId: "109", params: params) { data, error in
-//            print("*** data ***", data)
-//            print("*** error ***", error)
-//        }
-                
-        TaskAttachmentsAPI.getTaskAttachmentContent(contentId: "9") { data, error in
+        TasksAPI.completeTask(with: "95") { data, error in
             print("*** data ***", data)
             print("*** error ***", error)
         }

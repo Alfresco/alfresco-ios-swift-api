@@ -68,4 +68,34 @@ open class TasksAPI: NSObject {
         let requestBuilder: RequestBuilder<Task>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
+    
+    
+    /**
+     - PUT complete taskl by id
+     This API is used to complete a task
+     */
+    
+    open class func completeTask(with taskId: String, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        
+        self.markTaskAsComplete(taskId: taskId).execute { response, error in
+            if error == nil {
+                completion((), error)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    class func markTaskAsComplete(taskId: String) -> RequestBuilder<Void> {
+        var path = "/tasks/{taskId}/action/complete"
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        let parameters: [String:Any]? = nil
+
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
 }
