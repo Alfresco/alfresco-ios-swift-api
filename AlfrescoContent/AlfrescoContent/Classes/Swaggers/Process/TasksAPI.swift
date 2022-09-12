@@ -262,4 +262,32 @@ extension TasksAPI {
         }
         return (nil, nil)
     }
+    
+    /**
+     - DELETE attachment
+        This API is used to delete attachment from a task. This is DELETE request
+     */
+    open class func deleteRawContent(contentId: String, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        
+        self.deleteTaskAttachment(contentId: contentId).execute { response, error in
+            if error == nil {
+                completion((), error)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    class func deleteTaskAttachment(contentId: String) -> RequestBuilder<Void> {
+        var path = "/content/{contentId}"
+        let preEscape = "\(contentId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{contentId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        let parameters: [String:Any]? = nil
+
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
+        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
 }

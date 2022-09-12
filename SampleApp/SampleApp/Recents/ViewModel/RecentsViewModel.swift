@@ -42,13 +42,10 @@ class RecentsViewModel {
     }
     
     func getTasksDetails() {
-        let image = UIImage(named: "sample")
-        if let data = image?.pngData() {
-            
-            TasksAPI.uploadRawContent(taskId: "134", fileData: data, fileName: "sample.png") { data, error in
-                print("*** data ***", data)
-                print("*** error ***", error)
-            }
+        
+        TasksAPI.deleteRawContent(contentId: "2") { data, error in
+            print("*** data ***", data)
+            print("*** error ***", error)
         }
     }
 
