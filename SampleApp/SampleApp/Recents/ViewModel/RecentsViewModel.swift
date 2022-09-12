@@ -42,8 +42,7 @@ class RecentsViewModel {
     }
     
     func getTasksDetails() {
-        
-        TasksAPI.deleteRawContent(contentId: "2") { data, error in
+        UserProfile.getUserProfile { data, error in
             print("*** data ***", data)
             print("*** error ***", error)
         }
