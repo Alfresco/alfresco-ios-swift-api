@@ -42,7 +42,7 @@ class RecentsViewModel {
     }
     
     func getTasksDetails() {
-        TasksAPI.completeTask(with: "95") { data, error in
+        UserProfile.getUserProfile { data, error in
             print("*** data ***", data)
             print("*** error ***", error)
         }
