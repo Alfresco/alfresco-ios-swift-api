@@ -199,13 +199,13 @@ extension TasksAPI {
     }
     
     // MARK: - Upload Raw Content
-    open class func uploadRawContent(taskId: String, fileData: Data, fileName: String, withCallback completion: @escaping ((_ data: TaskAttachment?,_ error: Error?) -> Void)) {
+    open class func uploadRawContent(taskId: String, fileData: Data, fileName: String, mimeType: String, withCallback completion: @escaping ((_ data: TaskAttachment?,_ error: Error?) -> Void)) {
         
         let requestBuilder = TasksAPI.uploadAttachment(taskId: taskId)
         guard let url = URL(string: requestBuilder.URLString) else { return }
 
         Alamofire.upload(multipartFormData: { multipart in
-            multipart.append(fileData, withName: "file", fileName: fileName, mimeType: "")
+            multipart.append(fileData, withName: "file", fileName: fileName, mimeType: mimeType)
         }, to: url, method: .post, headers: AlfrescoContentAPI.customHeaders) { encodingResult in
             handle(encodingResult: encodingResult,
                    completionHandler: completion)
