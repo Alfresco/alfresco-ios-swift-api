@@ -38,12 +38,13 @@ class RecentsViewModel {
     func fetchRecentsList() {
         guard let provider = authenticationProvider else { return }
         AlfrescoContentAPI.customHeaders = provider.authorizationHeader()
-        getTasksDetails()
+        getProcessList()
     }
     
-    func getTasksDetails() {
-        UserProfile.getUserProfile { data, error in
-            print("*** data ***", data)
+    func getProcessList() {
+        let params = ProcessListParams(sort: "created-desc", state: .running)
+        ProcessAPI.getProcessList(params: params) { data, error in
+            print("*** process list ***", data?.data)
             print("*** error ***", error)
         }
     }
