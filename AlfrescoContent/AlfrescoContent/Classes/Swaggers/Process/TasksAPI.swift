@@ -104,7 +104,7 @@ open class TasksAPI: NSObject {
 extension TasksAPI {
     
     // MARK: - Create Task
-    open class func createTask(params: TaskBodyCreate, withCallback completion: @escaping ((_ data: Task?,_ error: Error?) -> Void)) {
+    public class func createTask(params: TaskBodyCreate, withCallback completion: @escaping ((_ data: Task?,_ error: Error?) -> Void)) {
         self.createNewTask(params: params).execute { response, error in
             completion(response?.body, error)
         }
@@ -123,7 +123,7 @@ extension TasksAPI {
     }
     
     // MARK: - Update Task
-    open class func updateTask(taskId: String, params: TaskBodyCreate, withCallback completion: @escaping ((_ data: Task?,_ error: Error?) -> Void)) {
+    public class func updateTask(taskId: String, params: TaskBodyCreate, withCallback completion: @escaping ((_ data: Task?,_ error: Error?) -> Void)) {
         
         self.updateTaskDetails(taskId: taskId, params: params).execute { response, error in
             completion(response?.body, error)
@@ -148,7 +148,7 @@ extension TasksAPI {
     }
     
     // MARK: - Assign Task
-    open class func assignTask(taskId: String, params: AssignUserBody, withCallback completion: @escaping ((_ data: Task?,_ error: Error?) -> Void)) {
+    public class func assignTask(taskId: String, params: AssignUserBody, withCallback completion: @escaping ((_ data: Task?,_ error: Error?) -> Void)) {
         
         self.assignTaskDetails(taskId: taskId, params: params).execute { response, error in
             completion(response?.body, error)
@@ -173,7 +173,7 @@ extension TasksAPI {
     }
     
     // MARK: - Search User
-    open class func searchUser(filter: String?, email: String?, withCallback completion: @escaping ((_ data: TaskAssigneeUserList?,_ error: Error?) -> Void)) {
+    public class func searchUser(filter: String?, email: String?, withCallback completion: @escaping ((_ data: TaskAssigneeUserList?,_ error: Error?) -> Void)) {
         
         self.searchUserToAssignTask(filter: filter, email: email).execute { response, error in
             completion(response?.body, error)
@@ -199,7 +199,7 @@ extension TasksAPI {
     }
     
     // MARK: - Upload Raw Content
-    open class func uploadRawContent(taskId: String, fileData: Data, fileName: String, mimeType: String, withCallback completion: @escaping ((_ data: TaskAttachment?,_ error: Error?) -> Void)) {
+    public class func uploadRawContent(taskId: String, fileData: Data, fileName: String, mimeType: String, withCallback completion: @escaping ((_ data: TaskAttachment?,_ error: Error?) -> Void)) {
         
         let requestBuilder = TasksAPI.uploadAttachment(taskId: taskId)
         guard let url = URL(string: requestBuilder.URLString) else { return }
@@ -267,7 +267,7 @@ extension TasksAPI {
      - DELETE attachment
         This API is used to delete attachment from a task. This is DELETE request
      */
-    open class func deleteRawContent(contentId: String, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+    public class func deleteRawContent(contentId: String, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
         
         self.deleteTaskAttachment(contentId: contentId).execute { response, error in
             if error == nil {
