@@ -15,11 +15,19 @@ public enum ProcessStates: String, Codable {
 public struct ProcessListParams: Codable {
     public var sort: String?
     public var state: ProcessStates?
-    
-    public init(sort: String?, state: ProcessStates?) {
+    public var page: Int? = 0
+    public var size: Int? = 25
+    public var start: Int? = 0
+
+    public init(sort: String? = "created-desc",
+                state: ProcessStates?,
+                page: Int?,
+                size: Int? = 25,
+                start: Int? = nil) {
         self.sort = sort
         self.state = state
+        self.page = page
+        self.size = size
+        self.start = start
     }
 }
-
-

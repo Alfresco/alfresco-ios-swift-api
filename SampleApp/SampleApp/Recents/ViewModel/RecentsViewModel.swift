@@ -42,7 +42,7 @@ class RecentsViewModel {
     }
     
     func getProcessList() {
-        let params = ProcessListParams(sort: "created-desc", state: .running)
+        let params = ProcessListParams(state: .running, page: 1)
         ProcessAPI.getProcessList(params: params) { data, error in
             print("*** process list ***", data?.data)
             print("*** error ***", error)
