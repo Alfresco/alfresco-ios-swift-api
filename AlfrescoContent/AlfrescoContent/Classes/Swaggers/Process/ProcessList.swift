@@ -38,7 +38,8 @@ public class Process: Codable {
 
 // MARK: Process User
 public class ProcessUser: Codable {
-    public var sort: String?
-    public var name: String?
-    public var assignment: String?
+    public var id: Int?
+    public var firstName: String?
+    public var lastName: String?
+    public var email: String?
 }
