@@ -10,6 +10,7 @@ import Foundation
 public enum ProcessStates: String, Codable {
     case running = "running"
     case completed = "completed"
+    case all = "all"
 }
 
 public struct ProcessListParams: Codable {
