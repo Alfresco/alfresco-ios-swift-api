@@ -42,9 +42,20 @@ class RecentsViewModel {
     }
     
     func getProcessList() {
-        let params = ProcessListParams(state: .running, page: 1)
-        ProcessAPI.getProcessList(params: params) { data, error in
-            print("*** process list ***", data?.data)
+//        let params = ProcessRequestLinkContent(mimeType: "image/jpeg", sourceId: "d1157240-1b06-4f86-8799-4c2f5fb74e17;1.0@", name: "IMG_20230307_192123733.jpg")
+//
+//        ProcessAPI.linkContentToProcess(params: params) { data, error in
+//            print("*** process content ***", data)
+//            print("*** error ***", error)
+//        }
+        
+//        ProcessAPI.checkIfAPSIsEnabled { data, error in
+//            print("*** process system properties ***", data)
+//            print("*** error ***", error)
+//        }
+        
+        ProcessAPI.processDefinition(appDefinitionId: "51") { data, error in
+            print("*** process definition ***", data)
             print("*** error ***", error)
         }
     }
