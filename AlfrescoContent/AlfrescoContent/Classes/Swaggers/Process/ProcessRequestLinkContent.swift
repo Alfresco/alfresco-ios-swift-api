@@ -13,7 +13,7 @@ public struct ProcessRequestLinkContent: Codable {
     public var sourceId: String?
     public var name: String?
 
-    public init(source: String? = "alfresco-1-adw-contentAlfresco",
+    public init(source: String?,
                 mimeType: String?,
                 sourceId: String?,
                 name: String?) {

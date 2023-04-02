@@ -42,7 +42,7 @@ class RecentsViewModel {
     }
     
     func getProcessList() {
-//        let params = ProcessRequestLinkContent(mimeType: "image/jpeg", sourceId: "d1157240-1b06-4f86-8799-4c2f5fb74e17;1.0@", name: "IMG_20230307_192123733.jpg")
+//        let params = ProcessRequestLinkContent(source: "alfresco-1-adw-contentAlfresco", mimeType: "image/jpeg", sourceId: "d1157240-1b06-4f86-8799-4c2f5fb74e17;1.0@", name: "IMG_20230307_192123733.jpg")
 //
 //        ProcessAPI.linkContentToProcess(params: params) { data, error in
 //            print("*** process content ***", data)
