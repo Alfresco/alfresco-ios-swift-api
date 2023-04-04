@@ -88,4 +88,26 @@ open class ProcessAPI: NSObject {
         let requestBuilder: RequestBuilder<ProcessDefinition>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
+    
+    // MARK: - Runtime app Definition
+    public class func runtimeAppDefinition(withCallback completion: @escaping ((_ data: WorkflowAppDefinition?,_ error: Error?) -> Void)) {
+        
+        self.getRuntimeAppDefinition().execute { response, error in
+            completion(response?.body, error)
+        }
+    }
+    
+    /**
+     - GET Run time app definition API call
+        This API is used to get the details of run time process. This is GET request
+     */
+    class func getRuntimeAppDefinition() -> RequestBuilder<WorkflowAppDefinition> {
+        let path = "/runtime-app-definitions"
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        let url = URLComponents(string: URLString)
+        
+        let requestBuilder: RequestBuilder<WorkflowAppDefinition>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
 }

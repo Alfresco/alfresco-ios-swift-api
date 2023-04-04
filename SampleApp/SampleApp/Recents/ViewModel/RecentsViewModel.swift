@@ -54,8 +54,13 @@ class RecentsViewModel {
 //            print("*** error ***", error)
 //        }
         
-        ProcessAPI.processDefinition(appDefinitionId: "51") { data, error in
-            print("*** process definition ***", data)
+//        ProcessAPI.processDefinition(appDefinitionId: "2") { data, error in
+//            print("*** process definition ***", data)
+//            print("*** error ***", error)
+//        }
+        
+        ProcessAPI.runtimeAppDefinition { data, error in
+            print("*** run time app definition ***", data?.data)
             print("*** error ***", error)
         }
     }
