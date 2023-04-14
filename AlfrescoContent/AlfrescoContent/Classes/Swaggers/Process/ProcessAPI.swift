@@ -110,4 +110,29 @@ open class ProcessAPI: NSObject {
         let requestBuilder: RequestBuilder<WorkflowAppDefinition>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
+    
+    // MARK: - Search Group
+    public class func searchGroup(filter: String?, withCallback completion: @escaping ((_ data: TaskAssigneeUserList?,_ error: Error?) -> Void)) {
+        
+        self.searchGroupToAssignTask(filter: filter).execute { response, error in
+            completion(response?.body, error)
+        }
+    }
+    
+    /**
+     - GET Tasks Assignee Group List API call
+        This API is used to fetch list of availble groups to assin a task. This is GET request
+     */
+    class func searchGroupToAssignTask(filter: String?) -> RequestBuilder<TaskAssigneeUserList> {
+        let path = "/groups"
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+            "filter": filter
+        ])
+        
+        let requestBuilder: RequestBuilder<TaskAssigneeUserList>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
 }

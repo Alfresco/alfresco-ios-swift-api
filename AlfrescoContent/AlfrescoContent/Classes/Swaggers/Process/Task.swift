@@ -53,9 +53,21 @@ public class Task: Codable {
 
 // MARK: Task Assignee
 public class TaskAssignee: Codable {
-    public var id: Int
+    public var id: Int = -1
     public var firstName: String?
     public var lastName: String?
     public var email: String?
+    public var groupName: String?
+    public var externalId: String?
+    public var status: String?
+    public var parentGroupId: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case firstName
+        case lastName
+        case email
+        case groupName = "name"
+        case externalId, status, parentGroupId
+    }
 }
-
