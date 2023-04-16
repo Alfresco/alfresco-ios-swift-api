@@ -42,14 +42,21 @@ class RecentsViewModel {
     }
     
     func getProcessList() {
-        TasksAPI.searchUser(filter: "mob", email: nil) { data, error in
-            print("*** search users ***", data)
-            print("*** error ***", error)
-        }
+//        TasksAPI.searchUser(filter: "mob", email: nil) { data, error in
+//            print("*** search users ***", data)
+//            print("*** error ***", error)
+//        }
+//
+//        ProcessAPI.searchGroup(filter: "mob") { data, error in
+//            print("*** search groups ***", data)
+//            print("*** error ***", error)
+//        }
         
-        ProcessAPI.searchGroup(filter: "mob") { data, error in
-            print("*** search groups ***", data)
-            print("*** error ***", error)
+        if let data = UIImage(named: "sample")?.pngData() {
+            TasksAPI.uploadContentToWorkflow(fileData: data, fileName: "sample", mimeType: "jpeg") { data, error in
+                print("*** upload content in workflow ***", data)
+                print("*** error ***", error)
+            }
         }
     }
 

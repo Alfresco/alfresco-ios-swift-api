@@ -290,4 +290,28 @@ extension TasksAPI {
         let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
         return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
+    
+    // MARK: - Upload Raw Content
+    public class func uploadContentToWorkflow(fileData: Data, fileName: String, mimeType: String, withCallback completion: @escaping ((_ data: TaskAttachment?,_ error: Error?) -> Void)) {
+        
+        let requestBuilder = TasksAPI.uploadWorkflowAttachment()
+        guard let url = URL(string: requestBuilder.URLString) else { return }
+
+        Alamofire.upload(multipartFormData: { multipart in
+            multipart.append(fileData, withName: "file", fileName: fileName, mimeType: mimeType)
+        }, to: url, method: .post, headers: AlfrescoContentAPI.customHeaders) { encodingResult in
+            handle(encodingResult: encodingResult,
+                   completionHandler: completion)
+        }
+    }
+    
+    class func uploadWorkflowAttachment() -> RequestBuilder<TaskAttachment> {
+        let path = "/content/raw"
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        
+        let parameters: [String:Any]? = nil
+        let requestBuilder: RequestBuilder<TaskAttachment>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
 }
