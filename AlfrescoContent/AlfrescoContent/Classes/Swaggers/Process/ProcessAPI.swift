@@ -120,8 +120,8 @@ open class ProcessAPI: NSObject {
     }
     
     /**
-     - GET Tasks Assignee Group List API call
-        This API is used to fetch list of availble groups to assin a task. This is GET request
+     - GET Tasks Assignee User List API call
+        This API is used to fetch list of availble users to assin a task. This is GET request
      */
     class func searchGroupToAssignTask(filter: String?) -> RequestBuilder<TaskAssigneeUserList> {
         let path = "/groups"
@@ -134,5 +134,24 @@ open class ProcessAPI: NSObject {
         
         let requestBuilder: RequestBuilder<TaskAssigneeUserList>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+    
+    // MARK: - Start Process Workflow
+    /**
+     - POST Start Process API call
+        This API is used to start a process. This is POST request
+     */
+    open class func startProcess(params: StartProcessBodyCreate, withCallback completion: @escaping ((_ data: ProcessContentDetails?,_ error: Error?) -> Void)) {
+        self.processInstance(params: params).execute { response, error in
+            completion(response?.body, error)
+        }
+    }
+    
+    class func processInstance(params: StartProcessBodyCreate) -> RequestBuilder<ProcessContentDetails> {
+        let path = "/process-instances"
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: params)
+        let requestBuilder: RequestBuilder<ProcessContentDetails>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "POST", URLString: (URLString), parameters: parameters, isBody: true)
     }
 }

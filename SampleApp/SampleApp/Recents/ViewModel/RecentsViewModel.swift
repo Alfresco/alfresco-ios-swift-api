@@ -42,21 +42,32 @@ class RecentsViewModel {
     }
     
     func getProcessList() {
-//        TasksAPI.searchUser(filter: "mob", email: nil) { data, error in
-//            print("*** search users ***", data)
-//            print("*** error ***", error)
-//        }
-//
-//        ProcessAPI.searchGroup(filter: "mob") { data, error in
-//            print("*** search groups ***", data)
-//            print("*** error ***", error)
-//        }
-        
+        /*
+        // upload content example
         if let data = UIImage(named: "sample")?.pngData() {
             TasksAPI.uploadContentToWorkflow(fileData: data, fileName: "sample", mimeType: "jpeg") { data, error in
                 print("*** upload content in workflow ***", data)
                 print("*** error ***", error)
             }
+        }
+        */
+        // start process example
+        let reviewer = ReviewerParams(email: "abc@example.com",
+                                      firstName: "ank",
+                                      lastName: "goy",
+                                      id: 1)
+        let params = StartProcessParams(message: "test",
+                                        dueDate: "2023-04-30",
+                                        attachmentIds: "10,20",
+                                        priority: TaskPriority.medium,
+                                        reviewer: reviewer,
+                                        sendemailnotifications: false)
+        
+        let finalParams = StartProcessBodyCreate.init(name: "name param", processDefinitionId: "123", params: params)
+        print("FINAL PARAMS \(finalParams)")
+        ProcessAPI.startProcess(params: finalParams) { data, error in
+            print("*** start process ***", data)
+            print("*** error ***", error)
         }
     }
 
