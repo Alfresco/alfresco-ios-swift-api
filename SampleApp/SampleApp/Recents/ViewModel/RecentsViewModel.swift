@@ -42,25 +42,31 @@ class RecentsViewModel {
     }
     
     func getProcessList() {
-//        let params = ProcessRequestLinkContent(source: "alfresco-1-adw-contentAlfresco", mimeType: "image/jpeg", sourceId: "d1157240-1b06-4f86-8799-4c2f5fb74e17;1.0@", name: "IMG_20230307_192123733.jpg")
-//
-//        ProcessAPI.linkContentToProcess(params: params) { data, error in
-//            print("*** process content ***", data)
-//            print("*** error ***", error)
-//        }
+        /*
+        // upload content example
+        if let data = UIImage(named: "sample")?.pngData() {
+            TasksAPI.uploadContentToWorkflow(fileData: data, fileName: "sample", mimeType: "jpeg") { data, error in
+                print("*** upload content in workflow ***", data)
+                print("*** error ***", error)
+            }
+        }
+        */
+        // start process example
+        let reviewer = ReviewerParams(email: "abc@example.com",
+                                      firstName: "ank",
+                                      lastName: "goy",
+                                      id: 1)
+        let params = StartProcessParams(message: "test",
+                                        dueDate: "2023-04-30",
+                                        attachmentIds: "10,20",
+                                        priority: TaskPriority.medium,
+                                        reviewer: reviewer,
+                                        sendemailnotifications: false)
         
-//        ProcessAPI.checkIfAPSIsEnabled { data, error in
-//            print("*** process system properties ***", data)
-//            print("*** error ***", error)
-//        }
-        
-//        ProcessAPI.processDefinition(appDefinitionId: "2") { data, error in
-//            print("*** process definition ***", data)
-//            print("*** error ***", error)
-//        }
-        
-        ProcessAPI.runtimeAppDefinition { data, error in
-            print("*** run time app definition ***", data?.data)
+        let finalParams = StartProcessBodyCreate.init(name: "name param", processDefinitionId: "123", params: params)
+        print("FINAL PARAMS \(finalParams)")
+        ProcessAPI.startProcess(params: finalParams) { data, error in
+            print("*** start process ***", data)
             print("*** error ***", error)
         }
     }
