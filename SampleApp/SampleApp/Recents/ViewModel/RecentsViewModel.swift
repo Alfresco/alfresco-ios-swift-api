@@ -50,7 +50,7 @@ class RecentsViewModel {
                 print("*** error ***", error)
             }
         }
-        */
+        
         // start process example
         let reviewer = ReviewerParams(email: "abc@example.com",
                                       firstName: "ank",
@@ -68,6 +68,13 @@ class RecentsViewModel {
         ProcessAPI.startProcess(params: finalParams) { data, error in
             print("*** start process ***", data)
             print("*** error ***", error)
+        }
+         */
+        
+        // start form
+        ProcessAPI.formFields(name: "singlereviewer7-2-23:1:36") { data, fields, error in
+            print("*** error ***", error)
+            print("*** start form fields ***", fields)
         }
     }
 
