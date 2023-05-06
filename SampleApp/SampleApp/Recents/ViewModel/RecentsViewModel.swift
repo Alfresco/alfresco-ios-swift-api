@@ -83,7 +83,7 @@ class RecentsViewModel {
             print("*** docusign envelope ***", data?.envelopID)
             print("*** error ***", error)
         }
-         */
+         
         
         let params = DocusignEnvelopeDetailParams(taskid: "7529",
                                                   envelopeId: "676a4c10-9b3c-425f-b3bc-b10cb9445c39",
@@ -92,6 +92,7 @@ class RecentsViewModel {
             print("*** docusign envelope ***", data?.id)
             print("*** error ***", error)
         }
+         */
     }
 
     func logout(on viewController: UIViewController) {
