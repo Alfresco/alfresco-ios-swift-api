@@ -155,27 +155,17 @@ open class ProcessAPI: NSObject {
         return requestBuilder.init(method: "POST", URLString: (URLString), parameters: parameters, isBody: true)
     }
     
-    // MARK: - Start Form / Get Form fields
-    public class func formFields(name: String?, withCallback completion: @escaping ((_ data: StartFormFields?, _ fields: [Field], _ error: Error?) -> Void)) {
-        guard let name = name else { return }
-        self.startForm(name: name).execute { response, error in
-            let body = response?.body
-            let fields = StartFormFieldOperation.processFormFields(for: body)
-            completion(body, fields, error)
+    // MARK: - GET APS Source
+    open class func getAPSSource(withCallback completion: @escaping ((_ data: APSAccountProfile?,_ error: Error?) -> Void)) {
+        self.apsSource().execute { response, error in
+            completion(response?.body, error)
         }
     }
     
-    /**
-     - GET Get Form fields API call
-        This API is used to fetch list of fields to start a form. This is GET request
-     */
-    class func startForm(name: String) -> RequestBuilder<StartFormFields> {
-        let path = String(format: "/process-definitions/%@/start-form", name)
+    class func apsSource() -> RequestBuilder<APSAccountProfile> {
+        let path = "/profile/accounts/alfresco"
         let URLString = AlfrescoProcessAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        let url = URLComponents(string: URLString)
-        
-        let requestBuilder: RequestBuilder<StartFormFields>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        let requestBuilder: RequestBuilder<APSAccountProfile>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "GET", URLString: (URLString), parameters: nil, isBody: false)
     }
 }
