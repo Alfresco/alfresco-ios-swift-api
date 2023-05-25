@@ -43,14 +43,6 @@ class RecentsViewModel {
     
     func getProcessList() {
         /*
-        // upload content example
-        if let data = UIImage(named: "sample")?.pngData() {
-            TasksAPI.uploadContentToWorkflow(fileData: data, fileName: "sample", mimeType: "jpeg") { data, error in
-                print("*** upload content in workflow ***", data)
-                print("*** error ***", error)
-            }
-        }
-        
         // start process example
         let reviewer = ReviewerParams(email: "abc@example.com",
                                       firstName: "ank",
@@ -69,30 +61,16 @@ class RecentsViewModel {
             print("*** start process ***", data)
             print("*** error ***", error)
         }
-        
-        
-        
-        let params = DocusignCreateEnvelopeParams(contentId: "121",
-                                            docName: "circuit.pdf",
-                                            docType: "application/pdf",
-                                            signerEmail: "ankit.goyal@globallogic.com",
-                                            signerName: "Ankit Goyal",
-                                            returnUrl: "https://mobileapps.envalfresco.com/activiti-app/")
-        
-        DocusignAPIs.createEnvelope(params: params) { data, error in
-            print("*** docusign envelope ***", data?.envelopID)
-            print("*** error ***", error)
-        }
-         
-        
-        let params = DocusignEnvelopeDetailParams(taskid: "7529",
-                                                  envelopeId: "676a4c10-9b3c-425f-b3bc-b10cb9445c39",
-                                                  fileName: "Devil-circuit.pdf")
-        DocusignAPIs.envelopeDetails(params: params) { data, error in
-            print("*** docusign envelope ***", data?.id)
-            print("*** error ***", error)
-        }
          */
+        
+        ProcessAPI.getAPSSource { data, error in
+            if let data = data {
+                print("*** aps source ***", data)
+                print("*** error ***", error)
+                print("*** aps source id ***", data.data?.first?.id)
+                print("*** aps source name ***", data.data?.first?.name)
+            }
+        }
     }
 
     func logout(on viewController: UIViewController) {
