@@ -21,3 +21,4 @@ steps:
       cd AlfrescoContent
       pod repo add alfresco-ios-swift-api https://$(gitUser):$(gitPAT)@github.com/Alfresco/alfresco-ios-swift-api.git
       pod spec lint --sources='https://github.com/Alfresco/alfresco-ios-swift-api.git,https://github.com/CocoaPods/Specs.git' --allow-warnings
+      pod trunk push AlfrescoContent.podspec
