@@ -12,7 +12,7 @@ public struct APSAccountProfile: Codable {
     public var size: Int?
     public var total: Int?
     public var start: Int?
-    public var data: APSAccountDetails?
+    public var data: [APSAccountDetails]?
 }
 
 public struct APSAccountDetails: Codable {
