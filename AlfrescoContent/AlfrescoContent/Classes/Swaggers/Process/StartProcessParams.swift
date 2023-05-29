@@ -7,26 +7,20 @@
 
 import Foundation
 
-// MARK: - Task Priority
-public enum TaskPriority: String, Codable {
-    case low = "Low"
-    case medium = "Medium"
-    case high = "High"
-}
 
 // MARK: - Start process params
 public struct StartProcessParams: Codable {
     public var message: String?
     public var dueDate: String?
     public var attachmentIds: String?
-    public var priority: TaskPriority?
+    public var priority: String?
     public var reviewer: ReviewerParams?
     public var sendemailnotifications: Bool?
 
     public init(message: String?,
                 dueDate: String?,
                 attachmentIds: String?,
-                priority: TaskPriority?,
+                priority: String?,
                 reviewer: ReviewerParams?,
                 sendemailnotifications: Bool?) {
         self.message = message
@@ -54,7 +48,8 @@ public struct StartProcessBodyCreate: Codable {
     
     func createValueParams(params: StartProcessParams?) -> StartProcessValueParams {
         
-        let priority = StartProcessPriority(id: params?.priority?.rawValue, name: params?.priority?.rawValue)
+        let priority = StartProcessPriority(id: params?.priority,
+                                            name: params?.priority)
         let reviewer = ReviewerParams(email: params?.reviewer?.email,
                                       firstName: params?.reviewer?.firstName,
                                       lastName: params?.reviewer?.lastName,
