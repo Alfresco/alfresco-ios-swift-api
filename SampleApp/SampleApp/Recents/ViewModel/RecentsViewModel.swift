@@ -43,32 +43,10 @@ class RecentsViewModel {
     
     func getProcessList() {
         
-        // start process example
-        let reviewer = ReviewerParams(email: "automation@alfresco.com",
-                                      firstName: "Automation",
-                                      lastName: "User",
-                                      id: 6)
-        
-        let groupReviewer = GroupReviewerParams(id: 8,
-                                                name: "Alfresco Mobile Workspace",
-                                                externalId: nil,
-                                                status: "active",
-                                                parentGroupId: nil,
-                                                groups: nil)
-        
-        let params = StartProcessParams(message: "test",
-                                        dueDate: "2023-04-30",
-                                        attachmentIds: "40",
-                                        priority: "Medium",
-                                        reviewer: nil,
-                                        reviewgroups: groupReviewer,
-                                        sendemailnotifications: false)
-        
-        let finalParams = StartProcessBodyCreate.init(name: "Review and Approve Pooled", processDefinitionId: "reviewandapprovepooled:1:39", params: params)
-        print("FINAL PARAMS \(finalParams)")
-        ProcessAPI.startProcess(params: finalParams) { data, error in
-            print("*** start process ***", data)
-            print("*** error ***", error)
+        TasksAPI.getTaskForm(taskId: "562") { data, fields, error in
+            print("---- data ---- \(data)")
+            print("---- fields ---- \(fields)")
+            print("---- error ---- \(error)")
         }
     }
 
