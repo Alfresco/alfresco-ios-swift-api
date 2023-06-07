@@ -314,4 +314,31 @@ extension TasksAPI {
         let requestBuilder: RequestBuilder<TaskAttachment>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
+    
+    // MARK: - GET Tasks Forms
+    public class func getTaskForm(taskId: String?, withCallback completion: @escaping ((_ data: StartFormFields?, _ fields: [Field], _ error: Error?) -> Void)) {
+        guard let taskId = taskId else { return }
+        self.taskForm(taskId: taskId).execute { response, error in
+            let body = response?.body
+            let fields = StartFormFieldOperation.processFormFields(for: body)
+            completion(body, fields, error)
+        }
+    }
+    
+    /**
+     - GET Tasks forms API call
+        This API is used to fetch list of task form. This is GET request
+     */
+    class func taskForm(taskId: String) -> RequestBuilder<StartFormFields> {
+        var path = "/task-forms/{taskId}"
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        let parameters: [String:Any]? = nil
+
+        let requestBuilder: RequestBuilder<StartFormFields>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
 }
