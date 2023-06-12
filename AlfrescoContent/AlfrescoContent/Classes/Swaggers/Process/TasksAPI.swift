@@ -341,4 +341,33 @@ extension TasksAPI {
         let requestBuilder: RequestBuilder<StartFormFields>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
+    
+    // MARK: - Save Form
+    public class func saveTaskForm(taskId: String, params: SaveFormParams, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        
+        let apiParams = SaveTaskFormParams(values: params)
+        self.saveTask(taskId: taskId, params: apiParams).execute { response, error in
+            if error == nil {
+                completion((), error)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    /**
+     - POST save tasks form API call
+        This API is used to save task form with status and comment. This is POST request
+     */
+    class func saveTask(taskId: String, params: SaveTaskFormParams) -> RequestBuilder<Void> {
+        var path = "/task-forms/{taskId}/save-form"
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: params)
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
 }
