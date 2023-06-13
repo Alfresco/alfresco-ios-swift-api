@@ -42,14 +42,9 @@ class RecentsViewModel {
     }
     
     func getProcessList() {
-        
-        TasksAPI.getTaskForm(taskId: "562") { data, fields, error in
-            print("---- data ---- \(data)")
-            print("---- fields ---- \(fields)")
-            print("---- error ---- \(error)")
-        }
+        // test your APIs here
     }
-
+    
     func logout(on viewController: UIViewController) {
         if let credentials = ssoCredential {
             authenticationService?.logOut(onViewController: viewController, lastKnownCredential: credentials, delegate: self)

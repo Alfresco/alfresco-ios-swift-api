@@ -148,7 +148,7 @@ public class Field: Codable {
 public class Layout: Codable {
     public let row, column, colspan: Int
 
-    init(row: Int, column: Int, colspan: Int) {
+    public init(row: Int, column: Int, colspan: Int) {
         self.row = row
         self.column = column
         self.colspan = colspan
@@ -158,8 +158,8 @@ public class Layout: Codable {
 // MARK: - Option
 public class Option: Codable {
     public let id, name: String
-
-    init(id: String, name: String) {
+    
+    public init(id: String, name: String) {
         self.id = id
         self.name = name
     }
@@ -188,7 +188,7 @@ public class FileSource: Codable {
         case name
     }
 
-    init(serviceID: String, name: String) {
+    public init(serviceID: String, name: String) {
         self.serviceID = serviceID
         self.name = name
     }
@@ -473,11 +473,11 @@ public enum ValueUnion: Codable {
 
 // MARK: - ValueElement
 public class ValueElement: Codable {
-    let id: Int
-    let name, created: String
-    let createdBy: CreatedBy
-    let relatedContent, contentAvailable, link: Bool
-    let mimeType, simpleType, previewStatus, thumbnailStatus: String
+    public let id: Int
+    public let name, created: String
+    public let createdBy: CreatedBy
+    public let relatedContent, contentAvailable, link: Bool
+    public let mimeType, simpleType, previewStatus, thumbnailStatus: String
 
     init(id: Int, name: String, created: String, createdBy: CreatedBy, relatedContent: Bool, contentAvailable: Bool, link: Bool, mimeType: String, simpleType: String, previewStatus: String, thumbnailStatus: String) {
         self.id = id
@@ -496,8 +496,8 @@ public class ValueElement: Codable {
 
 // MARK: - CreatedBy
 public class CreatedBy: Codable {
-    let id: Int
-    let firstName, lastName, email: String
+    public let id: Int
+    public let firstName, lastName, email: String
 
     init(id: Int, firstName: String, lastName: String, email: String) {
         self.id = id
@@ -509,11 +509,12 @@ public class CreatedBy: Codable {
 
 // MARK: - Outcome
 public class Outcome: Codable {
-    let id: JSONNull?
-    let name: String
+    public let id: JSONNull?
+    public let name: String
 
     init(id: JSONNull?, name: String) {
         self.id = id
         self.name = name
     }
 }
+
