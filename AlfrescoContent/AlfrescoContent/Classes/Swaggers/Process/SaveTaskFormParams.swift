@@ -9,9 +9,11 @@ import Foundation
 
 public struct SaveTaskFormParams: Codable {
     public var values: SaveFormParams?
+    public var outcome: String?
 
-    public init(values: SaveFormParams?) {
+    public init(values: SaveFormParams?, outcome: String? = nil) {
         self.values = values
+        self.outcome = outcome
     }
 }
 

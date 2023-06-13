@@ -370,4 +370,33 @@ extension TasksAPI {
         let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
+    
+    // MARK: - Approve or Reject Form
+    public class func approveOrRejectTaskForm(taskId: String, params: SaveFormParams, outcome: String?, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        
+        let apiParams = SaveTaskFormParams(values: params, outcome: outcome)
+        self.approveRejectTask(taskId: taskId, params: apiParams, outcome: outcome).execute { response, error in
+            if error == nil {
+                completion((), error)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    /**
+     - POST save tasks form API call
+        This API is used to save task form with status and comment. This is POST request
+     */
+    class func approveRejectTask(taskId: String, params: SaveTaskFormParams, outcome: String?) -> RequestBuilder<Void> {
+        var path = "/task-forms/{taskId}"
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: params)
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
 }

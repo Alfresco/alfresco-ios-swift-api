@@ -43,6 +43,13 @@ class RecentsViewModel {
     
     func getProcessList() {
         // test your APIs here
+        
+        let option = Option(id: "In Progress", name: "In Progress")
+        let params = SaveFormParams(status: option, comment: "test comment")
+        TasksAPI.approveOrRejectTaskForm(taskId: "9110", params: params, outcome: "Approve") { data, error in
+            print("data: \(data)")
+            print("error:\(error)")
+        }
     }
     
     func logout(on viewController: UIViewController) {
