@@ -399,4 +399,57 @@ extension TasksAPI {
         let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
+
+    /**
+     - GET Tasks Variables API call
+        This API is used to fetch variables of takss. This is GET request
+     */
+
+    
+    public class func getTasksVariables(taskId: String, withCallback completion: @escaping ((_ data: [TasksVariable]?,_ error: Error?) -> Void)) {
+        self.getTasksVariable(taskId: taskId).execute { response, error in
+            completion(response?.body, error)
+        }
+    }
+    
+    class func getTasksVariable(taskId: String) -> RequestBuilder<[TasksVariable]> {
+        var path = "/task-forms/{taskId}/variables"
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        
+        let parameters: [String:Any]? = nil
+        let requestBuilder: RequestBuilder<[TasksVariable]>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+    
+    /**
+     - PUT Claim or Unclaim Task
+        This API is used to claim or unclaim any task. This is PUT request
+     */
+
+    
+    public class func claimOrUnclaimTask(taskId: String, isClaimTask: Bool, withCallback completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        self.claimUnclaimTask(taskId: taskId, isClaimTask: isClaimTask).execute { response, error in
+            completion(response?.body, error)
+        }
+    }
+    
+    class func claimUnclaimTask(taskId: String, isClaimTask: Bool) -> RequestBuilder<Void> {
+        var path = "/tasks/{taskId}/action/claim"
+        if !isClaimTask {
+            path = "/tasks/{taskId}/action/unclaim"
+        }
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        
+        let parameters: [String:Any]? = nil
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
 }
