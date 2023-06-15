@@ -9,8 +9,8 @@ import Foundation
 
 // MARK: Tasks Variable
 public class TasksVariable: Codable {
-    let id, type: String
-    let value: Value
+    public let id, type: String
+    public let value: Value
 
     public init(id: String, type: String, value: Value) {
         self.id = id
