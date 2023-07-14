@@ -56,7 +56,7 @@ extension SearchAPI {
                                             "-TYPE:'dl:contact' AND -TYPE:'dl:location'",
                                             "-TYPE:'fm:forum' AND -TYPE:'fm:topic' AND -TYPE:'fm:post'",
                                             "-TYPE:'app:filelink' AND -TYPE:'lnk:link' AND -TYPE:'ia:calendarEvent'",
-                                            "-QNAME:comment AND -PNAME:'0/wiki'")
+                                            "-PNAME:'0/wiki'")
     }
 
     public class func simpleSearch(searchRequest: SimpleSearchRequest,
@@ -107,7 +107,7 @@ extension SearchAPI {
                                           fields: nil,
                                           sort: sort,
                                           templates: templates,
-                                          defaults: defaults,
+                                          defaults: nil,
                                           localization: nil,
                                           filterQueries: filter,
                                           facetQueries: facetQueries,
