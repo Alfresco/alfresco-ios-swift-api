@@ -130,7 +130,7 @@ extension SearchAPI {
         let querry = requestQuery("*")
         let paginationRequest = requestPagination(maxItems: recentFilesRequest.maxItems,
                                                   skipCount: recentFilesRequest.skipCount)
-        let include: RequestInclude = ["path", "allowableOperations"]
+        let include: RequestInclude = ["path", "allowableOperations", "isFavorite"]
         let sort = [RequestSortDefinitionInner(type: .field,
                                            field: "cm:modified",
                                            ascending: false)]
