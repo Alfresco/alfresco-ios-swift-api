@@ -126,11 +126,15 @@ extension SearchAPI {
     }
 
     public class func recentFiles(recentFilesRequest: RecentFilesRequest,
+                                  isFavoriteAllowed: Bool,
                            completion: @escaping ((_ data: ResultSetPaging?,_ error: Error?) -> Void)) {
         let querry = requestQuery("*")
         let paginationRequest = requestPagination(maxItems: recentFilesRequest.maxItems,
                                                   skipCount: recentFilesRequest.skipCount)
-        let include: RequestInclude = ["path", "allowableOperations", "isFavorite"]
+        var include: RequestInclude = ["path", "allowableOperations"]
+        if isFavoriteAllowed {
+            include = ["path", "allowableOperations", "isFavorite"]
+        }
         let sort = [RequestSortDefinitionInner(type: .field,
                                            field: "cm:modified",
                                            ascending: false)]
