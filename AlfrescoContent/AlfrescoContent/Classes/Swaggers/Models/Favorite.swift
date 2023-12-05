@@ -19,12 +19,14 @@ public struct Favorite: Codable {
     public var target: FavoriteTarget
     /** A subset of the target favorite properties, system properties and properties already available in the target are excluded. */
     public var properties: JSONValue?
+    public var allowableOperations: [String]?
 
-    public init(targetGuid: String, createdAt: Date?, target: FavoriteTarget, properties: JSONValue?) {
+    public init(targetGuid: String, createdAt: Date?, target: FavoriteTarget, properties: JSONValue?, allowableOperations: [String]?) {
         self.targetGuid = targetGuid
         self.createdAt = createdAt
         self.target = target
         self.properties = properties
+        self.allowableOperations = allowableOperations
     }
 
 

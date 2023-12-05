@@ -11,32 +11,45 @@ import Foundation
 // MARK: start form fields
 public class StartFormFields: Codable {
     public let id: Int
+    public let name: String?
     public let processDefinitionID, processDefinitionName, processDefinitionKey: String
+    public let taskID: String?
+    public let taskName: String?
+    public let taskDefinitionKey: String?
     public let tabs: [JSONAny]
     public let fields: [Field]
-    public let outcomes, javascriptEvents: [JSONAny]
+    public let outcomes: [Outcome]
+    public let javascriptEvents: [JSONAny]
+    public let selectedOutcome: String?
     public let className, style: String
     public let customFieldTemplates, metadata: CustomFieldTemplates
     public let variables: [JSONAny]
     public let customFieldsValueInfo: CustomFieldTemplates
     public let gridsterForm: Bool
     public let globalDateFormat: String
-
+    
     enum CodingKeys: String, CodingKey {
-        case id
+        case id, name
         case processDefinitionID = "processDefinitionId"
+        case taskID = "taskId"
         case processDefinitionName, processDefinitionKey, tabs, fields, outcomes, javascriptEvents, className, style, customFieldTemplates, metadata, variables, customFieldsValueInfo, gridsterForm, globalDateFormat
+        case taskName, taskDefinitionKey, selectedOutcome
     }
-
-    init(id: Int, processDefinitionID: String, processDefinitionName: String, processDefinitionKey: String, tabs: [JSONAny], fields: [Field], outcomes: [JSONAny], javascriptEvents: [JSONAny], className: String, style: String, customFieldTemplates: CustomFieldTemplates, metadata: CustomFieldTemplates, variables: [JSONAny], customFieldsValueInfo: CustomFieldTemplates, gridsterForm: Bool, globalDateFormat: String) {
+    
+    init(id: Int, name: String, processDefinitionID: String, processDefinitionName: String, processDefinitionKey: String, taskID: String, taskName: String, taskDefinitionKey: String, tabs: [JSONAny], fields: [Field], outcomes: [Outcome], javascriptEvents: [JSONAny], selectedOutcome: String, className: String, style: String, customFieldTemplates: CustomFieldTemplates, metadata: CustomFieldTemplates, variables: [JSONAny], customFieldsValueInfo: CustomFieldTemplates, gridsterForm: Bool, globalDateFormat: String) {
         self.id = id
+        self.name = name
         self.processDefinitionID = processDefinitionID
         self.processDefinitionName = processDefinitionName
         self.processDefinitionKey = processDefinitionKey
+        self.taskID = taskID
+        self.taskName = taskName
+        self.taskDefinitionKey = taskDefinitionKey
         self.tabs = tabs
         self.fields = fields
         self.outcomes = outcomes
         self.javascriptEvents = javascriptEvents
+        self.selectedOutcome = selectedOutcome
         self.className = className
         self.style = style
         self.customFieldTemplates = customFieldTemplates
@@ -60,7 +73,7 @@ public class Field: Codable {
     public let fieldType, id: String
     public let name: String?
     public let type: String
-    public let value: String?
+    public let value: ValueUnion?
     public let fieldRequired, readOnly, overrideID: Bool
     public let colspan: Int
     public let placeholder: String?
@@ -90,7 +103,7 @@ public class Field: Codable {
         case restLabelProperty, tab, className, dateDisplayFormat, layout, sizeX, sizeY, row, col, visibilityCondition, numberOfColumns, fields, params, metaDataColumnDefinitions, endpoint, requestHeaders
     }
 
-    init(fieldType: String, id: String, name: String?, type: String, value: String?, fieldRequired: Bool, readOnly: Bool, overrideID: Bool, colspan: Int, placeholder: String?, minLength: Int, maxLength: Int, minValue: JSONNull?, maxValue: JSONNull?, regexPattern: JSONNull?, optionType: JSONNull?, hasEmptyValue: Bool?, options: [Option]?, restURL: JSONNull?, restResponsePath: JSONNull?, restIDProperty: JSONNull?, restLabelProperty: JSONNull?, tab: JSONNull?, className: JSONNull?, dateDisplayFormat: JSONNull?, layout: Layout?, sizeX: Int, sizeY: Int, row: Int, col: Int, visibilityCondition: JSONNull?, numberOfColumns: Int?, fields: [String: [Field]]?, params: Params?, metaDataColumnDefinitions: JSONNull?, endpoint: JSONNull?, requestHeaders: JSONNull?) {
+    init(fieldType: String, id: String, name: String?, type: String, value: ValueUnion?, fieldRequired: Bool, readOnly: Bool, overrideID: Bool, colspan: Int, placeholder: String?, minLength: Int, maxLength: Int, minValue: JSONNull?, maxValue: JSONNull?, regexPattern: JSONNull?, optionType: JSONNull?, hasEmptyValue: Bool?, options: [Option]?, restURL: JSONNull?, restResponsePath: JSONNull?, restIDProperty: JSONNull?, restLabelProperty: JSONNull?, tab: JSONNull?, className: JSONNull?, dateDisplayFormat: JSONNull?, layout: Layout?, sizeX: Int, sizeY: Int, row: Int, col: Int, visibilityCondition: JSONNull?, numberOfColumns: Int?, fields: [String: [Field]]?, params: Params?, metaDataColumnDefinitions: JSONNull?, endpoint: JSONNull?, requestHeaders: JSONNull?) {
         self.fieldType = fieldType
         self.id = id
         self.name = name
@@ -135,7 +148,7 @@ public class Field: Codable {
 public class Layout: Codable {
     public let row, column, colspan: Int
 
-    init(row: Int, column: Int, colspan: Int) {
+    public init(row: Int, column: Int, colspan: Int) {
         self.row = row
         self.column = column
         self.colspan = colspan
@@ -145,8 +158,8 @@ public class Layout: Codable {
 // MARK: - Option
 public class Option: Codable {
     public let id, name: String
-
-    init(id: String, name: String) {
+    
+    public init(id: String, name: String) {
         self.id = id
         self.name = name
     }
@@ -175,7 +188,7 @@ public class FileSource: Codable {
         case name
     }
 
-    init(serviceID: String, name: String) {
+    public init(serviceID: String, name: String) {
         self.serviceID = serviceID
         self.name = name
     }
@@ -422,3 +435,86 @@ public class JSONAny: Codable {
         }
     }
 }
+
+public enum ValueUnion: Codable {
+    case string(String)
+    case valueElementArray([ValueElement])
+    case null
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let x = try? container.decode([ValueElement].self) {
+            self = .valueElementArray(x)
+            return
+        }
+        if let x = try? container.decode(String.self) {
+            self = .string(x)
+            return
+        }
+        if container.decodeNil() {
+            self = .null
+            return
+        }
+        throw DecodingError.typeMismatch(ValueUnion.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for ValueUnion"))
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .string(let x):
+            try container.encode(x)
+        case .valueElementArray(let x):
+            try container.encode(x)
+        case .null:
+            try container.encodeNil()
+        }
+    }
+}
+
+// MARK: - ValueElement
+public class ValueElement: Codable {
+    public let id: Int
+    public let name, created: String
+    public let createdBy: CreatedBy
+    public let relatedContent, contentAvailable, link: Bool
+    public let mimeType, simpleType, previewStatus, thumbnailStatus: String
+
+    init(id: Int, name: String, created: String, createdBy: CreatedBy, relatedContent: Bool, contentAvailable: Bool, link: Bool, mimeType: String, simpleType: String, previewStatus: String, thumbnailStatus: String) {
+        self.id = id
+        self.name = name
+        self.created = created
+        self.createdBy = createdBy
+        self.relatedContent = relatedContent
+        self.contentAvailable = contentAvailable
+        self.link = link
+        self.mimeType = mimeType
+        self.simpleType = simpleType
+        self.previewStatus = previewStatus
+        self.thumbnailStatus = thumbnailStatus
+    }
+}
+
+// MARK: - CreatedBy
+public class CreatedBy: Codable {
+    public let id: Int
+    public let firstName, lastName, email: String
+
+    init(id: Int, firstName: String, lastName: String, email: String) {
+        self.id = id
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+    }
+}
+
+// MARK: - Outcome
+public class Outcome: Codable {
+    public let id: JSONNull?
+    public let name: String
+
+    init(id: JSONNull?, name: String) {
+        self.id = id
+        self.name = name
+    }
+}
+

@@ -42,37 +42,16 @@ class RecentsViewModel {
     }
     
     func getProcessList() {
-        /*
-        // start process example
-        let reviewer = ReviewerParams(email: "abc@example.com",
-                                      firstName: "ank",
-                                      lastName: "goy",
-                                      id: 1)
-        let params = StartProcessParams(message: "test",
-                                        dueDate: "2023-04-30",
-                                        attachmentIds: "10,20",
-                                        priority: TaskPriority.medium,
-                                        reviewer: reviewer,
-                                        sendemailnotifications: false)
+        // test your APIs here
         
-        let finalParams = StartProcessBodyCreate.init(name: "name param", processDefinitionId: "123", params: params)
-        print("FINAL PARAMS \(finalParams)")
-        ProcessAPI.startProcess(params: finalParams) { data, error in
-            print("*** start process ***", data)
-            print("*** error ***", error)
-        }
-         */
-        
-        ProcessAPI.getAPSSource { data, error in
-            if let data = data {
-                print("*** aps source ***", data)
-                print("*** error ***", error)
-                print("*** aps source id ***", data.data?.first?.id)
-                print("*** aps source name ***", data.data?.first?.name)
-            }
+        let option = Option(id: "In Progress", name: "In Progress")
+        let params = SaveFormParams(status: option, comment: "test comment")
+        TasksAPI.approveOrRejectTaskForm(taskId: "9110", params: params, outcome: "Approve") { data, error in
+            print("data: \(data)")
+            print("error:\(error)")
         }
     }
-
+    
     func logout(on viewController: UIViewController) {
         if let credentials = ssoCredential {
             authenticationService?.logOut(onViewController: viewController, lastKnownCredential: credentials, delegate: self)

@@ -314,4 +314,142 @@ extension TasksAPI {
         let requestBuilder: RequestBuilder<TaskAttachment>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
+    
+    // MARK: - GET Tasks Forms
+    public class func getTaskForm(taskId: String?, withCallback completion: @escaping ((_ data: StartFormFields?, _ fields: [Field], _ error: Error?) -> Void)) {
+        guard let taskId = taskId else { return }
+        self.taskForm(taskId: taskId).execute { response, error in
+            let body = response?.body
+            let fields = StartFormFieldOperation.processFormFields(for: body)
+            completion(body, fields, error)
+        }
+    }
+    
+    /**
+     - GET Tasks forms API call
+        This API is used to fetch list of task form. This is GET request
+     */
+    class func taskForm(taskId: String) -> RequestBuilder<StartFormFields> {
+        var path = "/task-forms/{taskId}"
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        let parameters: [String:Any]? = nil
+
+        let requestBuilder: RequestBuilder<StartFormFields>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+    
+    // MARK: - Save Form
+    public class func saveTaskForm(taskId: String, params: SaveFormParams, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        
+        let apiParams = SaveTaskFormParams(values: params)
+        self.saveTask(taskId: taskId, params: apiParams).execute { response, error in
+            if error == nil {
+                completion((), error)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    /**
+     - POST save tasks form API call
+        This API is used to save task form with status and comment. This is POST request
+     */
+    class func saveTask(taskId: String, params: SaveTaskFormParams) -> RequestBuilder<Void> {
+        var path = "/task-forms/{taskId}/save-form"
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: params)
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+    
+    // MARK: - Approve or Reject Form
+    public class func approveOrRejectTaskForm(taskId: String, params: SaveFormParams, outcome: String?, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        
+        let apiParams = SaveTaskFormParams(values: params, outcome: outcome)
+        self.approveRejectTask(taskId: taskId, params: apiParams, outcome: outcome).execute { response, error in
+            if error == nil {
+                completion((), error)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    /**
+     - POST save tasks form API call
+        This API is used to save task form with status and comment. This is POST request
+     */
+    class func approveRejectTask(taskId: String, params: SaveTaskFormParams, outcome: String?) -> RequestBuilder<Void> {
+        var path = "/task-forms/{taskId}"
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: params)
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
+    /**
+     - GET Tasks Variables API call
+        This API is used to fetch variables of takss. This is GET request
+     */
+
+    
+    public class func getTasksVariables(taskId: String, withCallback completion: @escaping ((_ data: [TasksVariable]?,_ error: Error?) -> Void)) {
+        self.getTasksVariable(taskId: taskId).execute { response, error in
+            completion(response?.body, error)
+        }
+    }
+    
+    class func getTasksVariable(taskId: String) -> RequestBuilder<[TasksVariable]> {
+        var path = "/task-forms/{taskId}/variables"
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        
+        let parameters: [String:Any]? = nil
+        let requestBuilder: RequestBuilder<[TasksVariable]>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+    
+    /**
+     - PUT Claim or Unclaim Task
+        This API is used to claim or unclaim any task. This is PUT request
+     */
+
+    
+    public class func claimOrUnclaimTask(taskId: String, isClaimTask: Bool, withCallback completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        self.claimUnclaimTask(taskId: taskId, isClaimTask: isClaimTask).execute { response, error in
+            completion(response?.body, error)
+        }
+    }
+    
+    class func claimUnclaimTask(taskId: String, isClaimTask: Bool) -> RequestBuilder<Void> {
+        var path = "/tasks/{taskId}/action/claim"
+        if !isClaimTask {
+            path = "/tasks/{taskId}/action/unclaim"
+        }
+        let preEscape = "\(taskId)"
+        let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{taskId}", with: postEscape, options: .literal, range: nil)
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let url = URLComponents(string: URLString)
+        
+        let parameters: [String:Any]? = nil
+        let requestBuilder: RequestBuilder<Void>.Type = AlfrescoContentAPI.requestBuilderFactory.getNonDecodableBuilder()
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
 }

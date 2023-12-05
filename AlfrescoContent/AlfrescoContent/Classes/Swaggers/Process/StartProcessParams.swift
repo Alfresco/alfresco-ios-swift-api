@@ -7,33 +7,30 @@
 
 import Foundation
 
-// MARK: - Task Priority
-public enum TaskPriority: String, Codable {
-    case low = "Low"
-    case medium = "Medium"
-    case high = "High"
-}
 
 // MARK: - Start process params
 public struct StartProcessParams: Codable {
     public var message: String?
     public var dueDate: String?
     public var attachmentIds: String?
-    public var priority: TaskPriority?
+    public var priority: String?
     public var reviewer: ReviewerParams?
+    public var reviewgroups: GroupReviewerParams?
     public var sendemailnotifications: Bool?
 
     public init(message: String?,
                 dueDate: String?,
                 attachmentIds: String?,
-                priority: TaskPriority?,
+                priority: String?,
                 reviewer: ReviewerParams?,
+                reviewgroups: GroupReviewerParams?,
                 sendemailnotifications: Bool?) {
         self.message = message
         self.dueDate = dueDate
         self.attachmentIds = attachmentIds
         self.priority = priority
         self.reviewer = reviewer
+        self.reviewgroups = reviewgroups
         self.sendemailnotifications = sendemailnotifications
     }
 }
@@ -54,17 +51,15 @@ public struct StartProcessBodyCreate: Codable {
     
     func createValueParams(params: StartProcessParams?) -> StartProcessValueParams {
         
-        let priority = StartProcessPriority(id: params?.priority?.rawValue, name: params?.priority?.rawValue)
-        let reviewer = ReviewerParams(email: params?.reviewer?.email,
-                                      firstName: params?.reviewer?.firstName,
-                                      lastName: params?.reviewer?.lastName,
-                                      id: params?.reviewer?.id)
+        let priority = StartProcessPriority(id: params?.priority,
+                                            name: params?.priority)
         return StartProcessValueParams(message: params?.message,
                                             due: params?.dueDate,
                                             items: params?.attachmentIds,
                                             priority: priority,
-                                            reviewer: reviewer,
-                                            sendemailnotifications: params?.sendemailnotifications)
+                                       reviewer: params?.reviewer,
+                                       reviewgroups: params?.reviewgroups,
+                                       sendemailnotifications: params?.sendemailnotifications)
         
     }
 }
@@ -76,6 +71,7 @@ public struct StartProcessValueParams: Codable {
     public var items: String?
     public var priority: StartProcessPriority?
     public var reviewer: ReviewerParams?
+    public var reviewgroups: GroupReviewerParams?
     public var sendemailnotifications: Bool?
 
     public init(message: String?,
@@ -83,12 +79,14 @@ public struct StartProcessValueParams: Codable {
                 items: String?,
                 priority: StartProcessPriority?,
                 reviewer: ReviewerParams?,
+                reviewgroups: GroupReviewerParams?,
                 sendemailnotifications: Bool?) {
         self.message = message
         self.due = due
         self.items = items
         self.priority = priority
         self.reviewer = reviewer
+        self.reviewgroups = reviewgroups
         self.sendemailnotifications = sendemailnotifications
     }
 }
@@ -111,25 +109,38 @@ public struct ReviewerParams: Codable {
     public var firstName: String?
     public var lastName: String?
     public var id: Int?
-    public var groupName: String?
-    public var externalId: String?
-    public var parentGroupId: String?
 
     public init(email: String?,
                 firstName: String?,
                 lastName: String?,
-                id: Int?,
-                groupName: String? = nil,
-                externalId: String? = nil,
-                parentGroupId: String? = nil) {
+                id: Int?) {
         self.email = email
         self.firstName = firstName
         self.lastName = lastName
         self.id = id
-        if let groupName = groupName, !groupName.isEmpty {
-            self.groupName = groupName
-            self.externalId = externalId
-            self.parentGroupId = parentGroupId
-        }
+    }
+}
+
+// MARK: - Reviewer params
+public struct GroupReviewerParams: Codable {
+    public var id: Int?
+    public var name: String?
+    public var externalId: String?
+    public var status: String?
+    public var parentGroupId: String?
+    public var groups: String?
+
+    public init(id: Int?,
+                name: String?,
+                externalId: String?,
+                status: String?,
+                parentGroupId: String?,
+                groups: String?) {
+        self.id = id
+        self.name = name
+        self.externalId = externalId
+        self.status = status
+        self.parentGroupId = parentGroupId
+        self.groups = groups
     }
 }
