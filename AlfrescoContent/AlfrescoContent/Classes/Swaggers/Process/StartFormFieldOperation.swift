@@ -13,7 +13,7 @@ class StartFormFieldOperation: NSObject {
         var processedFields: [Field] = []
         
         let fields = data?.fields[0].fields ?? [:]
-        let allKeys = fields.keys
+        let allKeys = fields.keys.sorted()
         for key in allKeys {
             let array = fields[key] ?? []
             for elements in array {
