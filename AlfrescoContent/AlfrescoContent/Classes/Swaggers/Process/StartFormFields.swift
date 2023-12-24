@@ -441,6 +441,28 @@ public enum ValueUnion: Codable {
     case valueElementArray([ValueElement])
     case null
 
+    public func getStringValue() -> String? {
+        switch self {
+        case .string(let num):
+            return num
+        case .valueElementArray(let num):
+            return nil
+        case .null:
+            return nil
+        }
+    }
+    
+    public func getArrayValue() -> [ValueElement]? {
+        switch self {
+        case .string(let num):
+            return nil
+        case .valueElementArray(let num):
+            return num
+        case .null:
+            return nil
+        }
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let x = try? container.decode([ValueElement].self) {
@@ -517,4 +539,3 @@ public class Outcome: Codable {
         self.name = name
     }
 }
-
