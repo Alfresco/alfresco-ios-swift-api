@@ -73,7 +73,7 @@ extension SearchAPI {
                                                ascending: false)]
         let templates = [RequestTemplatesInner(name: "keywords",
                                                template: "%(cm:name cm:title cm:description TEXT TAG)")]
-        let defaults = RequestDefaults(textAttributes: nil,
+        _ = RequestDefaults(textAttributes: nil,
                                        defaultFTSOperator: .and,
                                        defaultFTSFieldOperator: nil,
                                        namespace: nil,
