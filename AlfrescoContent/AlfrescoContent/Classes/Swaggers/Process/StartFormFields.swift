@@ -445,7 +445,7 @@ public enum ValueUnion: Codable {
         switch self {
         case .string(let num):
             return num
-        case .valueElementArray(let num):
+        case .valueElementArray(_):
             return nil
         case .null:
             return nil
@@ -454,7 +454,7 @@ public enum ValueUnion: Codable {
     
     public func getArrayValue() -> [ValueElement]? {
         switch self {
-        case .string(let num):
+        case .string(_):
             return nil
         case .valueElementArray(let num):
             return num
@@ -539,3 +539,4 @@ public class Outcome: Codable {
         self.name = name
     }
 }
+
