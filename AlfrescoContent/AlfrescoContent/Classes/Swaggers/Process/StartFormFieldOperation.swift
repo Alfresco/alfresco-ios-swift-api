@@ -12,12 +12,15 @@ class StartFormFieldOperation: NSObject {
     static func processFormFields(for data: StartFormFields?) -> [Field] {
         var processedFields: [Field] = []
         
-        let fields = data?.fields[0].fields ?? [:]
-        let allKeys = fields.keys.sorted()
-        for key in allKeys {
-            let array = fields[key] ?? []
-            for elements in array {
-                processedFields.append(elements)
+        let fieldsArray = data?.fields ?? []
+        for fieldObject in fieldsArray {
+            let fields = fieldObject.fields ?? [:]
+            let allKeys = fields.keys.sorted()
+            for key in allKeys {
+                let array = fields[key] ?? []
+                for elements in array {
+                    processedFields.append(elements)
+                }
             }
         }
         return processedFields
