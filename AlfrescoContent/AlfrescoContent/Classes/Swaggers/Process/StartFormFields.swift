@@ -78,7 +78,8 @@ public class Field: Codable {
     public let colspan: Int
     public let placeholder: String?
     public let minLength, maxLength: Int
-    public let minValue, maxValue, regexPattern, optionType: JSONNull?
+    public let minValue, maxValue, regexPattern: String?
+    public let optionType: JSONNull?
     public let hasEmptyValue: Bool?
     public let options: [Option]?
     public let restURL, restResponsePath, restIDProperty, restLabelProperty: JSONNull?
@@ -103,7 +104,7 @@ public class Field: Codable {
         case restLabelProperty, tab, className, dateDisplayFormat, layout, sizeX, sizeY, row, col, visibilityCondition, numberOfColumns, fields, params, metaDataColumnDefinitions, endpoint, requestHeaders
     }
 
-    init(fieldType: String, id: String, name: String?, type: String, value: ValueUnion?, fieldRequired: Bool, readOnly: Bool, overrideID: Bool, colspan: Int, placeholder: String?, minLength: Int, maxLength: Int, minValue: JSONNull?, maxValue: JSONNull?, regexPattern: JSONNull?, optionType: JSONNull?, hasEmptyValue: Bool?, options: [Option]?, restURL: JSONNull?, restResponsePath: JSONNull?, restIDProperty: JSONNull?, restLabelProperty: JSONNull?, tab: JSONNull?, className: JSONNull?, dateDisplayFormat: JSONNull?, layout: Layout?, sizeX: Int, sizeY: Int, row: Int, col: Int, visibilityCondition: JSONNull?, numberOfColumns: Int?, fields: [String: [Field]]?, params: Params?, metaDataColumnDefinitions: JSONNull?, endpoint: JSONNull?, requestHeaders: JSONNull?) {
+    init(fieldType: String, id: String, name: String?, type: String, value: ValueUnion?, fieldRequired: Bool, readOnly: Bool, overrideID: Bool, colspan: Int, placeholder: String?, minLength: Int, maxLength: Int, minValue: String?, maxValue: String?, regexPattern: String?, optionType: JSONNull?, hasEmptyValue: Bool?, options: [Option]?, restURL: JSONNull?, restResponsePath: JSONNull?, restIDProperty: JSONNull?, restLabelProperty: JSONNull?, tab: JSONNull?, className: JSONNull?, dateDisplayFormat: JSONNull?, layout: Layout?, sizeX: Int, sizeY: Int, row: Int, col: Int, visibilityCondition: JSONNull?, numberOfColumns: Int?, fields: [String: [Field]]?, params: Params?, metaDataColumnDefinitions: JSONNull?, endpoint: JSONNull?, requestHeaders: JSONNull?) {
         self.fieldType = fieldType
         self.id = id
         self.name = name
