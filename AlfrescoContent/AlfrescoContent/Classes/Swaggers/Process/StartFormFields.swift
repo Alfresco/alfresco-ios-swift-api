@@ -168,15 +168,33 @@ public class Option: Codable {
 
 // MARK: - Params
 public class Params: Codable {
-    public let existingColspan, maxColspan: Int
-    public let multiple: Bool?
+    public let existingColspan, maxColspan: String?
+    public let multipal: Bool?
     public let fileSource: FileSource?
+    
+    enum CodingKeys: String, CodingKey {
+        case existingColspan = "existingColspan"
+        case maxColspan = "maxColspan"
+        case multipal = "multiple"
+        case fileSource = "fileSource"
+    }
+    
+    required public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        multipal = try? container.decode(Bool?.self, forKey: .multipal)
+        fileSource = try? container.decode(FileSource?.self, forKey: .fileSource)
 
-    init(existingColspan: Int, maxColspan: Int, multiple: Bool?, fileSource: FileSource?) {
-        self.existingColspan = existingColspan
-        self.maxColspan = maxColspan
-        self.multiple = multiple
-        self.fileSource = fileSource
+        do {
+            existingColspan = try? String(container.decode(Int.self, forKey: .existingColspan))
+        } catch DecodingError.typeMismatch {
+            existingColspan = try? container.decode(String.self, forKey: .existingColspan)
+        }
+        
+        do {
+            maxColspan = try? String(container.decode(Int.self, forKey: .maxColspan))
+        } catch DecodingError.typeMismatch {
+            maxColspan = try? container.decode(String.self, forKey: .maxColspan)
+        }
     }
 }
 
