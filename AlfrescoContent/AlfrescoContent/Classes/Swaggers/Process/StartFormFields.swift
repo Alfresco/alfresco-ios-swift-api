@@ -83,7 +83,8 @@ public class Field: Codable {
     public let hasEmptyValue: Bool?
     public let options: [Option]?
     public let restURL, restResponsePath, restIDProperty, restLabelProperty: JSONNull?
-    public let tab, className, dateDisplayFormat: JSONNull?
+    public let tab, className: JSONNull?
+    public let dateDisplayFormat: String?
     public let layout: Layout?
     public let sizeX, sizeY, row, col: Int
     public let visibilityCondition: JSONNull?
@@ -109,7 +110,7 @@ public class Field: Codable {
         case currency, fractionLength
     }
 
-    init(fieldType: String, id: String, name: String?, type: String, value: ValueUnion?, fieldRequired: Bool, readOnly: Bool, overrideID: Bool, colspan: Int, placeholder: String?, minLength: Int, maxLength: Int, minValue: String?, maxValue: String?, regexPattern: String?, optionType: JSONNull?, hasEmptyValue: Bool?, options: [Option]?, restURL: JSONNull?, restResponsePath: JSONNull?, restIDProperty: JSONNull?, restLabelProperty: JSONNull?, tab: JSONNull?, className: JSONNull?, dateDisplayFormat: JSONNull?, layout: Layout?, sizeX: Int, sizeY: Int, row: Int, col: Int, visibilityCondition: JSONNull?, numberOfColumns: Int?, fields: [String: [Field]]?, params: Params?, metaDataColumnDefinitions: JSONNull?, endpoint: JSONNull?, requestHeaders: JSONNull?, enableFractions: Bool?, enablePeriodSeparator: Bool?, currency: String?, fractionLength: Int?) {
+    init(fieldType: String, id: String, name: String?, type: String, value: ValueUnion?, fieldRequired: Bool, readOnly: Bool, overrideID: Bool, colspan: Int, placeholder: String?, minLength: Int, maxLength: Int, minValue: String?, maxValue: String?, regexPattern: String?, optionType: JSONNull?, hasEmptyValue: Bool?, options: [Option]?, restURL: JSONNull?, restResponsePath: JSONNull?, restIDProperty: JSONNull?, restLabelProperty: JSONNull?, tab: JSONNull?, className: JSONNull?, dateDisplayFormat: String?, layout: Layout?, sizeX: Int, sizeY: Int, row: Int, col: Int, visibilityCondition: JSONNull?, numberOfColumns: Int?, fields: [String: [Field]]?, params: Params?, metaDataColumnDefinitions: JSONNull?, endpoint: JSONNull?, requestHeaders: JSONNull?, enableFractions: Bool?, enablePeriodSeparator: Bool?, currency: String?, fractionLength: Int?) {
         self.fieldType = fieldType
         self.id = id
         self.name = name
