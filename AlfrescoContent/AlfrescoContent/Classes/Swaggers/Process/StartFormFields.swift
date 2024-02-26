@@ -95,9 +95,11 @@ public class Field: Codable {
     public let enableFractions, enablePeriodSeparator: Bool?
     public let currency: String?
     public let fractionLength: Int?
+    public let hyperlinkUrl: String?
+    public let displayText: String?
     
     enum CodingKeys: String, CodingKey {
-        case fieldType, id, name, type, value
+        case fieldType, id, name, type, value, hyperlinkUrl, displayText
         case fieldRequired = "required"
         case readOnly
         case overrideID = "overrideId"
@@ -110,7 +112,7 @@ public class Field: Codable {
         case currency, fractionLength
     }
 
-    init(fieldType: String, id: String, name: String?, type: String, value: ValueUnion?, fieldRequired: Bool, readOnly: Bool, overrideID: Bool, colspan: Int, placeholder: String?, minLength: Int, maxLength: Int, minValue: String?, maxValue: String?, regexPattern: String?, optionType: JSONNull?, hasEmptyValue: Bool?, options: [Option]?, restURL: JSONNull?, restResponsePath: JSONNull?, restIDProperty: JSONNull?, restLabelProperty: JSONNull?, tab: JSONNull?, className: JSONNull?, dateDisplayFormat: String?, layout: Layout?, sizeX: Int, sizeY: Int, row: Int, col: Int, visibilityCondition: JSONNull?, numberOfColumns: Int?, fields: [String: [Field]]?, params: Params?, metaDataColumnDefinitions: JSONNull?, endpoint: JSONNull?, requestHeaders: JSONNull?, enableFractions: Bool?, enablePeriodSeparator: Bool?, currency: String?, fractionLength: Int?) {
+    init(fieldType: String, id: String, name: String?, type: String, value: ValueUnion?, fieldRequired: Bool, readOnly: Bool, overrideID: Bool, colspan: Int, placeholder: String?, minLength: Int, maxLength: Int, minValue: String?, maxValue: String?, regexPattern: String?, optionType: JSONNull?, hasEmptyValue: Bool?, options: [Option]?, restURL: JSONNull?, restResponsePath: JSONNull?, restIDProperty: JSONNull?, restLabelProperty: JSONNull?, tab: JSONNull?, className: JSONNull?, dateDisplayFormat: String?, layout: Layout?, sizeX: Int, sizeY: Int, row: Int, col: Int, visibilityCondition: JSONNull?, numberOfColumns: Int?, fields: [String: [Field]]?, params: Params?, metaDataColumnDefinitions: JSONNull?, endpoint: JSONNull?, requestHeaders: JSONNull?, enableFractions: Bool?, enablePeriodSeparator: Bool?, currency: String?, fractionLength: Int?, hyperlinkUrl: String?, displayText: String?) {
         self.fieldType = fieldType
         self.id = id
         self.name = name
@@ -152,6 +154,8 @@ public class Field: Codable {
         self.enablePeriodSeparator = enablePeriodSeparator
         self.currency = currency
         self.fractionLength = fractionLength
+        self.hyperlinkUrl = hyperlinkUrl
+        self.displayText = displayText
     }
 }
 
