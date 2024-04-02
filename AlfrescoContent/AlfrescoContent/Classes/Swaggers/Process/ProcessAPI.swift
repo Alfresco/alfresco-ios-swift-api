@@ -141,20 +141,6 @@ open class ProcessAPI: NSObject {
      - POST Start Process API call
         This API is used to start a process. This is POST request
      */
-    open class func startProcess(params: StartProcessBodyCreate, withCallback completion: @escaping ((_ data: Process?,_ error: Error?) -> Void)) {
-        self.processInstance(params: params).execute { response, error in
-            completion(response?.body, error)
-        }
-    }
-    
-    class func processInstance(params: StartProcessBodyCreate) -> RequestBuilder<Process> {
-        let path = "/process-instances"
-        let URLString = AlfrescoProcessAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: params)
-        let requestBuilder: RequestBuilder<Process>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
-        return requestBuilder.init(method: "POST", URLString: (URLString), parameters: parameters, isBody: true)
-    }
-    
     open class func startWorkFlowProcess(params: StartWorkFlowBodyCreate, withCallback completion: @escaping ((_ data: Process?,_ error: Error?) -> Void)) {
         self.processInstance(params: params).execute { response, error in
             completion(response?.body, error)

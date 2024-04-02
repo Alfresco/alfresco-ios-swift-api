@@ -485,113 +485,53 @@ public enum ValueUnion: Codable {
         switch self {
         case .string(let num):
             return num
-        case .valueElementArray(_):
-            return nil
-        case .null:
-            return nil
-        case .int(_):
-            return nil
-        case .bool(_):
-            return nil
-        case .valueElementDict(_):
-            return nil
-        case .assignee(_):
+        default:
             return nil
         }
     }
     
     public func getArrayValue() -> [ValueElement]? {
         switch self {
-        case .string(_):
-            return nil
         case .valueElementArray(let num):
             return num
-        case .null:
-            return nil
-        case .int(_):
-            return nil
-        case .bool(_):
-            return nil
-        case .valueElementDict(_):
-            return nil
-        case .assignee(_):
+        default:
             return nil
         }
     }
     
     public func getIntValue() -> Int? {
         switch self {
-        case .string(_):
-            return nil
-        case .valueElementArray(_):
-            return nil
-        case .null:
-            return nil
         case .int(let num):
             return num
-        case .bool(_):
-            return nil
-        case .valueElementDict(_):
-            return nil
-        case .assignee(_):
+        default:
             return nil
         }
     }
     
     public func getBoolValue() -> Bool? {
         switch self {
-        case .string(_):
-            return nil
-        case .valueElementArray(_):
-            return nil
-        case .null:
-            return nil
-        case .int(_):
-            return nil
         case .bool(let num):
             return num
-        case .valueElementDict(_):
-            return nil
-        case .assignee(_):
+        default:
             return nil
         }
     }
     
     public func getDictValue() -> DropDownValue? {
         switch self {
-        case .string(_):
-            return nil
-        case .valueElementArray(_):
-            return nil
-        case .null:
-            return nil
-        case .int(_):
-            return nil
-        case .bool(_):
-            return nil
         case .valueElementDict(let num):
             return num
-        case .assignee(_):
+        default:
             return nil
         }
     }
     
     public func getAssignee() -> TaskAssignee? {
         switch self {
-        case .string(_):
-            return nil
-        case .valueElementArray(_):
-            return nil
-        case .null:
-            return nil
-        case .int(_):
-            return nil
-        case .bool(_):
-            return nil
-        case .valueElementDict(_):
-            return nil
         case .assignee(let num):
             return num
+        default:
+            return nil
         }
     }
     
