@@ -61,6 +61,7 @@ public class TaskAssignee: Codable {
     public var externalId: String?
     public var status: String?
     public var parentGroupId: String?
+    public var userName: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -69,5 +70,26 @@ public class TaskAssignee: Codable {
         case email
         case groupName = "name"
         case externalId, status, parentGroupId
+        case userName
+    }
+    
+    public init(assigneeID: Int,
+         firstName: String?,
+         lastName: String?,
+         email: String?,
+         groupName: String?,
+         externalId: String?,
+         status: String?,
+         parentGroupId: String?) {
+        
+        self.id = assigneeID
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+        self.userName = String(format: "%@ %@", firstName ?? "", lastName ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        self.groupName = groupName
+        self.externalId = externalId
+        self.status = status
+        self.parentGroupId = parentGroupId
     }
 }

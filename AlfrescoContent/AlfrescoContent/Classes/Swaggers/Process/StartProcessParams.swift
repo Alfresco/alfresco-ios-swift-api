@@ -144,3 +144,52 @@ public struct GroupReviewerParams: Codable {
         self.groups = groups
     }
 }
+
+// MARK: - Start WorkFlow
+public struct StartWorkFlowBodyCreate: Codable {
+    public var name: String?
+    public var processDefinitionId: String?
+    public var values: CodableDictionary?
+    
+    public init(name: String?,
+                processDefinitionId: String?,
+                params: [String: AnyEncodable]) {
+        self.name = name
+        self.processDefinitionId = processDefinitionId
+        self.values = CodableDictionary(params)
+    }
+}
+
+public struct CodableDictionary: Codable {
+    private var wrappedDictionary: [String: AnyEncodable]
+
+    public init(_ dictionary: [String: AnyEncodable]) {
+        self.wrappedDictionary = dictionary
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.wrappedDictionary = try container.decode([String: AnyEncodable].self)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(wrappedDictionary)
+    }
+}
+
+public struct AnyEncodable: Codable {
+    private let encodable: Encodable
+
+    public init(_ encodable: Encodable) {
+        self.encodable = encodable
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        try encodable.encode(to: encoder)
+    }
+
+    public init(from decoder: Decoder) throws {
+        fatalError("Decoding AnyEncodable directly is not supported. Decode the underlying type instead.")
+    }
+}
