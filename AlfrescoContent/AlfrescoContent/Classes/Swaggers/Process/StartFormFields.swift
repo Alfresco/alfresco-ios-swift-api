@@ -73,7 +73,7 @@ public class Field: Codable {
     public let fieldType, id: String
     public let name: String?
     public let type: String
-    public let value: ValueUnion?
+    public var value: ValueUnion?
     public let fieldRequired, readOnly, overrideID: Bool
     public let colspan: Int
     public let placeholder: String?
@@ -476,6 +476,10 @@ public enum ValueUnion: Codable {
     case string(String)
     case valueElementArray([ValueElement])
     case null
+    case int(Int)
+    case bool(Bool)
+    case valueElementDict(DropDownValue)
+    case assignee(TaskAssignee)
 
     public func getStringValue() -> String? {
         switch self {
@@ -484,6 +488,14 @@ public enum ValueUnion: Codable {
         case .valueElementArray(_):
             return nil
         case .null:
+            return nil
+        case .int(_):
+            return nil
+        case .bool(_):
+            return nil
+        case .valueElementDict(_):
+            return nil
+        case .assignee(_):
             return nil
         }
     }
@@ -496,6 +508,90 @@ public enum ValueUnion: Codable {
             return num
         case .null:
             return nil
+        case .int(_):
+            return nil
+        case .bool(_):
+            return nil
+        case .valueElementDict(_):
+            return nil
+        case .assignee(_):
+            return nil
+        }
+    }
+    
+    public func getIntValue() -> Int? {
+        switch self {
+        case .string(_):
+            return nil
+        case .valueElementArray(_):
+            return nil
+        case .null:
+            return nil
+        case .int(let num):
+            return num
+        case .bool(_):
+            return nil
+        case .valueElementDict(_):
+            return nil
+        case .assignee(_):
+            return nil
+        }
+    }
+    
+    public func getBoolValue() -> Bool? {
+        switch self {
+        case .string(_):
+            return nil
+        case .valueElementArray(_):
+            return nil
+        case .null:
+            return nil
+        case .int(_):
+            return nil
+        case .bool(let num):
+            return num
+        case .valueElementDict(_):
+            return nil
+        case .assignee(_):
+            return nil
+        }
+    }
+    
+    public func getDictValue() -> DropDownValue? {
+        switch self {
+        case .string(_):
+            return nil
+        case .valueElementArray(_):
+            return nil
+        case .null:
+            return nil
+        case .int(_):
+            return nil
+        case .bool(_):
+            return nil
+        case .valueElementDict(let num):
+            return num
+        case .assignee(_):
+            return nil
+        }
+    }
+    
+    public func getAssignee() -> TaskAssignee? {
+        switch self {
+        case .string(_):
+            return nil
+        case .valueElementArray(_):
+            return nil
+        case .null:
+            return nil
+        case .int(_):
+            return nil
+        case .bool(_):
+            return nil
+        case .valueElementDict(_):
+            return nil
+        case .assignee(let num):
+            return num
         }
     }
     
@@ -525,6 +621,14 @@ public enum ValueUnion: Codable {
             try container.encode(x)
         case .null:
             try container.encodeNil()
+        case .int(let x):
+            try container.encode(x)
+        case .bool(let x):
+            try container.encode(x)
+        case .valueElementDict(let x):
+            try container.encode(x)
+        case .assignee(let x):
+            try container.encode(x)
         }
     }
 }
@@ -576,3 +680,13 @@ public class Outcome: Codable {
     }
 }
 
+// MARK: - DropDown
+public class DropDownValue: Codable {
+    public let id: String
+    public let name: String
+
+    public init(id: String, name: String) {
+        self.id = id
+        self.name = name
+    }
+}

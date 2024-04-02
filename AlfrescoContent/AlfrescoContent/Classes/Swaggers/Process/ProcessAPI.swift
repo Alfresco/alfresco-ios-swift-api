@@ -155,6 +155,20 @@ open class ProcessAPI: NSObject {
         return requestBuilder.init(method: "POST", URLString: (URLString), parameters: parameters, isBody: true)
     }
     
+    open class func startWorkFlowProcess(params: StartWorkFlowBodyCreate, withCallback completion: @escaping ((_ data: Process?,_ error: Error?) -> Void)) {
+        self.processInstance(params: params).execute { response, error in
+            completion(response?.body, error)
+        }
+    }
+    
+    class func processInstance(params: StartWorkFlowBodyCreate) -> RequestBuilder<Process> {
+        let path = "/process-instances"
+        let URLString = AlfrescoProcessAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: params)
+        let requestBuilder: RequestBuilder<Process>.Type = AlfrescoContentAPI.requestBuilderFactory.getBuilder()
+        return requestBuilder.init(method: "POST", URLString: (URLString), parameters: parameters, isBody: true)
+    }
+    
     // MARK: - Start Form / Get Form fields
     public class func formFields(name: String?, withCallback completion: @escaping ((_ data: StartFormFields?, _ fields: [Field], _ error: Error?) -> Void)) {
         guard let name = name else { return }
