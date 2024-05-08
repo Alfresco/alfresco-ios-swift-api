@@ -186,6 +186,7 @@ public class Params: Codable {
     public let multipal: Bool?
     public let fileSource: FileSource?
     public let fractionLength: Int?
+    public let field: ParamsField?
     
     enum CodingKeys: String, CodingKey {
         case existingColspan = "existingColspan"
@@ -193,6 +194,7 @@ public class Params: Codable {
         case multipal = "multiple"
         case fileSource = "fileSource"
         case fractionLength = "fractionLength"
+        case field = "field"
     }
     
     required public init(from decoder: Decoder) throws {
@@ -212,6 +214,28 @@ public class Params: Codable {
         } catch DecodingError.typeMismatch {
             maxColspan = try? container.decode(String.self, forKey: .maxColspan)
         }
+        
+        field = try? container.decode(ParamsField.self, forKey: .field)
+    }
+}
+
+// MARK: - Field
+public class ParamsField: Codable {
+    public let id, name, type, dateDisplayFormat: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case name = "name"
+        case type = "type"
+        case dateDisplayFormat = "dateDisplayFormat"
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try? container.decode(String?.self, forKey: .id)
+        name = try? container.decode(String?.self, forKey: .name)
+        type = try? container.decode(String?.self, forKey: .type)
+        dateDisplayFormat = try? container.decode(String?.self, forKey: .dateDisplayFormat)
     }
 }
 
@@ -535,6 +559,15 @@ public enum ValueUnion: Codable {
         }
     }
     
+    public func getValueElementArray() -> [ValueElement]? {
+        switch self {
+        case .valueElementArray(let num):
+            return num
+        default:
+            return nil
+        }
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let x = try? container.decode([ValueElement].self) {
@@ -547,6 +580,22 @@ public enum ValueUnion: Codable {
         }
         if container.decodeNil() {
             self = .null
+            return
+        }
+        if let x = try? container.decode(Int.self) {
+            self = .int(x)
+            return
+        }
+        if let x = try? container.decode(Bool.self) {
+            self = .bool(x)
+            return
+        }
+        if let x = try? container.decode(DropDownValue.self) {
+            self = .valueElementDict(x)
+            return
+        }
+        if let x = try? container.decode(TaskAssignee.self) {
+            self = .assignee(x)
             return
         }
         throw DecodingError.typeMismatch(ValueUnion.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for ValueUnion"))
@@ -611,10 +660,10 @@ public class CreatedBy: Codable {
 
 // MARK: - Outcome
 public class Outcome: Codable {
-    public let id: JSONNull?
+    public let id: Int?
     public let name: String
 
-    init(id: JSONNull?, name: String) {
+    init(id: Int?, name: String) {
         self.id = id
         self.name = name
     }
