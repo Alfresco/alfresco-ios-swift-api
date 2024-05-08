@@ -27,3 +27,14 @@ public struct SaveFormParams: Codable {
         self.comment = comment
     }
 }
+
+public struct SaveTaskParams: Codable {
+    public var outcome: String?
+    public var values: CodableDictionary?
+    
+    public init(outcome: String?,
+                params: [String: AnyEncodable]) {
+        self.outcome = outcome
+        self.values = CodableDictionary(params)
+    }
+}
