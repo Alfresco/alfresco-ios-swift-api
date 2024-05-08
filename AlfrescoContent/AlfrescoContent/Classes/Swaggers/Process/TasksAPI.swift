@@ -343,10 +343,9 @@ extension TasksAPI {
     }
     
     // MARK: - Save Form
-    public class func saveTaskForm(taskId: String, params: SaveFormParams, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+    public class func saveTaskForm(taskId: String, params: SaveTaskParams, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
         
-        let apiParams = SaveTaskFormParams(values: params)
-        self.saveTask(taskId: taskId, params: apiParams).execute { response, error in
+        self.saveTask(taskId: taskId, params: params).execute { response, error in
             if error == nil {
                 completion((), error)
             } else {
@@ -359,7 +358,7 @@ extension TasksAPI {
      - POST save tasks form API call
         This API is used to save task form with status and comment. This is POST request
      */
-    class func saveTask(taskId: String, params: SaveTaskFormParams) -> RequestBuilder<Void> {
+    class func saveTask(taskId: String, params: SaveTaskParams) -> RequestBuilder<Void> {
         var path = "/task-forms/{taskId}/save-form"
         let preEscape = "\(taskId)"
         let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -372,10 +371,9 @@ extension TasksAPI {
     }
     
     // MARK: - Approve or Reject Form
-    public class func approveOrRejectTaskForm(taskId: String, params: SaveFormParams, outcome: String?, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+    public class func outcomeTaskForm(taskId: String, params: SaveTaskParams, withCallback completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
         
-        let apiParams = SaveTaskFormParams(values: params, outcome: outcome)
-        self.approveRejectTask(taskId: taskId, params: apiParams, outcome: outcome).execute { response, error in
+        self.outcomeTask(taskId: taskId, params: params).execute { response, error in
             if error == nil {
                 completion((), error)
             } else {
@@ -388,7 +386,7 @@ extension TasksAPI {
      - POST save tasks form API call
         This API is used to save task form with status and comment. This is POST request
      */
-    class func approveRejectTask(taskId: String, params: SaveTaskFormParams, outcome: String?) -> RequestBuilder<Void> {
+    class func outcomeTask(taskId: String, params: SaveTaskParams) -> RequestBuilder<Void> {
         var path = "/task-forms/{taskId}"
         let preEscape = "\(taskId)"
         let postEscape = preEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
