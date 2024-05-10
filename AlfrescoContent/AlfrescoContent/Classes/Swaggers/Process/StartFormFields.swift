@@ -630,7 +630,7 @@ public class ValueElement: Codable {
     public let relatedContent, contentAvailable, link: Bool
     public let mimeType, simpleType, previewStatus, thumbnailStatus: String
 
-    init(id: Int, name: String, created: String, createdBy: CreatedBy, relatedContent: Bool, contentAvailable: Bool, link: Bool, mimeType: String, simpleType: String, previewStatus: String, thumbnailStatus: String) {
+    public init(id: Int, name: String, created: String, createdBy: CreatedBy, relatedContent: Bool, contentAvailable: Bool, link: Bool, mimeType: String, simpleType: String, previewStatus: String, thumbnailStatus: String) {
         self.id = id
         self.name = name
         self.created = created
@@ -650,7 +650,7 @@ public class CreatedBy: Codable {
     public let id: Int
     public let firstName, lastName, email: String
 
-    init(id: Int, firstName: String, lastName: String, email: String) {
+    public init(id: Int, firstName: String, lastName: String, email: String) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
