@@ -8,6 +8,7 @@ target 'SampleApp' do
   pod 'AlfrescoAuth'
   pod 'AlfrescoContent'
   pod 'JWTDecode'
+  pod 'Auth0'	
 end
 
 post_install do |installer|

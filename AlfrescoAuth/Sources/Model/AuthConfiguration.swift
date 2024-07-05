@@ -25,6 +25,7 @@ public struct AuthConfiguration: Encodable, Equatable {
         case baseUrl
         case realm
         case redirectURI
+        case authType
     }
 
     var clientID: String
@@ -32,17 +33,19 @@ public struct AuthConfiguration: Encodable, Equatable {
     var baseUrl: String
     var realm: String
     var redirectURI: String?
+    var authType: AvailableAuthType
 
     public init(baseUrl: String,
                 clientID: String,
                 realm: String,
                 clientSecret: String? = nil,
-                redirectURI: String = "") {
+                redirectURI: String = "", authType: AvailableAuthType) {
         self.clientID = clientID
         self.baseUrl = baseUrl
         self.realm = realm
         self.clientSecret = clientSecret
         self.redirectURI = redirectURI
+        self.authType = authType
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -52,5 +55,6 @@ public struct AuthConfiguration: Encodable, Equatable {
         try container.encode("baseUrl", forKey: .baseUrl)
         try container.encode("realm", forKey: .realm)
         try container.encode("redirectURI", forKey: .redirectURI)
+        try container.encode("authType", forKey: .authType)
     }
 }

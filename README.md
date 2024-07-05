@@ -56,6 +56,18 @@ It's important that the redirect URI that was set is mirrored in the settings of
 -   As a child dependency for 'URL types' add a new key of type Dictionary
 -   As a child dependency of the former item, add a 'URL Schemes' key of type String with the value of the previously set redirect URI.
 
+##### Registering a mobile clientID in Auth0 
+
+*Note that this step is optional as it might have been taken care of by your administrator.*
+
+First, you need to define a client within Auth0 that would serve the mobile apps. Access the Auth0 admin interface and navigate to the Clients page. Add a new client entry and note down the client ID value. Save the entry and, on the next page, search for the  `Valid Redirect URIs`  field. The value for this particular field should be in the following format  `{Bundle_Identifier}://{Your_Domain}/ios/{Bundle_Identifier}/callback`.
+
+##### Register the redirect URI with your mobile app
+
+It's important that the redirect URI that was set is mirrored in the settings of the mobile client as well. To do so, open up the  `Info.plist`  file of your project, and add the following structure:
+-   Add a 'Domain' key of type String
+-   Add a 'ClientId' key of type String
+
 For more information, please refer to our  [sample app](https://github.com/Alfresco/alfresco-ios-swift-api/tree/develop/SampleApp).
 
 ##### Call the AlfrescoAuth API
