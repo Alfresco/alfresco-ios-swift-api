@@ -344,7 +344,7 @@ public class AuthPkcePresenter {
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let err = error {
-                completion(.failure(error))
+                completion(.failure(err))
                 return
             }
             
@@ -354,7 +354,7 @@ public class AuthPkcePresenter {
             
             do {
                 let decoder = JSONDecoder()
-                let appConfig = try decoder.decode(AppConfigDetails.self, from: data)
+                let appConfig = try decoder.decode(AppConfigDetails.self, from: resData)
                 
                 if let oauth2Config = appConfig.oauth2 {
                     completion(.success(oauth2Config))
