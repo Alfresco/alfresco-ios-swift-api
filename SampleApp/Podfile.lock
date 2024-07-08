@@ -13,12 +13,17 @@ PODS:
   - AppAuth/Core (1.6.2)
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
+  - Auth0 (2.3.2):
+    - JWTDecode (~> 3.0)
+    - SimpleKeychain (~> 1.0)
   - JWTDecode (3.0.1)
+  - SimpleKeychain (1.0.1)
   - TrustKit (3.0.3)
 
 DEPENDENCIES:
   - AlfrescoAuth
   - AlfrescoContent
+  - Auth0
   - JWTDecode
 
 SPEC REPOS:
@@ -28,7 +33,9 @@ SPEC REPOS:
     - AlfrescoContent
     - AlfrescoCore
     - AppAuth
+    - Auth0
     - JWTDecode
+    - SimpleKeychain
     - TrustKit
 
 SPEC CHECKSUMS:
@@ -37,9 +44,11 @@ SPEC CHECKSUMS:
   AlfrescoContent: 2d4646ff2a3d2d0fc3d40b15613e95d74f6b60cb
   AlfrescoCore: 5b9b48fa22dddeae139877c33baa22b9fa894e69
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
+  Auth0: 64da28fdc5cd499aa516dc4bfd0ace8efae2c1da
   JWTDecode: 2eed97c2fa46ccaf3049a787004eedf0be474a87
+  SimpleKeychain: 130211269f88f038d7dc5254cf0b1b9ce978c398
   TrustKit: 7858ea59d0e226b1457b2e9cc8b95d77ab21d471
 
-PODFILE CHECKSUM: 78be59add275dea374c604c60f230dae281f4a2a
+PODFILE CHECKSUM: a0c26cf2615301dc3da7f6e7ec6994c3d8dac456
 
 COCOAPODS: 1.14.3

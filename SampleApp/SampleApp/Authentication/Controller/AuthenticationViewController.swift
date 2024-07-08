@@ -57,7 +57,7 @@ class AuthenticationViewController: UIViewController {
 extension AuthenticationViewController: AuthenticationViewModelDelegate {
     func authServiceAvailable(for authType: AvailableAuthType) {
         switch authType {
-        case .aimsAuth:
+        case .aimsAuth, .auth0:
             if let authParams = viewModel?.authenticationService?.parameters {
                 authParams.contentURL = urlTextField.text ?? ""
                 viewModel?.authenticationService?.update(authenticationParameters: authParams)
