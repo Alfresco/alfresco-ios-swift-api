@@ -343,7 +343,7 @@ public class AuthPkcePresenter {
         }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
+            if let err = error {
                 completion(.failure(error))
                 return
             }
