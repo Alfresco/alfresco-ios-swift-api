@@ -348,7 +348,7 @@ public class AuthPkcePresenter {
                 return
             }
             
-            guard let data = data else {
+            guard let resData = data else {
                 return
             }
             
