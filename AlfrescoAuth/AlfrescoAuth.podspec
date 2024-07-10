@@ -15,6 +15,6 @@ s.framework 			= ['WebKit']
 s.resources 			= ["AlfrescoAuth/Sources/**/*.storyboard"]
 s.dependency 			 'AlfrescoCore'
 s.dependency 			 'AppAuth'
-s.dependency 			 'Auth0', '~> 2.3.2’
+s.dependency 			 'Auth0'
 
 end
