@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.14'
   s.tvos.deployment_target = '12.0'
   s.swift_version = '5.0'
-  s.version = '0.2.66'
+  s.version = '0.2.67'
   s.source = {:git => 'https://github.com/Alfresco/alfresco-ios-swift-api.git', :tag => 'content/'+s.version.to_s}
   s.authors = {'Alfresco' => 'mobile.alfresco@alfresco.com'}
   s.license = {:type => 'Apache License Version 2.0', :file => 'AlfrescoContent/LICENSE.md'}
