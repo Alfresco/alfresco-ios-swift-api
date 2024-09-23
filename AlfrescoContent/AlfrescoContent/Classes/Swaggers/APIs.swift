@@ -7,6 +7,7 @@
 import Foundation
 
 open class AlfrescoContentAPI {
+    public static var hostname = ""
     public static var basePath = "https://www.alfresco.com/alfresco/api/-default-/public"
     public static var credential: URLCredential?
     public static var customHeaders: [String:String] = [:]
