@@ -55,12 +55,15 @@ public class AuthPkcePresenter {
     }
 
     func availableAuthType(handler: @escaping((Result<AvailableAuthType, APIError>) -> Void)) {
-        guard let issuerURL = issuerURL() else {
+        
+        let issuerURL = (self.configuration.authType == .auth0) ? auth0IssuerURL() : issuerURL()
+
+        guard let issuer = issuerURL else {
             handler(.failure(nilIssuerError()))
             return
         }
 
-        OIDAuthorizationService.discoverConfiguration(forIssuer: issuerURL) { [weak self] _, error in
+        OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) { [weak self] _, error in
             guard let sSelf = self else { return }
 
             if error != nil {
@@ -86,47 +89,9 @@ public class AuthPkcePresenter {
     }
 
     func execute() {
-        let authType = configuration.authType
-        switch authType {
-        case .auth0:
-            getServerDetails(isLogin: true)
-        default:
-            keyClockLogin()
-        }
-    }
-    
-    func auth0login(auth0Config: OAuth2Data) {
-        Auth0
-            .webAuth(clientId: auth0Config.clientId ?? "", domain: auth0Config.host ?? "")
-            .audience(auth0Config.audience ?? "")
-            .scope(auth0Config.scope ?? "")
-            .start {[weak self] result in
-                guard let sSelf = self else { return }
-                do {
-                    switch result {
-                    case .success(let credentials):
-                        let credentialsDict = credentials.credentialDictionary()
-                        let alfrescoCredentials = try AlfrescoCredential(from: credentialsDict)
-                        sSelf.authDelegate?.didReceive(result: .success(alfrescoCredentials),
-                                                       session: sSelf.authSession)
-                        
-                    case .failure(_):
-                        let error = APIError(domain: moduleName,
-                                             code: ModuleErrorType.errorAuthStateNil.code,
-                                             message: errorAuthStateNil)
-                        sSelf.authDelegate?.didReceive(result: .failure(error))
-                    }
-                } catch {
-                    let error = APIError(domain: moduleName,
-                                         code: ModuleErrorType.errorAuthStateNil.code,
-                                         message: errorAuthStateNil)
-                    sSelf.authDelegate?.didReceive(result: .failure(error))
-                }
-            }
-    }
-    
-    func keyClockLogin() {
-        guard let issuer = issuerURL() else {
+        let issuerURL = (self.configuration.authType == .auth0) ? auth0IssuerURL() : issuerURL()
+
+        guard let issuer = issuerURL else {
             self.authDelegate?.didReceive(result: .failure(nilIssuerError()))
             return
         }
@@ -148,14 +113,17 @@ public class AuthPkcePresenter {
                 sSelf.authDelegate?.didReceive(result: .failure(sSelf.nilIssuerError()))
                 return
             }
+            
+            let additionalParameters = (sSelf.configuration.authType == .auth0) ? ["audience": sSelf.configuration.realm ?? "", "prompt": "login"] : nil
+
 
             let request = OIDAuthorizationRequest(configuration: pkceConfiguration,
                                                   clientId: sSelf.configuration.clientID,
                                                   clientSecret: sSelf.configuration.clientSecret,
-                                                  scopes: [OIDScopeOpenID],
+                                                  scopes: [OIDScopeOpenID, OIDScopeProfile, OIDScopeEmail],
                                                   redirectURL: URL(string: sSelf.configuration.redirectURI ?? "")!,
                                                   responseType: OIDResponseTypeCode,
-                                                  additionalParameters: nil)
+                                                  additionalParameters: additionalParameters)
 
             sSelf.authSession?.authorizationFlow =
                 OIDAuthState.authState(byPresenting: request,
@@ -179,19 +147,12 @@ public class AuthPkcePresenter {
                 }
         }
     }
-
-    func logout(forCredential credential: AlfrescoCredential) {
-        let authType = configuration.authType
-        switch authType {
-        case .auth0:
-            self.getServerDetails(isLogin: false)
-        default:
-            self.keyClockLogout(forCredential: credential)
-        }
-    }
     
-    func keyClockLogout(forCredential credential: AlfrescoCredential) {
-        guard let issuer = issuerURL() else {
+    func logout(forCredential credential: AlfrescoCredential) {
+        
+        let issuerURL = (self.configuration.authType == .auth0) ? auth0IssuerURL() : issuerURL()
+
+        guard let issuer = issuerURL else {
             self.authDelegate?.didReceive(result: .failure(nilIssuerError()))
             return
         }
@@ -214,13 +175,15 @@ public class AuthPkcePresenter {
                 sSelf.authDelegate?.didReceive(result: .failure(sSelf.nilIssuerError()))
                 return
             }
-
+            
             let logoutRequest =
                 OIDEndSessionRequest(configuration: pkceConfiguration,
                                      idTokenHint: credential.idToken ?? "",
                                      postLogoutRedirectURL: URL(string: sSelf.configuration.redirectURI ?? "")!,
                                      state: (sSelf.authSession?.authState?.lastAuthorizationResponse.state) ?? "",
                                      additionalParameters: nil)
+            
+            
 
             sSelf.logoutUserAgent =
                 OIDExternalUserAgentIOSSafari(presentingViewController: viewController)
@@ -244,48 +207,7 @@ public class AuthPkcePresenter {
             }
         }
     }
-    
-    func getServerDetails(isLogin: Bool) {
-        fetchAppConfig { [weak self] result in
-            guard let sSelf = self else { return }
-            switch result {
-            case .success(let auth0Config):
-                DispatchQueue.main.async {
-                    if isLogin {
-                        sSelf.auth0login(auth0Config: auth0Config)
-                    } else {
-                        sSelf.auth0Logout(auth0Config: auth0Config)
-                    }
-                }
-            case .failure(let error):
-                let error = APIError(domain: moduleName,
-                                     code: ModuleErrorType.errorAuthStateNil.code,
-                                     message: errorAuthStateNil)
-                sSelf.authDelegate?.didReceive(result: .failure(error))
-            }
-        }
         
-    }
-    
-    func auth0Logout(auth0Config: OAuth2Data) {
-        Auth0
-            .webAuth(clientId: auth0Config.clientId ?? "", domain: auth0Config.host ?? "")
-            .audience(auth0Config.audience ?? "")
-            .scope(auth0Config.scope ?? "")
-            .clearSession { [weak self] result in
-                guard let sSelf = self else { return }
-                switch result {
-                case .success:
-                    sSelf.authDelegate?.didLogOut(result: .success(StatusCodes.code200OK.code))
-                case .failure(let error):
-                    sSelf.authDelegate?.didLogOut(result: .failure(APIError(domain: moduleName,
-                                                                            code: StatusCodes.code403Forbidden.code,
-                                                                            error: error )))
-                }
-            }
-        
-    }
-
     func executeRefreshSession() {
         if let authState = self.authSession?.authState {
             authState.performAction { [weak self] (accessToken, _, error) in
@@ -330,6 +252,10 @@ public class AuthPkcePresenter {
                                   configuration.baseUrl,
                                   configuration.realm))
     }
+    
+    func auth0IssuerURL() -> URL? {
+        return URL(string: configuration.baseUrl)
+    }
 
     func apiError(for error: NSError) -> APIError {
         return APIError(domain: moduleName,
@@ -337,59 +263,4 @@ public class AuthPkcePresenter {
                         error: error)
     }
     
-    func fetchAppConfig(completion: @escaping (Result<OAuth2Data, Error>) -> Void) {
-        guard let url = URL(string: "\(self.configuration.baseUrl)/\(appConfig)") else {
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let err = error {
-                completion(.failure(err))
-                return
-            }
-            
-            guard let resData = data else {
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let appConfig = try decoder.decode(AppConfigDetails.self, from: resData)
-                
-                if let oauth2Config = appConfig.oauth2 {
-                    completion(.success(oauth2Config))
-                } else {
-                    let error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey : "OAuth2 config not found"])
-                    completion(.failure(error))
-                }
-            } catch {
-                completion(.failure(error))
-            }
-        }
-        
-        task.resume()
-    }
-}
-
-extension Credentials {
-    func credentialDictionary() -> [String: Any] {
-        var dictionary: [String: Any] = [:]
-        dictionary["token_type"] = self.tokenType
-        dictionary["access_token"] = self.accessToken
-        dictionary["expires_in"] = Int(self.expiresIn.timeIntervalSince1970)
-        dictionary["refresh_token"] = ""
-        dictionary["id_token"] = self.idToken
-        dictionary["session_state"] = ""
-        dictionary["refresh_expires_in"] = 0
-        return dictionary
-    }
-}
-
-// Convert Dictionary to AlfrescoCredential using Decoder
-extension AlfrescoCredential {
-    init(from dictionary: [String: Any]) throws {
-        let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: [])
-        let decoder = JSONDecoder()
-        self = try decoder.decode(AlfrescoCredential.self, from: jsonData)
-    }
 }
