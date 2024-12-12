@@ -48,11 +48,7 @@ public struct AlfrescoCredential: Codable {
             case "expires_in":
                 accessTokenExpiresIn = value as? Int
             case "refresh_token":
-                if let intValue = value as? Int {
-                    refreshToken = String(intValue) // Convert Int to String
-                } else if let stringValue = value as? String {
-                    refreshToken = stringValue
-                }
+                refreshToken = getRefreshToken(value: value)
             case "refresh_expires_in":
                 refreshTokenExpiresIn = value as? Int
             case "id_token":
@@ -85,5 +81,15 @@ public struct AlfrescoCredential: Codable {
         refreshTokenExpiresIn = try values.decode(Int.self, forKey: .refreshTokenExpiresIn)
         sessionState = try values.decode(String.self, forKey: .sessionState)
         idToken = try values.decode(String.self, forKey: .idToken)
+    }
+    
+    private func getRefreshToken(value: Any) -> String? {
+        var refreshToken = ""
+        if let intValue = value as? Int {
+            refreshToken = String(intValue) // Convert Int to String
+        } else if let stringValue = value as? String {
+            refreshToken = stringValue
+        }
+        return refreshToken
     }
 }
