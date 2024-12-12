@@ -19,7 +19,6 @@
 import Foundation
 import AppAuth
 import AlfrescoCore
-import Auth0
 
 public enum AvailableAuthType: String, Codable {
     case basicAuth = "Basic Auth"
