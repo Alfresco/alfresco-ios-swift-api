@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name                  = 'AlfrescoAuth'
-s.version               = '0.2.2'
+s.version               = '0.2.3'
 s.summary               = 'Alfresco Auth iOS Swift API'
 s.homepage              = 'https://github.com/Alfresco/alfresco-ios-swift-api'
 s.author                = {'Alfresco' => 'mobile.alfresco@alfresco.com' }
@@ -15,6 +15,5 @@ s.framework 			= ['WebKit']
 s.resources 			= ["Sources/**/*.storyboard"]
 s.dependency 			 'AlfrescoCore'
 s.dependency 			 'AppAuth'
-s.dependency 			 'Auth0'
 
 end

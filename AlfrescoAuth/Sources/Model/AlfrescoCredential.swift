@@ -26,6 +26,7 @@ public struct AlfrescoCredential: Codable {
     public var refreshTokenExpiresIn: Int?
     public var sessionState: String?
     public var idToken: String?
+    
     enum CodingKeys: String, CodingKey {
         case tokenType = "token_type"
         case accessToken = "access_token"
@@ -36,6 +37,7 @@ public struct AlfrescoCredential: Codable {
         case idToken = "id_token"
     }
     init() { }
+    
     init(with dictionary: [String: Any]) {
         for (key, value) in dictionary {
             switch key {
@@ -48,7 +50,7 @@ public struct AlfrescoCredential: Codable {
             case "expires_in":
                 accessTokenExpiresIn = value as? Int
             case "refresh_token":
-                refreshToken = value as? String
+                refreshToken = getRefreshToken(value: value)
             case "refresh_expires_in":
                 refreshTokenExpiresIn = value as? Int
             case "id_token":
@@ -57,6 +59,7 @@ public struct AlfrescoCredential: Codable {
             }
         }
     }
+    
     init(with response: OIDTokenResponse?) {
         self.tokenType = response?.tokenType
         self.accessToken = response?.accessToken
@@ -66,14 +69,36 @@ public struct AlfrescoCredential: Codable {
         self.sessionState = ""
         self.idToken = response?.idToken
     }
+    
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         tokenType = try values.decode(String.self, forKey: .tokenType)
         accessToken = try values.decode(String.self, forKey: .accessToken)
         accessTokenExpiresIn = try values.decode(Int.self, forKey: .accessTokenExpiresIn)
-        refreshToken = try values.decode(String.self, forKey: .refreshToken)
+        refreshToken = try getRefreshTokenFromDecoder(decoder: decoder)
         refreshTokenExpiresIn = try values.decode(Int.self, forKey: .refreshTokenExpiresIn)
         sessionState = try values.decode(String.self, forKey: .sessionState)
         idToken = try values.decode(String.self, forKey: .idToken)
+    }
+    
+    private func getRefreshTokenFromDecoder(decoder: Decoder) throws -> String? {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        var refreshToken: String? = nil
+        if let intValue = try? values.decode(Int.self, forKey: .refreshToken) {
+            refreshToken = String(intValue) // Convert Int to String
+        } else if let stringValue = try? values.decode(String.self, forKey: .refreshToken) {
+            refreshToken = stringValue
+        }
+        return refreshToken
+    }
+    
+    private func getRefreshToken(value: Any) -> String? {
+        var refreshToken: String? = nil
+        if let intValue = value as? Int {
+            refreshToken = String(intValue) // Convert Int to String
+        } else if let stringValue = value as? String {
+            refreshToken = stringValue
+        }
+        return refreshToken
     }
 }

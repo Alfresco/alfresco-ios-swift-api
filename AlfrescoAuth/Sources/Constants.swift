@@ -24,7 +24,6 @@ let kIssuerPKCE = "%@/auth/realms/%@"
 let kTokenEndPoint = "/auth/realms/%@/protocol/openid-connect/token"
 let kLogoutEndPoint = "/protocol/openid-connect/logout"
 let moduleName = "AlfrecoAuth"
-let appConfig = "app-config.json"
 
 // Error messages
 
