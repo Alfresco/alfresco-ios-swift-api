@@ -33,6 +33,7 @@
 		2BE0E70222F81BE9002857F0 /* AlfrescoCredentialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0E70122F81BE9002857F0 /* AlfrescoCredentialTests.swift */; };
 		2BE0E70422F84EAB002857F0 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0E70322F84EAB002857F0 /* TestData.swift */; };
 		2BE921A8230C26DF0009F470 /* String+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE921A7230C26DF0009F470 /* String+Helpers.swift */; };
+		47C392568626894863F9083E /* Pods_AlfrescoAuth_AlfrescoAuthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84180CFB34F9305F8C225ADD /* Pods_AlfrescoAuth_AlfrescoAuthTests.framework */; };
 		B95789F12344971B00F19594 /* AuthPkcePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95789F02344971B00F19594 /* AuthPkcePresenter.swift */; };
 		B96C65E02369DA03004E1402 /* GetPathInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96C65DF2369DA03004E1402 /* GetPathInstance.swift */; };
 		B98D87DB2344D47000BC0259 /* AlfrescoAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98D87DA2344D47000BC0259 /* AlfrescoAuthSession.swift */; };
@@ -59,6 +60,7 @@
 		E3C38EF52327B4EA007FCF8B /* GetAlfrescoCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C38EF42327B4EA007FCF8B /* GetAlfrescoCredential.swift */; };
 		E3C38EFD2327E50E007FCF8B /* URL+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C38EFC2327E50E007FCF8B /* URL+Helpers.swift */; };
 		E3DB7767233A296A000122BB /* AuthWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DB7766233A296A000122BB /* AuthWebViewController.swift */; };
+		F07737F1B4B519E888BC49C2 /* Pods_AlfrescoAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA04AE8AACABB3594C229086 /* Pods_AlfrescoAuth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,10 +89,16 @@
 		2BE0E70122F81BE9002857F0 /* AlfrescoCredentialTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoCredentialTests.swift; sourceTree = "<group>"; };
 		2BE0E70322F84EAB002857F0 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		2BE921A7230C26DF0009F470 /* String+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
+		5D34BD0D4E498315899F5650 /* Pods-AlfrescoAuth-AlfrescoAuthTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlfrescoAuth-AlfrescoAuthTests.release.xcconfig"; path = "Target Support Files/Pods-AlfrescoAuth-AlfrescoAuthTests/Pods-AlfrescoAuth-AlfrescoAuthTests.release.xcconfig"; sourceTree = "<group>"; };
+		713C052CAE0BF2D524E77ED3 /* Pods-AlfrescoAuth-AlfrescoAuthTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlfrescoAuth-AlfrescoAuthTests.debug.xcconfig"; path = "Target Support Files/Pods-AlfrescoAuth-AlfrescoAuthTests/Pods-AlfrescoAuth-AlfrescoAuthTests.debug.xcconfig"; sourceTree = "<group>"; };
+		84180CFB34F9305F8C225ADD /* Pods_AlfrescoAuth_AlfrescoAuthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlfrescoAuth_AlfrescoAuthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2AF81233C7456398745ED7B /* Pods-AlfrescoAuth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlfrescoAuth.debug.xcconfig"; path = "Target Support Files/Pods-AlfrescoAuth/Pods-AlfrescoAuth.debug.xcconfig"; sourceTree = "<group>"; };
 		B95789F02344971B00F19594 /* AuthPkcePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPkcePresenter.swift; sourceTree = "<group>"; };
 		B96C65DF2369DA03004E1402 /* GetPathInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPathInstance.swift; sourceTree = "<group>"; };
 		B98D87DA2344D47000BC0259 /* AlfrescoAuthSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlfrescoAuthSession.swift; sourceTree = "<group>"; };
 		B9B8E8E125342872004EF9BE /* OIDExternalUserAgentIOSSafari.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OIDExternalUserAgentIOSSafari.swift; sourceTree = "<group>"; };
+		C7BEDA39CD409B730A178484 /* Pods-AlfrescoAuth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlfrescoAuth.release.xcconfig"; path = "Target Support Files/Pods-AlfrescoAuth/Pods-AlfrescoAuth.release.xcconfig"; sourceTree = "<group>"; };
+		DA04AE8AACABB3594C229086 /* Pods_AlfrescoAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlfrescoAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E31B47DF22F97844002B6BC5 /* AlfrescoAuth.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = AlfrescoAuth.xctestplan; sourceTree = "<group>"; };
 		E31B47E022F97C53002B6BC5 /* AuthWebViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWebViewControllerTests.swift; sourceTree = "<group>"; };
 		E31FE3422355B5CE0024B376 /* AlfrescoAuthDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlfrescoAuthDelegateStub.swift; sourceTree = "<group>"; };
@@ -121,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F07737F1B4B519E888BC49C2 /* Pods_AlfrescoAuth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,18 +138,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BD6E14D22F442C900949E44 /* AlfrescoAuth.framework in Frameworks */,
+				47C392568626894863F9083E /* Pods_AlfrescoAuth_AlfrescoAuthTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0AA5D1E78735F103C9F0C074 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DA04AE8AACABB3594C229086 /* Pods_AlfrescoAuth.framework */,
+				84180CFB34F9305F8C225ADD /* Pods_AlfrescoAuth_AlfrescoAuthTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2BD6E13922F442C800949E44 = {
 			isa = PBXGroup;
 			children = (
 				2BD6E14522F442C900949E44 /* Sources */,
 				2BD6E15022F442C900949E44 /* AlfrescoAuthTests */,
 				2BD6E14422F442C900949E44 /* Products */,
+				D3EB852681078AACD7B27EA2 /* Pods */,
+				0AA5D1E78735F103C9F0C074 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,6 +232,18 @@
 				B96C65DF2369DA03004E1402 /* GetPathInstance.swift */,
 			);
 			path = Requests;
+			sourceTree = "<group>";
+		};
+		D3EB852681078AACD7B27EA2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A2AF81233C7456398745ED7B /* Pods-AlfrescoAuth.debug.xcconfig */,
+				C7BEDA39CD409B730A178484 /* Pods-AlfrescoAuth.release.xcconfig */,
+				713C052CAE0BF2D524E77ED3 /* Pods-AlfrescoAuth-AlfrescoAuthTests.debug.xcconfig */,
+				5D34BD0D4E498315899F5650 /* Pods-AlfrescoAuth-AlfrescoAuthTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		E3103B092345DCC700199CE0 /* Basic Authentication */ = {
@@ -337,6 +370,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2BD6E15722F442C900949E44 /* Build configuration list for PBXNativeTarget "AlfrescoAuth" */;
 			buildPhases = (
+				C198D3EDDA93E28D68C09192 /* [CP] Check Pods Manifest.lock */,
 				2BD6E13E22F442C800949E44 /* Headers */,
 				2BD6E13F22F442C800949E44 /* Sources */,
 				2BD6E14022F442C800949E44 /* Frameworks */,
@@ -356,9 +390,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2BD6E15A22F442C900949E44 /* Build configuration list for PBXNativeTarget "AlfrescoAuthTests" */;
 			buildPhases = (
+				3ACE17A6D1D77A96550DA85F /* [CP] Check Pods Manifest.lock */,
 				2BD6E14822F442C900949E44 /* Sources */,
 				2BD6E14922F442C900949E44 /* Frameworks */,
 				2BD6E14A22F442C900949E44 /* Resources */,
+				E884D313B42EDBB48771E2BF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -432,6 +468,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3ACE17A6D1D77A96550DA85F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlfrescoAuth-AlfrescoAuthTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B9AE3DEA2577B6BC0036E0B6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -466,6 +524,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/sh\n\n# Step 1: Define Macros\nRELEASE_TYPE=\"InternalRelease\"\n\n# Step 2: Define OS and directories\nTEMPORARY_WORK_DIR=${PROJECT_DIR}/\"temp\"\nUNIVERSAL_OUTPUTFOLDER=${TEMPORARY_WORK_DIR}/${CONFIGURATION}-universal\nUNIVERSAL_FRAMEWORKFOLDER=${PROJECT_NAME}${RELEASE_TYPE}\nDEVICE_OS=\"iphoneos\"\nDEVICE_SIMULATOR=\"iphonesimulator\"\n\n# Step 3: Make sure the output directories exists\nmkdir -p \"${TEMPORARY_WORK_DIR}\"\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_FRAMEWORKFOLDER}\"\n\n# Step 4: Build Device and Simulator versions\n# See: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html\nxcodebuild -workspace \"${PROJECT_NAME}.xcworkspace\" -scheme \"${PROJECT_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk ${DEVICE_OS}  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/\" \"${TEMPORARY_WORK_DIR}/dev\"\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_OS}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\nsleep 5s\n\nxcodebuild -workspace \"${PROJECT_NAME}.xcworkspace\" -scheme \"${PROJECT_NAME}\" VALID_ARCHS=\"x86_64 i386\" -configuration ${CONFIGURATION} -sdk ${DEVICE_SIMULATOR} ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/\" \"${TEMPORARY_WORK_DIR}/sim\"\n\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-${DEVICE_SIMULATOR}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\nsleep 5s\n\n# Step 5: Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${TEMPORARY_WORK_DIR}/sim/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${TEMPORARY_WORK_DIR}/dev/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 6: Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${UNIVERSAL_FRAMEWORKFOLDER}/\"\n\n# Step 7: Clean up\nrm -rf ${TEMPORARY_WORK_DIR}\n";
+		};
+		C198D3EDDA93E28D68C09192 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlfrescoAuth-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E884D313B42EDBB48771E2BF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlfrescoAuth-AlfrescoAuthTests/Pods-AlfrescoAuth-AlfrescoAuthTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlfrescoAuth-AlfrescoAuthTests/Pods-AlfrescoAuth-AlfrescoAuthTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlfrescoAuth-AlfrescoAuthTests/Pods-AlfrescoAuth-AlfrescoAuthTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -658,6 +755,7 @@
 		};
 		2BD6E15822F442C900949E44 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2AF81233C7456398745ED7B /* Pods-AlfrescoAuth.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
@@ -686,6 +784,7 @@
 		};
 		2BD6E15922F442C900949E44 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7BEDA39CD409B730A178484 /* Pods-AlfrescoAuth.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
@@ -713,6 +812,7 @@
 		};
 		2BD6E15B22F442C900949E44 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 713C052CAE0BF2D524E77ED3 /* Pods-AlfrescoAuth-AlfrescoAuthTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "${inherited}";
 				CODE_SIGN_STYLE = Automatic;
@@ -731,6 +831,7 @@
 		};
 		2BD6E15C22F442C900949E44 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D34BD0D4E498315899F5650 /* Pods-AlfrescoAuth-AlfrescoAuthTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "${inherited}";
 				CODE_SIGN_STYLE = Automatic;
