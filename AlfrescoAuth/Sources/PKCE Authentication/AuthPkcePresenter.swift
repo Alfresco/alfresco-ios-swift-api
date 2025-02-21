@@ -23,7 +23,6 @@ import AlfrescoCore
 public enum AvailableAuthType: String, Codable {
     case basicAuth = "Basic Auth"
     case aimsAuth = "KeyClock"
-    case auth0 = "Auth0"
     
     public init?(rawValue: String) {
             switch rawValue.lowercased() {
@@ -31,8 +30,6 @@ public enum AvailableAuthType: String, Codable {
                 self = .basicAuth
             case "keyclock":
                 self = .aimsAuth
-            case "auth0":
-                self = .auth0
             default:
                 return nil
             }
@@ -54,10 +51,8 @@ public class AuthPkcePresenter {
     }
 
     func availableAuthType(handler: @escaping((Result<AvailableAuthType, APIError>) -> Void)) {
-        
-        let issuerURL = (self.configuration.authType == .auth0) ? auth0IssuerURL() : issuerURL()
 
-        guard let issuer = issuerURL else {
+        guard let issuer = issuerURL() else {
             handler(.failure(nilIssuerError()))
             return
         }
@@ -88,9 +83,7 @@ public class AuthPkcePresenter {
     }
 
     func execute() {
-        let issuerURL = (self.configuration.authType == .auth0) ? auth0IssuerURL() : issuerURL()
-
-        guard let issuer = issuerURL else {
+        guard let issuer = issuerURL() else {
             self.authDelegate?.didReceive(result: .failure(nilIssuerError()))
             return
         }
@@ -113,7 +106,9 @@ public class AuthPkcePresenter {
                 return
             }
             
-            let additionalParameters = (sSelf.configuration.authType == .auth0) ? ["audience": sSelf.configuration.realm ?? "", "prompt": "login"] : nil
+            var additionalParameters: [String: String]? =
+            sSelf.configuration.audience.isEmpty == false ?
+            ["audience": sSelf.configuration.audience, "prompt": "login"] : nil
 
 
             let request = OIDAuthorizationRequest(configuration: pkceConfiguration,
@@ -149,9 +144,7 @@ public class AuthPkcePresenter {
     
     func logout(forCredential credential: AlfrescoCredential) {
         
-        let issuerURL = (self.configuration.authType == .auth0) ? auth0IssuerURL() : issuerURL()
-
-        guard let issuer = issuerURL else {
+        guard let issuer = issuerURL() else {
             self.authDelegate?.didReceive(result: .failure(nilIssuerError()))
             return
         }
@@ -245,16 +238,12 @@ public class AuthPkcePresenter {
                         code: ModuleErrorType.errorViewControllerNil.code,
                         message: errorViewControllerNil)
     }
-
-    func issuerURL() -> URL? {
-        return URL(string: String(format: kIssuerPKCE,
-                                  configuration.baseUrl,
-                                  configuration.realm))
-    }
     
-    func auth0IssuerURL() -> URL? {
-        return URL(string: configuration.baseUrl)
+    func issuerURL() -> URL? {
+        let realmPath = configuration.realm.isEmpty ? "" : "realms/\(configuration.realm)"
+        return URL(string: String(format: kIssuerPKCE, configuration.baseUrl, realmPath))
     }
+
 
     func apiError(for error: NSError) -> APIError {
         return APIError(domain: moduleName,
