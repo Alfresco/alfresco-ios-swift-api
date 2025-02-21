@@ -240,10 +240,9 @@ public class AuthPkcePresenter {
     }
     
     func issuerURL() -> URL? {
-        let realmPath = configuration.realm.isEmpty ? "" : "realms/\(configuration.realm)"
+        let realmPath = configuration.realm.isEmpty ? "" : String(format: kIssuerRealms, configuration.realm)
         return URL(string: String(format: kIssuerPKCE, configuration.baseUrl, realmPath))
     }
-
 
     func apiError(for error: NSError) -> APIError {
         return APIError(domain: moduleName,
