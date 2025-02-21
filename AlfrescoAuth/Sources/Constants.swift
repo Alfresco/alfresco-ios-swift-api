@@ -20,10 +20,11 @@ import Foundation
 
 let kWebSAMLURLString = kIssuerPKCE +
     "/protocol/openid-connect/auth?client_id=alfresco&redirect_uri&scope=openid&response_type=code&nonce"
-let kIssuerPKCE = "%@/auth/realms/%@"
+let kIssuerPKCE = "%@/auth/%@"
 let kTokenEndPoint = "/auth/realms/%@/protocol/openid-connect/token"
 let kLogoutEndPoint = "/protocol/openid-connect/logout"
 let moduleName = "AlfrecoAuth"
+let kIssuerRealms = "realms/%@"
 
 // Error messages
 
