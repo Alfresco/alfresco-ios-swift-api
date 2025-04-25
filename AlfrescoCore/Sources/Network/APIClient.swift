@@ -88,6 +88,7 @@ public class APIClient: APIClientProtocol {
                         }
                     } catch {
                         completion(.failure(APIError(domain: sSelf.moduleName,
+                                                     code:response.statusCode,
                                                      error: error)))
                     }
                     return
